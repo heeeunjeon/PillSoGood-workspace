@@ -1,4 +1,4 @@
-package com.kh.spring.common.model.vo;
+package com.kh.pill.common.model.vo;
 
 public class PageInfo {
 	
