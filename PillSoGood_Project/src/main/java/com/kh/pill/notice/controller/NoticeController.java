@@ -47,7 +47,7 @@ public class NoticeController {
 	
 	@RequestMapping("insert.no")
 	public void insertNotice(Notice n) {
-		System.out.println(n);
+		
 	}
 
 }
