@@ -36,6 +36,12 @@ public class NoticeController {
 		
 		return "notice/noticeListView";
 		
+	}
+	
+	@RequestMapping("enrollForm.no")
+	public String enrollForm() {
+		
+		return "notice/noticeEnrollForm";
 		
 	}
 

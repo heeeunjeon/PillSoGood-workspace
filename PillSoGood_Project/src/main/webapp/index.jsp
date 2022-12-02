@@ -8,6 +8,6 @@
 </head>
 <body>
 
-	<a href="list.no">공지사항</a>
+	<jsp:forward page="WEB-INF/views/common/menubar.jsp" />
 </body>
 </html>

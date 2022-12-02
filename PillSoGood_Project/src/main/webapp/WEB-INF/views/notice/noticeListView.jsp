@@ -5,53 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>PillSoGood</title>
+
 
 <style>
-
-    div {
-        /*border : 1px solid #78C2AD;*/
-        box-sizing : border-box;
-    }
-
-    /* 전체를 감싸는 wrap */
-    .wrap {
-        width: 98%;
-        height: 1530px;
-        margin : auto;
-    }
-
-    .wrap>div { width : 100%; }
-
-    #navigator2 { height: 100px; }
-
-    #content { height: 1150px; }
-    #content_2>div { width: 100%; }
-    #content_2_1 { height: 10%; float: left; }
-    #content_2_2 { height: 80%; float: left; }
-    #content_2_3 { height: 10%; float: left; }
-
-    #header { height: 130px; }
-
-    #content_2_1>p {
-        font-size: 35px;
-        color: black;
-        margin-top: 20px;
-        margin-left: 30px;
-    }
-
-    /* content 영역 */
-    #content>div { height : 100%; float : left; }
-    #content_1 { width : 20%; }
-    #content_2 { width : 60%; }
-    #content_3 { width : 20%; }
-
-    body { font-family: 'Noto Sans KR', sans-serif !important; }
-
-</style>
-
-<style>
-
+	
+	#noticeTable>tbody *:hover {
+		cursor : pointer;
+	}
+	
     #noticeTable>tbody * {
         height: 70px;
         vertical-align: middle;
@@ -78,13 +40,10 @@
             <div id="content_2">
                 <div id="content_2_1">
                     <p>공지사항
-                        <button style="float:right;" class="btn btn-primary btn-primary btn-lg">등록</button>
+                        <button style="float:right;" onclick="location.href='enrollForm.no'" class="btn btn-primary btn-primary btn-lg">등록</button>
                     </p>
                 </div>
                 <div id="content_2_2">
-
-                    
-
 
                     <table class="table table-hover" id="noticeTable">
                         
