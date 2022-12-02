@@ -2,9 +2,12 @@ package com.kh.pill.notice.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.notice.model.vo.Notice;
 
+@Service
 public class NoticeServiceImpl implements NoticeService {
 
 	@Override

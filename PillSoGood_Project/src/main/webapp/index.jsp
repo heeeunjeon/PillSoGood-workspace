@@ -8,5 +8,6 @@
 </head>
 <body>
 
+	<a href="list.no">공지사항</a>
 </body>
 </html>
