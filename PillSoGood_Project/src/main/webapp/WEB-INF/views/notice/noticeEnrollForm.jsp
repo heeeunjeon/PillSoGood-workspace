@@ -55,17 +55,17 @@
              </div>
              <div id="content_2_2">
                  
-                 <form action="" method="post">
+                 <form action="insert.no" method="post">
 
                      <div id="noticeEnrollArea">
                          <table class="table" align="center" id="noticeEnrollForm">
                              <tr>
                                  <th>제목</th>
-                                 <td><input type="text" name="" placeholder="제목을 입력하세요"></td>
+                                 <td><input type="text" name="noticeTitle" placeholder="제목을 입력하세요"></td>
                              </tr>
                              <tr>
                                  <th>내용</th>
-                                 <td><textarea name="" id="" cols="40" rows="20" style="resize:none;" placeholder="내용을 입력하세요"></textarea></td>
+                                 <td><textarea name="noticeContent" id="" cols="40" rows="20" style="resize:none;" placeholder="내용을 입력하세요"></textarea></td>
                              </tr>
                          </table>
 

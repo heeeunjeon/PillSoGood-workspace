@@ -44,5 +44,10 @@ public class NoticeController {
 		return "notice/noticeEnrollForm";
 		
 	}
+	
+	@RequestMapping("insert.no")
+	public void insertNotice(Notice n) {
+		System.out.println(n);
+	}
 
 }
