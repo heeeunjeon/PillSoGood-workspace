@@ -153,25 +153,13 @@
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
 </style>
-<!-- bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-<!-- bootswatch minty -->
-<link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.css">
-<!-- jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<!-- ajax jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-<!-- 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="wrap">
-        <%@ include file="menubar.jsp" %>
-        <div id="navigator2"></div>
+        <div id="navigator2">
+        	<jsp:include page="../common/menubar.jsp" />
+        </div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
@@ -375,7 +363,7 @@
             </div>
             <div id="content_3"></div>
         </div>
-        <%@ include file="footerbar.jsp" %>
+        <jsp:include page="../common/footer.jsp" />
     </div>
     
 </body>
