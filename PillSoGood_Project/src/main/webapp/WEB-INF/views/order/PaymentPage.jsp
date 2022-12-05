@@ -35,7 +35,7 @@
     #content_2_1>p {
         font-size: 35px;
         color: black;
-        margin-top: 40px;
+        margin-top: 20px;
         margin-left: 30px;
     }
 

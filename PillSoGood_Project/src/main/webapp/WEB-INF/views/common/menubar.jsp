@@ -29,43 +29,6 @@
 
 <style>
 
-    div {
-        /* border : 1px solid #78C2AD; */
-        box-sizing : border-box;
-    }
-
-    /* 전체를 감싸는 wrap */
-    .wrap {
-        width: 98%;
-        height: 1530px;
-        margin : auto;
-    }
-
-    .wrap>div { width : 100%; }
-
-    #navigator2 { height: 100px; }
-
-    #content { height: 1150px; }
-    #content_2>div { width: 100%; }
-    #content_2_1 { height: 10%; float: left; }
-    #content_2_2 { height: 80%; float: left; }
-    #content_2_3 { height: 10%; float: left; }
-
-    #header { height: 130px; }
-
-    #content_2_1>p {
-        font-size: 35px;
-        color: black;
-        margin-top: 20px;
-        margin-left: 30px;
-    }
-
-    /* content 영역 */
-    #content>div { height : 100%; float : left; }
-    #content_1 { width : 20%; }
-    #content_2 { width : 60%; }
-    #content_3 { width : 20%; }
-
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
     ul { font-family: 'Noto Sans KR', sans-serif !important; }  
@@ -73,7 +36,7 @@
 
     #navibar{
       width: 98%;
-      height:100px;
+      height: 100px;
       margin-top: 20px;
       /*position: fixed;*/
     }
@@ -127,11 +90,11 @@
     }
 
 </style>
-
 </head>
 <body>
 
-  	<script>
+  
+  <script>
 		var toastCount = 0;
 		// 전역변수 설정
 		var socket  = null;
@@ -164,8 +127,8 @@
                 $("#socketAlarmArea").addClass("slideon");
 	        
 	    };	
-
 	</script>
+
   <div id="navibar">
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid" id="menubar">
@@ -222,7 +185,7 @@
       </div>
     </div>
   </nav>
-</div>
+  </div>
 
 	<div id="socketAlarmArea" ></div>
 

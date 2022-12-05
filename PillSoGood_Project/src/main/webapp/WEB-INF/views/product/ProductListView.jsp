@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>제품 안내</title>
+<title>제품 소개</title>
 <style>
 
     div {

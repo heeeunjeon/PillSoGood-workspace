@@ -26,7 +26,7 @@
 
     #content { height: 600px; color: black;}
     #content_2>div { width: 100%; }
-    #content_2_1 { height: 20%; float: left; }
+    #content_2_1 { height: 115px; float: left; }
     #content_2_2 { height: 80%; float: left; }
 
     #header { height: 130px; }
@@ -34,9 +34,8 @@
     #content_2_1>p {
         font-size: 35px;
         color: black;
-        margin-top: 40px;
+        margin-top: 20px;
         margin-left: 30px;
-        font-weight: bold;
     }
 
     /* content 영역 */

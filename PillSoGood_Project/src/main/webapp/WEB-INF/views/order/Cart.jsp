@@ -24,7 +24,7 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1150px; }
+    #content { height: auto; display: flex; }
     #content_2>div { width: 100%; }
     #content_2_1 { height: 115px; float: left; }
     #content_2_2 { height: 90%; float: left; }
@@ -34,7 +34,7 @@
     #content_2_1>p {
         font-size: 35px;
         color: black;
-        margin-top: 40px;
+        margin-top: 20px;
         margin-left: 30px;
     }
 
@@ -89,8 +89,9 @@
 <body>
 
     <div class="wrap">
-        <jsp:include page="../common/menubar.jsp" />
-        <div id="navigator2"></div>
+        <div id="navigator2">
+        	<jsp:include page="../common/menubar.jsp" />
+        </div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
@@ -233,7 +234,9 @@
                         <div><button type="button" class="btn btn-outline-secondary btn-lg">단품결제</button></div>
                     </div>
                 </div>
+                <div style="height: 150px;"></div>
             </div>
+            
             <div id="content_3"></div>
         </div>
         <jsp:include page="../common/footer.jsp" />

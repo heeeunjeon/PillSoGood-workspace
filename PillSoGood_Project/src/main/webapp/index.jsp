@@ -8,6 +8,7 @@
 </head>
 <body>
 
-	<jsp:forward page="WEB-INF/views/common/menubar.jsp" />
+	<jsp:forward page="WEB-INF/views/order/Cart.jsp" />
+	
 </body>
 </html>
