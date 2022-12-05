@@ -2,48 +2,78 @@ package com.kh.pill.notice.model.service;
 
 import java.util.ArrayList;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.notice.model.dao.NoticeDao;
 import com.kh.pill.notice.model.vo.Notice;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
+	@Autowired
+	private NoticeDao noticeDao;
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return noticeDao.selectListCount(sqlSession);
+		
+		
 	}
 
 	@Override
 	public ArrayList<Notice> selectList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return noticeDao.selectList(sqlSession, pi);
+	}
+	
+
+	@Override
+	public ArrayList<Notice> selectNotice(int noticeNo) {
+		
+		
+		return noticeDao.selectNotice(sqlSession, noticeNo);
 	}
 
 	@Override
-	public int increaseCount(int boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int increaseCount(int noticeNo) {
+
+		return noticeDao.increaseCount(sqlSession, noticeNo);
 	}
 
 	@Override
-	public Notice selectBoard(int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertNotice(Notice n) {
+
+		return noticeDao.insertNotice(sqlSession, n);
+	}
+
+	
+
+
+	@Override
+	public int deleteNotice(int noticeNo) {
+		
+		return noticeDao.deleteNotice(sqlSession, noticeNo);
 	}
 
 	@Override
-	public int deleteBoard(int boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateNotice(Notice n) {
+
+		return noticeDao.updateNotice(sqlSession, n);
 	}
 
 	@Override
-	public int updateBoard(Notice n) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Notice selectUpdateNotice(int noticeNo) {
+		
+		return noticeDao.selectUpdateNotice(sqlSession,noticeNo);
 	}
+
+
 
 }

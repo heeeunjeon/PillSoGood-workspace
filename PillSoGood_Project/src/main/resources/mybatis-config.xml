@@ -34,6 +34,8 @@
 		<typeAlias type="com.kh.pill.review.model.vo.Review" alias="review" />
 		<typeAlias type="com.kh.pill.review.model.vo.ReviewFile" alias="reviewFile" />
 		<typeAlias type="com.kh.pill.review.model.vo.ReviewReply" alias="reviewReply" />
+		
+		<typeAlias type="com.kh.pill.notice.model.vo.Notice" alias="notice" />
 	</typeAliases>
 	
 

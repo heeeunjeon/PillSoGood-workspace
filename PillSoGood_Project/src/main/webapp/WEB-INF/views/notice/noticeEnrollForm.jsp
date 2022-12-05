@@ -8,6 +8,46 @@
 <title>PillSoGood</title>
 
 <style>
+	
+    div {
+        
+        box-sizing : border-box;
+    }
+
+    /* 전체를 감싸는 wrap */
+    .wrap {
+        width: 98%;
+        height: 1530px;
+        margin : auto;
+    }
+
+    .wrap>div { width : 100%; }
+
+    #navigator2 { height: 100px; }
+
+    #content { height: 1150px; }
+    #content_2>div { width: 100%; }
+    #content_2_1 { height: 10%; float: left; }
+    #content_2_2 { height: 80%; float: left; }
+    #content_2_3 { height: 10%; float: left; }
+
+    #header { height: 130px; }
+
+    #content_2_1>p {
+        font-size: 35px;
+        color: black;
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+
+    /* content 영역 */
+    #content>div { height : 100%; float : left; }
+    #content_1 { width : 20%; }
+    #content_2 { width : 60%; }
+    #content_3 { width : 20%; }
+
+    body { font-family: 'Noto Sans KR', sans-serif !important; }
+	
 
     #noticeEnrollArea{ 
 
@@ -34,6 +74,14 @@
         border-radius:5px
     }
     
+    #content_2_1>p {
+        font-size: 35px;
+        color: black;
+        margin-top: 20px;
+        margin-left: 30px;
+        font-weight: bold;
+    }
+    
 </style>
 
 </head>
@@ -58,14 +106,14 @@
                  <form action="insert.no" method="post">
 
                      <div id="noticeEnrollArea">
-                         <table class="table" align="center" id="noticeEnrollForm">
+                         <table class="table" style="width : 760px;" align="center" id="noticeEnrollForm">
                              <tr>
                                  <th>제목</th>
-                                 <td><input type="text" name="noticeTitle" placeholder="제목을 입력하세요"></td>
+                                 <td><input type="text" name="noticeTitle" class="form-control" placeholder="제목을 입력하세요"></td>
                              </tr>
                              <tr>
                                  <th>내용</th>
-                                 <td><textarea name="noticeContent" id="" cols="40" rows="20" style="resize:none;" placeholder="내용을 입력하세요"></textarea></td>
+                                 <td><textarea name="noticeContent" id="" class="form-control" cols="40" rows="20" style="resize:none;" placeholder="내용을 입력하세요"></textarea></td>
                              </tr>
                          </table>
 
