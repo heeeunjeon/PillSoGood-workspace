@@ -1,5 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="questionMapper">
-
+	
+	<resultMap id="questionResultSet" type="question">
+		<result column="QUESTION_NO" property="questionNo"/>
+		<result column="QUESTION_TITLE" property="questionTitle"/>
+		<result column="QUESTION_CONTENT" property="questionContent"/>
+		<result column="QUESTION_IMAGE" property="questionImage"/>
+		<result column="MEMBER_ID" property="memberNo"/> 
+		<result column="QUESTION_DATE" property="questionDate"/>
+		<result column="ANSWER" property="answer"/>
+		<result column="ANSWER_DATE" property="answerDate"/>
+		<result column="QUESTION_STATUS" property="questionStatus"/>
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM QUESTION
+		WHERE QUESTION_STATUS = 'Y'
+		  AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectQuestionList" resultMap="questionResultSet">
+		SELECT QUESTION_NO
+			 , QUESTION_TITLE
+			 , QUESTION_DATE
+			 , ANSWER
+		FROM QUESTION
+		WHERE QUESTION_STATUS = 'Y'
+		  AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectQuestion" parameterType="_int" resultMap="questionResultSet">
+		SELECT QUESTION_NO
+			 , QUESTION_TITLE
+			 , QUESTION_CONTENT
+			 , QUESTION_IMAGE
+			 , QUESTION_DATE
+			 , ANSWER
+			 , ANSWER_DATE
+		FROM QUESTION
+		WHERE QUESTION_STATUS = 'Y'
+		  AND QUESTION_NO = #{questionNo}
+	</select>
+	
+	<insert id="insertQuestion" parameterType="question">
+		INSERT INTO QUESTION (QUESTION_NO
+							, QUESTION_TITLE
+							, QUESTION_CONTENT
+							, QUESTION_IMAGE
+							, MEMBER_NO)
+					  VALUES (SEQ_QUESTION_NO.NEXTVAL
+					  		, #{questionTitle}
+					  		, #{questionContent}
+					  		, #{questionImage}
+					  		, #{memberNo})
+	</insert>
+	
+	<update id="updateQuestion" parameterType="question">
+		UPDATE QUESTION
+		   SET QUESTION_TITLE = #{questionTitle}
+		   	 , QUESTION_CONTENT = #{questionContent}
+		   	 , QUESTION_IMAGE = #{questionImage}
+		 WHERE QUESTION_NO = #{questionNo}
+	</update>
+	
+	<update id="deleteQuestion" parameterType="_int">
+		UPDATE QUESTION
+		   SET QUESTION_STATUS = 'N'
+		 WHERE QUESTION_NO = #{questionNo}
+	</update>
+	
 </mapper>

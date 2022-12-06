@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>1:1 문의 작성</title>
+<title>1:1 문의 수정</title>
 <style>
 
     div {
@@ -63,12 +63,12 @@
 
     .form-control {
         margin-left: 0px;
-        width: 95%!important;
+        width: 95%;;
         margin: auto;
     }
 
     #content_2_2 p {
-    	margin-left: 30px;
+        margin-left: 30px;
         font-weight: bold;
         font-size: large;
     }
@@ -89,34 +89,39 @@
                 </div>
                 <div id="content_2_2">
 
-                    <form action="insert.qu" method="post" enctype="multipart/form-data">
+                    <form action="update.qu" method="post" enctype="multipart/form-data">
                         <!-- 영섭 작업 영역 시작 -->
 
                         <!-- 제목 부분 -->
                         <div id="inquiryTitle" class="inquiryClass">
                             <p class="contentText">제목</p>
-                            <input type="text" class="form-control" name="questionTitle" placeholder="문의 제목을 입력해주세요 (30자 이내)" required>
+                            <input type="text" class="form-control" name="questionTitle" value="${ q.questionTitle }" placeholder="문의 제목을 입력해주세요 (30자 이내)" required>
                         </div>
                         <br>
                         
                         <!-- 내용 부분 -->
                         <div id="inquiryContent" class="inquiryClass">
                             <p class="contentText">내용</p>
-                            <textarea name="questionContent" cols="20" rows="15" class="form-control" placeholder="문의 내용을 입력해주세요 (1000자 이내)" style="resize: none;" required></textarea>
+                            <textarea name="questionContent" cols="30" rows="15" class="form-control" value="${ questionContent }" placeholder="문의 내용을 입력해주세요 (1000자 이내)" style="resize: none;" required></textarea>
                         </div>
                         <br>
                         
                         <!-- 사진첨부 부분 -->
                         <div id="inquiryImage" class="inquiryClass">
                             <p class="inquiryText">사진첨부(선택)</p>
-                            <input type="file" class="form-control" name="upfile">
+                            <input type="file" class="form-control" name="reupfile">
+                            
+                            <c:if test="${ not empty q.questionImage }">
+                            	<img src="${ q.questionImage }">
+                            	<input type="hidden" name="questionImage" value="${ q.questionImage }">
+                            </c:if>
                         </div>
                         <br><br>
 
                         <!-- 등록 버튼 -->
                         <div id="inquiryButton">
                             <br><br>
-                            <button type="submit" class="btn btn-primary">등록하기</button>
+                            <button type="submit" class="btn btn-primary">수정하기</button>
                         </div>
 
                         <!-- 영섭 작업 영역 끝 -->

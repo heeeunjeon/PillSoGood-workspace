@@ -9,7 +9,6 @@
 <style>
 
     div {
-        /* border : 1px solid rgb(120, 194, 173); */
         box-sizing : border-box;
     }
 

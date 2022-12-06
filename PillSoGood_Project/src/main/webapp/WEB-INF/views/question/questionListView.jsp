@@ -9,7 +9,6 @@
 <style>
 
     div {
-        border : 1px solid rgb(120, 194, 173);
         box-sizing : border-box;
     }
 
@@ -92,7 +91,7 @@
 
                     <!-- 문의사항 등록 버튼 -->
                     <div id="insertInquiry">
-                        <button type="button" class="btn btn-primary">문의사항 등록하기</button>
+                        <button type="button" class="btn btn-primary" onclick="location.href='enrollForm.qu'">문의사항 등록하기</button>
                     </div>
 
                     <!-- 문의 전체 조회 for문 부분 -->
@@ -106,88 +105,72 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <!-- 답변대기 / 답변완료로 색깔 바뀌어야 함 -->
-                                    <td><button type="button" class="btn btn-dark btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-dark btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-dark btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-dark btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-primary btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-primary btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-primary btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-primary btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-primary btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
-                                <tr>
-                                    <td><button type="button" class="btn btn-primary btn-sm disabled">답변대기</button></td> 
-                                    <td>문의제목</td>
-                                    <td>문의날짜</td>
-                                </tr>
+                            	<c:choose>
+                            		<c:when test="${ empty list }">
+                            			<tr><th colspan="3">등록하신 문의 내역이 없습니다.</th></tr>
+                            		</c:when>
+                            		<c:otherwise>
+                            			<c:forEach var="q" items="${ list }">
+		                            		<tr>
+		                            			<td>
+		                            				<c:choose>
+			                            				<c:when test="${ empty q.answer }">
+			                            					<button type="button" class="btn btn-dark btn-sm disabled">답변대기</button>
+			                            				</c:when>
+			                            				<c:otherwise>
+			                            					<button type="button" class="btn btn-primary btn-sm disabled">답변완료</button>
+			                            				</c:otherwise>
+		                            				</c:choose>
+		                            			</td>
+		                            			<td>${ q.questionTitle }</td>
+                                    			<td>${ q.questionContent }</td>
+		                            		</tr>
+		                            	</c:forEach>
+                            		</c:otherwise>
+                            	</c:choose>
                             </tbody>
                         </table>
                     </div>
                     <br><br>
+                    
+                    <script>
+		            	$(function() {
+		            		$("#question_list>tbody>tr").click(function() {
+		            			location.href = "detail.qu?qno=" + "${ q.questionNo }";
+		            		});
+		            	});
+		            </script>
 
                     <!-- 페이징 -->
-                    <div>
-                        <ul class="pagination pagination-sm">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#">&laquo;</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">4</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">5</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">&raquo;</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <c:if test="${ not empty list }">
+	                    <div>
+	                        <ul class="pagination">
+	                        	
+	                        	<c:choose>
+			                		<c:when test="${ pi.currentPage eq 1 }">
+			                			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+			                		</c:when>
+			                		<c:otherwise>
+			                			<li class="page-item"><a class="page-link" href="list.qu?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
+			                		</c:otherwise>
+			                	</c:choose>
+			                	
+			                	 <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                    		<li class="page-item"><a class="page-link" href="list.qu?cpage=${ p }">${ p }</a></li>
+			                    </c:forEach>
+	                        
+	                            <c:choose>
+			                		<c:when test="${ pi.currentPage eq pi.maxPage }">
+			                			<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+			                		</c:when>
+			                		<c:otherwise>
+			                			<li class="page-item"><a class="page-link" href="list.qu?cpage=${ pi.currentPage - 1 }">&raquo;</a></li>
+			                		</c:otherwise>
+			                	</c:choose>
+	                            
+	                        </ul>
+	                    </div>
+                    </c:if>
                     <!-- 영섭 작업 영역 끝 -->
 
                 </div>
