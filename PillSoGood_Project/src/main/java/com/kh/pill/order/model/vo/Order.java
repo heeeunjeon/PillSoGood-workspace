@@ -1,5 +1,22 @@
 package com.kh.pill.order.model.vo;
 
-public class Order {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+public class Order {
+	
+	private String orderNo;
+	private String orderDate;
+	private int orderPrice;
+	private int subsCount;
+	private String orderReceipt;
+	private String orderStatus;
+	private String subsStatus;
+	private int delivery;
 }
