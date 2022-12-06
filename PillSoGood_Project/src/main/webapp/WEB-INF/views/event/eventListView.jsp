@@ -97,7 +97,12 @@
             <div id="content_2">
                 <div id="content_2_1">
                     <p>이벤트
-                        <button style="float:right; margin-right: 20px; margin-top: 10px;" class="btn btn-primary btn-primary">등록</button>
+                    	<!-- 관리자일 경우에만 보여지는 등록 버튼 -->
+                    	<%-- <c:if test="${ loginUser.memberId eq 'admin') }" > --%>
+                    	
+                        	<button style="float:right; margin-right: 20px; margin-top: 10px;" class="btn btn-primary btn-primary">등록</button>
+                        
+                        <%-- </c:if> --%>
                     </p>
                 </div>
                 <div id="content_2_2">
@@ -108,168 +113,71 @@
                         DEWDATE 컬럼하고 현재 날짜 비교해서 자스로 addClass, removeClass 해주면 될거임
                     -->
                     
-                    <table class="table eventTable" onclick="location.href='#'" style="cursor:pointer; margin-top: 30px;" id="eventList" >
-                        <thead></thead>
-                        <tbody>
-                            <tr style="border-top : 1px solid lightgray;">
-                                <td class="eventTitle" style="padding-top: 20px;">
-                                    헬씨포텐! 섭취 기록 챌린지 보너스 트랙 
-                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
-                                </td>
-                                <td rowspan="4" style="padding-top: 20px;">
-                                    <img src="resources/images/Logo.PNG" width="250" alt="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="eventContent">단 하루만 섭취 기록해도 15% 할인 쿠폰 전원 증정♥</td>
-                            </tr>
-                            <tr>
-                                <td class="eventDate">2022.11.01 - 2022.11.30</td>
-                            </tr>
-                            <tr style="border-bottom : 1px solid lightgray;">
-                                <td class="eventLike" style="padding-bottom: 20px;">
-                                    <img src="resources/images/Like.png" width="15" alt="">
-                                    <span id="countLike">2</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
                     
-
-                    <table class="table eventTable" onclick="location.href='#'" style="cursor:pointer; margin-top: 30px;" id="eventList" >
+                    <table class="table eventTable" style="cursor:pointer; margin-top: 30px;" id="eventList" >
                         <thead></thead>
                         <tbody>
-                            <tr style="border-top : 1px solid lightgray;">
-                                <td class="eventTitle" style="padding-top: 20px;">
-                                    헬씨포텐! 섭취 기록 챌린지 보너스 트랙 
-                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
-                                </td>
-                                <td rowspan="4" style="padding-top: 20px;">
-                                    <img src="resources/images/Logo.PNG" width="250" alt="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="eventContent">단 하루만 섭취 기록해도 15% 할인 쿠폰 전원 증정♥</td>
-                            </tr>
-                            <tr>
-                                <td class="eventDate">2022.11.01 - 2022.11.30</td>
-                            </tr>
-                            <tr style="border-bottom : 1px solid lightgray;">
-                                <td class="eventLike" style="padding-bottom: 20px;">
-                                    <img src="resources/images/Like.png" width="15" alt="">
-                                    <span id="countLike">2</span>
-                                </td>
-                            </tr>
+                        	<c:forEach var="e" items="${ list }">
+                        		<tr style="border-top : 1px solid lightgray;" onclick="location.href='detail.ev?eno=${ e.evtNo }'">
+	                                <td class="eventTitle" style="padding-top: 20px;">
+	                                    ${ e.evtTitle }
+	                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
+	                                </td>
+	                                <td rowspan="4" style="padding-top: 20px;">
+	                                    <img src="resources/images/Logo.PNG" width="250" alt="">
+	                                </td>
+                            	</tr>
+	                            <tr>
+	                                <td class="eventContent">${ e.evtContent }</td>
+	                            </tr>
+	                            <tr>
+	                                <td class="eventDate">${ e.evtStart } - ${ e.evtDew }</td>
+	                            </tr>
+	                            <tr style="border-bottom : 1px solid lightgray;">
+	                                <td class="eventLike" style="padding-bottom: 20px;">
+	                                    <img src="resources/images/Like.png" width="15" alt="">
+	                                    <span id="countLike">${ e.evtLikeCount }</span>
+	                                </td>
+	                            </tr>
+                        	</c:forEach>
                         </tbody>
                     </table>
-
-                    
-
-                    <table class="table eventTable" onclick="location.href='#'" style="cursor:pointer; margin-top: 30px;" id="eventList" >
-                        <thead></thead>
-                        <tbody>
-                            <tr style="border-top : 1px solid lightgray;">
-                                <td class="eventTitle" style="padding-top: 20px;">
-                                    헬씨포텐! 섭취 기록 챌린지 보너스 트랙 
-                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
-                                </td>
-                                <td rowspan="4" style="padding-top: 20px;">
-                                    <img src="resources/images/Logo.PNG" width="250" alt="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="eventContent">단 하루만 섭취 기록해도 15% 할인 쿠폰 전원 증정♥</td>
-                            </tr>
-                            <tr>
-                                <td class="eventDate">2022.11.01 - 2022.11.30</td>
-                            </tr>
-                            <tr style="border-bottom : 1px solid lightgray;">
-                                <td class="eventLike" style="padding-bottom: 20px;">
-                                    <img src="resources/images/Like.png" width="15" alt="">
-                                    <span id="countLike">2</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                  
-
-                    <table class="table eventTable" onclick="location.href='#'" style="cursor:pointer; margin-top: 30px;" id="eventList" >
-                        <thead></thead>
-                        <tbody>
-                            <tr style="border-top : 1px solid lightgray;">
-                                <td class="eventTitle" style="padding-top: 20px;">
-                                    헬씨포텐! 섭취 기록 챌린지 보너스 트랙 
-                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
-                                </td>
-                                <td rowspan="4" style="padding-top: 20px;">
-                                    <img src="resources/images/Logo.PNG" width="250" alt="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="eventContent">단 하루만 섭취 기록해도 15% 할인 쿠폰 전원 증정♥</td>
-                            </tr>
-                            <tr>
-                                <td class="eventDate">2022.11.01 - 2022.11.30</td>
-                            </tr>
-                            <tr style="border-bottom : 1px solid lightgray;">
-                                <td class="eventLike" style="padding-bottom: 20px;">
-                                    <img src="resources/images/Like.png" width="15" alt="">
-                                    <span id="countLike">2</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                   
-
-                    <table class="table eventTable" onclick="location.href='#'" style="cursor:pointer; margin-top: 30px;" id="eventList" >
-                        <thead></thead>
-                        <tbody>
-                            <tr style="border-top : 1px solid lightgray;">
-                                <td class="eventTitle" style="padding-top: 20px;">
-                                    헬씨포텐! 섭취 기록 챌린지 보너스 트랙 
-                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
-                                </td>
-                                <td rowspan="4" style="padding-top: 20px;">
-                                    <img src="resources/images/Logo.PNG" width="250" alt="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="eventContent">단 하루만 섭취 기록해도 15% 할인 쿠폰 전원 증정♥</td>
-                            </tr>
-                            <tr>
-                                <td class="eventDate">2022.11.01 - 2022.11.30</td>
-                            </tr>
-                            <tr style="border-bottom : 1px solid lightgray;">
-                                <td class="eventLike" style="padding-bottom: 20px;">
-                                    <img src="resources/images/Like.png" width="15" alt="">
-                                    <span id="countLike">2</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
                 </div>
-                <div id="content_2_3">
-                    <!-- 페이지네이션 -->
+                
+               
+                
+                
+				<div id="content_2_3">
+             		<!-- 페이지네이션 -->
                     <div id="noticePagination">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination  justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-                            </ul>
-                        </nav>
+                    	<ul class="pagination  justify-content-center">
+	                    	<c:choose> 
+	                    		<c:when test="${ pi.currentPage eq 1 }">
+	                    			<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<li class="page-item"><a class="page-link" href="list.ev?cpage=${ pi.currentPage - 1 }">1</a></li>
+	                    		</c:otherwise>
+	                    	</c:choose>
+	                    	
+	                    	<c:forEach var="e" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                    		<li class="page-item"><a class="page-link" href="list.ev?cpage=${ e }">${ e }</a></li>
+	                    	</c:forEach>
+	                    	
+	                    	<c:choose>
+	                    		<c:when test="${pi.currentPage eq pi.maxPage }">
+	                    			<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<li class="page-item"><a class="page-link" href="list.ev?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+	                    		</c:otherwise>
+	                    	</c:choose>
+                        </ul>
+
                     </div>
-
-
                 </div>
+                
+                
             </div>
 
             <div id="content_3"></div>

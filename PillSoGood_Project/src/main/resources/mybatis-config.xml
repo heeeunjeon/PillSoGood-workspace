@@ -12,7 +12,7 @@
 		
 		<typeAlias type="com.kh.pill.event.model.vo.Event" alias="event" />
 		<typeAlias type="com.kh.pill.event.model.vo.EventLike" alias="eventLike" />
-		<typeAlias type="com.kh.pill.event.model.vo.Event" alias="eventReview" />
+		<typeAlias type="com.kh.pill.event.model.vo.EventReply" alias="eventReply" />
 		
 		<typeAlias type="com.kh.pill.magazine.model.vo.Magazine" alias="magazine" />
 		<typeAlias type="com.kh.pill.magazine.model.vo.MagazineLike" alias="magazineLike" />

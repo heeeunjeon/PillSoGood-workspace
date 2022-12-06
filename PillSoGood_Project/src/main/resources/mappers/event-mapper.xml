@@ -2,4 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="eventMapper">
 
+	<resultMap id="eventResultMap" type="event">
+		<result column="EVENT_NO" property="evtNo" />
+		<result column="EVENT_TITLE" property="evtTitle" />
+		<result column="EVENT_CONTENT" property="evtContent" />
+		<result column="EVENT_COUNT" property="evtCount" />
+		<result column="EVENT_IMG_NAME" property="evtImgName" />
+		<result column="EVENT_STATUS" property="evtStatus" />
+		<result column="EVENT_START" property="evtStart" />
+		<result column="EVENT_DEW" property="evtDew" />
+		<result column="EVENT_LIKE_COUNT" property="evtLikeCount" />
+		
+	</resultMap>
+	
+	<resultMap id="eventReplyResultMap" type="eventReply">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPLY_DATE" property="replyDate" />
+		<result column="PARENT_REPLY" property="parentReply" />
+		<result column="REPLY_STATUS" property="replyStatus" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="EVENT_NO" property="evtNo" />
+		<result column="MEMBER_NAME" property="memberName" />
+		
+	</resultMap>
+
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM EVENT
+		WHERE EVENT_STATUS = 'Y'
+	</select>
+
+
+	<select id="selectEventList" resultMap="eventResultMap">
+		SELECT EVENT_NO
+		     , EVENT_TITLE
+		     , EVENT_CONTENT
+		     , EVENT_COUNT
+		     , EVENT_IMG_NAME
+		     , EVENT_STATUS
+		     , EVENT_START
+		     , EVENT_DEW
+		     , EVENT_LIKE_COUNT
+		FROM EVENT
+		WHERE EVENT_STATUS = 'Y'
+		ORDER BY EVENT_NO DESC
+	</select>
+	
+	<select id="selectEvent" resultMap="eventResultMap" >
+		SELECT EVENT_NO
+			  ,	EVENT_TITLE
+			  , EVENT_START
+			  , EVENT_DEW
+			  , EVENT_LIKE_COUNT
+			  , EVENT_CONTENT
+			  , EVENT_IMG_NAME
+		FROM EVENT
+		WHERE EVENT_NO = #{evtNo}
+			  
+	</select>
+	
+	
+	<select id="selectReplyList" resultMap="eventReplyResultMap">
+		SELECT REPLY_NO
+		     , REPLY_CONTENT
+		     , REPLY_DATE
+		     , MEMBER_NAME
+		FROM EVENT_REPLY
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE REPLY_STATUS = 'Y'
+		  AND EVENT_NO = #{evtNo}
+		ORDER BY REPLY_NO DESC
+	
+	</select>
+
+
+
 </mapper>
