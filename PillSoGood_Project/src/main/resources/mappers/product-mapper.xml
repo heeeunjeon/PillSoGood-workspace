@@ -2,4 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="productMapper">
 
+	<resultMap id="productResultSet" type="product">
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="PRODUCT_EXPLAIN" property="productExplain" />
+		<result column="PRODUCT_PRICE" property="productPrice" />
+		<result column="PRODUCT_STOCK" property="productStock" />
+		<result column="PRODUCT_IMG_PATH" property="productImgPath" />
+		<result column="PRODUCT_DESCRIPTION" property="productDescription" />
+		<result column="PRODUCT_ENROLL_DATE" property="productEnrollDate" />
+		<result column="PRODUCT_STATUS" property="productStatus" />
+	</resultMap>
+	
+	<select id="selectList" resultMap="productResultSet">
+		SELECT PRODUCT_NO
+		     , PRODUCT_NAME
+		     , PRODUCT_EXPLAIN
+		     , PRODUCT_PRICE
+		     , PRODUCT_STOCK
+		     , PRODUCT_IMG_PATH
+		     , PRODUCT_DESCRIPTION
+		     , PRODUCT_ENROLL_DATE
+		     , PRODUCT_STATUS
+		  FROM PRODUCT
+		 WHERE PRODUCT_STATUS = 'Y'
+	  ORDER BY PRODUCT_NO DESC
+	</select>
+
 </mapper>

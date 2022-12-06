@@ -148,7 +148,7 @@
           <li class="nav-item dropdown" id="menubarLi"> 
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">제품</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">제품소개</a>
+              <a class="dropdown-item" href="list.pr">제품소개</a>
               <a class="dropdown-item" href="#">건강설문</a>
             </div>
           </li>
