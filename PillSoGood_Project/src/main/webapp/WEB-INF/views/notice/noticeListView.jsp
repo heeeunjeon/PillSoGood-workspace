@@ -186,13 +186,7 @@
             <div id="content_3"></div>
         </div>
 
-		<script>
-	   		$(function() {
-	   			console.log(${pi.currentPage});
-	   			console.log(${pi.maxPage});
-	   		});
-     	</script>
-
+		
         <jsp:include page="../common/footer.jsp" />
 
         
