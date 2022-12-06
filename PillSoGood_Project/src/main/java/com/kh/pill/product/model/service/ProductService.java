@@ -8,5 +8,8 @@ public interface ProductService {
 	
 	// 게시글 리스트 조회
 	ArrayList<Product> selectList();
+	
+	// 게시글 작성
+	int insertProduct(Product p);
 
 }

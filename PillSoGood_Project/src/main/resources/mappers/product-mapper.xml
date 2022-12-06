@@ -28,5 +28,22 @@
 		 WHERE PRODUCT_STATUS = 'Y'
 	  ORDER BY PRODUCT_NO DESC
 	</select>
+	
+	<insert id="insertProduct" parameterType="product">
+		INSERT INTO PRODUCT (PRODUCT_NO
+						   , PRODUCT_NAME
+						   , PRODUCT_EXPLAIN
+						   , PRODUCT_PRICE
+						   , PRODUCT_STOCK
+						   , PRODUCT_IMG_PATH
+						   , PRODUCT_DESCRIPTION)
+				      VALUES (SEQ_PRODUCT_NO.NEXTVAL
+				   		   , #{productName}
+				   		   , #{productExplain}
+				   		   , #{productPrice}
+				   		   , #{productStock}
+				   		   , #{productImgPath}
+				   		   , #{productDescription})
+	</insert>
 
 </mapper>

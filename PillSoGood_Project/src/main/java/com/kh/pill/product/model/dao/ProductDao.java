@@ -14,5 +14,10 @@ public class ProductDao {
 		
 		return (ArrayList)sqlSession.selectList("productMapper.selectList");
 	}
+	
+	public int insertProduct(SqlSessionTemplate sqlSession, Product p) {
+		
+		return sqlSession.insert("productMapper.insertProduct", p);
+	}
 
 }

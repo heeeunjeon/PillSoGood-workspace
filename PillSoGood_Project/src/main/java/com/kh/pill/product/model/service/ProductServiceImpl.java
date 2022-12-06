@@ -27,4 +27,13 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.selectList(sqlSession);
 	}
 
+	/**
+	 * 게시글 작성
+	 */
+	@Override
+	public int insertProduct(Product p) {
+		
+		return productDao.insertProduct(sqlSession, p);
+	}
+
 }
