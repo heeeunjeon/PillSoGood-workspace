@@ -12,5 +12,11 @@ public class PollController {
 		return "poll/pollMain";
 	}
 	
+	@RequestMapping("surveyResult.po")
+	public String fowardResult() {
+		
+		return "poll/pollResult";
+	}
+	
 
 }

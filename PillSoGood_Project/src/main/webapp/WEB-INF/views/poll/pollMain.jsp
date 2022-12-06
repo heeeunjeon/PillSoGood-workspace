@@ -576,7 +576,7 @@
 
         function fowardResult() {
             setTimeout(function() {
-                location.href='';
+                location.href='surveyResult.po';
             }, 5000);
 
         }
