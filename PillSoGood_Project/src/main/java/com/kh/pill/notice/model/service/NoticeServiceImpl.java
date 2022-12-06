@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.notice.model.dao.NoticeDao;
 import com.kh.pill.notice.model.vo.Notice;
+import com.kh.pill.notice.model.vo.NoticeDetail;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -35,7 +36,7 @@ public class NoticeServiceImpl implements NoticeService {
 	
 
 	@Override
-	public ArrayList<Notice> selectNotice(int noticeNo) {
+	public NoticeDetail selectNotice(int noticeNo) {
 		
 		
 		return noticeDao.selectNotice(sqlSession, noticeNo);

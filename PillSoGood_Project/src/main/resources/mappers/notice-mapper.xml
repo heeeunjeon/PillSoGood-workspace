@@ -10,6 +10,19 @@
 		<result column="NOTICE_DATE" property="noticeDate"/>
 		<result column="NOTICE_COUNT" property="noticeCount"/>
 	</resultMap>
+	
+	<resultMap id="noticeDetailResultSet" type="com.kh.pill.notice.model.vo.NoticeDetail">
+		<result column="NOTICE_NO" property="noticeNo"/>
+		<result column="NEXT_NO" property="nextNo"/>
+		<result column="PREV_NO" property="prevNo"/>
+		<result column="NOTICE_TITLE" property="noticeTitle"/>
+		<result column="NEXT_TITLE" property="nextTitle"/>
+		<result column="PREV_TITLE" property="prevTitle"/>
+		<result column="NOTICE_CONTENT" property="noticeContent"/>
+		<result column="NOTICE_DATE" property="noticeDate"/>
+		<result column="NEXT_DATE" property="nextDate"/>
+		<result column="PREV_DATE" property="prevDate"/>
+	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) COUNT
@@ -42,15 +55,22 @@
 		   AND NOTICE_STATUS = 'Y'
 	</update>
 	
-	<select id="selectNotice" parameterType="_int" resultMap="noticeResultSet">
-		SELECT NOTICE_NO
-			 , NOTICE_TITLE
-			 , NOTICE_CONTENT
-			 , TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') NOTICE_DATE
-			 , NOTICE_COUNT
-		  FROM NOTICE
-		 WHERE NOTICE_NO BETWEEN (#{noticeNo}-1) AND (#{noticeNo}+1)
-		   AND NOTICE_STATUS='Y'
+	<select id="selectNotice" parameterType="_int" resultMap="noticeDetailResultSet">
+		SELECT * 
+		  FROM (SELECT NOTICE_NO
+		       , LEAD(NOTICE_NO, 1, 9999) OVER(ORDER BY NOTICE_NO) NEXT_NO
+		       , LAG(NOTICE_NO, 1, 9999) OVER(ORDER BY NOTICE_NO) PREV_NO
+		       , NOTICE_TITLE
+		       , LEAD(NOTICE_TITLE, 1, 9999) OVER(ORDER BY NOTICE_NO) NEXT_TITLE
+		       , LAG(NOTICE_TITLE, 1, 9999) OVER(ORDER BY NOTICE_NO) PREV_TITLE
+		       , NOTICE_CONTENT
+		       , TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') NOTICE_DATE
+		       , TO_CHAR(LEAD(NOTICE_DATE, 1) OVER(ORDER BY NOTICE_NO),'YYYY-MM-DD') NEXT_DATE
+		       , TO_CHAR(LAG(NOTICE_DATE, 1) OVER(ORDER BY NOTICE_NO),'YYYY-MM-DD') PREV_DATE
+		    FROM NOTICE
+		   WHERE NOTICE_STATUS = 'Y'
+		    ORDER BY NOTICE_NO)
+		 WHERE NOTICE_NO = #{noticeNo}
 	</select>
 	
 	<select id="selectUpdateNotice" parameterType="_int" resultMap="noticeResultSet">

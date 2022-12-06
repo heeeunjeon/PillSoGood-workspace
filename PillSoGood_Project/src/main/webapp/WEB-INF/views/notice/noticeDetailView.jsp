@@ -73,6 +73,15 @@
     	outline: none;
     	box-shadow:none;
 	}
+	
+	#content_2_1>p {
+        font-size: 35px;
+        color: black;
+        margin-top: 20px;
+        margin-left: 30px;
+        font-weight: bold;
+    }
+    
     
 </style>
 
@@ -95,7 +104,7 @@
                     </p>
                 <form id="postForm" action="" method="post">
 	            	
-	            	<input type="hidden" name="nno" value="${ n[1].noticeNo }">
+	            	<input type="hidden" name="nno" value="${ n.noticeNo }">
                     
 	            </form>
 	            
@@ -126,35 +135,39 @@
                          <table class="table">
                             <tbody>
                                 <tr align="center">
-                                    <td>${ n[1].noticeNo }</td>
-                                    <td width="70%">${ n[1].noticeTitle }</td>
-                                    <td align="right">${ n[1].noticeDate }</td>
+                                    <td>${ n.noticeNo }</td>
+                                    <td width="70%">${ n.noticeTitle }</td>
+                                    <td align="right">${ n.noticeDate }</td>
                                 </tr>
                             </tbody>
                          </table>
                     </div>
 
                     <div>
-                        <textarea name="" id="noticeContent" class="form-control" readonly>${ n[1].noticeContent}</textarea>
+                        <textarea name="" id="noticeContent" class="form-control" readonly>${ n.noticeContent}</textarea>
 
                         <br>
                         <table class="table table-hover" id="noticePrevNextTable">
                             <tbody>
                             <c:choose>
-                            	<c:when test="${ n[2].noticeTitle ne null }">
+                            	<c:when test="${ n.nextNo ne 9999 }">
                             		<tr align="center">
-	                                    <td>${ n[2].noticeNo }</td>
-	                                    <td>${ n[2].noticeTitle }</td>
-	                                    <td align="right">${ n[2].noticeDate }</td>
+	                                    <td>${ n.nextNo }</td>
+	                                    <td>${ n.nextTitle }</td>
+	                                    <td align="right">${ n.nextDate }</td>
 	                                </tr>
                             	</c:when>
                             </c:choose>
-                                
-                                <tr align="center">
-                                    <td>${ n[0].noticeNo }</td>
-                                    <td>${ n[0].noticeTitle }</td>
-                                    <td align="right">${ n[0].noticeDate }</td>
+                            <c:choose>
+                            	<c:when test="${ n.prevNo ne 9999 }">
+                            		<tr align="center">
+                                    <td>${ n.prevNo }</td>
+                                    <td>${ n.prevTitle }</td>
+                                    <td align="right">${ n.prevDate }</td>
                                 </tr>
+                            	</c:when>
+                            </c:choose>    
+                                
                             </tbody>
                          </table>
                          

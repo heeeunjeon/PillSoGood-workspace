@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.notice.model.vo.Notice;
+import com.kh.pill.notice.model.vo.NoticeDetail;
 
 public interface NoticeService {
 	
@@ -16,7 +17,7 @@ public interface NoticeService {
 
 	int increaseCount(int noticeNo);
 	
-	ArrayList<Notice> selectNotice(int noticeNo);
+	NoticeDetail selectNotice(int noticeNo);
 	
 
 	int deleteNotice(int noticeNo);

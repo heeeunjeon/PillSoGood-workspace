@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.notice.model.vo.Notice;
+import com.kh.pill.notice.model.vo.NoticeDetail;
 
 @Repository
 public class NoticeDao {
@@ -38,10 +39,10 @@ public class NoticeDao {
 		return sqlSession.update("noticeMapper.increaseCount", noticeNo);
 	}
 	
-	public ArrayList<Notice> selectNotice(SqlSessionTemplate sqlSession, int noticeNo) {
+	public NoticeDetail selectNotice(SqlSessionTemplate sqlSession, int noticeNo) {
 	
 		
-		return (ArrayList)sqlSession.selectList("noticeMapper.selectNotice", noticeNo);
+		return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
 		
 	}
 	

@@ -167,7 +167,7 @@
 			                    </c:forEach>
 			                    
 			                    <c:choose>
-			                		<c:when test="${ pi.currentPage eq pi.maxPage }">
+			                		<c:when test="${ (pi.currentPage eq pi.maxPage) or (pi.maxPage eq 0) }">
 			                			<li class="page-item disabled" ><a class="page-link">&gt;</a></li>
 			                		</c:when>
 			                		<c:otherwise>
@@ -186,6 +186,12 @@
             <div id="content_3"></div>
         </div>
 
+		<script>
+	   		$(function() {
+	   			console.log(${pi.currentPage});
+	   			console.log(${pi.maxPage});
+	   		});
+     	</script>
 
         <jsp:include page="../common/footer.jsp" />
 

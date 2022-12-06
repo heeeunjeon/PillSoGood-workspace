@@ -14,6 +14,7 @@ import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
 import com.kh.pill.notice.model.service.NoticeService;
 import com.kh.pill.notice.model.vo.Notice;
+import com.kh.pill.notice.model.vo.NoticeDetail;
 
 @Controller
 public class NoticeController {
@@ -73,7 +74,7 @@ public class NoticeController {
 		
 		if(result > 0) {
 			
-			ArrayList<Notice> n = noticeService.selectNotice(nno);
+			NoticeDetail n = noticeService.selectNotice(nno);
 			
 			m.addAttribute("n" , n);
 			
