@@ -24,5 +24,11 @@
 	<context:component-scan base-package="com.kh.pill" />
 	
 	<!-- 인터셉터 나중에 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="qlist.ad"/>
+			<beans:bean class="com.kh.pill.common.interceptor.AdminInterceptor" id="adminInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

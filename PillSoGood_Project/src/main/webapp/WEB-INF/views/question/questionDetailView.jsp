@@ -123,6 +123,7 @@
                 </div>
                 <div id="content_2_2">
 
+					<div align="right" style="width: 95%; margin: auto;"><button class="btn btn-primary" onclick="location.href='list.qu'">목록으로</button></div>
                     <!-- 영섭 작업 영역 시작 -->
 
                     <!-- 제목 부분 -->
@@ -143,7 +144,7 @@
                     <br>
                     
                     
-                    <c:if test="${ loginUser.memberNo eq q.memberNo }">
+                    <c:if test="${ not empty loginUser and loginUser.memberNo eq q.memberNo }">
                     	<div align="center" id="update_btn">
 	                        <button class="btn btn-warning" onclick="updateFormSubmit(1);">수정</button>
 	                        <button class="btn btn-danger" onclick="updateFormSubmit(2);">삭제</button>
@@ -183,7 +184,7 @@
 		                                        <th width="15%;">PillSoGood</th>
 		                                        <td width="15%;">${ q.answerDate }</td>
 		                                        <td width="70%;" style="text-align: right;">
-		                                        	<c:if test="${ loginUser.memberId ne 'admin' }">
+		                                        	<c:if test="${ not empty loginUser and loginUser.memberId eq 'admin' }">
 			                                            <button id="btnUpdate" type="button" class="btn btn-warning btn-sm">수정</button>
 			                                            <button id="btnDelete" type="button" class="btn btn-danger btn-sm" onclick="deleteAnswer();">삭제</button>
 		                                            </c:if>
@@ -259,7 +260,7 @@
                         	</c:when>
                         	<c:otherwise>
 		                        <!-- 댓글 입력창 부분 -->
-		                        <c:if test="${ loginUser.memberId eq 'admin' and empty q.answer }">
+		                        <c:if test="${ not empty loginUser and loginUser.memberId eq 'admin' and empty q.answer }">
 			                        <div id="answer_enroll">
 		                                <textarea rows="8" class="form-control" placeholder="답변 내용 작성" style="resize: none;"></textarea>
 		                                
