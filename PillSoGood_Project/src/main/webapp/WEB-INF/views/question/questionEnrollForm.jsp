@@ -50,10 +50,10 @@
     /* content_2_2 영역 분배 */
     #content_2_2>div { width: 100%;}        
 
-    #inquiryButton { text-align: center; }
+    #insert_btn { text-align: center; }
 
     /* 요소들 스타일 */
-    #inquiryButton button {
+    #insert_btn button {
         height: 45px;
         width: 200px;
         margin: auto;
@@ -90,31 +90,32 @@
                 <div id="content_2_2">
 
                     <form action="insert.qu" method="post" enctype="multipart/form-data">
+                    	<input type="hidden" name="memberNo" value="1">
                         <!-- 영섭 작업 영역 시작 -->
 
                         <!-- 제목 부분 -->
-                        <div id="inquiryTitle" class="inquiryClass">
-                            <p class="contentText">제목</p>
+                        <div>
+                            <p>제목</p>
                             <input type="text" class="form-control" name="questionTitle" placeholder="문의 제목을 입력해주세요 (30자 이내)" required>
                         </div>
                         <br>
                         
                         <!-- 내용 부분 -->
-                        <div id="inquiryContent" class="inquiryClass">
-                            <p class="contentText">내용</p>
+                        <div>
+                            <p>내용</p>
                             <textarea name="questionContent" cols="20" rows="15" class="form-control" placeholder="문의 내용을 입력해주세요 (1000자 이내)" style="resize: none;" required></textarea>
                         </div>
                         <br>
                         
                         <!-- 사진첨부 부분 -->
-                        <div id="inquiryImage" class="inquiryClass">
-                            <p class="inquiryText">사진첨부(선택)</p>
+                        <div>
+                            <p>사진첨부(선택)</p>
                             <input type="file" class="form-control" name="upfile">
                         </div>
                         <br><br>
 
                         <!-- 등록 버튼 -->
-                        <div id="inquiryButton">
+                        <div id="insert_btn">
                             <br><br>
                             <button type="submit" class="btn btn-primary">등록하기</button>
                         </div>

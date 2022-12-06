@@ -70,6 +70,7 @@
         color: black;
         padding: 15px;
     }
+    #question_list>tbody td:hover { cursor: pointer; }
 </style>
 </head>
 <body>
@@ -112,6 +113,7 @@
                             		<c:otherwise>
                             			<c:forEach var="q" items="${ list }">
 		                            		<tr>
+		                            			<input type="hidden" value="${ q.questionNo }">
 		                            			<td>
 		                            				<c:choose>
 			                            				<c:when test="${ empty q.answer }">
@@ -123,7 +125,7 @@
 		                            				</c:choose>
 		                            			</td>
 		                            			<td>${ q.questionTitle }</td>
-                                    			<td>${ q.questionContent }</td>
+                                    			<td>${ q.questionDate }</td>
 		                            		</tr>
 		                            	</c:forEach>
                             		</c:otherwise>
@@ -133,19 +135,20 @@
                     </div>
                     <br><br>
                     
-                    <script>
-		            	$(function() {
-		            		$("#question_list>tbody>tr").click(function() {
-		            			location.href = "detail.qu?qno=" + "${ q.questionNo }";
-		            		});
-		            	});
-		            </script>
+                    <c:if test="${ not empty list }">
+	                    <script>
+			            	$(function() {
+			            		$("#question_list>tbody>tr").click(function() {
+			            			location.href = "detail.qu?qno=" + $(this).children().eq(0).val();
+			            		});
+			            	});
+			            </script>
+		            </c:if>
 
                     <!-- 페이징 -->
-                    <c:if test="${ not empty list }">
-	                    <div>
-	                        <ul class="pagination">
-	                        	
+                    <div>
+                        <ul class="pagination">
+                        	<c:if test="${ not empty list }">
 	                        	<c:choose>
 			                		<c:when test="${ pi.currentPage eq 1 }">
 			                			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
@@ -155,7 +158,7 @@
 			                		</c:otherwise>
 			                	</c:choose>
 			                	
-			                	 <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 		                    		<li class="page-item"><a class="page-link" href="list.qu?cpage=${ p }">${ p }</a></li>
 			                    </c:forEach>
 	                        
@@ -164,13 +167,12 @@
 			                			<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
 			                		</c:when>
 			                		<c:otherwise>
-			                			<li class="page-item"><a class="page-link" href="list.qu?cpage=${ pi.currentPage - 1 }">&raquo;</a></li>
+			                			<li class="page-item"><a class="page-link" href="list.qu?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
 			                		</c:otherwise>
 			                	</c:choose>
-	                            
-	                        </ul>
-	                    </div>
-                    </c:if>
+                            </c:if>
+                        </ul>
+                    </div>
                     <!-- 영섭 작업 영역 끝 -->
 
                 </div>

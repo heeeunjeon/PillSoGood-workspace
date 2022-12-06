@@ -21,14 +21,15 @@
 		  AND MEMBER_NO = #{memberNo}
 	</select>
 	
-	<select id="selectQuestionList" resultMap="questionResultSet">
+	<select id="selectQuestionList" parameterType="_int" resultMap="questionResultSet">
 		SELECT QUESTION_NO
 			 , QUESTION_TITLE
-			 , QUESTION_DATE
+			 , TO_CHAR(QUESTION_DATE, 'YYYY-MM-DD') AS "QUESTION_DATE"
 			 , ANSWER
 		FROM QUESTION
 		WHERE QUESTION_STATUS = 'Y'
 		  AND MEMBER_NO = #{memberNo}
+		ORDER BY QUESTION_NO DESC
 	</select>
 	
 	<select id="selectQuestion" parameterType="_int" resultMap="questionResultSet">
@@ -36,9 +37,9 @@
 			 , QUESTION_TITLE
 			 , QUESTION_CONTENT
 			 , QUESTION_IMAGE
-			 , QUESTION_DATE
+			 , TO_CHAR(QUESTION_DATE, 'YYYY-MM-DD') AS "QUESTION_DATE"
 			 , ANSWER
-			 , ANSWER_DATE
+			 , TO_CHAR(ANSWER_DATE, 'YYYY-MM-DD') AS "ANSWER_DATE"
 		FROM QUESTION
 		WHERE QUESTION_STATUS = 'Y'
 		  AND QUESTION_NO = #{questionNo}
@@ -62,12 +63,52 @@
 		   SET QUESTION_TITLE = #{questionTitle}
 		   	 , QUESTION_CONTENT = #{questionContent}
 		   	 , QUESTION_IMAGE = #{questionImage}
+		   	 , QUESTION_DATE = SYSDATE
 		 WHERE QUESTION_NO = #{questionNo}
 	</update>
 	
 	<update id="deleteQuestion" parameterType="_int">
 		UPDATE QUESTION
 		   SET QUESTION_STATUS = 'N'
+		 WHERE QUESTION_NO = #{questionNo}
+	</update>
+	
+	<select id="selectAllListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM QUESTION
+		WHERE QUESTION_STATUS = 'Y'
+	</select>
+	
+	<select id="selectQuestionAllList" resultMap="questionResultSet">
+		SELECT QUESTION_NO
+			 , QUESTION_TITLE
+			 , MEMBER_ID
+			 , TO_CHAR(QUESTION_DATE, 'YYYY-MM-DD') AS "QUESTION_DATE"
+			 , ANSWER
+		FROM QUESTION
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE QUESTION_STATUS = 'Y'
+		ORDER BY QUESTION_NO DESC
+	</select>
+	
+	<insert id="insertAnswer" parameterType="question">
+		UPDATE QUESTION
+		   SET ANSWER = #{answer}
+		   	 , ANSWER_DATE = SYSDATE
+		 WHERE QUESTION_NO = #{questionNo}
+	</insert>
+	
+	<update id="updateAnswer" parameterType="question">
+		UPDATE QUESTION
+		   SET ANSWER = #{answer}
+		   	 , ANSWER_DATE = SYSDATE
+		 WHERE QUESTION_NO = #{questionNo}
+	</update>
+	
+	<update id="deleteAnswer" parameterType="_int">
+		UPDATE QUESTION
+		   SET ANSWER = ''
+		   	 , ANSWER_DATE = NULL
 		 WHERE QUESTION_NO = #{questionNo}
 	</update>
 	

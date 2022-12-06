@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,8 @@ public class QuestionController {
 	
 	@Autowired
 	private QuestionService questionService;
+	
+	// 사용자
 	
 	@RequestMapping("list.qu")
 	public String selectQuestionList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
@@ -70,7 +73,7 @@ public class QuestionController {
 			
 			String questionImage = saveFile(upfile, session);
 			
-			q.setQuestionImage("/resources/questionUploadFiles/" + questionImage);
+			q.setQuestionImage("resources/questionUploadFiles/" + questionImage);
 		}
 		
 		int result = questionService.insertQuestion(q);
@@ -89,8 +92,11 @@ public class QuestionController {
 	}
 	
 	@RequestMapping("updateForm.qu")
-	public String updateForm() {
-	
+	public String updateForm(int qno, Model model) {
+		
+		Question q = questionService.selectQuestion(qno);
+		model.addAttribute("q", q);
+		
 		return "question/questionUpdateForm";
 	}
 	
@@ -100,13 +106,12 @@ public class QuestionController {
 		if(!reupfile.getOriginalFilename().equals("")) {
 			
 			if(!q.getQuestionImage().equals("")) {
-				
 				new File(session.getServletContext().getRealPath(q.getQuestionImage())).delete();
 			}
 			
 			String questionImage = saveFile(reupfile, session);
 			
-			q.setQuestionImage("/resources/questionUploadFiles/" + questionImage);
+			q.setQuestionImage("resources/questionUploadFiles/" + questionImage);
 		}
 		
 		int result = questionService.updateQuestion(q);
@@ -123,6 +128,77 @@ public class QuestionController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("delete.qu")
+	public ModelAndView deleteQuestion(int qno, String filePath, HttpSession session, ModelAndView mv) {
+		
+		int result = questionService.deleteQuestion(qno);
+		
+		if(result > 0) {
+			
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			session.setAttribute("alertMsg", "1:1 문의가 삭제되었습니다.");
+			mv.setViewName("redirect:/list.qu");
+		} else {
+			
+			mv.addObject("errorMsg", "1:1 문의 삭제 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
+	
+	// --------------------------------------------------------------------------
+	
+	// 관리자
+	@RequestMapping("qlist.ad")
+	public String selectQuestionAllList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		
+		int listCount = questionService.selectAllListCount();
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Question> list = questionService.selectQuestionAllList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "question/adminQuestionListView";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="aninsert.ad", produces="text/html; charset=UTF-8")
+	public String insertAnswer(Question q) {
+		
+		int result = questionService.insertAnswer(q);
+		
+		return (result > 0) ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="anupdate.ad", produces="text/html; charset=UTF-8")
+	public String updateAnswer(Question q) {
+		
+		int result = questionService.updateAnswer(q);
+		
+		return (result > 0) ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="andelete.ad", produces="text/html; charset=UTF-8")
+	public String deleteAnswer(int qno) {
+		
+		int result = questionService.deleteAnswer(qno);
+		
+		return (result > 0) ? "success" : "fail";
+	}
+	
+	// --------------------------------------------------------------------------
 	
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		

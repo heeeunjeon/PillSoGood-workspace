@@ -13,7 +13,7 @@ import com.kh.pill.question.model.vo.Question;
 public class QuestionDao {
 	
 	public int selectListCount(SqlSessionTemplate sqlSession, int memberNo) {
-		return sqlSession.selectOne("questionMapper.selectListCount");
+		return sqlSession.selectOne("questionMapper.selectListCount", memberNo);
 	}
 
 	public ArrayList<Question> selectQuestionList(SqlSessionTemplate sqlSession, int memberNo, PageInfo pi) {
@@ -22,7 +22,7 @@ public class QuestionDao {
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("questionMapper.selectQuestionList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("questionMapper.selectQuestionList", memberNo, rowBounds);
 	}
 
 	public Question selectQuestion(SqlSessionTemplate sqlSession, int questionNo) {
@@ -39,5 +39,30 @@ public class QuestionDao {
 
 	public int deleteQuestion(SqlSessionTemplate sqlSession, int questionNo) {
 		return sqlSession.update("questionMapper.deleteQuestion", questionNo);
+	}
+	
+	public int selectAllListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("questionMapper.selectAllListCount");
+	}
+	
+	public ArrayList<Question> selectQuestionAllList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("questionMapper.selectQuestionAllList", null, rowBounds);
+	}
+	
+	public int insertAnswer(SqlSessionTemplate sqlSession, Question q) {
+		return sqlSession.update("questionMapper.insertAnswer", q);
+	}
+
+	public int updateAnswer(SqlSessionTemplate sqlSession, Question q) {
+		return sqlSession.update("questionMapper.updateAnswer", q);
+	}
+
+	public int deleteAnswer(SqlSessionTemplate sqlSession, int questionNo) {
+		return sqlSession.update("questionMapper.deleteAnswer", questionNo);
 	}
 }

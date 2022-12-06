@@ -23,4 +23,16 @@ public interface QuestionService {
 	// 삭제
 	int deleteQuestion(int questionNo);
 	
+	// 관리자 전체 리스트조회
+	int selectAllListCount();
+	ArrayList<Question> selectQuestionAllList(PageInfo pi);
+	
+	// 답변 작성
+	int insertAnswer(Question q);
+	
+	// 답변 수정
+	int updateAnswer(Question q);
+	
+	// 답변 삭제
+	int deleteAnswer(int questionNo);
 }

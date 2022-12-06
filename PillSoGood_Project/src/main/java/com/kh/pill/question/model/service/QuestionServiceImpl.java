@@ -50,4 +50,28 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionDao.deleteQuestion(sqlSession, questionNo);
 	}
 
+	@Override
+	public int selectAllListCount() {
+		return questionDao.selectAllListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Question> selectQuestionAllList(PageInfo pi) {
+		return questionDao.selectQuestionAllList(sqlSession, pi);
+	}
+
+	@Override
+	public int insertAnswer(Question q) {
+		return questionDao.insertAnswer(sqlSession, q);
+	}
+
+	@Override
+	public int updateAnswer(Question q) {
+		return questionDao.updateAnswer(sqlSession, q);
+	}
+
+	@Override
+	public int deleteAnswer(int questionNo) {
+		return questionDao.deleteAnswer(sqlSession, questionNo);
+	}
 }
