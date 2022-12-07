@@ -297,12 +297,15 @@
 														<th>비밀번호 앞 두자리</th>
 														<td><input id="pwd_2digit" class="form-control" type="text" maxlength="2" placeholder="XX" pattern="[0-9]{2}"></td>
 													</tr>
+													<tr>
+														<th colspan="2" style="color: red; font-size: small; height: 80px; text-align: center;">유효하지 않은 카드정보를 입력할 경우 결제가 거절될 수 있습니다.<br>결제 전 확인 부탁드립니다.</th>
+													</tr>
 												</table>
 											
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-												<button type="submit" class="btn btn-primary" onclick="subscription();">정기구독 결제하기</button>
+												<button type="button" class="btn btn-primary" onclick="subscription();">정기구독 결제하기</button>
 											</div>
 											</form>
 										</div>
@@ -333,14 +336,14 @@
     		
     		// IMP.request_pay(param, callback)
     		IMP.request_pay({ // param
-    			pg: "html5_inicis", // PG사 코드값 (이니시스 웹표준)
+    			pg: "nice", // PG사 코드값
     			pay_method: "card", // 결제방법
-    			merchant_uid: "orderNo", // 가맹점 주문번호 (중복X, 한 주문번호로 재결제 불가)
-    			name: "", // 결제창에 노출될 상품명 (16자 이내 권장), 0번째 인덱스 상품명 + 외 n개
-    			amount: 0, // 결제할 금액
-    			buyer_name: "${ loginUser.memberName }", // 구매자 이름
-    			buyer_email: "${ loginUser.email }" // 구매자 이메일
-    		}, function(rsp) { // callback
+    			merchant_uid: orderNo, // 가맹점 주문번호 (중복X, 한 주문번호로 재결제 불가)
+    			name: "상품명", // 결제창에 노출될 상품명 (16자 이내 권장), 0번째 인덱스 상품명 + 외 n개
+    			amount: 100, // 결제할 금액
+    			// buyer_name: "${ loginUser.memberName }", // 구매자 이름
+    			// buyer_email: "${ loginUser.email }" // 구매자 이메일
+    		}, rsp => { // callback
     			
     			if(rsp.success) { // 결제 성공
     				
@@ -354,12 +357,12 @@
     						orderReceipt: rsp.receipt_url
     					},
     					type: "post",
-    					success: function(result) {
+    					success: result => {
     						
     						// alert
     						// 주문완료 창으로 포워딩
     					},
-    					error: function() {
+    					error: () => {
     						
     						// error 페이지
     					}
@@ -373,25 +376,88 @@
     	}
     	
 		function subscription() {
-    		
+			
 			// REST API token 발급
 			$.ajax({
-				url : "token.do",
-				type : "post",
+				url: "token.do",
+				type: "post",
 				success : result => {
 					
-					console.log(result);
+					var token = result;
+					var orderNo = new Date().getTime() + (parseInt(Math.random() * 90000) + 10000);
+					
+					// 빌링키 발급, 저장 동시에 첫 결제
+					$.ajax({
+						url: "billing.do",
+						type: "post",
+						data: {
+			    			name: "상품명",
+			    			amount: 100,
+			    			token: token,
+							card_number: $("#card_number").val(),
+							expiry: $("#expiry").val(),
+							birth: $("#birth").val(),
+							pwd_2digit: $("#pwd_2digit").val(),
+						},
+						success : result => {
+							
+							console.log(result);
+							console.log(result.response.paid_at)
+							
+							// 결제 예약
+							$.ajax({
+								url: "schedule.do",
+								type: "post",
+								data: {
+									token: token,
+									customer_uid: result.response.customer_uid,
+									name: result.response.name,
+									amount: result.response.amount,
+									time: result.response.paid_at
+								},
+								success: result => {
+									
+									console.log(result);
+								},
+								error: () => {
+									console.log("schdule ajax 통신 실패");
+								}
+								
+							});
+							
+						},
+						error : () => {
+							console.log("billing ajax 통신 실패");
+						}
+					});
+					
+					// 빌링키 발급 및 저장 customer_uid
+					/*
+					$.ajax({
+						url: "billing.do",
+						type: "post",
+						data: {
+							token: token,
+							card_number: $("#card_number").val(),
+							expiry: $("#expiry").val(),
+							birth: $("#birth").val(),
+							pwd_2digit: $("#pwd_2digit").val()
+						},
+						success : result => {
+							
+							console.log(result);
+						},
+						error : () => {
+							console.log("billing ajax 통신 실패");
+						}
+					});
+					*/
+					
 				},
 				error : () => {
 					console.log("token ajax 통신 실패");
 				}
 			});
-			
-			// 빌링키 발급 및 저장 customer_uid
-			$.ajax({
-				url: "https://api.iamport.kr/subscribe/customers/\${customer_uid}"
-			});
-    		
     	}
     </script>
     
