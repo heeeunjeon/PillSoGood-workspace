@@ -16,39 +16,21 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: 1530px;
+        height: 1650px;
         margin : auto;
     }
 
     .wrap>div { width : 100%; }
 
     #navigator2 { height: 100px; }
-
     #content { height: 1150px; }
-    #content_2>div { width: 100%; }
-    #content_2_1 { height: 10%; float: left; }
-    #content_2_2 { height: 80%; float: left; }
-    #content_2_3 { height: 10%; float: left; }
-
     #header { height: 130px; }
 
-    #content_2_1>div { width: 100%; height: 100%; }
-    #write>div { margin-top: 73px; margin-right: 5px; }
+    table { width: 100%; color: black; }
 
-    #content_2_2>div { width: 100%; float: left; }
-    #insertPro { height: 40%; }
-    #proImg { height: 60%; }
+    #tgg { width: 350px; height: 350px; }
 
-    #insertPro>div { height: 100%; float: left; }
-    #proThum, #proText { width: 50%; }
-
-    #proThum_1 {
-        width: 100%;
-        height: 100%;
-        padding: 20px 60px;
-    }
-
-    #proThum_2 {
+    #imgg { 
         width: 100%;
         height: 100%;
         background-color: #e0e0e0;
@@ -57,60 +39,18 @@
 
     #proImgg { width: 100%; height: 100%; padding: 40px; }
 
-    #proImgg_1 { width: 100%; height: 100%; }
 
-    #proImgg_1>img {
+    #proImgg>img, #proImg_1_1>img {
         height: 100%;
         width: 100%;
         object-fit: contain;
         margin: auto;
     }
-
-    #proText>div { width: 100%; float: left; }
-
-    #proText_1 { height: 35%; }
-    #proText_2 { height: 20%; }
-    #proText_3 { height: 30%; }
-
-    #proText_3>div { width: 100%; height: 100%; float: left; padding: 20px 0px; }
-
-    #proText_1>div { width: 150px; height: 45px; margin-top: 80px; margin-left: 10px; }
-    #proText_2>div { width: 200px; height: 45px; margin-top: 8px; margin-left: 10px; }
-    #proPrice_2>div { width: 200px; height: 45px; margin-top: 15px; margin-left: 10px; }
-
-    #proPrice {
-        width: 100%;
-        height: 100%;
-        float: left;
-        background-color: #f9f4f4;
-        border-bottom: solid lightgrey; 
-    }
-
-    #proPrice_1, #proPrice_2 { height: 100%; width: 50%; float: left; }
     
-    #proPrice_1>p, #proPrice_2>p {
-        width: 100%;
-        height: 100%;
-        color: black;
-        font-size: 30px;
-        font-weight: bold;
-        padding: 10px; 
-    }
-
-    #proPrice_2>p { margin-left: 80px; }
-
-    #proImg { border-top: solid lightgrey; }
-
-    #proImg_1 { width: 100%; height: 100%; padding: 40px; }
+    #proImg { height: 480px; border-top: solid lightgrey; padding: 20px 0px; }
 
     #proImg_1_1 { width: 100%; height: 100%; }
-
-    #proImg_1_1>img {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
-        margin: auto;
-    }
+  
 
     /* content 영역 */
     #content>div { height : 100%; float : left; }
@@ -132,47 +72,136 @@
         <div id="content">
             <div id="content_1"></div>
             <div id="content_2">
-                <div id="content_2_1">
-                    <div id="write">
-                        <div align="right"><button type="button" class="btn btn-primary">등록</button></div>
-                    </div>
-                </div>
-                <div id="content_2_2">
-                    <div id="insertPro">
-                        <div id="proThum">
-                            <div id="proThum_1">
-                                <div id="proThum_2">
-                                    <div id="proImgg">
-                                        <div id="proImgg_1"><img src="image/pill01.png"></div>
+                <form method="post" action="update.pr" enctype="multipart/form-data">
+                <input type="hidden" name="productNo" value="${ p.productNo }">
+                <input type="hidden" name="productImgPath" value="${ p.productImgPath }">
+                <input type="hidden" name="productDescription" value="${ p.productDescription }">
+                    <table>
+                        <thead>
+                            <tr align="right" height="115px">
+                                <td colspan="4">
+                                    <button class="btn btn-primary" type="submit" id="button-addon2" style="margin-right: 5px;">수정</button>
+                                    <button type="reset" class="btn btn-danger">취소</button>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody height="350px" width="50%">
+                            <tr>
+                                <td align="center" rowspan="4" width="50%">
+                                    <div id="tgg"><div id="imgg"><div id="proImgg"><img id="titleImg" src="${ p.productImgPath }"></div></div></div>
+                                </td>
+                                <th width="7%">효능</th>
+                                <td><input class="form-control" name="productExplain" value="${ p.productExplain }"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>이름</th>
+                                <td><input class="form-control" name="productName" value="${ p.productName }"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>재고</th>
+                                <td><input class="form-control" name="productStock" value="${ p.productStock }"></td>
+                                <td width="10%" style="padding-left: 10px">개</td>
+                            </tr>
+                            <tr height="175px">
+                                <th>가격</td>
+                                <td><input class="form-control" name="productPrice" value="${ p.productPrice }"></td>
+                                <td style="padding-left: 10px">원</td>
+                            </tr>
+                        </tbody>
+                        <tfoot height="530px">
+                            <tr>
+                                <td colspan="4">
+                                    <div id="proImg">
+                                        <div id="proImg_1_1"><img id="contentImg1" src="${ p.productDescription }"></div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="proText">
-                            <div id="proText_1"><div><input type="text" class="form-control"></div></div>
-                            <div id="proText_2"><div><input type="text" class="form-control"></div></div>
-                            <div id="proText_3">
-                                <div id="proText_3_1">
-                                    <div id="proPrice">
-                                        <div id="proPrice_1"><p>구매가</p></div>
-                                        <div id="proPrice_2"><div><input type="text" class="form-control"></div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <div id="file-area">
+                        <!-- input[type=file id=file$ name=file$]*4 + Enter -->
+                        <input type="file" id="file1" name="upfile1" onchange="loadImg(this, 1);"> <!-- 대표이미지 업로드용 (대표이미지 - 썸네일은 필수) -->
+                        <input type="file" id="file2" name="upfile2" onchange="loadImg(this, 2);"> <!-- 상세이미지 업로드용 -->
                     </div>
-                    <div id="proImg">
-                        <div id="proImg_1">
-                            <div id="proImg_1_1"><img src="image/효능.png"></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="content_2_3"></div>
+
+                </form>
             </div>
             <div id="content_3"></div>
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
+
+    
+
+    <script>
+        $(function() {
+
+            $("#file-area").hide();
+
+            $("#titleImg").click(function() {
+                $("#file1").click();
+            });
+
+            $("#contentImg1").click(function() {
+                $("#file2").click();
+            });
+
+        });
+
+        function loadImg(inputFile, num) {
+            // inputFile : 현재 변화가 생긴 input type="file" 요소 객체
+            // num : 몇번째 input 요소인지 확인 후 해당 그 영역에 미리보기 하기 위한 변수
+
+            // input type="file" 요소 객체는
+            // 내부적으로 files 라는 속성을 가지고있음
+            // => 현재 이 input 태그로 선택된 파일들의 정보를 배열 형식으로 가지고있음
+            // console.log(inputFile.files.length);
+            // 파일 선택 시 1, 파일 선택 취소시 0 이 출력됨
+            // => 즉, 파일의 존재 유무를 알 수 있다.
+
+            if(inputFile.files.length == 1) { // 선택된 파일이 있을 경우
+                
+                // 선택된 파일을 읽어들여서 그 영역에 맞는 곳에 미리보기 기능 추가
+
+                // 파일을 읽어들일 FileReader 객체 생성
+                var reader = new FileReader();
+
+                // 파일을 읽어들이는 메소드 속성을 호출
+                // => 어느 파일을 읽어들일건지 그 파일의 정보 자체를 매개변수로 제시해야함
+                // => inputFile.files 라는 배열의 0 번째 인덱스에 파일 정보가 담겨있음
+                reader.readAsDataURL(inputFile.files[0]);
+                // => 해당 파일을 읽어들이는 순간
+                //    그 파일만의 고유한 URL 주소가 하나 부여됨 (FileReader 객체의 result 속성에)
+                // => 이 고유한 URL 주소를 각 img 태그의 src 속성으로 부여
+
+                // 파일 읽기가 완료되었을 때 실행할 함수를 정의
+                reader.onload = function(e) {
+
+                    // e : 현재 발생한 이벤트의 정보 (이벤트객체)
+                    // e.target : 현재 이벤트가 발생된 요소 (이벤트를 당한 요소객체)
+
+                    // e.target == reader  == this
+                    // $("#titleImg").attr("src", e.target.result);
+
+                    // 각 영역에 맞춰서 이미지 미리보기
+                    switch(num) {
+                        case 1 : $("#titleImg").attr("src", e.target.result); break;
+                        case 2 : $("#contentImg1").attr("src", e.target.result); break;
+                    }
+                };
+            } else { // 선택된 파일이 사라졌을 경우
+
+                // 미리보기 이미지를 사라지게 하기 => src 속성에 null 대입
+                switch(num) {
+                    case 1 : $("#titleImg").attr("src", null); break;
+                    case 2 : $("#contentImg1").attr("src", null); break;
+                }
+            }
+        }
+    </script>
     
 </body>
 </html>

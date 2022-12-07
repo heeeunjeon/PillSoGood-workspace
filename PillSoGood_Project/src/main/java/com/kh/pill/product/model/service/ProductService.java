@@ -17,5 +17,10 @@ public interface ProductService {
 	int increaseCount(int productNo);
 	// 게시글 상세 조회 요청
 	Product selectProduct(int productNo);
-
+	
+	// 게시글 삭제 서비스
+	int deleteProduct(int productNo);
+	
+	// 게시글 수정 서비스
+	int updateProduct(Product p);
 }

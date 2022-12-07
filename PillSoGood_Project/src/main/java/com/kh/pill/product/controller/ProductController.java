@@ -69,7 +69,6 @@ public class ProductController {
 			
 			if(!f.getOriginalFilename().equals("")) {
 				
-			 
 				String originFileName = f.getOriginalFilename(); // 원본파일명
 		 
 				String ext = originFileName.substring(originFileName.lastIndexOf("."));
@@ -97,12 +96,16 @@ public class ProductController {
 			mv.setViewName("redirect:/list.pr");
 		}
 		else {
-			mv.addObject("errorMsg", "제품 등록에 실패했습니다.");
+			mv.addObject("alertMsg", "제품 등록에 실패했습니다.");
 		}
 		 
 		return mv;
 	}
 	
+	/**
+	 * @param 게시글 상세 조회
+	 * @return
+	 */
 	@RequestMapping("detail.pr")
 	public ModelAndView selectProduct(int pno, ModelAndView mv) {
 	      
@@ -121,14 +124,117 @@ public class ProductController {
 		}
 		else { // 실패 
 			
-			mv.addObject("errorMsg", "게시글 조회 실패").setViewName("common/errorPage");
+			mv.addObject("alertMsg", "게시글 조회 실패").setViewName("common/errorPage");
 			
 		}
 		
 		return mv;
 	}
 	
+	/**
+	 * @param 게시글 삭제
+	 * @return
+	 */
+	@RequestMapping("delete.pr")
+	public String deleteProduct(int pno, String[] upfile, HttpSession session, Model model) {
+		
+		int result = productService.deleteProduct(pno);
+		
+		if(result > 0) { // 게시글 삭제 성공
+			
+			// 첨부파일이 있을 경우 => 파일 삭제
+			// filePath 에는 해당 게시글의 수정파일명이 들어있음
+			// filePath 값이 빈 문자열이 아니라면 첨부파일이 있었던 경우임
+			for(String s : upfile) {
+				
+				if(!s.equals("")) {
+					String realPath = session.getServletContext().getRealPath(s);
+					new File(realPath).delete();
+				}
+			}
+			
+			// 게시판 리스트 페이지 url 재요청
+			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+			
+			return "redirect:/list.pr";
+		}
+		else { // 게시글 삭제 실패
+			
+			model.addAttribute("alertMsg", "게시글 삭제 실패");
+			return "redirect:/list.pr";
+		}
+	}
 	
+	/**
+	 * @param 게시글 수정 폼 띄우기
+	 * @return
+	 */
+	@RequestMapping("updateForm.pr")
+	public String updateForm(int pno, Model model) {
+		
+		// 게시글 수정 페이지를 포워딩 하기 전에 우선적으로 해당 게시글 정보 조회
+		Product p = productService.selectProduct(pno); // 기존의 상세보기 서비스 재활용
+		
+		model.addAttribute("p", p);
+		
+		return "product/productUpdateForm";
+	}
 	
-
+	@RequestMapping("update.pr")
+	public String updateProduct(Product p, MultipartFile upfile1, MultipartFile upfile2, HttpSession session, Model model) throws Exception {
+		
+		// upfile1 새로 올린 썸네일
+		// upfile2 새로 올린 상세사진
+		String path = session.getServletContext().getRealPath("/resources/productUploadFiles/"); // 실제 경로 알아내기
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		
+		// 새로운 썸네일이 있을 경우
+		if(!upfile1.getOriginalFilename().equals("")) {
+			
+			String originFileName = upfile1.getOriginalFilename(); // 원본파일명
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String saveFileName = currentTime + ext; // 수정파일명 만들기
+			
+			// 기존 썸네일이 있을 경우
+			if(p.getProductImgPath() != null) {
+				String realPath = session.getServletContext().getRealPath(p.getProductImgPath());
+				new File(realPath).delete();
+			}
+			saveFileName = "d" + saveFileName;
+			upfile1.transferTo(new File(path, saveFileName));
+			p.setProductImgPath("resources/productUploadFiles/" + saveFileName);
+		}
+		
+		// 새로운 상세사진이 있을 경우
+		if(!upfile2.getOriginalFilename().equals("")) {
+			
+			String originFileName = upfile2.getOriginalFilename(); // 원본파일명
+			String ext = originFileName.substring(originFileName.lastIndexOf("."));
+			String saveFileName = currentTime + ext; // 수정파일명 만들기
+			
+			// 기존 상세사진이 있을 경우
+			if(p.getProductDescription() != null) {
+				String realPath = session.getServletContext().getRealPath(p.getProductDescription());
+				new File(realPath).delete();
+			}
+			upfile2.transferTo(new File(path, saveFileName));
+			p.setProductDescription("resources/productUploadFiles/" + saveFileName);
+		}
+		
+		int result = productService.updateProduct(p);
+		
+		if(result > 0) { // 게시글 수정 성공
+			
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			
+			// 게시글 상세보기 페이지로 url 재요청
+			return "redirect:/detail.pr?pno=" + p.getProductNo();
+		}
+		else { // 게시글 수정 실패
+			
+			model.addAttribute("alertMsg", "게시글 수정 실패");
+			
+			return "redirect:/detail.pr?pno=" + p.getProductNo();
+		}
+	}
 }

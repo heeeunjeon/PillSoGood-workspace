@@ -66,5 +66,22 @@
 		 WHERE PRODUCT_NO = #{productNo}
 		   AND PRODUCT_STATUS = 'Y'
 	</select>
+	
+	<update id="deleteProduct" parameterType="_int">
+   		UPDATE PRODUCT
+		   SET PRODUCT_STATUS = 'N'
+		 WHERE PRODUCT_NO = #{productNo}	 
+   </update>
+   
+   <update id="updateProduct" parameterType="product">
+       UPDATE PRODUCT
+          SET PRODUCT_NAME = #{productName}
+            , PRODUCT_EXPLAIN = #{productExplain}
+		    , PRODUCT_PRICE = #{productPrice}
+		    , PRODUCT_STOCK = #{productStock}
+		    , PRODUCT_IMG_PATH = #{productImgPath}
+		    , PRODUCT_DESCRIPTION = #{productDescription}
+        WHERE PRODUCT_NO = #{productNo}
+    </update>
 
 </mapper>

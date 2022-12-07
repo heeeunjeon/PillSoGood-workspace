@@ -52,4 +52,20 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.selectProduct(sqlSession, productNo);
 	}
 
+	/**
+	 * 게시글 삭제
+	 */
+	@Override
+	public int deleteProduct(int productNo) {
+		return productDao.deleteProduct(sqlSession, productNo);
+	}
+
+	/**
+	 * 게시글 수정
+	 */
+	@Override
+	public int updateProduct(Product p) {
+		return productDao.updateProduct(sqlSession, p);
+	}
+
 }

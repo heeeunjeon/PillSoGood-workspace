@@ -29,5 +29,15 @@ public class ProductDao {
 		
 	    return sqlSession.selectOne("productMapper.selectProduct", productNo);
 	}
+	
+	public int deleteProduct(SqlSessionTemplate sqlSession, int productNo) {
+		
+		return sqlSession.update("productMapper.deleteProduct", productNo);
+	}
+	
+	public int updateProduct(SqlSessionTemplate sqlSession, Product p) {
+		
+		return sqlSession.update("productMapper.updateProduct", p);
+	}
 
 }

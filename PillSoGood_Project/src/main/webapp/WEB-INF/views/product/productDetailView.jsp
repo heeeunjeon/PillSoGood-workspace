@@ -210,9 +210,30 @@
                 <div id="content_2_1">
                     <div id="write">
                         <div align="right">
-                            <button type="button" class="btn btn-warning">수정</button>
-                            <button type="button" class="btn btn-danger">삭제</button>
+                            <button type="button" class="btn btn-warning" onclick="postFormSubmit(1);">수정</button>
+                            <button type="button" class="btn btn-danger" onclick="postFormSubmit(2);">삭제</button>
                         </div>
+                        
+                        <form id="postForm" action="" method="post">
+			            	<input type="hidden" name="pno" value="${ p.productNo }">
+			            	<input type="hidden" name="upfile" value="${ p.productImgPath }">
+			            	<input type="hidden" name="upfile" value="${ p.productDescription }">
+			            </form>
+                        
+                        <script>
+			            	function postFormSubmit(num) {
+			            		
+			            		// action 속성값을 부여 후 연이어서 submit 시키기
+			            		if(num == 1) { // 수정하기 버튼 클릭 시 num == 1 : updateForm.bo
+			            			
+			            			$("#postForm").attr("action", "updateForm.pr").submit();
+			            		} else { // 삭제하기 버튼 클릭 시 num == 2 : delete.bo
+			            		
+			            			$("#postForm").attr("action", "delete.pr").submit();
+			            		}
+			            	}
+			            </script>
+			            
                     </div>
                 </div>
                 <div id="content_2_2">
@@ -228,7 +249,7 @@
                                 </div>
                             </div>
                             <div id="proText">
-                                <div id="proText_1"><p>${ p.productExplain } 엔</p></div>
+                                <div id="proText_1"><p>${ p.productExplain }엔</p></div>
                                 <div id="proText_2"><p>${ p.productName }&ensp;<span style="color: rgb(185, 184, 184);">30일분</span></p></div>
                                 <div id="proText_3">
                                     <div id="proText_3_1">

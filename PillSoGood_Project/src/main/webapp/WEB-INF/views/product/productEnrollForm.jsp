@@ -121,7 +121,7 @@
                     <div id="file-area">
                         <!-- input[type=file id=file$ name=file$]*4 + Enter -->
                         <input type="file" id="file1" name="upfile" onchange="loadImg(this, 1);" required> <!-- 대표이미지 업로드용 (대표이미지 - 썸네일은 필수) -->
-                        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);"> <!-- 상세이미지 업로드용 -->
+                        <input type="file" id="file2" name="upfile" onchange="loadImg(this, 2);" required> <!-- 상세이미지 업로드용 -->
                     </div>
 
                 </form>
