@@ -16,7 +16,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: 2930px;
+        height: 1650px;
         margin : auto;
     }
 
@@ -24,10 +24,10 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 2550px; }
+    #content { height: 1150px; }
     #content_2>div { width: 100%; }
     #content_2_1 { height: 115px; float: left; }
-    #content_2_2 { height: 2433px; float: left; }
+    #content_2_2 { height: auto; float: left; }
 
     #content_2_2_1 { width: 100%; height: 920px; float: left; }
 
@@ -261,8 +261,8 @@
                                         </div>
                                         <div id="btnss">
                                             <div id="wish">
-                                                <img src="image/heart.png" alt="" class="likeControl" id="eventUnLike" style="cursor: pointer;">
-                                                <img src="image/heart2.png" class="likeControl" style="display:none" id="eventLike" style="cursor: pointer;">
+                                                <img src="resources/images/heart.png" alt="" class="likeControl" id="eventUnLike" style="cursor: pointer;">
+                                                <img src="resources/images/heart2.png" class="likeControl" style="display:none" id="eventLike" style="cursor: pointer;">
                                             </div>
                                             <div id="btnss_1">
                                                 <div> <!-- 상단의 div 선이 나타나면 버튼이 밀려서 내려가지만 없을땐 가로 배치로 잘 보임 -->
@@ -310,6 +310,7 @@
 
             // 결과 출력
             $("#result").val(num);
+            $("#proPPPP_1>p").html("총 " + num + "개");
             
             // 영섭
 			var price = ${ p.productPrice }; // price 라는 int
