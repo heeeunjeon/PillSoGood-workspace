@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% session.getAttribute("memberName"); %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,8 +96,15 @@
                         <i class="fa-sharp fa-solid fa-circle-check" ></i>
                     </div>
                     <div align="center" id="completeMsg">
-				          <label>${ loginUser.getMemberName }님 환영합니다</label><br>
-				                        회원가입을 축하합니다.
+                    	<label> 
+             				<c:forEach var="name" items="${ MemberName }" >
+             				 	<c:out value="${loginUser.getMemberName}"/> 
+							</c:forEach>
+                    		 님 환영합니다. <br>
+               
+                    	</label>
+						                       회원가입을 축하합니다.
+				        
                     </div>
                     <div align="center" id="completeMsg2">
 				                        설문을 통해 나만을 위한 <br> 

@@ -78,7 +78,7 @@
                     <p>회원가입</p>
                 </div>
                 <div id="content_2_2">
-                    <form action="insert.me" method="post" id="enrollForm">
+                    <form action="insert.me" method="post" id="enrollForm" onsubmit="return enrollForm_check()">
                         <table id="memberEnrollForm" align="center" >
                             <tr>
                                 <th align="left" colspan="3">아이디</th>
@@ -88,7 +88,7 @@
                                     <input class="form-control" type="text" placeholder="아이디를 입력" maxlength="20" style="width: 300px;" required name="memberId" id="memberId">
                                 </td>
                                 <td>
-                                    <button class="btn btn-secondary" style="width:100px" name="idCheck" id="idCheckbtn">중복확인</button>
+                                    <button type="button" class="btn btn-secondary" style="width:100px" name="idCheck" id="idCheckbtn">중복확인</button>
 
                                 </td>
 							<tr>
@@ -266,6 +266,75 @@
    		});
    	});
    </script>
+   
+   <script>
+      function enrollForm_check() {
+          
+          var memberId = document.getElementById("memberId");
+          var memberPwd = document.getElementById("memberPwd");
+          var checkPwd = document.getElementById("checkPwd");
+          var memberName = document.getElementById("memberName");
+          var phone = document.getElementById("phone");
+          var email = document.getElementById("email");
+          
+          var regExp = /^[a-z\d]{5,20}$/i;
+          
+          if(!regExp.test(memberId.value)) {
+              
+        	  alert("영문(소문자), 숫자를  포함하여 5자 이상 20자 이하로만 입력해주세요.");
+              memberId.select(); // 재입력 유도
+              
+              return false;
+          }
+
+         var regExp = /^[a-z\d!@#$%^&*()]{8,20}$/i;
+         if(!regExp.test(memberPwd.value)) {
+             
+        	  alert("특문(!@#$%^), 영문(대소문자), 숫자 포함하여 8자 이상 20자 이하로 총 12~20자로 입력해주세요.");
+             
+        	  memberPwd.value = "";
+              memberPwd.focus(); // 재입력 유도
+             
+              return false;
+          }
+          
+          if($("input[name=memberPwd]").val() != $("input[name=checkPwd]").val()) {
+            
+        	  alert("비밀번호가 일치하지 않습니다.");
+              checkPwd.select(); // 재입력 유도
+             
+              return false;
+          }
+          
+          var regExp = /^[가-힣]{2,6}$/;
+          
+          if(!regExp.test(memberName.value)) {
+              
+        	  alert("한글로 된 2~6자리 이름을 입력해주세요.");
+              memberName.select(); // 재입력 유도
+             
+              return false;
+          }
+          
+          var regExp = /^(010)[0-9]{4}[0-9]{4}$/;
+          
+          if(!regExp.test(phone.value)) {
+             
+        	  alert("-빼고 유효한 전화번호를 입력해주세요.");
+              phone.select(); // 재입력 유도
+              
+              return false;
+          }
+          
+          var regExp = /^([0-9a-zA-Z_\.-]+)$/i;
+          if(!regExp.test(email.value)) {
+              alert("숫자 또는 영어만 입력해주세요.");
+              email.select(); // 재입력 유도
+              return false;
+          }
+      	document.enrollForm.submit();
+      }
+  </script>
 
 </body>
 </html>

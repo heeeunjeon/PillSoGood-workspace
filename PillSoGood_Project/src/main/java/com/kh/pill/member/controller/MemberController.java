@@ -54,6 +54,17 @@ public class MemberController {
 		return mv;
 	}
 	
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		
+		// 세션을 무효화하는 메소드 : session.invalidate();
+		session.invalidate();
+		
+		// 메인페이지로 url 요청
+		return "redirect:/";
+	}
+	
+	
 	@RequestMapping("enrollForm.me")
 	public String enrollForm() {
 		
@@ -76,8 +87,8 @@ public class MemberController {
 			
 			// 일회성 알람 문구
 			session.setAttribute("alertMsg", "성공적으로 회원가입이 되었습니다.");
-			
-			return "redirect:/";
+
+			return "member/memberEnrollFormCongrats";
 		}
 		else { 
 			
