@@ -112,7 +112,7 @@
                             <tbody>
                                 <tr>
                                     <td rowspan="2" align="center"><input class="form-check-input" type="checkbox"></td>
-                                    <td rowspan="2" align="center" width="150px"><div style="width: 80px; height: 80px;"><img src="image/pill01.png" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
+                                    <td rowspan="2" align="center" width="150px"><div style="width: 80px; height: 80px;"><img src="../../../resources/images/" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
                                     <td height="30px">눈건강엔</td>
                                     <td rowspan="2" width="150px">
                                         <table align="center">

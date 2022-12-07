@@ -95,7 +95,7 @@
 	
 	<c:if test="${ not empty alertMsg }">	
 		<script>
-			alert("${ alertMsg }")
+			alert("${ alertMsg }");
 		</script>
 		<c:remove var="alertMsg" scope="session" />
 	</c:if>
@@ -177,8 +177,8 @@
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="list.no">공지사항</a>
-              <a class="dropdown-item" href="#">FAQ</a>
-              <a class="dropdown-item" href="#">1:1 문의</a>
+              <a class="dropdown-item" href="faq">FAQ</a>
+              <a class="dropdown-item" href="list.qu">1:1 문의</a>
             </div>
           </li>
         </ul>
