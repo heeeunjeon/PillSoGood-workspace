@@ -92,8 +92,14 @@
 </style>
 </head>
 <body>
-
-  
+	
+	<c:if test="${ not empty alertMsg }">	
+		<script>
+			alert("${ alertMsg }")
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+	
   <script>
 		var toastCount = 0;
 		// 전역변수 설정
@@ -148,8 +154,8 @@
           <li class="nav-item dropdown" id="menubarLi"> 
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">제품</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="list.pr">제품소개</a>
-              <a class="dropdown-item" href="survey.po">건강설문</a>
+              <a class="dropdown-item" href="#">제품소개</a>
+              <a class="dropdown-item" href="#">건강설문</a>
             </div>
           </li>
           <li class="nav-item" id="menubarLi">
@@ -178,16 +184,33 @@
         </ul>
 
         <div class="text-decoration-none" id="side" style="font-size: 15px;">
-            <a class="text-decoration-none" href="#" style="color:rgb(92, 93, 96)">장바구니 |</a>
-            <a class="text-decoration-none" href="#" style="color:rgb(92, 93, 96)">로그인 |</a>
-            <a class="text-decoration-none" href="#" style="color:rgb(92, 93, 96)">회원가입</a>
+  
+            
+            <c:choose>
+            	<c:when test="${ empty loginUser }">
+            	<!-- 로그인 전 -->
+	         	    <a class="text-decoration-none" href="cart.me" style="color:rgb(92, 93, 96)">장바구니 |</a>  
+	            	<a class="text-decoration-none" href="loginForm.me" style="color:rgb(92, 93, 96);">로그인 |</a>
+	            	<a class="text-decoration-none" href="enrollForm.me" style="color:rgb(92, 93, 96)">회원가입</a>	
+            	</c:when>
+            	<c:otherwise>
+            	<!-- 로그인 후 -->
+		            <a class="text-decoration-none" href="cart.me" style="color:rgb(92, 93, 96)">장바구니 |</a>    
+		            <a class="text-decoration-none" href="logout.me" style="color:rgb(92, 93, 96)">로그아웃 |</a> 
+		            <a class="text-decoration-none" href="myPage.me" style="color:rgb(92, 93, 96)">마이페이지</a>      	
+            	</c:otherwise>
+            </c:choose>
+
         </div>
       </div>
     </div>
   </nav>
   </div>
 
+
+
 	<div id="socketAlarmArea" ></div>
+
 
 </body>
 </html>
