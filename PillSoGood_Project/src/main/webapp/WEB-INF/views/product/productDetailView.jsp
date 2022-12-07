@@ -30,7 +30,7 @@
     #content_2_2 { height: 2433px; float: left; }
 
     #content_2_2_1 { width: 100%; height: 920px; float: left; }
-    #content_2_2_2 { width: 100%; height: 1513px; float: left; }
+
 
     #header { height: 130px; }
 
@@ -181,41 +181,10 @@
         margin: auto;
     }
 
-    #content_2_2_2>div { width: 100%; float: left; }
 
-    #reviewBtn, #reviewFilter { height: 60px; border-bottom: solid lightgrey; }
-    #reviewBtn>div { width: 100%; height: 100%; }
-    #write>div { margin-top: 15px; margin-right: 5px; }
 
-    #reviewFilter>div { height: 100%; width: 50%; float: left; }
 
-    #allPro>p {
-        font-size: 20px;
-        color: black;
-        margin-left: 15px;
-        margin-top: 18px;
-    }
-
-    #filter>p {
-        font-size: 15px;
-        color: black;
-        margin-left: 365px;
-        margin-top: 23px;
-    }
-
-    #filter>p a:hover { cursor: pointer; }
-
-    #review { height: 1250px; }
-
-    #reviewT { border-bottom: 1px solid lightgray;;}
-
-    #reviewT th, #reviewT td { color: black; padding: 10px; }
-
-    #reviewT:hover { cursor: pointer; }
-
-    #reviewP { height: 100px; }
-
-    #reviewP>div>div { height: 100%; width: 26%; margin: auto; margin-top: 7px; }
+  
 
 
     /* content 영역 */
@@ -253,20 +222,20 @@
                                 <div id="proThum_1">
                                     <div id="proThum_2">
                                         <div id="proImgg">
-                                            <div id="proImgg_1"><img src="image/pill01.png"></div>
+                                            <div id="proImgg_1"><img src="${ p.productImgPath }"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div id="proText">
-                                <div id="proText_1"><p>눈 건강엔</p></div>
-                                <div id="proText_2"><p>루테인&ensp;<span style="color: rgb(185, 184, 184);">30일분</span></p></div>
+                                <div id="proText_1"><p>${ p.productExplain } 엔</p></div>
+                                <div id="proText_2"><p>${ p.productName }&ensp;<span style="color: rgb(185, 184, 184);">30일분</span></p></div>
                                 <div id="proText_3">
                                     <div id="proText_3_1">
                                         <div id="proPrice">
                                             <div id="proPricee">
                                                 <div id="proPrice_1"><p>구매가</p></div>
-                                                <div id="proPrice_2"><p>24,000원</p></div>
+                                                <div id="proPrice_2"><p>${ p.productPrice }원</p></div>
                                             </div>
                                             <div id="proPP_1">
                                                 <div id="proPPP_1"><p>수량선택</p></div>
@@ -277,7 +246,7 @@
                                                             <table>
                                                                 <tr>
                                                                     <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('minus');">-</button></td>
-                                                                    <td style="width: 36px;"><input class="form-control" id="result" value="0" style="width: 36px;" readonly></td>
+                                                                    <td style="width: 36px;"><input class="form-control" id="result" value="1" style="width: 36px;" readonly></td>
                                                                     <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('plus');">+</button></td>
                                                                 </tr>
                                                             </table>
@@ -287,7 +256,7 @@
                                             </div>
                                             <div id="proPP_2">
                                                 <div id="proPPP_3"><p>총 금액</p></div>
-                                                <div id="proPPP_4"><p>24,000원</p></div>
+                                                <div id="proPPP_4"><p>${ p.productPrice }원</p></div>
                                             </div>
                                         </div>
                                         <div id="btnss">
@@ -308,147 +277,11 @@
                         </div>
                         <div id="proImg">
                             <div id="proImg_1">
-                                <div id="proImg_1_1"><img src="image/효능.png"></div>
+                                <div id="proImg_1_1"><img src="${ p.productDescription }"></div>
                             </div>
                         </div>
                     </div>
-                    <div id="content_2_2_2">
-                        <div id="reviewBtn">
-                            <div id="write">
-                                <div align="right"><button type="button" class="btn btn-primary btn-sm">리뷰 작성</button></div>
-                            </div>
-                        </div>
-                        <div id="reviewFilter">
-                            <div id="allPro"><p>총 <span style="color:#78C2AD;">26</span>건</p></div>
-                            <div id="filter">
-                                <p>
-                                    <a>최신순</a> | <a>인기순</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div id="review">
-                            <table id="reviewT" align="center">
-                                <tr>
-                                    <td width="800px" style="font-size: 20px; padding-top: 20px;"><b>정기구독</b></td>
-                                    <td align="center"><button type="button" class="btn btn-secondary btn-sm">삭제</button></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="color: #78C2AD;">
-                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                        </span>
-                                    </td>
-                                    <td rowspan="5">2022.10.21</td>
-                                </tr>
-                                <tr>
-                                    <td>김성철&ensp;정기구독&ensp;<span style="color: #78C2AD; font-weight: bold;">8회차</span></td>
-                                </tr>
-                                <tr height="100px">
-                                    <td>맞춤영양제 덕분에 몸이 좋아졌어요~</td>
-                                </tr>
-                                <tr height="100px">
-                                    <td>
-                                        <img src="image/pill06.png" width="100" height="100">
-                                        <img src="image/pill07.png" width="100" height="100">
-                                        <img src="image/pill08.png" width="100" height="100">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fa-regular fa-heart"></i>&ensp;486&ensp;<i class="fa-regular fa-comment"></i>&ensp;1</td>
-                                </tr>
-                            </table>
-                            <table id="reviewT" align="center">
-                                <tr>
-                                    <td width="800px" style="font-size: 20px; padding-top: 20px;"><b>정기구독</b></td>
-                                    <td align="center"><button type="button" class="btn btn-secondary btn-sm">삭제</button></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="color: #78C2AD;">
-                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                        </span>
-                                    </td>
-                                    <td rowspan="5">2022.10.21</td>
-                                </tr>
-                                <tr>
-                                    <td>김성철&ensp;정기구독&ensp;<span style="color: #78C2AD; font-weight: bold;">8회차</span></td>
-                                </tr>
-                                <tr height="100px">
-                                    <td>맞춤영양제 덕분에 몸이 좋아졌어요~</td>
-                                </tr>
-                                <tr height="100px">
-                                    <td>
-                                        <img src="image/pill06.png" width="100" height="100">
-                                        <img src="image/pill07.png" width="100" height="100">
-                                        <img src="image/pill08.png" width="100" height="100">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fa-regular fa-heart"></i>&ensp;486&ensp;<i class="fa-regular fa-comment"></i>&ensp;1</td>
-                                </tr>
-                            </table>
-                            <table id="reviewT" align="center">
-                                <tr>
-                                    <td width="800px" style="font-size: 20px; padding-top: 20px;"><b>정기구독</b></td>
-                                    <td align="center"><button type="button" class="btn btn-secondary btn-sm">삭제</button></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="color: #78C2AD;">
-                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                                        </span>
-                                    </td>
-                                    <td rowspan="5">2022.10.21</td>
-                                </tr>
-                                <tr>
-                                    <td>김성철&ensp;정기구독&ensp;<span style="color: #78C2AD; font-weight: bold;">8회차</span></td>
-                                </tr>
-                                <tr height="100px">
-                                    <td>맞춤영양제 덕분에 몸이 좋아졌어요~</td>
-                                </tr>
-                                <tr height="100px">
-                                    <td>
-                                        <img src="image/pill06.png" width="100" height="100">
-                                        <img src="image/pill07.png" width="100" height="100">
-                                        <img src="image/pill08.png" width="100" height="100">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fa-regular fa-heart"></i>&ensp;486&ensp;<i class="fa-regular fa-comment"></i>&ensp;1</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div id="reviewP">
-                            <div>
-                                <div>
-                                    <ul class="pagination">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="">&laquo;</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a class="page-link" href="">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="">&raquo;</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
+                  
                 </div>
             </div>
             <div id="content_3"></div>
@@ -470,15 +303,20 @@
                     num = num + 1;
                 }
             } else if(type == "minus")  {
-                if (num != 0) {
+                if (num != 1) {
                     num = num - 1;
                 }
             }
 
             // 결과 출력
             $("#result").val(num);
+            
+            // 영섭
+			var price = ${ p.productPrice }; // price 라는 int
+			// 결과를 표시할 element
+ 			$("#proPPP_4>p").html(num * price + "원");
         }
-
+        
         $(function() {
             $("#wish").on("click",".likeControl",function() {
                 if ($("#eventLike").css("display") == "none") {

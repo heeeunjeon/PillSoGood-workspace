@@ -63,50 +63,68 @@ public class ProductController {
 		    
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		
-		int c = 0;
+		int c = 0; // 파일 레벨을 구분하기 위한 변수선언
 		
 		for (MultipartFile f : upfiles) {
 			
 			if(!f.getOriginalFilename().equals("")) {
 				
 			 
-				String originFileName = f.getOriginalFilename(); // 원본 파일 명
+				String originFileName = f.getOriginalFilename(); // 원본파일명
 		 
 				String ext = originFileName.substring(originFileName.lastIndexOf("."));
 				
-				String saveFileName = String.format("%s%s", currentTime, ext); // 수정파일명 만들기
-		   
-		    try {
-		   	 // 파일생성 하기
+				String saveFileName = currentTime + ext; // 수정파일명 만들기
+				
+				if(c == 0) {
+					saveFileName = "d" + saveFileName;
+					p.setProductImgPath("resources/productUploadFiles/" + saveFileName);
+				}
+				
+				// 파일생성 하기
 			    f.transferTo(new File(path, saveFileName));
-			   
-			    if (c == 0) {	            	 
-			   	 	p.setProductDescription("resources/productUploadFiles/" + saveFileName); // Product에 담아주기
-			    } 
-			    else if (c == 1) {
-			    	p.setProductImgPath("resources/productUploadFiles/" + saveFileName); // Product에 담아주기
-			    }			    
-		     
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		    }
-			 			 
-			 c++;
+			    p.setProductDescription("resources/productUploadFiles/" + saveFileName); // Product에 담아주기
+			    
+			    c++;
 			}
 		}
 		
-		
 		int result = productService.insertProduct(p); // Service단으로 보내기
-		
 		 
 		if(result > 0) {
-			session.setAttribute("alertMsg", "제품이 등록되었습니다.");
-			mv.setViewName("redirect:/Enroll.pr");
+			
+			session.setAttribute("alertMsg", "제품이 성공적으로 등록되었습니다.");
+			mv.setViewName("redirect:/list.pr");
 		}
 		else {
 			mv.addObject("errorMsg", "제품 등록에 실패했습니다.");
 		}
 		 
+		return mv;
+	}
+	
+	@RequestMapping("detail.pr")
+	public ModelAndView selectProduct(int pno, ModelAndView mv) {
+	      
+		// 게시글 조회수 증가용 서비스 호출 결과 받기 (update 하고 오기)
+		int result = productService.increaseCount(pno);
+		  
+		if(result > 0) { // 성공적으로 조회수 증가가 일어났다면
+		 
+			// 상세조회 요청
+			// DetailView.jsp 상에 필요한 데이터 조회
+			Product p = productService.selectProduct(pno);
+			 
+			// 조회된 데이터를 담아서 포워딩 
+			mv.addObject("p", p).setViewName("product/productDetailView");
+		
+		}
+		else { // 실패 
+			
+			mv.addObject("errorMsg", "게시글 조회 실패").setViewName("common/errorPage");
+			
+		}
+		
 		return mv;
 	}
 	

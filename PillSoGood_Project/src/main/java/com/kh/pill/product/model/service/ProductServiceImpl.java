@@ -36,4 +36,20 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.insertProduct(sqlSession, p);
 	}
 
+	/**
+	 * 게시글 조회수 상승
+	 */
+	@Override
+	public int increaseCount(int productNo) {
+		return productDao.increaseCount(sqlSession, productNo);
+	}
+
+	/**
+	 * 게시글 상세조회
+	 */
+	@Override
+	public Product selectProduct(int productNo) {
+		return productDao.selectProduct(sqlSession, productNo);
+	}
+
 }

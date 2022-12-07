@@ -172,7 +172,7 @@
                     </div>
                     <div id="productList">
                         <div id="allText">
-                            <div id="allPro"><p>총 <span style="color:#78C2AD;">18</span>건</p></div>
+                            <div id="allPro"><p>총 <span style="color:#78C2AD;">${ list.size() }</span>건</p></div>
                             <div id="filter">
                                 <div class="form-group" style="width: 200px;">
                                     <select class="form-select" id="exampleSelect1">
@@ -185,11 +185,13 @@
                         
                         
                         <div id="product">
+
                             <c:forEach var="p" items="${ list }">
                             <div id="product_1">
-                                <div id="product_1_1" style="background-color: #fef7f8; cursor:pointer;">
+                                <div id="product_1_1" class="prod" style="background-color: #fef7f8; cursor:pointer;">
                                     <div id="productT">
                                         <div id="productTT">
+                                        	<input type="hidden" value="${ p.productNo }">
                                             <div id="productTT_1"><p>${ p.productExplain }엔</p></div>
                                             <div id="productTT_2"><p>${ p.productName }</p></div>
                                             <div id="productTT_3"><p>30일분</p></div>
@@ -205,7 +207,17 @@
                                 </div>
                             </div>
                             </c:forEach>
+
                         </div>
+                        
+                        <script>
+			            	$(function(){
+			            		$(".prod").click(function() {
+			            			
+			            			location.href = "detail.pr?pno=" + $(this).children().eq(0).children().eq(0).children().eq(0).val();
+			            		});
+			            	});	
+			            </script>
                         
                             
                             

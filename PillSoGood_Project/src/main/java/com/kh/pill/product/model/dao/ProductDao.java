@@ -19,5 +19,15 @@ public class ProductDao {
 		
 		return sqlSession.insert("productMapper.insertProduct", p);
 	}
+	
+	public int increaseCount(SqlSessionTemplate sqlSession, int productNo) {
+		
+		return sqlSession.update("productMapper.increaseCount", productNo);
+	}
+	
+	public Product selectProduct(SqlSessionTemplate sqlSession, int productNo) {
+		
+	    return sqlSession.selectOne("productMapper.selectProduct", productNo);
+	}
 
 }

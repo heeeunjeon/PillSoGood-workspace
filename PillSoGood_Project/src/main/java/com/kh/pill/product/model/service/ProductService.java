@@ -11,5 +11,11 @@ public interface ProductService {
 	
 	// 게시글 작성
 	int insertProduct(Product p);
+	
+	// 게시글 상세 조회 서비스
+	// 게시글 조회수 증가
+	int increaseCount(int productNo);
+	// 게시글 상세 조회 요청
+	Product selectProduct(int productNo);
 
 }

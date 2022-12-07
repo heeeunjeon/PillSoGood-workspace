@@ -12,6 +12,7 @@
 		<result column="PRODUCT_DESCRIPTION" property="productDescription" />
 		<result column="PRODUCT_ENROLL_DATE" property="productEnrollDate" />
 		<result column="PRODUCT_STATUS" property="productStatus" />
+		<result column="PRODUCT_COUNT" property="productCount" />
 	</resultMap>
 	
 	<select id="selectList" resultMap="productResultSet">
@@ -45,5 +46,25 @@
 				   		   , #{productImgPath}
 				   		   , #{productDescription})
 	</insert>
+	
+	<update id="increaseCount" parameterType="int">
+		UPDATE PRODUCT
+		   SET PRODUCT_COUNT = PRODUCT_COUNT + 1
+		 WHERE PRODUCT_NO = #{productNo}
+		   AND PRODUCT_STATUS = 'Y'
+	</update>
+	
+	<select id="selectProduct" parameterType="_int" resultMap="productResultSet">
+		SELECT PRODUCT_NO
+			 , PRODUCT_NAME
+			 , PRODUCT_EXPLAIN
+		     , PRODUCT_PRICE
+		     , PRODUCT_STOCK
+		     , PRODUCT_IMG_PATH
+		     , PRODUCT_DESCRIPTION
+		  FROM PRODUCT
+		 WHERE PRODUCT_NO = #{productNo}
+		   AND PRODUCT_STATUS = 'Y'
+	</select>
 
 </mapper>

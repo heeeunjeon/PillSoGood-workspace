@@ -22,4 +22,5 @@ public class Product {
 	private String productDescription; // PRODUCT_DESCRIPTION VARCHAR2(255) NOT NULL,
 	private Date productEnrollDate; // PRODUCT_ENROLL_DATE DATE,
 	private String productStatus; // PRODUCT_STATUS CHAR(1) DEFAULT 'Y');
+	private int productCount;
 }

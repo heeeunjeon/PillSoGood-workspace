@@ -85,7 +85,7 @@
                         <tbody height="350px" width="50%">
                             <tr>
                                 <td align="center" rowspan="4" width="50%">
-                                    <div id="tgg"><div id="imgg"><div id="proImgg"><img id="titleImg" src="#"></div></div></div>
+                                    <div id="tgg"><div id="imgg"><div id="proImgg"><img id="titleImg"></div></div></div>
                                 </td>
                                 <th width="7%">효능</th>
                                 <td><input class="form-control" name="productExplain"></td>
@@ -111,7 +111,7 @@
                             <tr>
                                 <td colspan="4">
                                     <div id="proImg">
-                                        <div id="proImg_1_1"><img id="contentImg1" src="#"></div>
+                                        <div id="proImg_1_1"><img id="contentImg1"></div>
                                     </div>
                                 </td>
                             </tr>
