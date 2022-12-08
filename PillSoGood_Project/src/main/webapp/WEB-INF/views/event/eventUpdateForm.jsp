@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Event 등록하기</title>
+<title>Event 수정하기</title>
 <style>
 
     div {
@@ -79,40 +79,50 @@
             <div id="content_2">
                 <div id="content_2_1">
                     <p>
-                        이벤트 작성하기
+                        이벤트 수정하기
                     </p>    
                 </div>
                 <div id="content_2_2">
                         <div id="eventModifyArea">
-                            <form action="insert.ev" method="post" enctype="multipart/form-data">
+                            <form action="update.ev" method="post" enctype="multipart/form-data">
+                            	<input type="hidden" name="evtNo" value="${ e.evtNo }">
                                 <div style="padding: 20px;">
                                     <table class="table" id="eventModifyForm" width="100%" align="center">
                                         <tr>
                                             <th>제목</th>
                                             <td colspan="3">
-                                                <input class="form-control" type="text" name="evtTitle" value="제목 입력">
+                                                <input class="form-control" type="text" name="evtTitle" value="${ e.evtTitle }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>시작일</th>
                                             <td>
-                                                <input class="form-control" name="evtStart" style="width:250px" type="date" required>
+                                                <input class="form-control" name="evtStart" style="width:250px" type="date" required value="${ e.evtStart }">
                                             </td>
                                             <th>마감일</th>
                                             <td>
-                                                <input class="form-control" name="evtDew" style="width:250px" type="date" required>
+                                                <input class="form-control" name="evtDew" style="width:250px" type="date" required value="${ e.evtDew }">
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>첨부파일</th>
                                             <td colspan="100%">
-                                            	<input type="file" id="upfile" name="upfile" class="form-control">
+                                            	<!-- 파일 선택하는 버튼 -->
+                                            	<input type="file" id="upfile" name="reupfile" class="form-control"> 
+                                            	
+                                            	<c:if test="${ not empty e.evtImgName }">
+                                            		현재 업로드 된 파일 : 
+                                            		<p>${ e.evtImgName.substring(24) }</p>
+                                            		
+                                            		<input type="hidden" name="${ e.evtImgName }">
+                               
+                                            	</c:if>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>내용</th>
                                             <td colspan="100%">
-                                                <textarea class="form-control" name="evtContent" id="evtContent" cols="40" rows="20" style="resize:none;">내용 입력</textarea>
+                                                <textarea class="form-control" name="evtContent" id="evtContent" cols="40" rows="20" style="resize:none;">${ e.evtContent }</textarea>
                                             </td>
                                         </tr>
                                     </table>

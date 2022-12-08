@@ -125,7 +125,7 @@
                     <p>이벤트
                     	<%-- <c:if test="${ loginUser.memberId eq 'admin' }"> --%>
                         	<button style="float:right; margin-right: 20px;" class="btn btn-primary btn-danger" onclick="location.href='delete.ev?eno=${ e.evtNo }&evtImgName=${ e.evtImgName }'">삭제</button>
-                        	<button style="float:right; margin-right: 5px;" class="btn btn-primary btn-warning">수정</button>
+                        	<button style="float:right; margin-right: 5px;" class="btn btn-primary btn-warning" onclick="location.href='updateForm.ev?eno=${ e.evtNo }&evtImgName=${ e.evtImgName }'">수정</button>
                     	<%-- </c:if> --%>
                     </p>
                     

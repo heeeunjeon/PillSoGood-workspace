@@ -124,7 +124,7 @@
 		                                    ${ e.evtTitle }
 		                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
 		                                </td>
-		                                <td rowspan="4" style="padding-top: 20px; padding-bottom:20px; folat="left;"  width="20%">
+		                                <td rowspan="4" style="padding-top: 20px; padding-bottom:20px;" width="20%">
 		                
 		                                    <img src="${ e.evtImgName }" width="250px;" height="250px;" alt="">
 		                                </td>

@@ -53,9 +53,9 @@ public class EventServiceImpl implements EventService {
 	 * 이벤트 게시글 추가
 	 */
 	@Override
-	public int insertEvent(Event b) {
+	public int insertEvent(Event e) {
 		
-		return eventDao.insertEvent(sqlSession, b);
+		return eventDao.insertEvent(sqlSession, e);
 	}
 
 	/**
@@ -67,10 +67,13 @@ public class EventServiceImpl implements EventService {
 		return eventDao.deleteEvent(sqlSession, eno);
 	}
 
+	/**
+	 * 이벤트 게시물 수정 
+	 */
 	@Override
-	public int updateEvent(Event b) {
+	public int updateEvent(Event e) {
 		
-		return 0;
+		return eventDao.updateEvent(sqlSession, e);
 	}
 
 	/**

@@ -17,7 +17,7 @@
 
         /* 전체를 감싸는 wrap */
         .wrap {
-            width: 98%;
+            width: 100%;
             height: 3800px;
             margin: auto;
         }
@@ -200,8 +200,9 @@
     <!-- dragscroll -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous">
-        </script>
-    <script src="dragScroll.js"></script>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragscroll/0.0.8/dragscroll.min.js" integrity="sha512-/ncZdOhQm5pgj5KHy720Ck7XF5RzYK6rtUsLNnGcitXrKT3wUYzTrPlOSG7SdL2kDzkuLEOFvrQRyllcZkeAlg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="dragScroll.js"></script> -->
 
     <!-- 알약 슬라이드에 필요함 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">

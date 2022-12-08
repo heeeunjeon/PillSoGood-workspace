@@ -228,6 +228,81 @@ public class EventController {
 	}
 	
 	
+	/**
+	 * 이벤트 게시물 수정하는 페이지로 이동 
+	 */
+	@RequestMapping("updateForm.ev")
+	public String updateForm(int eno, Model model) {
+			
+		Event e = eventService.selectEvent(eno);
+		
+		model.addAttribute("e", e);
+		
+		// System.out.println(e);
+		
+		return "event/eventUpdateForm";
+		
+		
+	}
+	
+	
+	@RequestMapping("update.ev")
+	public String updateEvent(Event e, MultipartFile reupfile, HttpSession session, Model model) {
+		
+		
+		// System.out.println(e);
+		
+		// 첨부파일 있는 경우 
+		if(!reupfile.getOriginalFilename().contentEquals("")) {
+			
+			// 기존 첨부파일이 있었을 경우 => 첨부파일 삭제 
+			if(e.getEvtImgName() != null) {
+				
+				String realPath = session.getServletContext().getRealPath(e.getEvtImgName());
+				new File(realPath).delete();
+				
+			} 
+			
+			// 새로 넘어온 첨부파일을 수정명으로 바꾸고 서버에 업로드 
+			String ChangeName = saveFile(reupfile, session);
+			
+			// 새로 넘어온 첨부파일에 대한 원본명, 수정파일명 필드에 담기 
+			e.setEvtImgName(reupfile.getOriginalFilename());
+			e.setEvtImgName("resources/eventUploadFiles/" + ChangeName);
+			
+			System.out.println(e.getEvtImgName());
+			
+		}
+		
+		int result = eventService.updateEvent(e);
+		
+		System.out.println(result);
+
+
+		if(result > 0) { // 게시글 수정 성공 
+			
+			System.out.println(result);
+			
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			
+			// 게시글 상세보기 페이지 url 재요청 
+			return "redirect:/detail.ev?eno=" + e.getEvtNo();
+			
+			
+		} else { // 게시글 수정 실패
+			
+			model.addAttribute("errorMsg", "게시글 수정 실패");
+			
+			return "common/errorPage";
+			
+		}
+		
+		
+		
+		
+	}
+	
+	
 
 }
 

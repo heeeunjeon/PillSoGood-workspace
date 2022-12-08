@@ -55,9 +55,9 @@ public class EventDao {
 	/**
 	 * 이벤트 게시물 추가
 	 */
-	public int insertEvent(SqlSessionTemplate sqlSession, Event b) {
+	public int insertEvent(SqlSessionTemplate sqlSession, Event e) {
 		
-		return sqlSession.insert("eventMapper.insertEvent", b);
+		return sqlSession.insert("eventMapper.insertEvent", e);
 	}
 
 	/**
@@ -65,6 +65,14 @@ public class EventDao {
 	 */
 	public int deleteEvent(SqlSessionTemplate sqlSession, int eno) {
 		return sqlSession.update("eventMapper.deleteEvent", eno);
+	}
+
+	/**
+	 * 이벤트 게시물 수정
+	 */
+	public int updateEvent(SqlSessionTemplate sqlSession, Event e) {
+		
+		return sqlSession.update("eventMapper.updateEvent", e);
 	}
 
 
