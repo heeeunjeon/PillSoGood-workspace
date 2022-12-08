@@ -1,5 +1,9 @@
 package com.kh.pill.member.model.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -24,15 +28,17 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMember", m);
 	}
 	
-	public int deleteMember(SqlSessionTemplate sqlSession, String userId) {
+	public int deleteMember(SqlSessionTemplate sqlSession, String memberId) {
 		
-		return sqlSession.update("memberMapper.deleteMember", userId);
+		return sqlSession.update("memberMapper.deleteMember", memberId);
 	}
 	
 	public int idCheck(SqlSessionTemplate sqlSession, String checkId) {
 
 		return sqlSession.selectOne("memberMapper.idCheck", checkId);
 	}
+
+
 
 }
 

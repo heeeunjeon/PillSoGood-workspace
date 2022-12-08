@@ -1,5 +1,8 @@
 package com.kh.pill.member.model.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +41,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int deleteMember(String userId) {
+	public int deleteMember(String memberId) {
 		
-		return memberDao.deleteMember(sqlSession, userId);
+		return memberDao.deleteMember(sqlSession, memberId);
 	}
 
 	@Override
@@ -48,5 +51,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDao.idCheck(sqlSession, checkId);
 	}
+
+	@Override
+	public String findId(String memberName, String email) {
+	
+		return memberDao.findId(sqlSession, memberName, email);
+	}
+
 
 }

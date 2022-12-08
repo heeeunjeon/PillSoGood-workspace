@@ -140,7 +140,8 @@
                                 </td>
                                 <td width="10px">@</td>
                                 <td>
-                                    <select class="form-select" style="width: 190px;">
+                                    <select class="form-select" style="width: 190px;" name="eamilSelection">
+                                    	<option value="1">직접입력</option>
                                         <option value="naver.com">naver.com</option>
                                         <option value="google.com">google.com</option>
                                         <option value="kakao.com">kakao.com</option>
@@ -334,6 +335,28 @@
           }
       	document.enrollForm.submit();
       }
+  </script>
+  
+  
+  <!-- 이메일  -->
+  <script>
+  	$(function(){
+  		$(document).ready(function() {
+  			$('select[name=emailSelection]').change(function() {
+  				
+  				if($(this).val()== "1") {
+  					$('#email').val("");
+  				
+  				} else {
+  					$('#email').val($(this).val());
+  					$('#email').attr("readonly", true);
+  				}
+  				
+  			});
+  		});
+  		
+  	});
+  
   </script>
 
 </body>

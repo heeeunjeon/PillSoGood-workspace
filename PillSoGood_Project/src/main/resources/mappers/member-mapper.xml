@@ -72,6 +72,14 @@
 		FROM MEMBER
 		WHERE MEMBER_ID = #{memberId}
 	</select>
+	
+	<select id="findId" parameterType="string" resultType="_int">
+		SELECT MEMBER_ID
+		FROM MEMBER
+		WHERE MEMBER_NAME = #{userName}
+		  AND EMAIL = #{email}
+		  AND MEMBER_STATUS = 'Y'
+	</select>
 
 
 </mapper>

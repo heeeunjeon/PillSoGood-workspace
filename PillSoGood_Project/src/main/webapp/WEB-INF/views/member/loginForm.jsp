@@ -68,8 +68,10 @@
                     </form>
 
                     <div align="center" style="padding: 40px;">
-                        ID 찾기 &ensp; | &ensp;
-                        	회원가입
+                        <a href="findIdForm.me" style="text-decoration:none; color:black;">
+                        ID 찾기 </a>
+                        &ensp; | &ensp;
+                                                     회원가입
                     </div>
                     <div align="center" style="padding: 50px;">소설 로그인 아이콘</div>
                     
