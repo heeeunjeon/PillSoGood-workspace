@@ -10,9 +10,9 @@ import com.kh.pill.product.model.vo.Product;
 @Repository
 public class ProductDao {
 	
-	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession) {
+	public ArrayList<Product> selectList(SqlSessionTemplate sqlSession, String filter) {
 		
-		return (ArrayList)sqlSession.selectList("productMapper.selectList");
+		return (ArrayList)sqlSession.selectList("productMapper.selectList", filter);
 	}
 	
 	public int insertProduct(SqlSessionTemplate sqlSession, Product p) {
@@ -39,5 +39,5 @@ public class ProductDao {
 		
 		return sqlSession.update("productMapper.updateProduct", p);
 	}
-
+	
 }

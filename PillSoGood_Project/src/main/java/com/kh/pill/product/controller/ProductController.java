@@ -1,7 +1,6 @@
 package com.kh.pill.product.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,21 +27,29 @@ public class ProductController {
 	private ProductService productService;
 	
 	/**
-	 * 제품 게시글 전체 리스트 조회
+	 * 상품 전체 리스트 조회
 	 * @return
 	 */
 	@RequestMapping("list.pr")
-	public String selectList(Model model) {
+	public String selectList(@RequestParam(value="order", defaultValue="all")String order, String keyword, Model model) {
 		
-		ArrayList<Product> list = productService.selectList();
+		ArrayList<Product> list = new ArrayList<>();
+		
+		if(keyword == null) {
+			list = productService.selectList(order);
+		} else {
+			list = productService.selectList(keyword);
+		}
 		
 		model.addAttribute("list", list);
+		model.addAttribute("order", order);
+		model.addAttribute("keyword", keyword);
 		
 		return "product/productListView";
 	}
 	
 	/**
-	 * 게시글 작성 폼 띄우기
+	 * 상품 등록 폼 띄우기
 	 * @return
 	 */
 	@RequestMapping("enrollForm.pr")
@@ -51,7 +59,7 @@ public class ProductController {
 	}
 	
 	/**
-	 * @param 게시글 작성
+	 * @param 상품 등록
 	 * @return
 	 */
 	@RequestMapping("insert.pr")
@@ -103,7 +111,7 @@ public class ProductController {
 	}
 	
 	/**
-	 * @param 게시글 상세 조회
+	 * @param 상품 상세 조회
 	 * @return
 	 */
 	@RequestMapping("detail.pr")
@@ -132,7 +140,7 @@ public class ProductController {
 	}
 	
 	/**
-	 * @param 게시글 삭제
+	 * @param 상품 삭제
 	 * @return
 	 */
 	@RequestMapping("delete.pr")
@@ -166,7 +174,7 @@ public class ProductController {
 	}
 	
 	/**
-	 * @param 게시글 수정 폼 띄우기
+	 * @param 상품 수정 폼 띄우기
 	 * @return
 	 */
 	@RequestMapping("updateForm.pr")
@@ -180,6 +188,9 @@ public class ProductController {
 		return "product/productUpdateForm";
 	}
 	
+	/**
+	 * @param 상품 수정
+	 */
 	@RequestMapping("update.pr")
 	public String updateProduct(Product p, MultipartFile upfile1, MultipartFile upfile2, HttpSession session, Model model) throws Exception {
 		
@@ -237,4 +248,5 @@ public class ProductController {
 			return "redirect:/detail.pr?pno=" + p.getProductNo();
 		}
 	}
+	
 }

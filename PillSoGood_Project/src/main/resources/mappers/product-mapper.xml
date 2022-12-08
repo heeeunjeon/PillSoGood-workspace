@@ -15,7 +15,7 @@
 		<result column="PRODUCT_COUNT" property="productCount" />
 	</resultMap>
 	
-	<select id="selectList" resultMap="productResultSet">
+	<select id="selectList" resultMap="productResultSet" parameterType="_int">
 		SELECT PRODUCT_NO
 		     , PRODUCT_NAME
 		     , PRODUCT_EXPLAIN
@@ -27,7 +27,21 @@
 		     , PRODUCT_STATUS
 		  FROM PRODUCT
 		 WHERE PRODUCT_STATUS = 'Y'
-	  ORDER BY PRODUCT_NO DESC
+		<choose>
+			<when test="filter == 'all'">
+				ORDER BY PRODUCT_NO DESC
+			</when>
+			<when test="filter == 'price'">
+				ORDER BY PRODUCT_PRICE
+			</when>
+			<when test="filter == 'name'">
+				ORDER BY PRODUCT_NAME
+			</when>
+			<when test="filter != ''">
+				AND PRODUCT_NAME LIKE '%' || #{filter} || '%'
+				ORDER BY PRODUCT_NO DESC
+			</when>
+		</choose>
 	</select>
 	
 	<insert id="insertProduct" parameterType="product">
@@ -83,5 +97,6 @@
 		    , PRODUCT_DESCRIPTION = #{productDescription}
         WHERE PRODUCT_NO = #{productNo}
     </update>
+    
 
 </mapper>

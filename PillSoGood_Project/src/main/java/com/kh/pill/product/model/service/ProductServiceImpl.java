@@ -19,16 +19,16 @@ public class ProductServiceImpl implements ProductService {
 	private SqlSessionTemplate sqlSession;
 
 	/**
-	 * 게시글 리스트 조회
+	 * 상품 리스트 조회
 	 */
 	@Override
-	public ArrayList<Product> selectList() {
+	public ArrayList<Product> selectList(String filter) {
 		
-		return productDao.selectList(sqlSession);
+		return productDao.selectList(sqlSession, filter);
 	}
 
 	/**
-	 * 게시글 작성
+	 * 상품 작성
 	 */
 	@Override
 	public int insertProduct(Product p) {
@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	/**
-	 * 게시글 조회수 상승
+	 * 상품 조회수 상승
 	 */
 	@Override
 	public int increaseCount(int productNo) {
@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	/**
-	 * 게시글 상세조회
+	 * 상품 상세조회
 	 */
 	@Override
 	public Product selectProduct(int productNo) {
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	/**
-	 * 게시글 삭제
+	 * 상품 삭제
 	 */
 	@Override
 	public int deleteProduct(int productNo) {
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	/**
-	 * 게시글 수정
+	 * 상품 수정
 	 */
 	@Override
 	public int updateProduct(Product p) {

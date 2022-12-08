@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +62,7 @@
     #allText>div { height: 100%; float: left; }
     #allPro, #filter { width: 50%; }
 
-    #filter>div { margin-left: 345px; }
+    #filter>div { margin-left: 345px; padding: 10px 0px; }
 
     #allPro>p {
         font-size: 20px;
@@ -158,7 +159,7 @@
                     <div id="blank"></div>
                     <div id="search">
                         <div id="searchbar" class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <input type="text" class="form-control" placeholder="검색어를 입력해주세요">
                             <button class="btn btn-primary" type="button" id="button-addon2">검색</button>
                         </div>
                     </div>
@@ -168,24 +169,60 @@
                 </div>
                 <div id="content_2_2">
                     <div id="question">
-                        <div id="question_1" style="cursor:pointer"><p align="center">내 건강점수는? <b>건강설문</b>으로 확인하기<i class="fa-solid fa-angle-right"></i></p></div>
+                        <div id="question_1" style="cursor:pointer" onclick="location.href='survey.po'"><p align="center">내 건강점수는? <b>건강설문</b>으로 확인하기<i class="fa-solid fa-angle-right"></i></p></div>
                     </div>
                     <div id="productList">
                         <div id="allText">
                             <div id="allPro"><p>총 <span style="color:#78C2AD;">${ list.size() }</span>건</p></div>
+                            
                             <div id="filter">
                                 <div class="form-group" style="width: 200px;">
                                     <select class="form-select" id="exampleSelect1">
-                                      <option>이름순</option>
-                                      <option>가격순</option>
+                                      <option value="all">전체보기</option>
+                                      <option value="name">이름순</option>
+                                      <option value="price">가격순</option>
                                     </select>
-                                  </div>
+                                </div>
                             </div>
                         </div>
                         
+                        <script>
+                        	$(function() {
+                        		$("#exampleSelect1").on("change", function() {
+                        			location.href="list.pr?order=" + $("#exampleSelect1").val();
+                        		});
+                        		
+                        		$("#button-addon2").on("click", function() {
+                        			// console.log($("#searchbar>input").val());
+                        			if($("#searchbar>input").val().trim().length != 0) {
+                        				location.href="list.pr?keyword=" + $("#searchbar>input").val();
+                        			} else {
+                        				location.href="list.pr";
+                        			}
+                        		});
+                        	});
+                        </script>
+                        
+                        <c:if test="${ not empty order }">
+							<script>
+								$(function() {
+									$("#exampleSelect1 option[value=${ order }]").attr("selected", true);
+								});
+							</script>
+						</c:if>
+                        
+                        <c:if test="${ not empty keyword }">
+							<script>
+								$(function() {
+									$("#searchbar>input").val("${ keyword }");
+									
+									$("#filter").css("display", "none");
+								});
+							</script>
+						</c:if>
                         
                         <div id="product">
-
+								
                             <c:forEach var="p" items="${ list }">
                             <div id="product_1">
                                 <div id="product_1_1" class="prod" style="background-color: #fef7f8; cursor:pointer;">
@@ -199,7 +236,7 @@
                                         <div id="productPP"><img src="${ p.productImgPath }"></div>
                                     </div>
                                     <div id="productP">
-                                        <p>${ p.productPrice }원</p>
+                                        <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
                                     </div>
                                     <div id="productW">
                                         <div id="productW_1" style="cursor:pointer"><p><i class="fa-solid fa-cart-shopping"></i>&ensp;장바구니 담기</p></div>

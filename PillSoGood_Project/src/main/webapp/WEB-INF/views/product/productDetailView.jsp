@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -256,7 +257,7 @@
                                         <div id="proPrice">
                                             <div id="proPricee">
                                                 <div id="proPrice_1"><p>구매가</p></div>
-                                                <div id="proPrice_2"><p>${ p.productPrice }원</p></div>
+                                                <div id="proPrice_2"><p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p></div>
                                             </div>
                                             <div id="proPP_1">
                                                 <div id="proPPP_1"><p>수량선택</p></div>
@@ -277,7 +278,7 @@
                                             </div>
                                             <div id="proPP_2">
                                                 <div id="proPPP_3"><p>총 금액</p></div>
-                                                <div id="proPPP_4"><p>${ p.productPrice }원</p></div>
+                                                <div id="proPPP_4"><p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p></div>
                                             </div>
                                         </div>
                                         <div id="btnss">
