@@ -23,7 +23,7 @@
 		<result column="REPLY_STATUS" property="replyStatus" />
 		<result column="MEMBER_NO" property="memberNo" />
 		<result column="EVENT_NO" property="evtNo" />
-		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_ID" property="memberId" />
 		
 	</resultMap>
 
@@ -66,8 +66,9 @@
 	<select id="selectReplyList" resultMap="eventReplyResultMap">
 		SELECT REPLY_NO
 		     , REPLY_CONTENT
-		     , REPLY_DATE
-		     , MEMBER_NAME
+		     , TO_CHAR(REPLY_DATE, 'YYYY-MM-DD') AS "REPLY_DATE"
+		     , PARENT_REPLY
+		     , MEMBER_ID
 		FROM EVENT_REPLY
 		JOIN MEMBER USING (MEMBER_NO)
 		WHERE REPLY_STATUS = 'Y'
@@ -75,6 +76,30 @@
 		ORDER BY REPLY_NO DESC
 	
 	</select>
+	
+	
+	<insert id="insertEvent" parameterType="event">
+		INSERT INTO EVENT (EVENT_NO
+						  , EVENT_TITLE
+						  , EVENT_START
+						  , EVENT_DEW
+						  , EVENT_IMG_NAME
+						  , EVENT_CONTENT)
+			VALUES (SEQ_EVENT_NO.NEXTVAL
+					, #{evtTitle}
+					, #{evtStart}
+					, #{evtDew}
+					, #{evtImgName}
+					, #{evtContent})
+							
+	
+	</insert>
+	
+	<update id="deleteEvent" parameterType="_int">
+		UPDATE EVENT
+		SET EVENT_STATUS = 'N'
+		WHERE EVENT_NO = #{evtNo}
+	</update>
 
 
 

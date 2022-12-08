@@ -22,7 +22,7 @@ public class EventDao {
 	}
 	
 
-	/**
+	/** 
 	 * 이벤트 게시글 리스트 전체 조회
 	 */
 	public ArrayList<Event> SelectEventList(SqlSessionTemplate sqlSession, PageInfo pi) {
@@ -50,6 +50,21 @@ public class EventDao {
 	public ArrayList<EventReply> selectReplyList(SqlSessionTemplate sqlSession, int evtNo) {
 		
 		return (ArrayList)sqlSession.selectList("eventMapper.selectReplyList", evtNo);
+	}
+
+	/**
+	 * 이벤트 게시물 추가
+	 */
+	public int insertEvent(SqlSessionTemplate sqlSession, Event b) {
+		
+		return sqlSession.insert("eventMapper.insertEvent", b);
+	}
+
+	/**
+	 * 이벤트 게시물 삭제 
+	 */
+	public int deleteEvent(SqlSessionTemplate sqlSession, int eno) {
+		return sqlSession.update("eventMapper.deleteEvent", eno);
 	}
 
 

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Event 상세보기</title>
 <style>
 
     div {
@@ -16,7 +16,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: 1530px;
+        height: auto;
         margin : auto;
     }
 
@@ -24,10 +24,10 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1150px; }
-    #content_2>div { width: 100%; }
+    #content { height: auto; display:flex; }
+    #content_2>div { width: 100%; color: black; }
     #content_2_1 { height: 10%; float: left; }
-    #content_2_2 { height: 80%; float: left; color: black;}
+    #content_2_2 { height: 80%; float: left; }
     #content_2_3 { height: 10%; float: left; }
 
     #header { height: 130px; }
@@ -41,12 +41,12 @@
     }
 
     /* content 영역 */
-    #content>div {  float : left; }
+    #content>div {  float : left;  }
     #content_1 { width : 20%; }
     #content_2 { width : 60%; }
     #content_3 { width : 20%; }
 
-    body { font-family: 'Noto Sans KR', sans-serif !important; }
+    body { font-family: 'Noto Sans KR', sans-serif !important;  }
 	
 	  #eventContentArea {
 
@@ -77,6 +77,7 @@
     #content {
         display: flex;
         height : auto;
+        
     }
     .wrap {
         height : inherit;
@@ -102,6 +103,10 @@
         float: right;
 
     }
+    
+    #replyTable {
+    	width:100%;
+    }
 
 </style>
 </head>
@@ -118,8 +123,10 @@
             <div id="content_2">
                 <div id="content_2_1">
                     <p>이벤트
-                        <button style="float:right; margin-right: 20px;" class="btn btn-primary btn-danger" >삭제</button>
-                        <button style="float:right; margin-right: 5px;" class="btn btn-primary btn-warning">수정</button>
+                    	<%-- <c:if test="${ loginUser.memberId eq 'admin' }"> --%>
+                        	<button style="float:right; margin-right: 20px;" class="btn btn-primary btn-danger" onclick="location.href='delete.ev?eno=${ e.evtNo }&evtImgName=${ e.evtImgName }'">삭제</button>
+                        	<button style="float:right; margin-right: 5px;" class="btn btn-primary btn-warning">수정</button>
+                    	<%-- </c:if> --%>
                     </p>
                     
                 </div>
@@ -128,12 +135,12 @@
                     <br clear="both"/>
 
                     <div>
-                         <table class="table">
+                         <table class="table" style="color:black">
                             <tbody>
                                 <tr>
                                     <td class="EventTitleArea">${ e.evtTitle }</td>
                                     <td align="right">
-                                        <span class="eventStart">${ e.evtStart }</span> -
+                                        <span class="eventStart">${ e.evtStart }</span> ~
                                         <span class="eventDewDate">${ e.evtDew }</span>
                                     </td>
                                 </tr>
@@ -168,8 +175,15 @@
                     <br clear="both">
 
                     <div align="center">
-
-                        <img src="resources/images/Logo.PNG" width="820" alt="">
+						<c:choose>
+							<c:when test="${ empty e.evtImgName }">
+								첨부파일이 없습니다.
+							</c:when>
+							<c:otherwise>
+								<img src="${ e.evtImgName }" width="500" alt="">
+							</c:otherwise>
+						</c:choose>
+                        
 
                     </div>
 
@@ -210,56 +224,21 @@
 
 
                     <div id="replyArea" align="center">
-                        
-                            
-                        <table class="comm comm1">
-                            <input type="hidden" value="1" >
-                            <tr>
-                                <td class="replyWriters" width="80%" style="padding-left: 60px; padding-top:20px;">
-                                    한*섭
-                                </td>
-                                <td class="replyCreateDates" colspan="2" width="20%" style="padding-top: 20px; padding-left: 30px;">
-                                    2022.11.01
-                                </td>
-                            </tr>
-                            <tr style="border-bottom : 1px solid lightgray;">
-                                <td class="replyContents" style="padding: 30px; padding-left: 60px;">
-                                    포장도 먹기 좋게 나와서 너무 좋은거 같아요 포장도 먹기 좋게 나와서 너무 좋은거 같아요포장도 먹기 좋게 나와서 너무 좋은거 같아요포장도 먹기 좋게 나와서 너무 좋은거 같아요포장도 먹기 좋게 나와서 너무 좋은거 같아요
-                                </td>
-                                <td>
-                                    <button style="width:65px; margin-left: 30px;" class='btn btn-primary btn-danger'>삭제</button>
-                                </td>
-                            </tr>
-                            <tr class="nested_reply_container" style="display:none; background-color: #78c2ad36;">                                    
-                                <td colspan="" align="center" id="reply_reply" width="80%">
-                                    <textarea class="form-control" name="" placeholder='대댓글남기기' class='txtArea nested_reply' maxlength='500'></textarea>
-                                </td>
-                                <td width="20%">
-                                    <input type='button' value='등록' class='btn btn-primary' onclick='' style='float:left; margin-top: 20px; margin-bottom: 20px;'>
-                                </td>
-                                
-                            </tr>
-                        </table> 
-
-                        
+                  
                     </div>
 
-                    <script>
-                        $(function() {
-                            $("#replyArea").on("click", ".comm", function(e){
-                                parentNo=$(e.currentTarget).children().first().val();
-                                $(e.target).parent().siblings('.nested_reply_container').toggle();
-                                
-                            })
 
-                        });
-                        
+
+
+
+                    <script>
+                 		var parentNo = 0;
                         $(function() {
                         	selectReplyList();
                         	
                         });
                         
-                        function selectReplyList() {
+                        function selectReplyList() { // 해당 게시글의 댓글 리스트 조회용 ajax 
                         	
                         	$.ajax({
                         		url : "rlist.ev",
@@ -267,26 +246,87 @@
                         		success : function(result) {
                         			
                         			var resultStr = "";
+                      
                         			
-                        			console.log(result);
                         			
                         			for(var i = 0; i < result.length; i++) {
-                        				
-                        				resultStr += " <tr>"
-                        				              + "<td class="replyWriters" width="80%" style="padding-left: 60px; padding-top:20px;">"
-                                        			  + result[i].
-                                        			  +	"</td>"
-                                        <td class="replyCreateDates" colspan="2" width="20%" style="padding-top: 20px; padding-left: 30px;">
-                                            2022.11.01
-                                        </td>
-                        				
-                        				
-                        			} 
-                        			
+                        				if ( result[i].parentReply == 0) { // 부모 댓글이 없다면 대댓글이 안보이는 테이블
+	                        				resultStr += "<table class='comm comm1' id='replyTable'>"
+		                          							+ "<input type='hidden' value="+ result[i].replyNo +">"
+		    	                                        	  + "<tr>"
+				                        				              + "<td class='replyWriters' width='80%' style='padding-left: 60px; padding-top:20px;'>"
+				                                        			  + result[i].memberId
+				                                        			  +	"</td>"
+				                                        			  + "<td class='replyCreateDates' colspan='2' width='20%' style='padding-top: 20px; padding-left: 30px;'>"
+				                                        			  + result[i].replyDate
+				                                        		      + "</td>"
+				                                    		   + "</tr>"
+				                                    		   + "<tr style='border-bottom : 1px solid lightgray;'>"
+				                                    		          + "<td class='replyContents' style='padding: 30px; padding-left: 60px;'>"
+					                                    			  + result[i].replyContent
+					                                    	          + "</td>"
+					                                				  + "<td>"
+					                                   				  + "<button style='width:65px; margin-left: 30px;' class='btn btn-primary btn-danger'>삭제</button>"
+					                                				  + "</td>"
+					                            			  + "</tr>"
+					                                      + "</table>"
+    	                                          
+    	                                           } else if ( result[i].parentReply != 0 && ${ not empty loginUser } ) { // 부모댓글이 있고, 로그인한 유저라면 대댓글 달 수 있음
+    	                                        	   resultStr += "<table class='comm' id='replyTable'>"
+	                            							+ "<input type='hidden' value="+result[i].replyNo +">"
+		                        							+ "<tr>"
+			                        				              + "<td class='replyWriters' width='80%' style='padding-left: 60px; padding-top:20px;'>"
+			                                        			  + result[i].memberId
+			                                        			  +	"</td>"
+			                                        			  + "<td class='replyCreateDates' colspan='2' width='20%' style='padding-top: 20px; padding-left: 30px;'>"
+			                                        			  + result[i].replyDate
+			                                        		      + "</td>"
+		                                        		  	 + "</tr>"
+		                                        		  	 + "<tr style='border-bottom : 1px solid lightgray;'>"
+		                                        		          + "<td class='replyContents' style='padding: 30px; padding-left: 60px;'>"
+		    	                                    			  + result[i].replyContent
+		    	                                    	          + "</td>"
+		    	                                				  + "<td>"
+		    	                                   					+"<button style='width:65px; margin-left: 30px;' class='btn btn-primary btn-danger'>삭제</button>"
+		    	                                				  + "</td>"
+		    	                            			  	+ "</tr>"
+		    	                            			  	+ "<tr class='nested_reply_container' style='display:none; background-color: #78c2ad36;'>"                                   
+		    	                                				  + "<td align='center' id='reply_reply' width='80%'>"
+		    	                                    			  + "<textarea class='form-control' name='' placeholder='대댓글남기기' class='txtArea nested_reply' maxlength='500'></textarea>"
+		    	                                				  + "</td>"
+		    	                                                  + "<td width='20%'>"
+		    	                                                  + "<input type='button' value='등록' class='btn btn-primary' onclick='' style='float:left; margin-top: 20px; margin-bottom: 20px;'>"
+		    	                                                  + "</td>"
+		    	                                          	+ "</tr>"
+		    	                                        + "</table>" 
+    	                                          }   
+   
+                        			}
+									
+                        			$("#replyArea").html(resultStr);
+
+                        		},
+                        		error : function() {
+                        			console.log("댓글리스트 조회용 ajax 통신 실패!");
                         		}
                         		
                         	});
                         }
+                        
+                        
+                        // 대댓글 나오는 스트립트
+                        $(function() {
+                            $("#replyArea").on("click", ".comm", function(e){
+                            	
+                                parentNo=$(e.currentTarget).children().first().val(); //댓글 넘버 
+                                console.log(parentNo);
+                                console.log(e.currentTarget);
+                                $(e.target).parent().siblings('.nested_reply_container').toggle();
+                                
+                            });
+
+                        });
+                        
                     </script>
 
 

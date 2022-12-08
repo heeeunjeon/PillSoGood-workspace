@@ -100,7 +100,9 @@
                     	<!-- 관리자일 경우에만 보여지는 등록 버튼 -->
                     	<%-- <c:if test="${ loginUser.memberId eq 'admin') }" > --%>
                     	
-                        	<button style="float:right; margin-right: 20px; margin-top: 10px;" class="btn btn-primary btn-primary">등록</button>
+                        	<button onclick="location.href='enrollForm.ev'" style="float:right; margin-right: 20px; margin-top: 10px;" class="btn btn-primary btn-primary">
+                        		등록
+                        	</button>
                         
                         <%-- </c:if> --%>
                     </p>
@@ -113,35 +115,36 @@
                         DEWDATE 컬럼하고 현재 날짜 비교해서 자스로 addClass, removeClass 해주면 될거임
                     -->
                     
-                    
-                    <table class="table eventTable" style="cursor:pointer; margin-top: 30px;" id="eventList" >
-                        <thead></thead>
-                        <tbody>
-                        	<c:forEach var="e" items="${ list }">
-                        		<tr style="border-top : 1px solid lightgray;" onclick="location.href='detail.ev?eno=${ e.evtNo }'">
-	                                <td class="eventTitle" style="padding-top: 20px;">
-	                                    ${ e.evtTitle }
-	                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
-	                                </td>
-	                                <td rowspan="4" style="padding-top: 20px;">
-	                                    <img src="resources/images/Logo.PNG" width="250" alt="">
-	                                </td>
-                            	</tr>
-	                            <tr>
-	                                <td class="eventContent">${ e.evtContent }</td>
-	                            </tr>
-	                            <tr>
-	                                <td class="eventDate">${ e.evtStart } - ${ e.evtDew }</td>
-	                            </tr>
-	                            <tr style="border-bottom : 1px solid lightgray;">
-	                                <td class="eventLike" style="padding-bottom: 20px;">
-	                                    <img src="resources/images/Like.png" width="15" alt="">
-	                                    <span id="countLike">${ e.evtLikeCount }</span>
-	                                </td>
-	                            </tr>
-                        	</c:forEach>
-                        </tbody>
-                    </table>
+                    <c:forEach var="e" items="${ list }">
+	                    <table class="table eventTable" style="cursor:pointer; margin-top: 30px;" id="eventList" onclick="location.href='detail.ev?eno=${ e.evtNo }'">
+	                        <thead></thead>
+	                        <tbody>
+	                        		<tr style="border-top : 1px solid lightgray;" >
+		                                <td class="eventTitle" style="padding-top: 20px;" width="80%">
+		                                    ${ e.evtTitle }
+		                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
+		                                </td>
+		                                <td rowspan="4" style="padding-top: 20px; padding-bottom:20px; folat="left;"  width="20%">
+		                
+		                                    <img src="${ e.evtImgName }" width="250px;" height="250px;" alt="">
+		                                </td>
+	                            	</tr>
+		                            <tr>
+		                                <td class="eventContent">${ e.evtContent }</td>
+		                            </tr>
+		                            <tr>
+		                                <td class="eventDate">${ e.evtStart } ~ ${ e.evtDew }</td>
+		                            </tr>
+		                            <tr style="border-bottom : 1px solid lightgray;">
+		                                <td class="eventLike" style="padding-bottom: 20px;">
+		                                    <img src="resources/images/Like.png" width="15" alt="">
+		                                    <span id="countLike">${ e.evtLikeCount }</span>
+		                                </td>
+		                            </tr>
+	                        	
+	                        </tbody>
+	                    </table>
+                    </c:forEach>
                 </div>
                 
                
