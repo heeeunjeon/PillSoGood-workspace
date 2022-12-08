@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="orderMapper">
-
+	
+	<resultMap id="cartResultSet" type="cart">
+		<result column="CART_NO" property="cartNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="PRODUCT_NO" property="productNo"/>
+		<result column="CART_AMOUNT" property="cartAmount"/>
+		<result column="CART_STATUS" property="cartStatus"/>
+	</resultMap>
+	
+	<resultMap id="orderResultSet" type="order">
+		<result column="ORDER_NO" property="orderNo"/>
+		<result column="ORDER_DATE" property="orderDate"/>
+		<result column="ORDER_PRICE" property="orderPrice"/>
+		<result column="SUBS_COUNT" property="subsCount"/>
+		<result column="CUSTOMER_UID" property="customerUid"/>
+		<result column="ORDER_RECEIPT" property="orderReceipt"/>
+		<result column="ORDER_STATUS" property="orderStatus"/>
+		<result column="SUBS_STATUS" property="subsStatus"/>
+		<result column="DELEVERY" property="delivery"/>
+		<result column="ADDRESS" property="address"/>
+	</resultMap>
+	
+	<resultMap id="orderCartResultSet" type="orderCart">
+		<result column="CART_NO" property="cartNo"/>
+		<result column="ORDER_NO" property="orderNo"/>
+	</resultMap>
+	
+	<insert id="insertOrder" parameterType="order">
+		INSERT INTO ORDERS (ORDER_NO
+						  , ORDER_DATE
+						  , ORDER_PRICE
+						  , CUSTOMER_UID
+						  , ORDER_RECEIPT
+						  , ADDRESS)
+					VALUES (#{orderNo}
+						  , TO_DATE(#{orderDate}, 'YYYYMMDDHH24MISS')
+						  , #{orderPrice}
+						  , #{customerUid}
+						  , #{orderReceipt}
+						  , #{address})
+	</insert>
+	
+	<select id="selectCart" parameterType="_int" resultMap="cartResultSet">
+		SELECT CART_NO, PRODUCT_NO, CART_AMOUNT
+		FROM CART
+		WHERE MEMBER_NO = #{memberNo}
+		  AND CART_STATUS = 'Y'
+	</select>
+	
+	<insert id="insertOrderCart" parameterType="orderCart">
+		INSERT INTO ORDER_CART
+		VALUES (#{cartNo}, #{orderNo})
+	</insert>
+	
+	<update id="deleteCart" parameterType="_int">
+		UPDATE CART
+		SET CART_STATUS = 'N'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="updateOrder" parameterType="order">
+	
+	</update>
+	
+	<update id="deleteOrder" parameterType="_int">
+	
+	</update>
+	
+	
 </mapper>

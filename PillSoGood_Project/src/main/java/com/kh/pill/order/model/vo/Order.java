@@ -15,8 +15,10 @@ public class Order {
 	private String orderDate;
 	private int orderPrice;
 	private int subsCount;
+	private String customerUid;
 	private String orderReceipt;
 	private String orderStatus;
 	private String subsStatus;
 	private int delivery;
+	private String address;
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
 
     div {
@@ -63,6 +65,7 @@
 	
 	
 	/* 배송지 정보 */
+	#bill_delivery>tbody td { padding: 0px 27%; }
 	#bill_delivery>tbody tr { height: 50px; }
 	#bill_delivery .form-control {
 		display: inline-block;
@@ -138,17 +141,29 @@
                         </thead>
                         <tbody>
                         	<tr style="height: 10px!important;"></tr>
-                            <tr>
-                                <td rowspan="2" align="center" width="10%;"><img src="resources/images/pill01.png" width="100px" heigth="100px"></td>
-                                <td width="60%;" class="ptitle">눈건강엔</td>
-                                <td rowspan="2" width="10%;" align="right">1개</td>
-                                <td rowspan="2" align="right" style="font-size: 23px;" width="20%;"><b>24,000원</b></td>
-                            </tr>
-                            <tr style="border-bottom: 1px solid lightgray;">
-                                <td style="font-size: 20px;" class="ptitle"><b>루테인</b></td>
-                            </tr>
+                        	
+                        	<c:forEach var="c" items="${ clist }">
+                        		<c:forEach var="p" items="${ plist }">
+                        			
+                        			<c:if test="${ c.productNo eq p.productNo }">
+		                        		<tr>
+		                                <td rowspan="2" align="center" width="10%;"><img src="${ p.productImgPath }" width="100px" height="100px"></td>
+		                                <td width="60%;" class="ptitle">${ p.productExplain }엔</td>
+		                                <td rowspan="2" width="10%;" align="right">${ c.cartAmount } 개</td>
+		                                <td rowspan="2" align="right" style="font-size: 23px;" width="20%;"><b class="prices"><fmt:formatNumber value="${ c.cartAmount * p.productPrice }" /> 원</b></td>
+		                                
+			                            </tr>
+			                            <tr style="border-bottom: 1px solid lightgray;">
+			                                <td style="font-size: 20px; vertical-align: top;" class="ptitle" id="product_name"><b>${ p.productName }</b></td>
+			                            </tr>
+		                            </c:if>
+		                            
+	                            </c:forEach>
+                        	</c:forEach>
+                        	
                         </tbody>
                     </table>
+                    
                     <div style="height: 100px;"></div>
                     <table id="bill_delivery">
                         <thead>
@@ -157,7 +172,7 @@
                             </tr>
                         </thead>
                         <tbody>
-	                        <tr style="height: 10px!important;"></tr>
+	                        <tr style="height: 30px!important;"></tr>
 	                        <tr>
 	                            <td>이름</td>
 	                        </tr>
@@ -237,21 +252,30 @@
                                 	<thead>
                                         <tr>
                                             <td>총 제품 금액</td>
-                                            <th>24,000 원</th>
+                                            <th id="total"></th>
                                         </tr>
+                                        <!-- 정기구독 여부 Y 일 경우에만 보이기 -->
                                         <tr>
                                             <td>정기 구독 10% 할인</td>
-                                            <th>4,800 원</th>
+                                            <th id="discount"></th>
                                         </tr>
                                         <tr>
                                             <td>배송비</td>
-                                            <th>0원</th>
+                                            <!-- 정기구독 여부 N 이고 5만원 미만일 때만 -->
+                                            <c:choose>
+                                            	<c:when test="">
+                                            		<th>3,000 원</th>
+                                            	</c:when>
+                                            	<c:otherwise>
+                                            		<th>0 원</th>
+                                            	</c:otherwise>
+                                            </c:choose>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	<tr>
                                     		<td>최종 결제 금액</td>
-                                    		<th>19,200 원</th>
+                                    		<th id="finalprice"></th>
                                     	</tr>
                                     </tbody>
                                     <tfoot>
@@ -264,9 +288,28 @@
                         </tbody>
                     </table>
                     
+                    <script>
+	                    $(function() {
+				        	
+				        	var prices = $('.prices').text().split(' 원');
+				        	var total = 0;
+				        	
+				        	for(var i = 0; i < prices.length - 1; i++) {
+				        		total += parseInt(prices[i].replace(',', ''));
+				        	}
+				        	
+				        	var discount = total * 0.1;
+				        	
+				        	$('#total').text(total.toLocaleString('ko-KR') + ' 원');
+				        	$('#discount').text('- ' + discount.toLocaleString('ko-KR') + ' 원');
+				        	$('#finalprice').text((total - discount).toLocaleString('ko-KR') + ' 원');
+				        	
+				        }); 
+                    </script>
+                    
                     <div id="bill_btn" align="center">
                     	<c:choose>
-                    		<c:when test="${ empty loginUser }">
+                    		<c:when test="${ not empty loginUser }">
                     			<!-- 정기결제 -->
                     			<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#subscription">구독하기</button>
                     			
@@ -330,49 +373,60 @@
     <script>
     	function regular() {
     		
-    		var orderNo = new Date().getTime() + (parseInt(Math.random() * 90000) + 10000);
-    		
-    		IMP.init("imp00813715"); // 가맹점 식별코드 초기화
-    		
-    		// IMP.request_pay(param, callback)
-    		IMP.request_pay({ // param
-    			pg: "nice", // PG사 코드값
-    			pay_method: "card", // 결제방법
-    			merchant_uid: orderNo, // 가맹점 주문번호 (중복X, 한 주문번호로 재결제 불가)
-    			name: "상품명", // 결제창에 노출될 상품명 (16자 이내 권장), 0번째 인덱스 상품명 + 외 n개
-    			amount: 100, // 결제할 금액
-    			// buyer_name: "${ loginUser.memberName }", // 구매자 이름
-    			// buyer_email: "${ loginUser.email }" // 구매자 이메일
-    		}, rsp => { // callback
+    		if($("#address1").val().length != 0) {
     			
-    			if(rsp.success) { // 결제 성공
-    				
-    				// ORDERS 테이블에 추가
-    				$.ajax({
-    					url: "insert.or",
-    					data: {
-    						orderNo: rsp.merchant_uid,
-    						orderDate: rsp.paid_at,
-    						orderPrice: rsp.paid_amount,
-    						orderReceipt: rsp.receipt_url
-    					},
-    					type: "post",
-    					success: result => {
-    						
-    						// alert
-    						// 주문완료 창으로 포워딩
-    					},
-    					error: () => {
-    						
-    						// error 페이지
-    					}
-    				});
-    				
-    			} else { // 결제 실패
-    				
-    				
-    			}
-    		});
+    			var date = moment(new Date()).format('YYYYMMDDHHmmss');
+	    		var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
+	    		var address = '(' + $("#address_zip").val() + ') ' + $("#address1").val() + ' ' + $("#address2").val();
+	    		
+	    		IMP.init("imp00813715"); // 가맹점 식별코드 초기화
+	    		
+	    		// IMP.request_pay(param, callback)
+	    		IMP.request_pay({ // param
+	    			pg: "nice", // PG사 코드값
+	    			pay_method: "card", // 결제방법
+	    			merchant_uid: orderNo, // 가맹점 주문번호 (중복X, 한 주문번호로 재결제 불가)
+	    			name: $("#product_name").text() + ' 외 1개', // 결제창에 노출될 상품명 (16자 이내 권장), 0번째 인덱스 상품명 + 외 n개
+	    			amount: 100, // 결제할 금액
+	    			buyer_name: "${ loginUser.memberName }", // 구매자 이름
+	    			buyer_email: "${ loginUser.email }" // 구매자 이메일
+	    		}, rsp => { // callback
+	    			
+	    			if(rsp.success) { // 결제 성공
+	    				
+	    				// ORDERS 테이블에 추가
+	    				$.ajax({
+	    					url: "insert.or",
+	    					data: {
+	    						orderNo: rsp.merchant_uid,
+	    						orderDate: date,
+	    						orderPrice: rsp.paid_amount,
+	    						orderReceipt: rsp.receipt_url,
+	    						subsStatus: 'N',
+	    						address: address
+	    					},
+	    					type: "post",
+	    					success: result => {
+	    						
+	    						if(result == "success") {
+	    							location.href = "paid?ono=" + rsp.merchant_uid; 
+	    						}
+	    					},
+	    					error: () => {
+	    						console.log("insert.or ajax 통신 실패");
+	    					}
+	    				});
+	    				
+	    			} else { // 결제 실패
+	    				
+	    				alert("결제에 실패했습니다.");
+	    				location.href("cart.or");
+	    			}
+	    		});
+    		} else {
+    			alert("배송지 정보를 입력해주세요.");
+    			setTimeout(() => {$("#address_zip").focus();}, 1);
+    		}
     	}
     	
 		function subscription() {
@@ -385,6 +439,7 @@
 					
 					var token = result;
 					var orderNo = new Date().getTime() + (parseInt(Math.random() * 90000) + 10000);
+					var address = '(' + $("#address_zip").val() + ') ' + $("#address1").val() + ' ' + $("#address2").val();
 					
 					// 빌링키 발급, 저장 동시에 첫 결제
 					$.ajax({
@@ -403,6 +458,30 @@
 							
 							console.log(result);
 							console.log(result.response.paid_at)
+							
+							// ORDERS 테이블에 추가
+		    				$.ajax({
+		    					url: "insert.or",
+		    					data: {
+		    						orderNo: result.response.merchant_uid,
+		    						orderDate: date,
+		    						orderPrice: result.response.paid_amount,
+		    						customerUid: result.response.customer_uid,
+		    						orderReceipt: result.response.receipt_url,
+		    						subsStatus: 'Y',
+		    						address: address
+		    					},
+		    					type: "post",
+		    					success: result => {
+		    						
+		    						if(result == "success") {
+		    							location.href = "paid?ono=" + rsp.merchant_uid; 
+		    						}
+		    					},
+		    					error: () => {
+		    						console.log("insert.or ajax 통신 실패");
+		    					}
+		    				});
 							
 							// 결제 예약
 							$.ajax({

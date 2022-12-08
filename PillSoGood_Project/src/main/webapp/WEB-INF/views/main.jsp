@@ -241,7 +241,7 @@
                             건강 설문 시작하기
                         </button>
                     </div>
-                    <img src="resources/Does L-Glutamine Help You Lose Weight_.png">
+                    <img src="">
                 </div>
 
 
@@ -491,7 +491,7 @@
                                     <td>
                                         <div id="el1" align="center">
                                             <div>
-                                                <img src="resources/IMG_1528.jpg" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
+                                                <img src="" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
                                             </div>
                                             <h6 style="padding-top: 25px;">정기구독 10회차</h6>
                                             <p style="color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;">뭘 먹어야할지 헤메던 제게, <br> 딱 맞는 영양제를 찾아줬어요!</p>
@@ -500,7 +500,7 @@
                                     <td>
                                         <div id="el1" align="center">
                                             <div>
-                                                <img src="resources/IMG_1528.jpg" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
+                                                <img src="" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
                                             </div>
                                             <h6 style="padding-top: 25px;">정기구독 7회차</h6>
                                             <p style="color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;"> 여러군데에서 찾기 귀찮았는데 <br> 한번에 사니 편리해요 </p>
@@ -509,7 +509,7 @@
                                     <td>
                                         <div id="el1" align="center">
                                             <div>
-                                                <img src="resources/IMG_1528.jpg" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
+                                                <img src="" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
                                             </div>
                                             <h6 style="padding-top: 25px;">정기구독 13회차</h6>
                                             <p style="color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;"> 과다섭취를 걱정했는데 <br> 알맞게 구성해주니 좋아요 </p>
@@ -518,7 +518,7 @@
                                     <td>
                                         <div id="el1" align="center">
                                             <div>
-                                                <img src="resources/IMG_1528.jpg" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
+                                                <img src="" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
                                             </div>
                                             <h6 style="padding-top: 25px;">정기구독 10회차</h6>
                                             <p style="color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;"> 이젠 챙겨먹는게 <br> 습관이 됐어요 </p>
@@ -552,7 +552,7 @@
                         <table style="width: 1000px;" align="center">
                             <tr>
                                 <td rowspan="6" style="width: 60%; vertical-align: top; padding-right: 30px; padding-top: 30px;" align="center" >
-                                    <img src="resources/Eat Spoonful Of Mustard After You Eat And Feel The Surprising Effects - Here's The Info You Need.png" style="width:100%; height: 350px;">
+                                    <img src="" style="width:100%; height: 350px;">
                                     <p style="text-align: left; width: 100%;">
                                         <a href="" style="text-decoration: none; color:rgb(40, 40, 40);">
                                             <b style="padding-top: 20px; display: block; font-size: 20px;">속 쓰릴때 도움되는 영양제</b> 
@@ -564,7 +564,7 @@
                                 </td>
                                 <tr>
                                     <td style="width: 100%; height: 200px; vertical-align: top; padding-top: 30px;">
-                                        <img src="resources/image/newslettermain2.png" style="width:100%; height: 200px;">
+                                        <img src="" style="width:100%; height: 200px;">
                                     </td>
                                 </tr>
                                 <tr>
@@ -575,7 +575,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 100%; height: 200px; vertical-align: top; padding-top: 30px;">
-                                        <img src="resources/image/newslettermain5.png" style="width:100%; height: 200px;">
+                                        <img src="" style="width:100%; height: 200px;">
                                     </td>
                                 </tr>
                                 <tr>

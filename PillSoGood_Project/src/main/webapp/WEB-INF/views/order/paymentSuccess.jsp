@@ -75,6 +75,7 @@
                         <i class="fa-sharp fa-solid fa-circle-check" ></i>
                     </div>
                     <div align="center" id="completeMsg">
+                    	주문번호 : ${ ono } <br>
                         상품 결제가 <br> 
                         완료 되었습니다!
                     </div>
