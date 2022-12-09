@@ -392,6 +392,22 @@
 	    			buyer_email: "${ loginUser.email }" // 구매자 이메일
 	    		}, rsp => { // callback
 	    			
+	    			console.log(rsp);
+	    			
+	    			$.ajax({
+	    				type: "post",
+	    				url: "/pill/verifyIamport/" + rsp.imp_uid
+	    			}).done(data => {
+	    				
+	    				console.log(data);
+	    				if(rsp.paid_amount == data.response.amount) {
+	    					alert("성공");
+	    				} else {
+	    					alert("실패");
+	    				}
+	    			});
+	    			
+	    		/*
 	    			if(rsp.success) { // 결제 성공
 	    				
 	    				// ORDERS 테이블에 추가
@@ -422,6 +438,7 @@
 	    				alert("결제에 실패했습니다.");
 	    				location.href("cart.or");
 	    			}
+	    		*/
 	    		});
     		} else {
     			alert("배송지 정보를 입력해주세요.");
@@ -433,21 +450,24 @@
 			
 			// REST API token 발급
 			$.ajax({
-				url: "token.do",
+				url: "/pill/users/getToken",
 				type: "post",
 				success : result => {
+					
+					console.log(result);
 					
 					var token = result;
 					var orderNo = new Date().getTime() + (parseInt(Math.random() * 90000) + 10000);
 					var address = '(' + $("#address_zip").val() + ') ' + $("#address1").val() + ' ' + $("#address2").val();
 					
+					/*
 					// 빌링키 발급, 저장 동시에 첫 결제
 					$.ajax({
 						url: "billing.do",
 						type: "post",
 						data: {
 			    			name: "상품명",
-			    			amount: 100,
+			    			amount: parseInt($('#finalprice').text()),
 			    			token: token,
 							card_number: $("#card_number").val(),
 							expiry: $("#expiry").val(),
@@ -509,6 +529,7 @@
 							console.log("billing ajax 통신 실패");
 						}
 					});
+					*/
 					
 					// 빌링키 발급 및 저장 customer_uid
 					/*

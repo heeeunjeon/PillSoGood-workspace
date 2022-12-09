@@ -9,18 +9,25 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.kh.pill.member.model.vo.Member;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.AccessToken;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 
 @Controller
 public class APIController {
@@ -29,45 +36,18 @@ public class APIController {
 	public static final String IMP_SECRET = "OCjfwc1lxL1LMNxWqq38WJceT8I24xn8k1e6UGT23s9nxtmFtMouX70Sk09YOR2S3OXI578aeko6jxIB";
 	public static final String TOKEN_URL = "https://api.iamport.kr/users/getToken";
 	
+	private IamportClient client = new IamportClient(IMP_KEY, IMP_SECRET);
+	
 	@ResponseBody
-	@RequestMapping(value="token.do", produces="text/html; charset=UTF-8")
-	public String token() throws IOException {
-		
-		URL requestUrl = new URL(TOKEN_URL);
-		
-		HttpURLConnection urlConnection = (HttpURLConnection)requestUrl.openConnection();
-		
-		urlConnection.setRequestMethod("POST");
-		
-		urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-		urlConnection.setRequestProperty("Accept", "application/json");
-		urlConnection.setDoOutput(true);
-		
-		JSONObject jObj = new JSONObject();
-		jObj.put("imp_key", IMP_KEY);
-		jObj.put("imp_secret", IMP_SECRET);
-		
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream()));
-		bw.write(jObj.toString());
-		bw.flush();
-		bw.close();
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-		
-		Gson gson = new Gson();
-		
-		// fromJson(jsonString, javaObject.class)
-		// JSON 형태의 String 을 지정한 클래스타입으로 변환
-		String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
-		// System.out.println(response);
-		// {access_token=c6634707b4cf3538938e38d767ec2ab8448451b3, now=1.669885794E9, expired_at=1.669887594E9}
-		
-		String token = gson.fromJson(response, Map.class).get("access_token").toString();
-		
-		br.close();
-		urlConnection.disconnect();
-		
-		return token;
+	@RequestMapping(value="/verifyIamport/{imp_uid}")
+	public IamportResponse<Payment> verifyIamportPOST(@PathVariable(value = "imp_uid") String imp_uid) throws IamportResponseException, IOException {
+	    return client.paymentByImpUid(imp_uid);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/users/getToken")
+	public IamportResponse<AccessToken> getToken() throws IamportResponseException, IOException {
+	    return client.getAuth();
 	}
 	
 	/*
@@ -249,8 +229,15 @@ public class APIController {
 	}
 	
 	
-	
-	
+	@PostMapping(value="/iamport/webhook", produces="application/json; charset=UTF-8;")
+	public void webhookTest(@RequestBody HashMap<String,Object> webhook_param) {
+		
+		System.out.println(webhook_param);
+		
+		String merchantUid = webhook_param.get("merchant_uid").toString();
+		
+		System.out.println(merchantUid);
+	}
 	
 	
 	
