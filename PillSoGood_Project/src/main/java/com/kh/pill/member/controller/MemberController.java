@@ -172,23 +172,44 @@ public class MemberController {
 
 		return (count > 0) ? "NNNNN" : "NNNNY";
 	}
-	
-	@RequestMapping("findIdForm.me")
-	public String findIdForm() {
+
+	@RequestMapping("idFindForm.me")
+	public String idFindForm() {
 		
-		return "member/findIdForm";
+		return "member/idFindForm";
 	}
 
 
-	@ResponseBody
-	@RequestMapping("findId")
-		public String findId(String memberName, String email) {
+	@RequestMapping(value="idFind.me")
+	public String idFind(String memberName, String email, HttpSession session, Model model) {
 		
-		String result = memberService.findId(memberName, email);
+		//System.out.println(memberName);
+		//System.out.println(email);
+		HashMap <String, String> map = new HashMap<>();
+		map.put("memberName", memberName);
+		map.put("email", email);
 		
-		return result;
+		
+		//System.out.println(map);
+		String findId = memberService.findId(map);
+		//System.out.println(findId);
+			
+		if (findId == null) {
+			
+			session.setAttribute("alertMsg", "입력하신 정보의 해당 아이디가 없습니다. 다시 입력해주세용.");
+			
+			return "member/idFindForm";
+			
+		} else {
+			
+			model.addAttribute("findId", findId);
+			
+			return "member/idFindFormCongrats";
+			
+		}
+
 	}
-	
+
 }
 
 

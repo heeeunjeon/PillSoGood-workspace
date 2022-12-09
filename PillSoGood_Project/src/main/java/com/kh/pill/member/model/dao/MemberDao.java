@@ -38,8 +38,16 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.idCheck", checkId);
 	}
 
+	public String findId(SqlSessionTemplate sqlSession, Map<String, String> map) {
 
-
+		return sqlSession.selectOne("memberMapper.idFind", map);
+	}
+	/*
+	public boolean emailCheck(SqlSessionTemplate sqlSession, String email) {
+		
+		return sqlSession.selectOne("memberMapper.emailCheck", email);
+	}
+	*/
 }
 
 

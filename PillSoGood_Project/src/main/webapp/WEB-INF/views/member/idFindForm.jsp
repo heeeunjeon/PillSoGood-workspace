@@ -10,20 +10,19 @@
 <style>
 
     div {
-        border : 1px solid #78C2AD;
         box-sizing : border-box;
     }
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%; 
+        width: 98%;
         height: 1530px;
         margin : auto;
     }
 
     .wrap>div { width : 100%; }
 
-    #navigator2 { height: 100px; }
+    #navigator2 { height: 0px; }
 
     #content { height: 1000px; }
     #content_2>div { width: 100%; }
@@ -31,7 +30,7 @@
     #content_2_2 { height: 80%; float: left; }
     #content_2_3 { height: 10%; float: left; }
 
-    #header { height: 130px; }
+    #header { height: 0px; }
 
     #content_2_1>p {
         font-size: 35px;
@@ -51,7 +50,7 @@
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
     /* 여기부터는 내가 준 스타일 영역 */
-    #success_id_main_text {
+    #search_id_main_text {
         font-size: 35px;
         color : rgb(40, 40, 40);
         font-weight: bold;
@@ -59,7 +58,7 @@
         text-align: center;
     }
 
-    #success_id_text {
+    #search_id_text {
         color : rgb(40, 40, 40);
         display: inline-block;
         padding-top: 30px;
@@ -68,34 +67,25 @@
         text-align: center
     }
 
-    #successId {
-        background-color: lightgrey;
-        color : rgb(40, 40, 40);
-        border-radius: 10px;
-        width: 400px;
+    #searchId {
+        padding: 30px;
+        margin-top: -30px;
+        box-sizing : border-box;
+        width: 100%;
+        display: inline-block;
+    }
+
+    #searchId table {
         height: 100px;
-        margin: auto;
-        text-align: center;
-        vertical-align: middle;
-        margin-top: 30px;
-        margin-bottom: 30px;
-    }
-
-    #successId>p {
-        margin-top: 33px;
-    }
-
-
-    #checkicon {
-        color: #78C2AD;
+        color : rgb(40, 40, 40);
+        
     }
     
 
 
 
-
-
 </style>
+
 
 </head>
 <body>
@@ -107,26 +97,42 @@
         <div id="content">
             <div id="content_1"></div>
             <div id="content_2">
-                <div id="content_2_1">
+                <div id="content_2_1" style="height: 100px;">
                     <p></p>
                 </div>
                 <div id="content_2_2">
-                    <div id="success_id_main_text">
-                        <i class="fa-sharp fa-solid fa-circle-check" id="checkicon"></i> <br>
-                        		아이디 찾기 성공
-                    </div>
-                    <div id="success_id_text">
-                        		입력하신 정보와 <br>
-                      		  일치하는 아이디를 찾았습니다.
+                    <div id="search_id_main_text">아이디 찾기</div>
+                    <div id="search_id_text">
+			                        회원가입때 등록하신 <br>
+			                        이름과 이메일을 입력해주세요.
                     </div>
                     
-                    <div id="successId">
-                        <p>${m.getMemberId}</p>
-                    </div>
+                    <form action="idFind.me" method="post">
+                        <div id="searchId" >
+                            <table align="center">
+                                <tr>
+                                    <th width="80px">이름</th>
+                                    <td>
+                                        <input class="form-control" type="text" placeholder="이름 입력" maxlength="10" size="30" id="memberName" name="memberName" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>이메일</th>
+                                    <td>
+                                        <input type="text" class="form-control" placeholder="이메일 입력" maxlength="20" id="email" name="email" required>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-                    <div align="center">
-                        <button class="btn btn-secondary" style="width: 400px; height: 50px;" href="loginForm.me">로그인</button>
-                    </div>
+                        <div></div>
+
+                        <div align="center">
+                            <button class="btn btn-secondary" style="width: 400px; height: 50px;" id="findIdbtn">다음</button>
+                        </div>
+
+					 </form>
+
                 </div>
                 <div id="content_2_3"></div>
             </div>

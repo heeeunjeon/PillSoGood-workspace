@@ -70,15 +70,15 @@
 	<select id="idCheck" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
-		WHERE MEMBER_ID = #{memberId}
+		WHERE MEMBER_ID = #{checkId}
 	</select>
 	
-	<select id="findId" parameterType="string" resultType="_int">
+	<select id="idFind" parameterType="hashmap" resultType="string">
 		SELECT MEMBER_ID
 		FROM MEMBER
-		WHERE MEMBER_NAME = #{userName}
-		  AND EMAIL = #{email}
-		  AND MEMBER_STATUS = 'Y'
+	   WHERE MEMBER_NAME = #{memberName}
+		 AND EMAIL = #{email}
+		 AND MEMBER_STATUS = 'Y'
 	</select>
 
 

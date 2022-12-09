@@ -1,7 +1,6 @@
 package com.kh.pill.member.model.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +52,17 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String findId(String memberName, String email) {
-	
-		return memberDao.findId(sqlSession, memberName, email);
+	public String findId(Map<String, String> map) {
+
+		return memberDao.findId(sqlSession, map);
 	}
 
+	/*
+	@Override
+	public boolean emailCheck(String email) {
+		
+		return memberDao.emailCheck(sqlSession, email);
+	}
+	*/
 
 }

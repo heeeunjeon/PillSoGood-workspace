@@ -1,6 +1,6 @@
 package com.kh.pill.member.model.service;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import com.kh.pill.member.model.vo.Member;
 
@@ -20,7 +20,11 @@ public interface MemberService {
 	
 	// 아이디중복체크 서비스 (select)
 	int idCheck(String checkId);
+
+	// 이메일 중복 체크
+	//boolean emailCheck(String email);
 	
-	// 아이디 찾기 (select)
-	String findId(String memberName, String email);
+	// 아이디 찾기
+	String findId(Map<String, String> map);
+	
 }
