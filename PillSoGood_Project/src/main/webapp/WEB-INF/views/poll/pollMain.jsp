@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,6 +98,19 @@
     .textForm { height: 65%; }
 
 
+		
+	input[type="date"]::-webkit-inner-spin-button,
+	input[type="date"]::-webkit-calendar-picker-indicator {
+	    display: none;
+	    -webkit-appearance: none;
+	}
+	
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+	    -webkit-appearance: none;
+	    margin: 0;
+	}
+	
 
 </style>
 
@@ -128,7 +143,7 @@
                         <div class="text"><p>PillSoGood 과 함께 건강 설문 시작하기</p></div>
                         <div class="surveyBtn">
                             <div align="center">
-                                <button type="button" class="btn btn-secondary btn-lg" onclick="nextSurvey(2);" style="width: 200px">설문 시작</button>
+                                <button type="button" class="btn btn-secondary btn-lg" onclick="nextSurvey(2); insertPoll();" style="width: 200px">설문 시작</button>
                             </div>
                         </div>
                     </div>
@@ -141,16 +156,17 @@
                             <table align="center">
                                 <tr>
                                     <th width="80">생년월일</th>
-                                    <td  width="100"><input type="number" class="form-control" style="width: 10;" required></td>
+                                    <td  width="100"><input type="date" class="form-control" style="width: 10;" id="memberBirthYear" name="memberBirthYear" required max='9999-12-31'></td>
+                                    
                                 </tr>
                                 <tr>
                                     <th>키</th>
-                                    <td width="100"><input type="number" class="form-control" id="memberHeight" required></td>
+                                    <td width="100"><input type="number" class="form-control" id="height" name="height" required maxlength="3"></td>
                                     <td width="40">cm</td>
                                 </tr>
                                 <tr>
                                     <th>몸무게</th>
-                                    <td><input type="number" class="form-control" id="memberWeight" required></td>
+                                    <td><input type="number" class="form-control" id="weight" name="weight" required maxlength="3"></td>
                                     <td>kg</td>
                                 </tr>
                                 <tr>
@@ -165,7 +181,7 @@
                             </table>
                             <div class="surveyBtn">
                                 <div align="center">
-                                    <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(3);">다음</button>
+                                    <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(3); updateMember();">다음</button>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +217,7 @@
                         </div>
                         <div class="surveyBtn">
                             <div align="center">
-                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(4,$('input[name=survey3Answer]:checked').val());">다음</button>
+                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(4,$('input[name=survey3Answer]:checked').val(),1);">다음</button>
                             </div>
                         </div>
                     </div>
@@ -237,7 +253,7 @@
                         </div>
                         <div class="surveyBtn">
                             <div align="center">
-                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(5,$('input[name=survey4Answer]:checked').val());">다음</button>
+                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(5,$('input[name=survey4Answer]:checked').val(),4);">다음</button>
                             </div>
                         </div>
                     </div>
@@ -273,7 +289,7 @@
                         </div>
                         <div class="surveyBtn">
                             <div align="center">
-                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(6,$('input[name=survey5Answer]:checked').val());">다음</button>
+                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(6,$('input[name=survey5Answer]:checked').val(),13);">다음</button>
                             </div>
                         </div>
                     </div>
@@ -282,24 +298,24 @@
 
                     <!-- 6번 -->
                     <div id="survey6" style="display:none;">
-                        <div class="text"><p><span style="color: #F3969A">스트레스</span>에 대해 해당되는 내용을 선택해 주세요.</p></div>
+                        <div class="text"><p><span style="color: #F3969A">식습관</span>에 대해 해당되는 내용을 선택해 주세요.</p></div>
                         <div class="textForm">
                             <table align="center">
                                 <tr>
                                     <td width="30px"><input class="form-check-input" type="radio" name="survey6Answer" id="answer6_1" value="1"></td>
-                                    <td><label class="form-check-label" for="answer6_1">평소 신경이 예민해 잠들기가 어렵고 자는 중에 자주 깨는 편이다.</label></td>
+                                    <td><label class="form-check-label" for="answer6_1">빵, 떡, 면종류 등 탄수화물이 많은 음식을 자주 먹는다. (하루에 2회 이상)</label></td>
                                 </tr>
                                 <tr>
                                     <td><input class="form-check-input" type="radio" name="survey6Answer" value="2" id="answer6_2"></td>
-                                    <td><label class="form-check-label" for="answer6_2">최근 가슴이 두근거리는 증상이 잦고, 신경이 날카로워 졌다는 말을 자주 듣는다.</label></td>
+                                    <td><label class="form-check-label" for="answer6_2">폭식과 과식이 잦고, 스트레스를 주로 음식으로 해소하는 편이다.</label></td>
                                 </tr>
                                 <tr>
                                     <td><input class="form-check-input" type="radio" name="survey6Answer" value="3" id="answer6_3"></td>
-                                    <td><label class="form-check-label" for="answer6_3">과로와 폭언 등 스트레스를 받는 환경에 자주 노출되는 편이다.</label></td>
+                                    <td><label class="form-check-label" for="answer6_3">평소 섭취하는 음식량을 줄여도 체중을 감량하기 힘들다.</label></td>
                                 </tr>
                                 <tr>
                                     <td><input class="form-check-input" type="radio" name="survey6Answer" value="4" id="answer6_4"></td>
-                                    <td><label class="form-check-label" for="answer6_4">특별한 이유 없이 자주 불안하거나 우울한 기분이 든다.</label></td>
+                                    <td><label class="form-check-label" for="answer6_4">꾸준한 운동을 하고 있으나, 눈에 띄는 체중의 변화가 없다.</label></td>
                                 </tr>
                                 <tr>
                                     <td><input class="form-check-input" type="radio" name="survey6Answer" value="5" id="answer6_5"></td>
@@ -309,7 +325,7 @@
                         </div>
                         <div class="surveyBtn">
                             <div align="center">
-                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(7,$('input[name=survey6Answer]:checked').val());">다음</button>
+                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(7,$('input[name=survey6Answer]:checked').val(),8);">다음</button>
                             </div>
                         </div>
                     </div>
@@ -344,7 +360,7 @@
                         </div>
                         <div class="surveyBtn">
                             <div align="center">
-                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(8,$('input[name=survey7Answer]:checked').val());">다음</button>
+                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(8,$('input[name=survey7Answer]:checked').val(),16);">다음</button>
                             </div>
                         </div>
                     </div>
@@ -378,7 +394,7 @@
                         </div>
                         <div class="surveyBtn">
                             <div align="center">
-                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(9,$('input[name=survey8Answer]:checked').val());">다음</button>
+                                <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(9,$('input[name=survey8Answer]:checked').val(),6);">다음</button>
                             </div>
                         </div>
                     </div>
@@ -386,24 +402,24 @@
 
                    <!-- 9번 -->
                    <div id="survey9" style="display:none;">
-                    <div class="text"><p><span style="color: #F3969A">두뇌건강</span>에 대해 해당되는 내용을 선택해 주세요.</p></div>
+                    <div class="text"><p><span style="color: #F3969A">피부건강</span>에 대해 해당되는 내용을 선택해 주세요.</p></div>
                     <div class="textForm">
                         <table align="center">
                             <tr>
                                 <td width="30px"><input class="form-check-input" type="radio" name="survey9Answer" id="answer9_1" value="1"></td>
-                                <td><label class="form-check-label" for="answer9_1">은행 비밀번호나 현관문 키번호 등이 생각이 나지 않는 경우가 잦아졌다</label></td>
+                                <td><label class="form-check-label" for="answer9_1">피부가 건조하여 거칠고 각질이 많이 생기는 편이다.</label></td>
                             </tr>
                             <tr>
                                 <td><input class="form-check-input" type="radio" name="survey9Answer" value="2" id="answer9_2"></td>
-                                <td><label class="form-check-label" for="answer9_2">최근 일어난 일에 대해 빨리 생각 나지 않을 때가 많다.</label></td>
+                                <td><label class="form-check-label" for="answer9_2">최근 피부의 윤기와 탄력이 줄어, 주름이 많아졌다는 느낌을 종종 받는다.</label></td>
                             </tr>
                             <tr>
                                 <td><input class="form-check-input" type="radio" name="survey9Answer" value="3" id="answer9_3"></td>
-                                <td><label class="form-check-label" for="answer9_3">집안일이나 업무 등 집중하는 시간이 줄어들고 능력이 떨어진 느낌이 든다.</label></td>
+                                <td><label class="form-check-label" for="answer9_3">평소 스킨이나 로션을 바를때, 흡수가 잘 되지 않고 잘 발리지 않아 불편하다.</label></td>
                             </tr>
                             <tr>
                                 <td><input class="form-check-input" type="radio" name="survey9Answer" value="4" id="answer9_4"></td>
-                                <td><label class="form-check-label" for="answer9_4">평소에 쉽게 하던 고스톱이나 게임 등을 하는데 어려움을 느낄 때가 많다.</label></td>
+                                <td><label class="form-check-label" for="answer9_4">피부건강을 관리하고 싶으나 무엇을 해야 할 지 잘 모르겠다.</label></td>
                             </tr>
                             <tr>
                                 <td><input class="form-check-input" type="radio" name="survey9Answer" value="5" id="answer9_5"></td>
@@ -413,7 +429,7 @@
                     </div>
                     <div class="surveyBtn">
                         <div align="center">
-                            <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(10,$('input[name=survey9Answer]:checked').val());">다음</button>
+                            <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(10,$('input[name=survey9Answer]:checked').val(),14);">다음</button>
                         </div>
                     </div>
                 </div>
@@ -447,7 +463,7 @@
                     </div>
                     <div class="surveyBtn">
                         <div align="center">
-                            <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(11,$('input[name=survey10Answer]:checked').val()); fowardResult();">다음</button>
+                            <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(11,$('input[name=survey10Answer]:checked').val(),5); fowardResult();">다음</button>
                         </div>
                     </div>
                 </div>
@@ -496,9 +512,12 @@
 
         var progressValue = 20;
 
-        function nextSurvey(num, surveyAnswer) {
-
-            if(num == 3 && $("#memberHeight").val()==0) {
+        function nextSurvey(num, surveyAnswer, productNo) {
+        	
+			if(num==2 && "<c:out value='${loginUser.memberId}'/>" == "<c:out value=''/>") {
+				alert("로그인이 필요한 서비스 입니다.");
+				return false;
+			} else if(num == 3 && $("#memberHeight").val()==0) {
                 
                 alert("키를 입력해주세요");
                 return false;
@@ -549,19 +568,24 @@
                 alert("답안을 선택해주세요");
                 return false;
             }
+			
+			if((num > 3) && (surveyAnswer == 1 || surveyAnswer == 2)) {
+				
+				insertResultType1(productNo);
+			} else if ((num > 3) && (surveyAnswer == 3 || surveyAnswer == 4)) {
+				
+				insertResultType2(productNo);
+			}
 
             
 
             
 
-            // if(num <= 3) {
-            //     var progress = (num * 5)+'%';    
-            // } else if(num >= 4) {
                 progress = progressValue + '%';
 
                 progressValue=progressValue+10;
-            // }
 
+			
 
             
             
@@ -573,6 +597,99 @@
             $("#surveyProgressBar").css("width",progress);
 
         };
+        
+        var pollNo = 0;
+        function insertPoll() {
+        	
+        	if(${loginUser.memberId != null}){
+	        	$.ajax({
+	        		url : "insertPoll.po",
+	        		data : {
+	        			
+	     	  			memberNo : ${ loginUser.memberNo }
+	        			
+	        		},
+	        		success : function(result) {
+	        			
+	        			pollNo = result.pollNo;
+	        			
+	        		},
+	        		error : function() {
+	        			console.log("pollMain insertPoll ajax failure");
+	        		}
+	        		
+	        	});
+        	} else {
+        		alert("로그인이 필요한 서비스 입니다.");
+        		return false;
+        	}
+        }
+        
+        function updateMember() {
+        	
+        	$.ajax({
+        		url : "updateMem.po",
+        		data : {
+        			memberNo : ${ loginUser.memberNo},
+        			memberBirthYear : $("#memberBirthYear").val(),
+        			height : $("#height").val(),
+        			weight : $("#weight").val(),
+        			gender : $("input[name=gender]:checked").val()
+        		},
+        		success : function(result) {
+        			
+        		},
+        		error : function() {
+        			console.log("pollMain updateMember ajax failure");
+        		}
+        		
+        	});
+        	
+        }
+        
+        function insertResultType1(productNo) {
+        	
+        	$.ajax({
+        		url : "insertResultType.po",
+        		data : {
+        			pollLevel : 1,
+        			pollNo : pollNo,
+        			productNo : productNo
+       			},
+        		success : function(result) {
+        			
+        		},
+        		error : function() {
+        			
+        			console.log("pollMain insertResultType1 ajax failure");
+        		}
+        		
+        		
+        	});
+        	
+        }
+        
+        function insertResultType2(productNo) {
+        	
+        	$.ajax({
+        		url : "insertResultType.po",
+        		data : {
+        			pollLevel : 2,
+        			pollNo : pollNo,
+        			productNo : productNo
+       			},
+        		success : function(result) {
+        			
+        		},
+        		error : function() {
+        			
+        			console.log("pollMain insertResultType2 ajax failure");
+        		}
+        		
+        		
+        	});
+        	
+        }
 
         function fowardResult() {
             setTimeout(function() {

@@ -106,7 +106,12 @@
             <div id="content_2">
                 <div id="content_2_1">
                     <p>공지사항
-                        <button style="float:right; margin-right: 20px;" onclick="location.href='enrollForm.no'" class="btn btn-primary btn-primary btn-lg">등록</button>
+                    	<c:choose>
+                    		<c:when test="${ loginUser.memberId eq 'admin' }">
+                    			<button style="float:right; margin-right: 20px;" onclick="location.href='enrollForm.no'" class="btn btn-primary btn-primary btn-lg">등록</button>	
+                    		</c:when>
+                    	</c:choose>
+                        
                     </p>
                 </div>
                 <div id="content_2_2">

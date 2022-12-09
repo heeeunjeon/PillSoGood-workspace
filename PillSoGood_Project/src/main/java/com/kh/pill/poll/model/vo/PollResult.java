@@ -18,5 +18,15 @@ public class PollResult {
     private String productNo; // PRODUCT_NO NUMBER
     
     
+    // 결과창 조회 내용
+    private String productName;
+    private String productExplain;
+    private int productPrice;
+    private String productImgPath;
+    private String productEffect;
+    private String productEffectPath;
+    
+    
+    
     
 }

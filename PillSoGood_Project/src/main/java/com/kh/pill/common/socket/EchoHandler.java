@@ -14,7 +14,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-//import com.kh.pill.member.model.vo.Member;
+import com.kh.pill.member.model.vo.Member;
 
 public class EchoHandler extends TextWebSocketHandler {
 	private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
@@ -88,14 +88,14 @@ public class EchoHandler extends TextWebSocketHandler {
 	
 	private String currentUserName(WebSocketSession session) {
 		Map<String, Object> httpSession = session.getAttributes();
-	//	Member loginUser = (Member)httpSession.get("loginUser");
+		Member loginUser = (Member)httpSession.get("loginUser");
 		
-//		if(loginUser == null) {
+		if(loginUser == null) {
 			
 			return null;
-//		}
+		}
 
-//		return loginUser.getUserId();
+		return loginUser.getMemberId();
 		
 	}
 }
