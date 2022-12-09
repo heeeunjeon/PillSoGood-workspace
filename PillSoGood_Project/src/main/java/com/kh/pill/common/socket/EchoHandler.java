@@ -26,9 +26,9 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {//클라이언트와 서버가 연결
 		// TODO Auto-generated method stub
-		// logger.info("Socket 연결");
+		logger.info("Socket 연결");
 		sessions.add(session);
-		// logger.info(currentUserName(session));//현재 접속한 사람
+		logger.info(currentUserName(session));//현재 접속한 사람
 		String senderId = currentUserName(session);
 		userSessionsMap.put(senderId,session);
 		
