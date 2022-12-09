@@ -143,6 +143,19 @@
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
+    .prod { background-color: #fef7f8; }
+    /* 배경색 스타일 미리 지정 */
+    
+    .prodback0 { background-color: #fef7f8; }
+    .prodback1 { background-color: #f9faf0; }
+    .prodback2 { background-color: #faf4f1; }
+    .prodback3 { background-color: #fef6ec; }
+    .prodback4 { background-color: #edf7fd; }
+    .prodback5 { background-color: #fef5f4; }
+    .prodback6 { background-color: #fbf7fd; }
+    .prodback7 { background-color: #e9f7f5; }
+    .prodback8 { background-color: #f9f9f9; }
+    
 </style>
 </head>
 <body>
@@ -225,7 +238,7 @@
 								
                             <c:forEach var="p" items="${ list }">
                             <div id="product_1">
-                                <div id="product_1_1" class="prod" style="background-color: #fef7f8; cursor:pointer;">
+                                <div id="product_1_1" class="prod" style="cursor:pointer;">
                                     <div id="productT">
                                         <div id="productTT">
                                         	<input type="hidden" value="${ p.productNo }">
@@ -243,16 +256,27 @@
                                     </div>
                                 </div>
                             </div>
+
                             </c:forEach>
+                            
 
                         </div>
                         
                         <script>
-			            	$(function(){
+			            	$(function() {
 			            		$(".prod").click(function() {
 			            			
 			            			location.href = "detail.pr?pno=" + $(this).children().eq(0).children().eq(0).children().eq(0).val();
 			            		});
+
+                                var $prods = $(".prod");
+
+                                $.each($prods, function(index, prod) {
+
+                                    let indexNum = index % 9;
+
+                                    $(prod).addClass("prodback" + indexNum);
+                                });
 			            	});	
 			            </script>
                         
