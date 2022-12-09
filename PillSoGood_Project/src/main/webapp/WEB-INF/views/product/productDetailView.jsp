@@ -283,8 +283,16 @@
                                         </div>
                                         <div id="btnss">
                                             <div id="wish">
-                                                <img src="resources/images/heart.png" alt="" class="likeControl" id="eventUnLike" style="cursor: pointer;">
-                                                <img src="resources/images/heart2.png" class="likeControl" style="display:none" id="eventLike" style="cursor: pointer;">
+                                            <c:choose>
+	                                            <c:when test="${ count eq 0 }">
+	                                                <img src="resources/images/heart.png" class="likeControl" id="eventUnLike" style="cursor: pointer;">
+	                                                <img src="resources/images/heart2.png" class="likeControl" id="eventLike" style="display:none; cursor: pointer;">
+	                                            </c:when>
+	                                            <c:otherwise>
+	                                                <img src="resources/images/heart2.png" class="likeControl" id="eventLike" style="cursor: pointer;">
+	                                                <img src="resources/images/heart.png" class="likeControl" id="eventUnLike" style="display:none; cursor: pointer;">
+	                                            </c:otherwise>
+                                            </c:choose>
                                             </div>
                                             <div id="btnss_1">
                                                 <div> <!-- 상단의 div 선이 나타나면 버튼이 밀려서 내려가지만 없을땐 가로 배치로 잘 보임 -->
@@ -341,15 +349,45 @@
         }
         
         $(function() {
-            $("#wish").on("click",".likeControl",function() {
-                if ($("#eventLike").css("display") == "none") {
-                    $("#eventLike").show();
-                    $("#eventUnLike").hide();
-                } else {
-                    $("#eventLike").hide();
-                    $("#eventUnLike").show();
-                }
-            });
+        	$("#wish").on("click",".likeControl", function() {
+        		
+        		  if ($("#eventLike").css("display") == "none") {
+        			  
+        			  
+              		$.ajax({
+            			url : "like.pr",
+            			data : {
+            				productNo: ${ p.productNo },
+            				memberNo: ${ loginUser.memberNo }
+            			},
+            			success : function(result) {
+            				 $("#eventLike").show();
+                             $("#eventUnLike").hide();
+            			},
+            			error : function(){
+            				console.log("ajax failure");
+            			}
+            		});
+        			  
+                  } else {
+                	  
+                		$.ajax({
+                			url : "deletelike.pr",
+                			data : {
+                				productNo: ${ p.productNo },
+                				memberNo: ${ loginUser.memberNo }
+                				
+                			},
+                			success : function(result) {
+                                $("#eventLike").hide();
+                                $("#eventUnLike").show();
+                			},
+                			error : function(){
+                				console.log("ajax failure");
+                			}
+                		});
+                  }
+        	});
         });
     </script>
     

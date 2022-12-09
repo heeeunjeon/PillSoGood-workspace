@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.pill.product.model.dao.ProductDao;
 import com.kh.pill.product.model.vo.Product;
+import com.kh.pill.product.model.vo.ProductLike;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -66,6 +67,30 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int updateProduct(Product p) {
 		return productDao.updateProduct(sqlSession, p);
+	}
+
+	/**
+	 * 상품 좋아요 조회
+	 */
+	@Override
+	public int selectProductLike(ProductLike pl) {
+		return productDao.selectProductLike(sqlSession, pl);
+	}
+
+	/**
+	 * 상품 찜하기
+	 */
+	@Override
+	public int deleteProductLike(ProductLike pl) {
+		return productDao.deleteProductLike(sqlSession, pl);
+	}
+
+	/**
+	 * 상품 찜 취소
+	 */
+	@Override
+	public int insertProductLike(ProductLike pl) {
+		return productDao.insertProductLike(sqlSession, pl);
 	}
 
 }

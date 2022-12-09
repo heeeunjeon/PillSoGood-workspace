@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pill.product.model.vo.Product;
+import com.kh.pill.product.model.vo.ProductLike;
 
 @Repository
 public class ProductDao {
@@ -40,4 +41,19 @@ public class ProductDao {
 		return sqlSession.update("productMapper.updateProduct", p);
 	}
 	
+	public int selectProductLike(SqlSessionTemplate sqlSession, ProductLike pl) {
+		int count =  sqlSession.selectOne("productMapper.selectProductLike", pl);
+		System.out.println(count);
+		return count;
+	}
+	
+	public int deleteProductLike(SqlSessionTemplate sqlSession, ProductLike pl) {
+		
+		return sqlSession.delete("productMapper.deleteProductLike", pl);
+	}
+	
+	public int insertProductLike(SqlSessionTemplate sqlSession, ProductLike pl) {
+		
+		return sqlSession.insert("productMapper.insertProductLike", pl);
+	}
 }

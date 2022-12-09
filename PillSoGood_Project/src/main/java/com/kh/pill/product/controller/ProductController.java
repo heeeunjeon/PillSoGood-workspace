@@ -13,12 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.product.model.service.ProductService;
 import com.kh.pill.product.model.vo.Product;
+import com.kh.pill.product.model.vo.ProductLike;
 
 @Controller
 public class ProductController {
@@ -115,11 +118,22 @@ public class ProductController {
 	 * @return
 	 */
 	@RequestMapping("detail.pr")
-	public ModelAndView selectProduct(int pno, ModelAndView mv) {
+	public ModelAndView selectProduct(int pno, ModelAndView mv, HttpSession session) {
 	      
 		// 게시글 조회수 증가용 서비스 호출 결과 받기 (update 하고 오기)
 		int result = productService.increaseCount(pno);
-		  
+		
+		int count = 0;
+		
+		if(session.getAttribute("loginUser") != null) {
+			
+			int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo(); 
+			
+			ProductLike pl = new ProductLike(memberNo, pno);
+			count = productService.selectProductLike(pl);
+		}
+		
+		
 		if(result > 0) { // 성공적으로 조회수 증가가 일어났다면
 		 
 			// 상세조회 요청
@@ -127,6 +141,7 @@ public class ProductController {
 			Product p = productService.selectProduct(pno);
 			 
 			// 조회된 데이터를 담아서 포워딩 
+			mv.addObject("count", count);
 			mv.addObject("p", p).setViewName("product/productDetailView");
 		
 		}
@@ -248,5 +263,32 @@ public class ProductController {
 			return "redirect:/detail.pr?pno=" + p.getProductNo();
 		}
 	}
+	
+	/**
+	 * @param 상품 찜하기
+	 * @param session
+	 */
+	@ResponseBody
+	@RequestMapping("like.pr")
+	public int productLike (ProductLike pl) {
+		
+		int	result = productService.insertProductLike(pl);
+			
+		return result;
+	}
+	
+	/**
+	 * @param 상품 찜 취소
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("deletelike.pr")
+	public int productUnLike (ProductLike pl) {
+		
+		int	result = productService.deleteProductLike(pl);
+			
+		return result;
+	}
+
 	
 }

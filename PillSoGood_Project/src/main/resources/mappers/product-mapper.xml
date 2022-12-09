@@ -15,6 +15,11 @@
 		<result column="PRODUCT_COUNT" property="productCount" />
 	</resultMap>
 	
+	<resultMap id="productLikeResultSet" type="productLike">
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="MEMBER_NO" property="memberNo" />
+	</resultMap>
+	
 	<select id="selectList" resultMap="productResultSet" parameterType="_int">
 		SELECT PRODUCT_NO
 		     , PRODUCT_NAME
@@ -97,6 +102,26 @@
 		    , PRODUCT_DESCRIPTION = #{productDescription}
         WHERE PRODUCT_NO = #{productNo}
     </update>
+    
+    <select id="selectProductLike" parameterType="productLike" resultType="_int">
+		SELECT COUNT(*)
+		  FROM PRODUCT_LIKE
+		 WHERE PRODUCT_NO = #{productNo}
+		   AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	<delete id="deleteProductLike" parameterType="productLike">
+		DELETE
+		  FROM PRODUCT_LIKE
+		 WHERE PRODUCT_NO = #{productNo}
+		   AND MEMBER_NO = #{memberNo}
+	</delete>
+	
+	<insert id="insertProductLike" parameterType="productLike">
+		INSERT INTO PRODUCT_LIKE VALUES (#{memberNo}, #{productNo})
+		 
+	</insert>
+    
     
 
 </mapper>
