@@ -65,7 +65,7 @@
 	
 	
 	/* 배송지 정보 */
-	#bill_delivery>tbody td { padding: 0px 27%; }
+	#bill_delivery>tbody td { padding: 0px 230px; }
 	#bill_delivery>tbody tr { height: 50px; }
 	#bill_delivery .form-control {
 		display: inline-block;
@@ -338,7 +338,7 @@
 													</tr>
 													<tr>
 														<th>비밀번호 앞 두자리</th>
-														<td><input id="pwd_2digit" class="form-control" type="text" maxlength="2" placeholder="XX" pattern="[0-9]{2}"></td>
+														<td><input id="pwd_2digit" class="form-control" type="password" maxlength="2" placeholder="XX" pattern="[0-9]{2}"></td>
 													</tr>
 													<tr>
 														<th colspan="2" style="color: red; font-size: small; height: 80px; text-align: center;">유효하지 않은 카드정보를 입력할 경우 결제가 거절될 수 있습니다.<br>결제 전 확인 부탁드립니다.</th>
@@ -375,9 +375,9 @@
     		
     		if($("#address1").val().length != 0) {
     			
-    			var date = moment(new Date()).format('YYYYMMDDHHmmss');
-	    		var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
-	    		var address = '(' + $("#address_zip").val() + ') ' + $("#address1").val() + ' ' + $("#address2").val();
+   			 	var date = moment(new Date()).format('YYYYMMDDHHmmss');
+   				var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
+   				var amount = parseInt($("#finalprice").text().substring(0, $("#finalprice").text().lastIndexOf(' ')).replace(',', ''));
 	    		
 	    		IMP.init("imp00813715"); // 가맹점 식별코드 초기화
 	    		
@@ -387,58 +387,30 @@
 	    			pay_method: "card", // 결제방법
 	    			merchant_uid: orderNo, // 가맹점 주문번호 (중복X, 한 주문번호로 재결제 불가)
 	    			name: $("#product_name").text() + ' 외 1개', // 결제창에 노출될 상품명 (16자 이내 권장), 0번째 인덱스 상품명 + 외 n개
-	    			amount: 100, // 결제할 금액
+	    			amount: amount, // 결제할 금액
 	    			buyer_name: "${ loginUser.memberName }", // 구매자 이름
-	    			buyer_email: "${ loginUser.email }" // 구매자 이메일
+	    			buyer_email: "${ loginUser.email }", // 구매자 이메일
+	    			buyer_postcode: $("#address_zip").val(),
+	    			buyer_addr: $("#address1").val() + ' ' + $("#address2").val()
 	    		}, rsp => { // callback
-	    			
-	    			console.log(rsp);
 	    			
 	    			$.ajax({
 	    				type: "post",
 	    				url: "/pill/verifyIamport/" + rsp.imp_uid
 	    			}).done(data => {
 	    				
-	    				console.log(data);
 	    				if(rsp.paid_amount == data.response.amount) {
+	    					
 	    					alert("성공");
+	    					location.href = 'paid?ono=' + rsp.merchant_uid; 
+	    				
 	    				} else {
-	    					alert("실패");
+	    					
+	    					alert("결제에 실패했습니다.");
+		    				// 장바구니로?
 	    				}
 	    			});
 	    			
-	    		/*
-	    			if(rsp.success) { // 결제 성공
-	    				
-	    				// ORDERS 테이블에 추가
-	    				$.ajax({
-	    					url: "insert.or",
-	    					data: {
-	    						orderNo: rsp.merchant_uid,
-	    						orderDate: date,
-	    						orderPrice: rsp.paid_amount,
-	    						orderReceipt: rsp.receipt_url,
-	    						subsStatus: 'N',
-	    						address: address
-	    					},
-	    					type: "post",
-	    					success: result => {
-	    						
-	    						if(result == "success") {
-	    							location.href = "paid?ono=" + rsp.merchant_uid; 
-	    						}
-	    					},
-	    					error: () => {
-	    						console.log("insert.or ajax 통신 실패");
-	    					}
-	    				});
-	    				
-	    			} else { // 결제 실패
-	    				
-	    				alert("결제에 실패했습니다.");
-	    				location.href("cart.or");
-	    			}
-	    		*/
 	    		});
     		} else {
     			alert("배송지 정보를 입력해주세요.");
@@ -448,116 +420,45 @@
     	
 		function subscription() {
 			
-			// REST API token 발급
-			$.ajax({
-				url: "/pill/users/getToken",
-				type: "post",
-				success : result => {
-					
-					console.log(result);
-					
-					var token = result;
-					var orderNo = new Date().getTime() + (parseInt(Math.random() * 90000) + 10000);
-					var address = '(' + $("#address_zip").val() + ') ' + $("#address1").val() + ' ' + $("#address2").val();
-					
-					/*
-					// 빌링키 발급, 저장 동시에 첫 결제
-					$.ajax({
-						url: "billing.do",
-						type: "post",
-						data: {
-			    			name: "상품명",
-			    			amount: parseInt($('#finalprice').text()),
-			    			token: token,
-							card_number: $("#card_number").val(),
-							expiry: $("#expiry").val(),
-							birth: $("#birth").val(),
-							pwd_2digit: $("#pwd_2digit").val(),
-						},
-						success : result => {
-							
-							console.log(result);
-							console.log(result.response.paid_at)
-							
-							// ORDERS 테이블에 추가
-		    				$.ajax({
-		    					url: "insert.or",
-		    					data: {
-		    						orderNo: result.response.merchant_uid,
-		    						orderDate: date,
-		    						orderPrice: result.response.paid_amount,
-		    						customerUid: result.response.customer_uid,
-		    						orderReceipt: result.response.receipt_url,
-		    						subsStatus: 'Y',
-		    						address: address
-		    					},
-		    					type: "post",
-		    					success: result => {
-		    						
-		    						if(result == "success") {
-		    							location.href = "paid?ono=" + rsp.merchant_uid; 
-		    						}
-		    					},
-		    					error: () => {
-		    						console.log("insert.or ajax 통신 실패");
-		    					}
-		    				});
-							
-							// 결제 예약
-							$.ajax({
-								url: "schedule.do",
-								type: "post",
-								data: {
-									token: token,
-									customer_uid: result.response.customer_uid,
-									name: result.response.name,
-									amount: result.response.amount,
-									time: result.response.paid_at
-								},
-								success: result => {
-									
-									console.log(result);
-								},
-								error: () => {
-									console.log("schdule ajax 통신 실패");
-								}
-								
-							});
-							
-						},
-						error : () => {
-							console.log("billing ajax 통신 실패");
-						}
-					});
-					*/
-					
-					// 빌링키 발급 및 저장 customer_uid
-					/*
-					$.ajax({
-						url: "billing.do",
-						type: "post",
-						data: {
-							token: token,
-							card_number: $("#card_number").val(),
-							expiry: $("#expiry").val(),
-							birth: $("#birth").val(),
-							pwd_2digit: $("#pwd_2digit").val()
-						},
-						success : result => {
-							
-							console.log(result);
-						},
-						error : () => {
-							console.log("billing ajax 통신 실패");
-						}
-					});
-					*/
-					
-				},
-				error : () => {
-					console.log("token ajax 통신 실패");
-				}
-			});
+			var amount = parseInt($("#finalprice").text().substring(0, $("#finalprice").text().lastIndexOf(' ')).replace(',', ''));
+			amount = 100;
+			
+			if($("#address1").val().length != 0) {
+    			
+   			 	var date = moment(new Date()).format('YYYYMMDDHHmmss');
+   				var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
+			
+				// 빌링키 발급, 저장 동시에 첫 결제
+				$.ajax({
+					url: "subscribe/payments/onetime",
+					type: "post",
+					data: {
+						merchant_uid: orderNo,
+		    			amount: amount,
+		    			name: $("#product_name").text() + ' 외 1개',
+						card_number: $("#card_number").val(),
+						expiry: $("#expiry").val(),
+						birth: $("#birth").val(),
+						pwd_2digit: $("#pwd_2digit").val(),
+						memberId: "${ loginUser.memberId }",
+						memberName: "${ loginUser.memberName }",
+		    			email: "${ loginUser.email }"},
+		    			addressZip: $("#address_zip").val(),
+		    			address1: $("#address1").val(),
+		    			address2: $("#address2").val()
+				}).done(data => {
+						
+					if(data.response.status == 'paid') {
+						
+						// 주문 성공 화면으로 이동
+						location.href = 'paid?ono=' + data.response.merchant_uid; 
+					}
+				});
+						
+			} else {
+    			alert("배송지 정보를 입력해주세요.");
+    			setTimeout(() => {$("#address_zip").focus();}, 1);
+    		}
     	}
     </script>
     
