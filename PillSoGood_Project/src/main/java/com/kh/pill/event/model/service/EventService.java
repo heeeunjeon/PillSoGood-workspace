@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.event.model.vo.Event;
+import com.kh.pill.event.model.vo.EventLike;
 import com.kh.pill.event.model.vo.EventReply;
 
 public interface EventService {
@@ -32,7 +33,24 @@ public interface EventService {
 	
 	// 이벤트 댓글 작성 서비스 (Ajax)
 	int insertReply(EventReply r);
+
+	// 이벤트 좋아요 누른사람 추가 
+	int insertEvtLike(EventLike el);
+
+	// 이벤트 좋아요 조회
+	EventLike selectEventLike(EventLike elList);
+
+	// 이벤트 좋아요 카운트 세는 메소드 
+	int selectEvtLikeCount(int eno);
+
+	// 이벤트 좋아요 카운트 업데이트 
+	int updateEventEvtLikeCount(int eno);
+
+	// 이벤트 좋아요 삭제 
+	int deleteEvtLike(EventLike el);
+
 	
+
 	
 		
 }

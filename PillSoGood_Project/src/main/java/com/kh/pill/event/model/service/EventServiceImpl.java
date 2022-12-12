@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.event.model.dao.EventDao;
 import com.kh.pill.event.model.vo.Event;
+import com.kh.pill.event.model.vo.EventLike;
 import com.kh.pill.event.model.vo.EventReply;
 
 @Service
@@ -85,10 +86,63 @@ public class EventServiceImpl implements EventService {
 		return eventDao.selectReplyList(sqlSession, evtNo);
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public int insertReply(EventReply r) {
 		
 		return 0;
 	}
+	
+	
+
+	/**
+	 * 이벤트 게시물 좋아요 누름 
+	 */
+	@Override
+	public int insertEvtLike(EventLike el) {
+		
+		return eventDao.insertEvtLike(sqlSession, el);
+	}
+
+	
+	/**
+	 * 이벤트 좋아요 조회
+	 */
+	@Override
+	public EventLike selectEventLike(EventLike elList) {
+		
+		return eventDao.selectEventLike(sqlSession, elList);
+	}
+
+	/**
+	 * 이벤트 좋아요 카운트 컬럼 업데이트 
+	 */
+	@Override
+	public int updateEventEvtLikeCount(int eno) {
+	
+		return eventDao.updateEventEvtLikeCount(sqlSession ,eno);
+	}
+
+	/**
+	 * 이벤트 좋아요 삭제 
+	 */
+	@Override
+	public int deleteEvtLike(EventLike el) {
+	
+		return eventDao.deleteEvtLike(sqlSession, el);
+	}
+
+	/**
+	 * 이벤트 좋아요 카운트 세는 메소드 
+	 */
+	@Override
+	public int selectEvtLikeCount(int eno) {
+	
+		return eventDao.selectEvtLikeCount(sqlSession, eno);
+	}
+
+	
 
 }

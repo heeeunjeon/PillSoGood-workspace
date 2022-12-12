@@ -1,6 +1,7 @@
 package com.kh.pill.event.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,5 @@ public class Event {
 	private Date evtDew; // EVENT_DEW	DATE
 	private int evtLikeCount; // EVENT_LIKE_COUNT	NUMBER
 	
-
 
 }

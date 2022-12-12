@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.event.model.vo.Event;
+import com.kh.pill.event.model.vo.EventLike;
 import com.kh.pill.event.model.vo.EventReply;
 
 @Repository
@@ -75,6 +76,56 @@ public class EventDao {
 		return sqlSession.update("eventMapper.updateEvent", e);
 	}
 
+	
+
+	/**
+	 * 이벤트 좋아요 누름 요청 
+	 */
+	public int insertEvtLike(SqlSessionTemplate sqlSession, EventLike el) {
+		
+		return sqlSession.insert("eventMapper.insertEvtLike", el);
+	}
+
+
+	
+	/**
+	 * 이벤트 좋아요 조회
+	 */
+	public EventLike selectEventLike(SqlSessionTemplate sqlSession, EventLike elList) {
+		
+		return sqlSession.selectOne("eventMapper.selectEventLike", elList);
+	}
+
+	/**
+	 * 이벤트 좋아요 카운트 컬럼 업데이트 
+	 */
+	public int updateEventEvtLikeCount(SqlSessionTemplate sqlSession, int eno) {
+		
+		return sqlSession.update("eventMapper.updateEventEvtLikeCount", eno);
+	}
+
+
+	/**
+	 * 이벤트 좋아요 삭제 
+	 */
+	public int deleteEvtLike(SqlSessionTemplate sqlSession, EventLike el) {
+		
+		return sqlSession.delete("eventMapper.deleteEvtLike", el);
+	}
+
+	
+	/**
+	 * 이벤트 좋아요 카운트 세는 메소드
+	 */
+	public int selectEvtLikeCount(SqlSessionTemplate sqlSession, int eno) {
+		
+		return sqlSession.selectOne("eventMapper.selectEvtLikeCount", eno);
+	}
+
+
+	
+
+	
 
 	
 

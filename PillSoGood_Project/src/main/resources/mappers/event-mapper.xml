@@ -27,6 +27,12 @@
 		
 	</resultMap>
 	
+	<resultMap id="eventLikeResultMap" type="eventLike">
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="EVENT_NO" property="evtNo" />
+	
+	</resultMap>
+	
 	<!-- 이벤트 게시물 갯수 조회 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -51,7 +57,7 @@
 	</select>
 	
 	<!-- 이벤트 게시물 상세조회 -->
-	<select id="selectEvent" resultMap="eventResultMap" >
+	<select id="selectEvent" resultMap="eventResultMap" parameterType="_int">
 		SELECT EVENT_NO
 			  ,	EVENT_TITLE
 			  , EVENT_START
@@ -59,13 +65,14 @@
 			  , EVENT_LIKE_COUNT
 			  , EVENT_CONTENT
 			  , EVENT_IMG_NAME
+			  , EVENT_LIKE_COUNT
 		FROM EVENT
-		WHERE EVENT_NO = #{evtNo}
+		WHERE EVENT_NO = #{eno}
 			  
 	</select>
 	
 	<!-- 이벤트 댓글 리스트 조회 -->
-	<select id="selectReplyList" resultMap="eventReplyResultMap">
+	<select id="selectReplyList" resultMap="eventReplyResultMap" parameterType="_int">
 		SELECT REPLY_NO
 		     , REPLY_CONTENT
 		     , TO_CHAR(REPLY_DATE, 'YYYY-MM-DD') AS "REPLY_DATE"
@@ -93,15 +100,14 @@
 					, #{evtDew}
 					, #{evtImgName}
 					, #{evtContent})
-							
-	
+
 	</insert>
 	
 	<!-- 이벤트 게시물 삭제 -->
 	<update id="deleteEvent" parameterType="_int">
 		UPDATE EVENT
 		SET EVENT_STATUS = 'N'
-		WHERE EVENT_NO = #{evtNo}
+		WHERE EVENT_NO = #{eno}
 	</update>
 	
 	<!-- 이벤트 게시물 수정 -->
@@ -114,7 +120,58 @@
 		     , EVENT_CONTENT = #{evtContent}
 		 WHERE EVENT_NO = #{evtNo}
 	</update>
+	
 
+	
+	<!-- 이벤트 좋아요 누름 -->
+	<insert id="insertEvtLike" parameterType="eventLike">
+	INSERT INTO EVENT_LIKE (EVENT_NO
+						  , MEMBER_NO)
+			        VALUES (#{evtNo}
+					      , #{memberNo})
+
+	</insert>
+	
+	
+	
+	<!-- 이벤트 좋아요 조회 -->
+	<select id="selectEventLike" parameterType="eventLike" resultMap="eventLikeResultMap">
+		SELECT EVENT_NO
+		     , MEMBER_NO
+		FROM EVENT_LIKE
+		WHERE EVENT_NO = #{evtNo}
+		  AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	
+	
+	<!-- 이벤트라이크카운트 컬럼 업데이트  -->
+	<update id="updateEventEvtLikeCount" parameterType="_int">
+		UPDATE EVENT
+		   SET EVENT_LIKE_COUNT = (SELECT COUNT(*) COUNT
+		   						   FROM EVENT_LIKE
+		   						   WHERE EVENT_NO = #{eno})	
+		WHERE EVENT_NO = #{eno}
+	</update>
+	
+	<!-- 이벤트 좋아요 삭제 --> 
+	<update id="deleteEvtLike" parameterType="eventLike">
+		DELETE
+		FROM EVENT_LIKE
+		WHERE EVENT_NO = #{evtNo}
+		  AND MEMBER_NO = #{memberNo}
+	
+	</update>
+	
+	
+	<!-- 이벤트 좋아요 갯수 세기 -->
+	<select id="selectEvtLikeCount" resultType="_int">
+		SELECT COUNT(*) COUNT
+		FROM EVENT_LIKE
+		WHERE EVENT_NO = #{evtNo}
+	</select>
+	
+	
 
 
 </mapper>

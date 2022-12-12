@@ -123,10 +123,10 @@
             <div id="content_2">
                 <div id="content_2_1">
                     <p>이벤트
-                    	<%-- <c:if test="${ loginUser.memberId eq 'admin' }"> --%>
+                    	<c:if test="${ loginUser.memberId.equals('admin') }" >
                         	<button style="float:right; margin-right: 20px;" class="btn btn-primary btn-danger" onclick="location.href='delete.ev?eno=${ e.evtNo }&evtImgName=${ e.evtImgName }'">삭제</button>
                         	<button style="float:right; margin-right: 5px;" class="btn btn-primary btn-warning" onclick="location.href='updateForm.ev?eno=${ e.evtNo }&evtImgName=${ e.evtImgName }'">수정</button>
-                    	<%-- </c:if> --%>
+                    	</c:if>
                     </p>
                     
                 </div>
@@ -147,30 +147,37 @@
                             </tbody>
                          </table>
                     </div>
-
-                    <div align="right" id="like_con">
-                        <img src="resources/images/Unlike.png" width="25" alt="" class="likeControl" id="eventUnLike">
-                        <img src="resources/images/Like.png" width="25" class="likeControl" style="display:none" id="eventLike" >
-                        <span id="evnetLikeCount">${ e.evtLikeCount }</span>
-                    </div>
-
-                    <script>
-                        $(function() {
-
-                            $("#like_con").on("click",".likeControl",function(){
-
-                                if ($("#eventLike").css("display") == "none") { 
-                                    $("#eventLike").show();
-                                    $("#eventUnLike").hide();
-                                } else {
-                                    
-                                    $("#eventLike").hide();
-                                    $("#eventUnLike").show();
-                                }
-                            });
-
-                        });
-                    </script>
+					
+					<!-- 이벤트 좋아요 -->
+                    <!-- 로그인한 유저가 좋아요 버튼이 보여야함  -->
+                    <c:if test="${ not empty loginUser  }">
+                    	<div align="right" id="like_con">
+                    	<c:choose>
+	                    		<%-- 로그인유저의 memberNo과 이벤트 라이크 객체의 memberNo이 같다면 좋아요 누른 사람 --%>
+		                    	<c:when test="${ loginUser.memberNo eq el.memberNo  }"> 
+		                    	
+		                    		
+		                    		<%-- 좋아요 버튼이 눌려있다면 눌려있는 표시로 보여줘 --%>
+		                    		<img src="resources/images/Like.png" width="25" class="likeControl"  id="eventLike" style="cursor: pointer;" >
+			                        
+			                        <%-- 좋아요 버튼이 안눌렸으면 안누른 표시로 보여줘 --%>
+			                        <img src="resources/images/Unlike.png" width="25" alt="" style="display:none" class="likeControl" id="eventUnLike" style="cursor: pointer;">
+			                        <span id="evnetLikeCount">${ e.evtLikeCount }</span>
+			                    
+			                    </c:when>
+			                    <c:otherwise>
+			                    <%-- 로그인 유저의 memberNo과 이벤트 객체의 memberNo이 같지 않다면 좋아요 안누른 사람임 --%>
+			                    	
+			                    	<%-- 좋아요 버튼 안누른 상태가 먼저 보이고, 누르면 insert, 거기서 한번더 누르면 delete 해줘 --%>
+			                    	<img src="resources/images/Unlike.png" width="25" alt="" class="likeControl" id="eventUnLike" style="cursor: pointer;">
+			                        <img src="resources/images/Like.png" width="25" class="likeControl" style="display:none" id="eventLike" style="cursor: pointer;">
+			                        <span id="evnetLikeCount">${ e.evtLikeCount }</span>
+			                    </c:otherwise>
+		                    </c:choose>
+	
+                    	</div>
+                    </c:if>
+           
 
                     <br clear="both">
 
@@ -233,8 +240,10 @@
 
                     <script>
                  		var parentNo = 0;
+                 		
                         $(function() {
                         	selectReplyList();
+                        
                         	
                         });
                         
@@ -326,6 +335,67 @@
                             });
 
                         });
+                        
+                        
+                        // 좋아요 추가, 삭제 
+                        $(function() {
+                            $("#like_con").on("click", ".likeControl", function() {
+                                    if($("#eventLike").css("display") == "none") {
+                                    	
+                                    	$.ajax ({ // 좋아요 추가 
+                                    		
+                                    		url : "insert.el",
+                                    		data : { evtNo : ${e.evtNo},
+                                    				 memberNo : ${loginUser.memberNo}
+                                    		},
+                                    		success : function (result) {
+            									console.log("좋아요 성공");
+            									
+            									$("#eventLike").show();
+            	                                $("#eventUnLike").hide();
+            									
+            	                                
+            	                                console.log(result);
+            	                                $("#evnetLikeCount").html(result);
+            									
+                                    			
+
+                                    		},
+                                    		error : function () {
+                                    			console.log("좋아요 실패");
+                                    		}
+                                    		
+                                    	});
+                                    	
+                                    } else { // 좋아요 삭제 
+                                    	$.ajax ({
+                                    		
+                                    		url : "delete.el",
+                                    		data : { evtNo : ${e.evtNo},
+                                    		         memberNo : ${loginUser.memberNo}},
+                                    		success : function (result) {
+                            					console.log("좋아요 삭제 성공");
+                            					
+                            					$("#eventLike").hide();
+                                                $("#eventUnLike").show();
+                            					console.log(result);
+                                                $("#evnetLikeCount").html(result);
+                                    			
+                                    			
+                                    		},
+                                    		error : function() {
+                                    			console.log("좋아요 삭제 실패");
+                                    		}
+                                    		
+                                    		
+                                    	});
+                                    }
+                            });
+                        });
+                        
+                        
+      
+                       
                         
                     </script>
 

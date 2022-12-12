@@ -22,13 +22,16 @@ import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
 import com.kh.pill.event.model.service.EventService;
 import com.kh.pill.event.model.vo.Event;
+import com.kh.pill.event.model.vo.EventLike;
 import com.kh.pill.event.model.vo.EventReply;
+import com.kh.pill.member.model.vo.Member;
 
 @Controller
 public class EventController { 
 	
 	@Autowired
 	private EventService eventService;
+	
 	
 	
 	/**
@@ -47,6 +50,8 @@ public class EventController {
 		
 		ArrayList<Event> list = eventService.SelectEventList(pi);
 		
+
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
@@ -55,26 +60,72 @@ public class EventController {
 		
 	}
 	
+	
 	/**
 	 * 이벤트 게시글 상세조회 
 	 */
 	@RequestMapping("detail.ev")
-	public ModelAndView selectEvent(int eno, ModelAndView mv) {
+	public String selectEvent(int eno, HttpSession session ,Model model) {
 		
-		Event e = eventService.selectEvent(eno);
 		
-		if( e == null) {
+		Member loginUser= (Member)session.getAttribute("loginUser");
+		
+		if(loginUser != null) { // 로그인 유저가 있다면 좋아요 누를수 있는 상세 페이지 
+		
+			int memberNo = loginUser.getMemberNo();
 			
-			mv.addObject("errorMsg", "게시글 상세조회 실패").setViewName("common/errorPage");
+			// System.out.println(memberNo);
 			
-		} else {
+			EventLike elList = new EventLike(eno, memberNo);
 			
-			mv.addObject("e", e).setViewName("event/eventDetailView");
+			EventLike el = eventService.selectEventLike(elList);
+			
+			// System.out.println(el);
+			
+			Event e = eventService.selectEvent(eno);
+			
+			
+			
+			if( e == null) {
+				
+				model.addAttribute("errorMsg", "게시글 상세조회 실패");
+				return "common/errorPage";
+				
+			} else {
+				
+				model.addAttribute("e", e);
+				model.addAttribute("el", el);
+				return "event/eventDetailView";
+				
+				
+			}
+			
+		
+			
+		} else { // 로그인 유저가 없다면 그냥 게시글만 조회만 하는 상세 페이지
+			
+			
+			Event e = eventService.selectEvent(eno);
+			
+			if( e == null) {
+				
+				model.addAttribute("errorMsg", "게시글 상세조회 실패");
+				return "common/errorPage";
+				
+			} else {
+				
+				model.addAttribute("e", e);
+				return "event/eventDetailView";
+				
+			}
+			
 			
 			
 		}
 		
-		return mv;
+		
+		
+		
 		
 	}
 	
@@ -245,7 +296,9 @@ public class EventController {
 		
 	}
 	
-	
+	/**
+	 * 이벤트 게시물 수정 요청 
+	 */
 	@RequestMapping("update.ev")
 	public String updateEvent(Event e, MultipartFile reupfile, HttpSession session, Model model) {
 		
@@ -301,6 +354,75 @@ public class EventController {
 		
 		
 	}
+	
+	
+	/**
+	 * 이벤트 게시물 좋아요 누름 요청 
+	 */
+	@ResponseBody
+	@RequestMapping(value="insert.el", produces="text/html; charset=UTF-8")
+	public String ajaxInsertEvtLike(EventLike el) {
+		
+		// System.out.println(el);
+		
+		int result = eventService.insertEvtLike(el);
+		
+		int evtLikeCount = 0;
+		
+		if (result > 0) { // 좋아요가 추가 되면 event_like_count 컬럼 업데이트 
+			
+			int eno = el.getEvtNo();
+			
+			result *= eventService.updateEventEvtLikeCount(eno); // 업데이트 
+			
+			evtLikeCount = eventService.selectEvtLikeCount(eno);// 업데이트한거 다시 조회함
+			
+			
+		}
+		
+		
+		return String.valueOf(evtLikeCount);
+
+		
+	}
+	
+	
+
+	
+	/**
+	 * 이벤트 좋아요 삭제하는 구문
+	 */
+	@ResponseBody
+	@RequestMapping(value="delete.el", produces="text/html; charset=UTF-8")
+	public String ajaxDeleteEvtLike(EventLike el) {
+	
+		int result = eventService.deleteEvtLike(el);
+		int count = 0;
+		int evtLikeCount = 0;
+		
+		
+		if (result > 0) { // 좋아요가 삭제 되면 event_like_count 컬럼 업데이트 
+					
+			int eno = el.getEvtNo();
+			
+			count = eventService.updateEventEvtLikeCount(eno);
+		
+			evtLikeCount = eventService.selectEvtLikeCount(eno);// 업데이트한거 다시 조회함
+			
+		}
+		
+		
+		
+		return String.valueOf(evtLikeCount);
+		
+		
+	}
+		
+		
+	
+	
+	
+	
 	
 	
 
