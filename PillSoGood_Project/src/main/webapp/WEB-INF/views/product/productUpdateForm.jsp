@@ -81,7 +81,7 @@
                             <tr align="right" height="115px">
                                 <td colspan="4">
                                     <button class="btn btn-primary" type="submit" id="button-addon2" style="margin-right: 5px;">수정</button>
-                                    <button type="reset" class="btn btn-danger">취소</button>
+                                    <button type="button" class="btn btn-danger" onclick="location.href='detail.pr?pno=${ p.productNo }'">취소</button>
                                 </td>
                             </tr>
                         </thead>

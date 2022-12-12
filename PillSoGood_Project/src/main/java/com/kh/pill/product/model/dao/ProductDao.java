@@ -42,8 +42,8 @@ public class ProductDao {
 	}
 	
 	public int selectProductLike(SqlSessionTemplate sqlSession, ProductLike pl) {
+		
 		int count =  sqlSession.selectOne("productMapper.selectProductLike", pl);
-		System.out.println(count);
 		return count;
 	}
 	

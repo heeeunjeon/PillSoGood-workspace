@@ -273,7 +273,7 @@ public class ProductController {
 	public int productLike (ProductLike pl) {
 		
 		int	result = productService.insertProductLike(pl);
-			
+		
 		return result;
 	}
 	
@@ -289,6 +289,4 @@ public class ProductController {
 			
 		return result;
 	}
-
-	
 }

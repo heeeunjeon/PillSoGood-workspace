@@ -118,7 +118,8 @@
 	</delete>
 	
 	<insert id="insertProductLike" parameterType="productLike">
-		INSERT INTO PRODUCT_LIKE VALUES (#{memberNo}, #{productNo})
+		INSERT INTO PRODUCT_LIKE (PRODUCT_NO, MEMBER_NO)
+						VALUES (#{productNo}, #{memberNo})
 		 
 	</insert>
     

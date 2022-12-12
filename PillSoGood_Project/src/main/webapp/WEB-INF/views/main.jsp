@@ -211,10 +211,6 @@
     <!-- 스크롤 애니매이션 -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-      AOS.init();
-    </script>
-
 
 </head>
 
@@ -241,7 +237,7 @@
                             건강 설문 시작하기
                         </button>
                     </div>
-                    <img src="">
+                    <img src="resources/images/main1.png">
                 </div>
 
 
@@ -622,9 +618,11 @@
             </script>
 
             
-<jsp:include page="/WEB-INF/views/common/footer.jsp" /> 
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" /> 
 
-
+    <script>
+        AOS.init();
+    </script>
 
 
 </body>
