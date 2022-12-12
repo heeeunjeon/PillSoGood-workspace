@@ -167,7 +167,7 @@
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">소식</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="list.ev">이벤트</a>
-              <a class="dropdown-item" href="#">매거진</a>
+              <a class="dropdown-item" href="list.mag">매거진</a>
             </div>
           </li>
         

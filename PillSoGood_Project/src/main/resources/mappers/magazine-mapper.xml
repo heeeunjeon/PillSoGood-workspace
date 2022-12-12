@@ -2,4 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="magazineMapper">
 
+	<resultMap id="magazineResultSet" type="magazine">
+		<result column="MAGAZINE_NO" property="magazineNo" />
+		<result column="MAGAZINE_TITLE" property="magazineTitle" />
+		<result column="MAGAZINE_CONTENT" property="magazineContent" />
+		<result column="MAGAZINE_COUNT" property="magazineCount" />
+		<result column="MAGAZINE_IMG_NAME" property="magazineImgName" />
+		<result column="CATEGORY_NAME" property="categoryName" />	
+		<result column="MAGAZINE_STATUS" property="magazineStatus" />	
+		<result column="MAGAZINE_HASHTAG" property="magazineHashtag" />	
+	</resultMap>
+
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM MAGAZINE
+		 WHERE MAGAZINE_STATUS = 'Y'
+	</select>
+
+	<select id="selectMagazineList" resultMap="magazineResultSet" >
+		SELECT MAGAZINE_NO
+			 , CATEGORY_NAME
+		     , MAGAZINE_TITLE
+			 , MAGAZINE_IMG_NAME
+			 , MAGAZINE_HASHTAG
+		  FROM MAGAZINE
+		 WHERE MAGAZINE_STATUS = 'Y'
+		 ORDER BY MAGAZINE_NO DESC
+	</select>
+
+	<insert id="insertMagazine" parameterType="magazine">
+		INSERT INTO MAGAZINE (MAGAZINE_NO
+							, CATEGORY_NAME
+						    , MAGAZINE_TITLE
+						    , MAGAZINE_CONTENT
+						    , MAGAZINE_IMG_NAME
+						    , MAGAZINE_HASHTAG)
+					  VALUES (SEQ_MAGAZINE_NO.NEXTVAL
+							, #{categoryName}
+							, #{magazineTitle}
+							, #{magazineContent}
+							, #{magazineImgName}
+							, #{magazineHashtag})
+	</insert>
+		
+	<select id="selectMagazine" resultMap="magazineResultSet" parameterType="_int">
+		 SELECT MAGAZINE_NO
+			  ,	MAGAZINE_TITLE
+			  , MAGAZINE_CONTENT
+			  , MAGAZINE_IMG_NAME
+			  , MAGAZINE_HASHTAG
+		   FROM MAGAZINE
+		  WHERE MAGAZINE_NO = #{magazineNo}
+			  
+	</select>
+	
+	<update id="deleteMagazine" parameterType="_int">
+		UPDATE MAGAZINE
+		   SET MAGAZINE_STATUS = 'N'
+		 WHERE MAGAZINE_NO = #{magazineNo}
+	</update>
+	
+	<update id="updateMagazine" parameterType="magazine">
+		UPDATE MAGAZINE
+		   SET CATEGORY_NAME = #{categoryName}
+		     , MAGAZINE_TITLE = #{magazineTitle}
+		     , MAGAZINE_CONTENT = #{magazineContent}
+		     , MAGAZINE_IMG_NAME = #{magazineImgName}
+		     , MAGAZINE_HASHTAG = #{magazineHashtag}
+		 WHERE MAGAZINE_NO = #{magazineNo}
+	</update>
+
 </mapper>
