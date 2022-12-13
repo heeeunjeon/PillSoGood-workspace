@@ -22,6 +22,11 @@ public class OrderServiceImpl implements OrderService {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
+	public int selectCountByCustomerUid(String customerUid) {
+		return orderDao.selectCountByCustomerUid(sqlSession, customerUid);
+	}
+	
+	@Override
 	public int insertOrder(Order o) {
 		return orderDao.insertOrder(sqlSession, o);
 	}

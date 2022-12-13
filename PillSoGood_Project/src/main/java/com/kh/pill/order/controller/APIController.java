@@ -57,6 +57,12 @@ public class APIController {
 	@ResponseBody
 	@RequestMapping(value="/subscribe/payments/onetime")
 	public IamportResponse<Payment> onetime(String merchant_uid, BigDecimal amount, String name, String card_number, String expiry, String birth, String pwd_2digit, Member m) throws IamportResponseException, IOException {
+		
+		String address = m.getAddress1();
+		if(m.getAddress2() != "") {
+			address += " " + m.getAddress2();
+		}
+		
 		OnetimePaymentData onetimeData = new OnetimePaymentData(merchant_uid, amount, new CardInfo(card_number, expiry, birth, pwd_2digit));
 		onetimeData.setPg("nice");
 		String customer_uid = m.getMemberId() + "_" + card_number.substring(15);
@@ -65,7 +71,7 @@ public class APIController {
 		onetimeData.setBuyerName(m.getMemberName());
 		onetimeData.setBuyerEmail(m.getEmail());
 		onetimeData.setBuyerPostcode(m.getAddressZip());
-		onetimeData.setBuyerAddr(m.getAddress1() + " " + m.getAddress2());
+		onetimeData.setBuyerAddr(address);
 		
 		return client.onetimePayment(onetimeData);
 	}
@@ -111,20 +117,35 @@ public class APIController {
 			
 			Payment p = getPayments(impUid).getResponse();
 			
-			System.out.println(p.getMerchantUid().substring(0, 14));
+			ObjectMapper mapper = new ObjectMapper();
+			String response = mapper.writeValueAsString(p);
 			
 			Order o = new Order();
 			o.setOrderNo(p.getMerchantUid());
 			o.setOrderDate(p.getMerchantUid().substring(0, 14));
 			o.setOrderPrice(p.getAmount().intValue());
+			o.setSubsCount(1);
 			o.setOrderReceipt(p.getReceiptUrl());
-			o.setSubsStatus("Y");
+			o.setSubsStatus("N");
 			o.setAddress("(" + p.getBuyerPostcode() + ") " + p.getBuyerAddr());
 			
-			orderService.insertOrder(o);
+			// 구독일 경우
+			// p.getCustomerUid() 로 select 검사
+			// customerUid 가 일치하는 subs_count 컬럼값 조회
+			if(p.getCustomerUid() != null) {
+				
+				o.setCustomerUid(p.getCustomerUid());
+				o.setSubsStatus("Y");
+				
+				int count = orderService.selectCountByCustomerUid(p.getCustomerUid());
 			
-			ObjectMapper mapper = new ObjectMapper();
-			String response = mapper.writeValueAsString(p);
+				if(count != 0) {
+					// subs_count 컬럼 +1
+					o.setSubsCount(count + 1);
+				}
+			}
+			
+			orderService.insertOrder(o);
 			
 			String merchantUid = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ((int)(Math.random() * 90000) + 10000);
 			

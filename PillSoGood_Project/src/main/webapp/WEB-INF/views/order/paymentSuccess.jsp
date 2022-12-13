@@ -81,7 +81,7 @@
                     </div>
                     <div align="center" style="margin-top: 20px">
                         <button type="button" class="btn btn-outline-primary">주문내역조회</button>
-                        <button type="button" class="btn btn-outline-secondary">메인으로</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/pill'">메인으로</button>
                     </div>
                 </div>
             </div>

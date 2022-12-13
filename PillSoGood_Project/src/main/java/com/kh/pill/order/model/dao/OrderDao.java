@@ -12,6 +12,10 @@ import com.kh.pill.order.model.vo.OrderCart;
 @Repository
 public class OrderDao {
 	
+	public int selectCountByCustomerUid(SqlSessionTemplate sqlSession, String customerUid) {
+		return sqlSession.selectOne("orderMapper.selectCountByCustomerUid", customerUid);
+	}
+	
 	public int insertOrder(SqlSessionTemplate sqlSession, Order o) {
 		return sqlSession.insert("orderMapper.insertOrder", o);
 	}

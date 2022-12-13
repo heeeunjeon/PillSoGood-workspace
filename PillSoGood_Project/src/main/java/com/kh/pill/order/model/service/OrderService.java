@@ -8,6 +8,9 @@ import com.kh.pill.order.model.vo.OrderCart;
 
 public interface OrderService {
 	
+	// 구독회차 조회
+	int selectCountByCustomerUid(String customerUid);
+	
 	// 주문 완료 (저장)
 	// Order insert -> Cart select -> OrderCart insert -> Cart update
 	int insertOrder(Order o);

@@ -309,7 +309,7 @@
                     
                     <div id="bill_btn" align="center">
                     	<c:choose>
-                    		<c:when test="${ not empty loginUser }">
+                    		<c:when test="${ empty loginUser }">
                     			<!-- 정기결제 -->
                     			<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#subscription">구독하기</button>
                     			
@@ -378,7 +378,8 @@
    			 	var date = moment(new Date()).format('YYYYMMDDHHmmss');
    				var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
    				var amount = parseInt($("#finalprice").text().substring(0, $("#finalprice").text().lastIndexOf(' ')).replace(',', ''));
-	    		
+	    		amount = 100;
+   				
 	    		IMP.init("imp00813715"); // 가맹점 식별코드 초기화
 	    		
 	    		// IMP.request_pay(param, callback)
@@ -442,16 +443,18 @@
 						pwd_2digit: $("#pwd_2digit").val(),
 						memberId: "${ loginUser.memberId }",
 						memberName: "${ loginUser.memberName }",
-		    			email: "${ loginUser.email }"},
+		    			email: "${ loginUser.email }",
 		    			addressZip: $("#address_zip").val(),
 		    			address1: $("#address1").val(),
-		    			address2: $("#address2").val()
+		    			address2: $("#address2").val()}
 				}).done(data => {
-						
+					
+					console.log(data);
+					
 					if(data.response.status == 'paid') {
 						
 						// 주문 성공 화면으로 이동
-						location.href = 'paid?ono=' + data.response.merchant_uid; 
+						location.href = 'paid?ono=' + data.response.merchantUid; 
 					}
 				});
 						

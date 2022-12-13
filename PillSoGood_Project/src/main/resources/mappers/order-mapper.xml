@@ -28,18 +28,28 @@
 		<result column="ORDER_NO" property="orderNo"/>
 	</resultMap>
 	
+	<select id="selectCountByCustomerUid" parameterType="string" resultType="_int">
+		SELECT NVL(MAX(SUBS_COUNT), 0) "SUBS_COUNT"
+		FROM ORDERS
+		WHERE CUSTOMER_UID = #{customerUid}
+	</select>
+	
 	<insert id="insertOrder" parameterType="order">
 		INSERT INTO ORDERS (ORDER_NO
 						  , ORDER_DATE
 						  , ORDER_PRICE
+						  , SUBS_COUNT
 						  , CUSTOMER_UID
 						  , ORDER_RECEIPT
+						  , SUBS_STATUS
 						  , ADDRESS)
 					VALUES (#{orderNo}
 						  , TO_DATE(#{orderDate}, 'YYYYMMDDHH24MISS')
 						  , #{orderPrice}
+						  , #{subsCount}
 						  , #{customerUid}
 						  , #{orderReceipt}
+						  , #{subsStatus}
 						  , #{address})
 	</insert>
 	
