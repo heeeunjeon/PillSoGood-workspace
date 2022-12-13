@@ -80,4 +80,17 @@
 	</update>
 	
 	
+	
+	
+	<insert id="insertCart" parameterType="cart">
+		INSERT INTO CART (CART_NO
+						, MEMBER_NO
+						, PRODUCT_NO
+						, CART_AMOUNT)
+				   VALUES (CART_NO.NEXTVAL
+				   		 , #{memberNo}
+				   		 , #{productNo}
+				   		 , #{cartAmount})		
+	</insert>
+	
 </mapper>

@@ -107,8 +107,8 @@
                                     <table width="100%" style="background-color: #f9f4f4;">
                                         <tbody align="left">
                                             <tr height="55px" style="font-size: 20px; border-bottom: 1px solid lightgrey;">
-                                                <td width="60%" style="padding-left: 10px;">구매가</td>
-                                                <th colspan="2" style="text-align:right"><fmt:formatNumber value="${ p.productPrice }"/>원</td>
+                                                <th width="60%" style="padding-left: 10px;">구매가</th>
+                                                <th colspan="2" style="text-align:right"><fmt:formatNumber value="${ p.productPrice }"/>원</th>
                                             </tr>
                                             <tr height="55px" style="font-size: 20px">
                                                 <td style="padding-left: 10px;">수량선택</td>
@@ -146,7 +146,7 @@
                                     </c:choose>
                                     </div>
                                 </td>
-                                <td width="90%"><button type="button" class="btn btn-primary" style="width: 300px">장바구니</button></td>
+                                <td width="90%"><button type="button" class="btn btn-primary" id="addCart" style="width: 300px">장바구니</button></td>
                             </tr>
                         </tbody>
                         <tfoot height="530px">
@@ -162,7 +162,7 @@
                 </form>
                 
                  <form id="postForm" action="" method="post">
-                     <input type="hidden" name="pno" value="${ p.productNo }">
+                     <input type="hidden" id="productNo" name="pno" value="${ p.productNo }">
                      <input type="hidden" name="upfile" value="${ p.productImgPath }">
                      <input type="hidden" name="upfile" value="${ p.productDescription }">
                  </form>
@@ -179,6 +179,41 @@
                              $("#postForm").attr("action", "delete.pr").submit();
                          }
                      }
+                     
+                     $("#addCart").click(function() {
+                    	    	 
+                    	 var productNo = $("#productNo").val();
+                    	 var cartAmount = $("#result").val();
+                    	 
+                    	 var data = {
+                    		productNo : productNo,
+                    		cartAmount : cartAmount
+                		};
+                    	 
+                   		$.ajax({
+                   			url : "insert.cart",
+                   		    type : "post",
+                   		    data : data,
+                   		    success : function(result) {
+                   		    
+                   		    	if(result == 'fail') {
+                   		    	
+                   		     		alert("회원만 이용할 수 있는 서비스입니다.");
+
+                   		    	} else {
+                   		    	
+                   		     		if(confirm("장바구니에 성공적으로 담겼습니다.\n장바구니로 이동하시겠습니까?")) {
+                   		     			location.href = 'list.cart';
+                   		     		}
+                   		     			
+                   		    	}
+                   		   },
+                   		   error : function() {
+                   		   		
+                   			   alert("카트 담기 실패");
+                   		   }
+                   		});
+                   	});
                  </script>
             </div>
             <div id="content_3"></div>

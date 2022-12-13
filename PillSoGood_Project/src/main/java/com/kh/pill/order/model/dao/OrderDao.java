@@ -39,4 +39,12 @@ public class OrderDao {
 	public int deleteOrder(SqlSessionTemplate sqlSession, int orderNo) {
 		return sqlSession.update("orderMapper.deleteOrder", orderNo);
 	}
+	
+	
+	
+	
+	
+	public int insertCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.insert("orderMapper.insertCart", c);
+	}
 }

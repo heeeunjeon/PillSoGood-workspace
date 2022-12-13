@@ -25,4 +25,10 @@ public interface OrderService {
 	int deleteOrder(int orderNo);
 	
 	
+	
+	
+	// 장바구니
+	// 장바구니 담기
+	int insertCart(Cart c);
+	
 }

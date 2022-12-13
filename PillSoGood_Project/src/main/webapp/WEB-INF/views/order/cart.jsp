@@ -25,9 +25,9 @@
     #navigator2 { height: 100px; }
 
     #content { height: auto; display: flex; }
-    #content_2>div { width: 100%; }
+    #content_2>div { width: 100%; float: left; }
     #content_2_1 { height: 115px; float: left; }
-    #content_2_2 { height: 90%; float: left; }
+    #content_2_2 { height: auto; float: left; }
 
     #header { height: 130px; }
 
@@ -118,7 +118,7 @@
                                         <table align="center">
                                             <tr>
                                                 <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('minus');">-</button></td>
-                                                <td style="width: 36px;"><input class="form-control" id="result" value="0" style="width: 36px;" readonly></td>
+                                                <td style="width: 36px;"><input class="form-control" id="result" value="1" style="width: 36px;" readonly></td>
                                                 <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('plus');">+</button></td>
                                             </tr>
                                         </table>
@@ -128,65 +128,12 @@
                                 <tr style="border-bottom: 1px solid lightgray;">
                                     <td style="font-size: 20px;"><b>루테인</b></td>
                                 </tr>
-                                <tr>
-                                    <td rowspan="2" align="center"><input class="form-check-input" type="checkbox"></td>
-                                    <td rowspan="2" align="center" width="150px"><div style="width: 80px; height: 80px;"><img src="image/pill01.png" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
-                                    <td height="30px">눈건강엔</td>
-                                    <td rowspan="2" width="150px">
-                                        <table align="center">
-                                            <tr>
-                                                <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('minus');">-</button></td>
-                                                <td style="width: 36px;"><input class="form-control" id="result" value="0" style="width: 36px;" readonly></td>
-                                                <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('plus');">+</button></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td rowspan="2" align="center" style="font-size: 23px;"><b>24,000원</b></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid lightgray;">
-                                    <td style="font-size: 20px;"><b>루테인</b></td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="2" align="center"><input class="form-check-input" type="checkbox"></td>
-                                    <td rowspan="2" align="center" width="150px"><div style="width: 80px; height: 80px;"><img src="image/pill01.png" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
-                                    <td height="30px">눈건강엔</td>
-                                    <td rowspan="2" width="150px">
-                                        <table align="center">
-                                            <tr>
-                                                <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('minus');">-</button></td>
-                                                <td style="width: 36px;"><input class="form-control" id="result" value="0" style="width: 36px;" readonly></td>
-                                                <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('plus');">+</button></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td rowspan="2" align="center" style="font-size: 23px;"><b>24,000원</b></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid lightgray;">
-                                    <td style="font-size: 20px;"><b>루테인</b></td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="2" align="center"><input class="form-check-input" type="checkbox"></td>
-                                    <td rowspan="2" align="center" width="150px"><div style="width: 80px; height: 80px;"><img src="image/pill01.png" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
-                                    <td height="30px">눈건강엔</td>
-                                    <td rowspan="2" width="150px">
-                                        <table align="center">
-                                            <tr>
-                                                <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('minus');">-</button></td>
-                                                <td style="width: 36px;"><input class="form-control" id="result" value="0" style="width: 36px;" readonly></td>
-                                                <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('plus');">+</button></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td rowspan="2" align="center" style="font-size: 23px;"><b>24,000원</b></td>
-                                </tr>
-                                <tr style="border-bottom: 1px solid lightgray;">
-                                    <td style="font-size: 20px;"><b>루테인</b></td>
-                                </tr>
+                           
                             </tbody>
                         </table>
                     </div>
                     <div id="btns" style="margin-top: 10px;">
-                        <button type="button" class="btn btn-outline-primary btn-lg">+ 제품 추가</button>
+                        <button type="button" class="btn btn-outline-primary btn-lg" onclick="location.href='list.pr'">+ 제품 추가</button>
                     </div>
                     <div style="height: 200px;"></div>
                     <div>
