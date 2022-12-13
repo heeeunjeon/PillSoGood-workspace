@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.kh.pill.alarm.model.dao.AlarmDao;
 
 @Service
-public class AlarmServiceImpl {
+public class AlarmServiceImpl implements AlarmService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
