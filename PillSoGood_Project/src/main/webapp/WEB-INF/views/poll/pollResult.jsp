@@ -211,7 +211,7 @@
                                 <div>
                                     <div class="container-fluid">
                                         <div class="d-flex"> <!-- 반복 돌렸을 때 옆으로 배치되게 바꾸기 -->
-                                        	<c:forEach var="i" begin="0" end="${ prlist.size() }">
+                                        	<c:forEach var="i" begin="0" end="${ prlist.size() -1 }">
                                         		<c:if test="${ prlist[i].pollLevel eq 2 }">
                                         			<div style="margin-right : 10px;">
 		                                                <div id="icon2_circle"><img src="${ prlist[i].productEffectPath }"></div>
@@ -248,7 +248,8 @@
 	                                    </tr>
 	                                </thead>
 	                                <tbody> <!-- 반복문 돌려서 값 뽑기 -->
-	                                	<c:forEach var="i" begin="0" end="${ prlist.size() - 1 }">
+	                                
+                             			<c:forEach var="i" begin="0" end="${ prlist.size() -1 }">
 	                                		<tr>
 		                                        <td rowspan="2" align="center"><input class="form-check-input" name="productCheck" type="checkbox" value="${ prlist[i].productNo }"></td>
 		                                        <td rowspan="2" align="center" width="100px"><div style="width: 80px; height: 80px;"><img src="${ prlist[i].productImgPath }" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
@@ -257,10 +258,8 @@
 		                                    <tr style="border-bottom: 1px solid lightgray;">
 		                                        <td style="font-size: 20px;"><b>${ prlist[i].productName }</b></td>
 		                                    </tr>
-	                                	
-	                                	</c:forEach>
-	                                   
-	                                    
+	                                	</c:forEach>	
+	                                		
 	                                </tbody>
 	                                <tfoot>
 	                                    <tr height="70px">
@@ -287,7 +286,7 @@
     	  
     	  checkboxes.forEach((checkbox) => {
     	    checkbox.checked = selectAll.checked
-    	  })
+    	  });
     	}
     	
     

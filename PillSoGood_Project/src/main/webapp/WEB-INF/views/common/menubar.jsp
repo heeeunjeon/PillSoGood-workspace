@@ -197,7 +197,7 @@
             	<!-- 로그인 후 -->
 		            <a class="text-decoration-none" href="cart.me" style="color:rgb(92, 93, 96)">장바구니 |</a>    
 		            <a class="text-decoration-none" href="logout.me" style="color:rgb(92, 93, 96)">로그아웃 |</a> 
-		            <a class="text-decoration-none" href="myPage.me" style="color:rgb(92, 93, 96)">마이페이지</a>      	
+		            <a class="text-decoration-none" href="myPage.or" style="color:rgb(92, 93, 96)">마이페이지</a>      	
             	</c:otherwise>
             </c:choose>
 

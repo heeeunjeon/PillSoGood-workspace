@@ -181,7 +181,7 @@
                             </table>
                             <div class="surveyBtn">
                                 <div align="center">
-                                    <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(3); updateMember();">다음</button>
+                                    <button type="button" class="btn btn-info btn-lg" style="width: 200px" onclick="nextSurvey(3); updateMember(); insertResultType1(19);">다음</button>
                                 </div>
                             </div>
                         </div>

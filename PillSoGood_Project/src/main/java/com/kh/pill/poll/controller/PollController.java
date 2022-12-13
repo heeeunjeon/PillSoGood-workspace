@@ -68,7 +68,7 @@ public class PollController {
 	public void updateMem(Member m) {
 		
 		
-		int result = pollService.updateMember(m);
+		pollService.updateMember(m);
 		
 	}
 	
@@ -77,7 +77,7 @@ public class PollController {
 	public void insertResultType(PollResult pr) {
 		
 		
-		int result = pollService.insertResultType(pr);
+		pollService.insertResultType(pr);
 		
 	}
 	
