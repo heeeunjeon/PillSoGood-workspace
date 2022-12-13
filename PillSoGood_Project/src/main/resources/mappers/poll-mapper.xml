@@ -91,7 +91,7 @@
 		WHERE RANK &lt;= 3
 	</select>
 
-	<select id="selectPollList" resultMap="pollResultSet">
+	<select id="selectPollList" resultMap="pollResultSet" >
 		SELECT POLL_NO, POLL_DATE
 		  FROM (SELECT DISTINCT POLL_NO, POLL_DATE, DENSE_RANK() OVER(ORDER BY POLL_NO DESC) RANK
 		        FROM POLL
@@ -102,5 +102,30 @@
 		        ORDER BY POLL_NO DESC)
 		  WHERE RANK &lt;= 3
 	</select>
+	
+	<select id="pollResult" parameterType="poll" resultMap="pollResultDetailSet">
+		SELECT PRODUCT_NAME
+			 , PRODUCT_EXPLAIN
+			 , PRODUCT_PRICE
+			 , PRODUCT_IMG_PATH
+			 , PRODUCT_EFFECT
+			 , PRODUCT_EFFECT_PATH
+			 , POLL_LEVEL
+			 , POLL_NO
+			 , PRODUCT_NO
+		  FROM PRODUCT
+		  JOIN POLL_RESULT USING(PRODUCT_NO)
+		  JOIN POLL USING(POLL_NO)
+		 WHERE POLL_NO = #{pollNo}
+		   AND MEMBER_NO = #{memberNo}
+		   AND POLL_STATUS = 'Y'
+	</select>
+	
+	
+	<update id="deletePoll">
+		UPDATE POLL
+		   SET POLL_STATUS = 'N'
+		 WHERE POLL_NO = ${pollNo}
+	</update>
 
 </mapper>

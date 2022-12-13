@@ -43,6 +43,34 @@ public class PollController {
 		return "poll/pollResult";
 	}
 	
+	@RequestMapping("pollResult.po")
+	public String pollResult(int pollNo, HttpSession session, Model m) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		int memberNo = loginUser.getMemberNo();
+		
+		Poll p = new Poll();
+		p.setPollNo(pollNo);
+		p.setMemberNo(String.valueOf(memberNo));
+		
+		ArrayList<PollResult> prlist = pollService.pollResult(p);
+		
+		
+		m.addAttribute("prlist", prlist);
+		
+		return "poll/pollResult";
+	}
+	
+	@RequestMapping("delete.po")
+	public String deletePoll(int pollNo) {
+		
+		pollService.deletePoll(pollNo);
+		
+		return "redirect:/myPage.poll";
+	}
+	
+	
 	@ResponseBody
 	@RequestMapping(value="insertPoll.po", produces="application/json; charset=UTF-8")
 	public String insertPoll(int memberNo) {

@@ -146,65 +146,69 @@
                         </div>
                         <hr>
 
-                        <script>
-                            $(function() {
-                                $("#go_survey").on("click", function() {
-
-                                    // 건강설문 시작화면으로 이동
-                                });
-                            });
-                        </script>
+                      
+						<c:if test="${ pollList.size() ne 0 }">
 						
-						<c:forEach var="i" begin="0" end="${ pollList.size() - 1}">
-							
-							
-							<div class="survey">
-	                            ${ pollList[i].pollDate } <div><i class="fa-solid fa-xmark fa-lg"></i></div>
-	                            <br><br>
-	                            <c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
-	                            	
-	                            	<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
-	                            	
-		                            	<b>
-			                            	# ${ pollResult[j].productExplain },
-			                            </b>
+							<c:forEach var="i" begin="0" end="${ pollList.size() - 1}">
+								
+								
+								<div class="survey">
+		                            ${ pollList[i].pollDate } <div><i class="fa-solid fa-xmark fa-lg" onclick="deleteSurvey(${ pollList[i].pollNo })"></i></div>
+		                            <br><br>
+		                            <c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
+		                            	
+		                            	<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
+		                            	
+			                            	<b>
+				                            	# ${ pollResult[j].productExplain },
+				                            </b>
+			                            
+			                            </c:if>
 		                            
-		                            </c:if>
-	                            
-	                            
-	                            </c:forEach>
-	                            
-	                            
-	                            <br>
-	                            <sub>
-	                            	
-	                            	<c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
-	                            		<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
-	                            		
-			                            	${ pollResult[j].productName },
-			                        
-		                            	</c:if>
-	                            	
-	                            	
-	                            	</c:forEach>
-	                            		
-	                            	
-	                            </sub>
-	                            <br><br>
-	                            <button type="button" class="btn btn-outline-primary btn-sm"><small>설문결과 보기</small></button>
-	                        </div>
-	                        <hr>
-						
-						</c:forEach>
+		                            
+		                            </c:forEach>
+		                            
+		                            
+		                            <br>
+		                            <sub>
+		                            	
+		                            	<c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
+		                            		<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
+		                            		
+				                            	${ pollResult[j].productName },
+				                        
+			                            	</c:if>
+		                            	
+		                            	
+		                            	</c:forEach>
+		                            	
+		                            </sub>
+		                            <br><br>
+		                            <button type="button" class="btn btn-outline-primary btn-sm" onclick="selectPollResult(${ pollList[i].pollNo })"><small>설문결과 보기</small></button>
+		                        </div>
+		                        <hr>
+							
+							</c:forEach>
+						</c:if>
 
                         <script>
-                            $(function() {
-                                $(".survey>div").on("click", function() {
-
-                                    // 해당 설문 삭제
-                                    // div 아래에 hidden 으로 설문PK 값이 있어야 할 듯
-                                });
-                            });
+							
+                        	function selectPollResult(pollNo) {
+                        		
+                        		location.href='pollResult.po?pollNo='+pollNo;
+                        	}
+                            
+                            
+                        	function deleteSurvey(pollNo) {
+                        		
+                        		
+                        		if(window.confirm("정말 삭제하시겠습니까?")) {
+                        			
+                        			location.href='delete.po?pollNo='+pollNo;
+                        		}
+                        		
+                        	}
+                            
                         </script>
 
                     </div>
@@ -216,6 +220,8 @@
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
+    
+    
     
 
 

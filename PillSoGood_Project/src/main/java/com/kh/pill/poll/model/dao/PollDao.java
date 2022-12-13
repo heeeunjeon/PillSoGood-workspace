@@ -44,5 +44,15 @@ public class PollDao {
 		
 		return sqlSession.insert("pollMapper.insertCart", c);
 	}
+	
+	public ArrayList<PollResult> pollResult(SqlSessionTemplate sqlSession, Poll p) {
+		
+		return (ArrayList)sqlSession.selectList("pollMapper.pollResult", p);
+	}
+	
+	public int deletePoll(SqlSessionTemplate sqlSession, int pollNo) {
+		
+		return sqlSession.update("pollMapper.deletePoll", pollNo);
+	}
 
 }

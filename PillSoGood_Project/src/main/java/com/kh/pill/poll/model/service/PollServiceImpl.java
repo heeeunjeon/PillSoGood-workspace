@@ -63,4 +63,18 @@ public class PollServiceImpl implements PollService {
 		return pollDao.insertCart(sqlSession, c);
 	}
 
+
+	@Override
+	public ArrayList<PollResult> pollResult(Poll p) {
+		
+		return pollDao.pollResult(sqlSession, p); 
+	}
+
+
+	@Override
+	public int deletePoll(int pollNo) {
+
+		return pollDao.deletePoll(sqlSession, pollNo);
+	}
+
 }

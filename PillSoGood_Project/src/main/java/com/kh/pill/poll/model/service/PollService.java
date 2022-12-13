@@ -20,5 +20,9 @@ public interface PollService {
 	ArrayList<PollResult> selectResult(int memberNo);
 	
 	int insertCart(Cart c);
+	
+	ArrayList<PollResult> pollResult(Poll p);
+	
+	int deletePoll(int pollNo);
 
 }
