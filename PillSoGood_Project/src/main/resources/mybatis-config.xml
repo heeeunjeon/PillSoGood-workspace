@@ -37,7 +37,7 @@
 		
 		<typeAlias type="com.kh.pill.notice.model.vo.Notice" alias="notice" />
 		
-		<typeAlias type="com.kh.pill.alarm.model.vo.alarm" alias="alarm" />
+		<typeAlias type="com.kh.pill.alarm.model.vo.Alarm" alias="alarm" />
 	</typeAliases>
 	
 
