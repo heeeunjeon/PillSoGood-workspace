@@ -143,11 +143,26 @@
                         <div class="text"><p>PillSoGood 과 함께 건강 설문 시작하기</p></div>
                         <div class="surveyBtn">
                             <div align="center">
-                                <button type="button" class="btn btn-secondary btn-lg" onclick="nextSurvey(2); insertPoll();" style="width: 200px">설문 시작</button>
+                            	<c:choose>
+                            		<c:when test="${ loginUser eq null }">
+                            			<button type="button" class="btn btn-secondary btn-lg" onclick="login();" style="width: 200px">설문 시작</button>	
+                            		</c:when>
+                            		<c:otherwise>
+                            			<button type="button" class="btn btn-secondary btn-lg" onclick="nextSurvey(2); insertPoll();" style="width: 200px">설문 시작</button>
+                            		</c:otherwise>
+                            	</c:choose>
+                                
                             </div>
                         </div>
                     </div>
                 
+                
+                	<script>
+                		function login() {
+                			alert("로그인이 필요한 서비스 입니다.");
+                			return false;
+                		}
+                	</script>
 
                     <!-- 2번 -->
                     <div id="survey2" style="display:none;">
@@ -485,8 +500,6 @@
                     
                 </div>
 
-
-                    
                 <!--content_2_2영역 끝-->
                     </div>
                 
@@ -514,10 +527,7 @@
 
         function nextSurvey(num, surveyAnswer, productNo) {
         	
-			if(num==2 && "<c:out value='${loginUser.memberId}'/>" == "<c:out value=''/>") {
-				alert("로그인이 필요한 서비스 입니다.");
-				return false;
-			} else if(num == 3 && $("#memberHeight").val()==0) {
+			if(num == 3 && $("#memberHeight").val()==0) {
                 
                 alert("키를 입력해주세요");
                 return false;

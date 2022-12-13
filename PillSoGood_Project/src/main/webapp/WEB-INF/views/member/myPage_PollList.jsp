@@ -141,7 +141,7 @@
                         <h4>건강설문 관리</h4>
                         <hr>
 
-                        <div align="center" id="go_survey">
+                        <div align="center" id="go_survey" onclick="location.href='survey.po'">
                             건강설문으로 맞춤 영양성분을 확인하세요. <b>건강설문 시작하기 &gt;</b>
                         </div>
                         <hr>

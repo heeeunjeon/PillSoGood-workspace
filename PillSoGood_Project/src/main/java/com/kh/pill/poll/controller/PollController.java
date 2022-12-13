@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.pill.member.model.service.MemberService;
 import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.poll.model.service.PollService;
@@ -23,6 +24,9 @@ public class PollController {
 	@Autowired
 	private PollService pollService;
 	
+	@Autowired
+	private MemberService memberService;
+	
 	@RequestMapping("survey.po")
 	public String fowardSurvey() {
 		
@@ -32,11 +36,16 @@ public class PollController {
 	@RequestMapping("surveyResult.po")
 	public String fowardResult(HttpSession session, Model m) {
 		
-		Member loginUser = (Member)session.getAttribute("loginUser");
+		Member user = (Member)session.getAttribute("loginUser");
 		
-		int memberNo = loginUser.getMemberNo();
+		int memberNo = user.getMemberNo();
 		
 		ArrayList<PollResult> prlist = pollService.selectResult(memberNo);
+		
+		Member mem = new Member();
+		mem.setMemberId(user.getMemberId());
+		Member updateMem = memberService.loginMember(mem);
+		m.addAttribute("loginUser", updateMem);
 		
 		m.addAttribute("prlist", prlist);
 		
