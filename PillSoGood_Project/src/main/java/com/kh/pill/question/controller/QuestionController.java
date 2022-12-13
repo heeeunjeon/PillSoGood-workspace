@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
+import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.question.model.service.QuestionService;
 import com.kh.pill.question.model.vo.Question;
 
@@ -33,20 +34,24 @@ public class QuestionController {
 	@RequestMapping("list.qu")
 	public String selectQuestionList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
 		
-		// int memberNo = (session.getAttribute("loginUser")).getMemberNo();
-		int memberNo = 1;
-		int listCount = questionService.selectListCount(memberNo);
+		Member loginUser = (Member)session.getAttribute("loginUser");
 		
-		int pageLimit = 5;
-		int boardLimit = 10;
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
-		ArrayList<Question> list = questionService.selectQuestionList(memberNo, pi);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		
+		if(loginUser != null) {
+			
+			int memberNo = loginUser.getMemberNo();
+			int listCount = questionService.selectListCount(memberNo);
+			
+			int pageLimit = 5;
+			int boardLimit = 10;
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+			
+			ArrayList<Question> list = questionService.selectQuestionList(memberNo, pi);
+			
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+		}
+			
 		return "question/questionListView";
 	}
 	
@@ -101,7 +106,7 @@ public class QuestionController {
 	}
 	
 	@RequestMapping("update.qu")
-	public ModelAndView updateQuestion(Question q, MultipartFile reupfile, HttpSession session, ModelAndView mv) {
+	public ModelAndView updateQuestion(Question q, MultipartFile reupfile, String imageCheck, HttpSession session, ModelAndView mv) {
 		
 		if(!reupfile.getOriginalFilename().equals("")) {
 			
@@ -112,6 +117,12 @@ public class QuestionController {
 			String questionImage = saveFile(reupfile, session);
 			
 			q.setQuestionImage("resources/questionUploadFiles/" + questionImage);
+		}
+		
+		if(imageCheck.equals("check")) {
+			
+			new File(session.getServletContext().getRealPath(q.getQuestionImage())).delete();
+			q.setQuestionImage("");
 		}
 		
 		int result = questionService.updateQuestion(q);

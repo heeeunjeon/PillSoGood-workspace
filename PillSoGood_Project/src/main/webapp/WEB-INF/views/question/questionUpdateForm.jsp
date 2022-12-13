@@ -35,6 +35,7 @@
         color: black;
         margin-top: 20px;
         margin-left: 30px;
+        font-weight: bold;
     }
 
     /* content 영역 */
@@ -73,7 +74,7 @@
         font-size: large;
     }
     
-    #question_image {
+    #question_image, #checkbox {
     	margin-left: 40px;
     	margin-top: 30px;
     }
@@ -96,6 +97,7 @@
                 <div id="content_2_2">
 
                     <form action="update.qu" method="post" enctype="multipart/form-data">
+                    	<input type="hidden" name="questionNo" value="${ q.questionNo }">
                         <!-- 영섭 작업 영역 시작 -->
 
                         <!-- 제목 부분 -->
@@ -115,11 +117,15 @@
                         <!-- 사진첨부 부분 -->
                         <div>
                             <p>사진첨부(선택)</p>
-                            <input type="file" class="form-control" name="reupfile">
+                            <input type="file" class="form-control" name="reupfile" value="${ q.questionImage }">
                             
                             <c:if test="${ not empty q.questionImage }">
                             	<img id="question_image" src="${ q.questionImage }" width="200px" height="200px">
                             	<input type="hidden" name="questionImage" value="${ q.questionImage }">
+                            	<br><br>
+                            	<div style="vertical-align: top; width: 200px;" id="checkbox" align="center">
+                            		<input type="checkbox" class="form-check-input" name="imageCheck" value="check" class="form-control" id="imageCheck"> <label for="imageCheck" class="form-check-label">기존 사진 삭제</label>
+                            	</div>
                             </c:if>
                         </div>
                         <br><br>

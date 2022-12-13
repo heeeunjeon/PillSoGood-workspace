@@ -15,18 +15,18 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: 1500px;
-        margin : auto; /* 가운데로 좌, 우 자동 정렬*/
+        height: inherit;
+        margin : auto;
     }
 
     .wrap>div { width : 100%; }
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1150px;}
+    #content { display: flex; height: auto; }
     #content_2>div { width: 100%; }
-    #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_1, #content_2_3 { height: 115px; }
+    #content_2_2 { height: auto; color: black; }
 
     #header { height: 130px; }
 
@@ -35,6 +35,7 @@
         color: black;
         margin-top: 20px;
         margin-left: 30px;
+        font-weight: bold;
     }
 
     /* content 영역 */
@@ -88,93 +89,106 @@
                 </div>
                 <div id="content_2_2">
 
-                    <!-- 영섭 작업 영역 시작 -->
-
-                    <!-- 문의사항 등록 버튼 -->
-                    <div id="insertInquiry">
-                        <button type="button" class="btn btn-primary" onclick="location.href='enrollForm.qu'">문의사항 등록하기</button>
-                    </div>
-
-                    <!-- 문의 전체 조회 for문 부분 -->
-                    <div>
-                        <table id="question_list" class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th width="10%;"></th>
-                                    <th width="70%;">제목</th>
-                                    <th width="20%;">등록일</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            	<c:choose>
-                            		<c:when test="${ empty list }">
-                            			<tr><th colspan="3">등록하신 문의 내역이 없습니다.</th></tr>
-                            		</c:when>
-                            		<c:otherwise>
-                            			<c:forEach var="q" items="${ list }">
-		                            		<tr>
-		                            			<input type="hidden" value="${ q.questionNo }">
-		                            			<td>
-		                            				<c:choose>
-			                            				<c:when test="${ empty q.answer }">
-			                            					<button type="button" class="btn btn-dark btn-sm disabled">답변대기</button>
-			                            				</c:when>
-			                            				<c:otherwise>
-			                            					<button type="button" class="btn btn-primary btn-sm disabled">답변완료</button>
-			                            				</c:otherwise>
-		                            				</c:choose>
-		                            			</td>
-		                            			<td>${ q.questionTitle }</td>
-                                    			<td>${ q.questionDate }</td>
-		                            		</tr>
-		                            	</c:forEach>
-                            		</c:otherwise>
-                            	</c:choose>
-                            </tbody>
-                        </table>
-                    </div>
-                    <br><br>
                     
-                    <c:if test="${ not empty list }">
-	                    <script>
-			            	$(function() {
-			            		$("#question_list>tbody>tr").click(function() {
-			            			location.href = "detail.qu?qno=" + $(this).children().eq(0).val();
-			            		});
-			            	});
-			            </script>
-		            </c:if>
-
-                    <!-- 페이징 -->
-                    <div>
-                        <ul class="pagination">
-                        	<c:if test="${ not empty list }">
-	                        	<c:choose>
-			                		<c:when test="${ pi.currentPage eq 1 }">
-			                			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-			                		</c:when>
-			                		<c:otherwise>
-			                			<li class="page-item"><a class="page-link" href="list.qu?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
-			                		</c:otherwise>
-			                	</c:choose>
-			                	
-			                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                    		<li class="page-item"><a class="page-link" href="list.qu?cpage=${ p }">${ p }</a></li>
-			                    </c:forEach>
-	                        
-	                            <c:choose>
-			                		<c:when test="${ pi.currentPage eq pi.maxPage }">
-			                			<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
-			                		</c:when>
-			                		<c:otherwise>
-			                			<li class="page-item"><a class="page-link" href="list.qu?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
-			                		</c:otherwise>
-			                	</c:choose>
-                            </c:if>
-                        </ul>
-                    </div>
-                    <!-- 영섭 작업 영역 끝 -->
-
+					<c:choose>
+						<c:when test="${ not empty loginUser }">
+							<!-- 영섭 작업 영역 시작 -->
+		                    <!-- 문의사항 등록 버튼 -->
+		                    <div id="insertInquiry">
+		                        <button type="button" class="btn btn-primary" onclick="location.href='enrollForm.qu'">문의사항 등록하기</button>
+		                    </div>
+		
+		                    <!-- 문의 전체 조회 for문 부분 -->
+		                    <div>
+		                        <table id="question_list" class="table table-hover">
+		                            <thead>
+		                                <tr>
+		                                    <th width="10%;"></th>
+		                                    <th width="70%;">제목</th>
+		                                    <th width="20%;">등록일</th>
+		                                </tr>
+		                            </thead>
+		                            <tbody>
+		                            	<c:choose>
+		                            		<c:when test="${ empty list }">
+		                            			<tr><th colspan="3">등록하신 문의 내역이 없습니다.</th></tr>
+		                            		</c:when>
+		                            		<c:otherwise>
+		                            			<c:forEach var="q" items="${ list }">
+				                            		<tr>
+				                            			<input type="hidden" value="${ q.questionNo }">
+				                            			<td>
+				                            				<c:choose>
+					                            				<c:when test="${ empty q.answer }">
+					                            					<button type="button" class="btn btn-dark btn-sm disabled">답변대기</button>
+					                            				</c:when>
+					                            				<c:otherwise>
+					                            					<button type="button" class="btn btn-primary btn-sm disabled">답변완료</button>
+					                            				</c:otherwise>
+				                            				</c:choose>
+				                            			</td>
+				                            			<td>${ q.questionTitle }</td>
+		                                    			<td>${ q.questionDate }</td>
+				                            		</tr>
+				                            	</c:forEach>
+		                            		</c:otherwise>
+		                            	</c:choose>
+		                            </tbody>
+		                        </table>
+		                    </div>
+		                    <br><br>
+		                    
+		                    <c:if test="${ not empty list }">
+			                    <script>
+					            	$(function() {
+					            		$("#question_list>tbody>tr").click(function() {
+					            			location.href = "detail.qu?qno=" + $(this).children().eq(0).val();
+					            		});
+					            	});
+					            </script>
+				            </c:if>
+		
+		                    <!-- 페이징 -->
+		                    <div>
+		                        <ul class="pagination">
+		                        	<c:if test="${ not empty list }">
+			                        	<c:choose>
+					                		<c:when test="${ pi.currentPage eq 1 }">
+					                			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+					                		</c:when>
+					                		<c:otherwise>
+					                			<li class="page-item"><a class="page-link" href="list.qu?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
+					                		</c:otherwise>
+					                	</c:choose>
+					                	
+					                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				                    		<li class="page-item"><a class="page-link" href="list.qu?cpage=${ p }">${ p }</a></li>
+					                    </c:forEach>
+			                        
+			                            <c:choose>
+					                		<c:when test="${ pi.currentPage eq pi.maxPage }">
+					                			<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+					                		</c:when>
+					                		<c:otherwise>
+					                			<li class="page-item"><a class="page-link" href="list.qu?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
+					                		</c:otherwise>
+					                	</c:choose>
+		                            </c:if>
+		                        </ul>
+		                    </div>
+		                    <!-- 영섭 작업 영역 끝 -->
+	                	</c:when>
+	                	<c:otherwise>
+	                		<div align="center">
+		                        <button type="button" class="btn btn-secondary" style="height: 45px; width: 300px;" onclick="location.href='loginForm.me'">로그인</button>
+		                        <br>
+		                        <div style="font-size: large; margin: 100px 0px;">
+		                        	<b>1:1 문의 내역은<br>로그인 후 확인하실 수 있습니다.</b>
+		                        </div>
+		                    </div>
+	                		
+	                	</c:otherwise>
+                	</c:choose>
                 </div>
                 <div id="content_2_3"></div>
             </div>

@@ -41,13 +41,15 @@
         font-size: 35px;
         color: black;
         margin-top: 20px;
+        margin-left: 30px;
+        font-weight: bold;
     }
 
     /* content 영역 */
     #content>div { height : 100%; float : left; }
-    #content_1 { width : 25%; }
-    #content_2 { width : 50%; }
-    #content_3 { width : 25%; }
+    #content_1 { width : 20%; }
+    #content_2 { width : 60%; }
+    #content_3 { width : 20%; }
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 	

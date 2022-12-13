@@ -178,7 +178,14 @@
             <div class="dropdown-menu">
               <a class="dropdown-item" href="list.no">공지사항</a>
               <a class="dropdown-item" href="faq">FAQ</a>
-              <a class="dropdown-item" href="list.qu">1:1 문의</a>
+              <c:choose>
+              	<c:when test="${ loginUser.memberId eq 'admin' }">
+              		<a class="dropdown-item" href="qlist.ad">1:1 문의</a>
+              	</c:when>
+              	<c:otherwise>
+              		<a class="dropdown-item" href="list.qu">1:1 문의</a>
+              	</c:otherwise>
+              </c:choose>
             </div>
           </li>
         </ul>

@@ -37,6 +37,7 @@
         color: black;
         margin-top: 20px;
         margin-left: 30px;
+        font-weight: bold;
     }
 
     /* content 영역 */
@@ -78,13 +79,13 @@
         border-radius: 10px;
     }
 
-    #answer_content {
+    #answer_content, #not_answer {
         width: 90%;
         margin: auto;
         background-color: #78c2ad36;
         border-radius: 10px;
     }
-    #answer_content th, #answer_content td { padding: 15px; color: black; }
+    #answer_content th, #answer_content td, #not_answer { padding: 15px; color: black; }
 
     #answer_enroll {
         width: 90%;
@@ -122,13 +123,24 @@
                     <p>1:1 문의</p>
                 </div>
                 <div id="content_2_2">
-
-					<div align="right" style="width: 95%; margin: auto;"><button class="btn btn-primary" onclick="location.href='list.qu'">목록으로</button></div>
+					
+					<c:choose>
+						<c:when test="${ loginUser.memberId eq 'admin' }">
+							<div align="right" style="width: 95%; margin: auto;"><button class="btn btn-primary" onclick="location.href='qlist.ad'">목록으로</button></div>
+						</c:when>
+						<c:otherwise>
+							<div align="right" style="width: 95%; margin: auto;"><button class="btn btn-primary" onclick="location.href='list.qu'">목록으로</button></div>
+						</c:otherwise>
+					</c:choose>
+					<br>
                     <!-- 영섭 작업 영역 시작 -->
 
                     <!-- 제목 부분 -->
                     <p>제목</p>
                     <div class="question_content">${ q.questionTitle }</div>
+                    
+                    <p>작성자</p>
+                    <div class="question_content">${ q.memberNo }</div>
                     
                     <!-- 내용 부분 -->
                     <p>내용</p>
@@ -144,9 +156,11 @@
                     <br>
                     
                     
-                    <c:if test="${ not empty loginUser and loginUser.memberNo eq q.memberNo }">
+                    <c:if test="${ not empty loginUser and loginUser.memberId eq q.memberNo }">
                     	<div align="center" id="update_btn">
-	                        <button class="btn btn-warning" onclick="updateFormSubmit(1);">수정</button>
+                    		<c:if test="${ empty q.answer }">
+	                        	<button class="btn btn-warning" onclick="updateFormSubmit(1);">수정</button>
+	                        </c:if>
 	                        <button class="btn btn-danger" onclick="updateFormSubmit(2);">삭제</button>
                    		</div>
                    	
@@ -176,7 +190,7 @@
                     <div>
                     	<c:choose>
                     		<c:when test="${ not empty q.answer }">
-		                        <!-- 댓글 부분 -->
+		                        <%-- 댓글 부분 --%>
 		                        <div>
 		                            <table id="answer_content">
 		                                <thead>
@@ -198,9 +212,9 @@
 		                            
 		                            <div id="answer_update">
 		                                <textarea rows="8" class="form-control" placeholder="답변 내용 작성" style="resize: none;">${ q.answer }</textarea>
-		                                <!-- 버튼 영역 -->
+		                                <%-- 버튼 영역 --%>
 		                                <div align="right">
-		                                    <button type="button" class="btn btn-primary btn-sm" style="margin-top: 15px;" onclick="updateAnswer();">수정</button>
+		                                    <button type="button" class="btn btn-primary btn-sm" style="margin-top: 15px; width: 60px;" onclick="updateAnswer();">수정</button>
 		                                </div>
 		                            </div>
 		                        </div>
@@ -259,42 +273,51 @@
 		                        
                         	</c:when>
                         	<c:otherwise>
-		                        <!-- 댓글 입력창 부분 -->
-		                        <c:if test="${ not empty loginUser and loginUser.memberId eq 'admin' and empty q.answer }">
-			                        <div id="answer_enroll">
-		                                <textarea rows="8" class="form-control" placeholder="답변 내용 작성" style="resize: none;"></textarea>
-		                                
-		                                <!-- 버튼 영역 -->
-		                                <div align="right">
-		                                    <button id="btnInsert" type="button" class="btn btn-primary btn-sm" onclick="insertAnswer();">등록</button>
-		                                </div>
-			                        </div>
-		                        </c:if>
-		                        
-		                        <script>
-		                        	function insertAnswer() {
-		                        		
-		                        		$.ajax({
-		                        			url : "aninsert.ad",
-		                        			data : {
-		                        				questionNo: ${ q.questionNo },
-		                        				answer: $("#answer_enroll>textarea").val()
-		                        			},
-		                        			success : function(result) {
-		                        				
-												if(result == "success") {
-													alert("답변을 작성했습니다.");
-		                        					location.reload();
-		                        				}
-		                        			},
-		                        			error : function() {
-		                        				console.log("1:1 문의 답변 작성용 ajax 통신 실패");
-		                        			}
-		                        		});
-		                        	}
-		                        </script>
+                        		<c:choose>
+			                        <%-- 댓글 입력창 부분 --%>
+			                        <c:when test="${ not empty loginUser and loginUser.memberId eq 'admin' }">
+				                        <div id="answer_enroll">
+			                                <textarea rows="8" class="form-control" placeholder="답변 내용 작성" style="resize: none;"></textarea>
+			                                
+			                                <%-- 버튼 영역 --%>
+			                                <div align="right">
+			                                    <button id="btnInsert" type="button" class="btn btn-primary btn-sm" onclick="insertAnswer();">등록</button>
+			                                </div>
+				                        </div>
+			                        </c:when>
+			                        
+			                        <c:otherwise>
+			                        	<div id="not_answer">
+			                        		&nbsp;PillSoGood<br><br>
+			                        		<p style="text-align: center;">빠른 시일 내로 답변드리겠습니다.</p>
+			                        	</div>
+			                        </c:otherwise>
+		                        </c:choose>
                         	</c:otherwise>
                         </c:choose>
+                        
+                        <script>
+                        	function insertAnswer() {
+                        		
+                        		$.ajax({
+                        			url : "aninsert.ad",
+                        			data : {
+                        				questionNo: ${ q.questionNo },
+                        				answer: $("#answer_enroll>textarea").val()
+                        			},
+                        			success : function(result) {
+                        				
+										if(result == "success") {
+											alert("답변을 작성했습니다.");
+                        					location.reload();
+                        				}
+                        			},
+                        			error : function() {
+                        				console.log("1:1 문의 답변 작성용 ajax 통신 실패");
+                        			}
+                        		});
+                        	}
+                        </script>
                     </div>
 
                     <!-- 영섭 작업 영역 끝 -->

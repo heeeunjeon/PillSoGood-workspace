@@ -35,6 +35,7 @@
         color: black;
         margin-top: 20px;
         margin-left: 30px;
+        font-weight: bold;
     }
 
     /* content 영역 */
@@ -90,7 +91,7 @@
                 <div id="content_2_2">
 
                     <form action="insert.qu" method="post" enctype="multipart/form-data">
-                    	<input type="hidden" name="memberNo" value="1">
+                    	<input type="hidden" name="memberNo" value="${ loginUser.memberNo }">
                         <!-- 영섭 작업 영역 시작 -->
 
                         <!-- 제목 부분 -->
@@ -118,6 +119,7 @@
                         <div id="insert_btn">
                             <br><br>
                             <button type="submit" class="btn btn-primary">등록하기</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='list.qu'">뒤로가기</button>
                         </div>
 
                         <!-- 영섭 작업 영역 끝 -->
