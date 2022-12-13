@@ -59,9 +59,30 @@ public class OrderServiceImpl implements OrderService {
 	
 	
 	
+	/**
+	 * 장바구니 담기
+	 */
 	@Override
 	public int insertCart(Cart c) {
 		return orderDao.insertCart(sqlSession, c);
 	}
+
+	@Override
+	public int selectIsCart(Cart c) {
+		return orderDao.selectIsCart(sqlSession, c);
+	}
+
+
+	@Override
+	public int updateCart(Cart c) {
+		return orderDao.updateCart(sqlSession, c);
+	}
+
+	@Override
+	public int removeCart(String productNo) {
+		return orderDao.removeCart(sqlSession, productNo);
+	}
+
+	
 
 }

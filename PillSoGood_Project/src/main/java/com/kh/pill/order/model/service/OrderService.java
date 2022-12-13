@@ -31,4 +31,12 @@ public interface OrderService {
 	// 장바구니 담기
 	int insertCart(Cart c);
 	
+	// 장바구니 리스트 조회
+	int selectIsCart(Cart c);
+	
+	// 장바구니 상품 추가되었을 때 update
+	int updateCart(Cart c);
+	
+	// 장바구니 상품 삭제
+	int removeCart(String productNo);
 }

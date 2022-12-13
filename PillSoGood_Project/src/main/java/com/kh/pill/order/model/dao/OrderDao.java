@@ -47,4 +47,18 @@ public class OrderDao {
 	public int insertCart(SqlSessionTemplate sqlSession, Cart c) {
 		return sqlSession.insert("orderMapper.insertCart", c);
 	}
+	
+	public int selectIsCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.selectOne("orderMapper.selectIsCart", c);
+	}
+	
+	public int updateCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.update("orderMapper.updateCart", c);
+	}
+	
+	public int removeCart(SqlSessionTemplate sqlSession, String productNo) {
+		return sqlSession.delete("orderMapper.removeCart", productNo);
+	}
+	
+	
 }

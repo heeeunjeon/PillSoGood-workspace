@@ -73,7 +73,7 @@
 
     #product>div { 
         width: 33.3%; 
-        height: 250px; 
+        height: 200px; 
         float: left;
         padding: 15px;
     }
@@ -87,8 +87,8 @@
 
     #product>div>div>div { width: 100%; float: left; }
 
-    #productT { height: 50%; }
-    #productP { height: 20%; }
+    #productT { height: 65%; }
+    #productP { height: 35%; }
 
     #productT>div { height: 100%; float: left; }
     #productTT { width: 60%; }
@@ -117,21 +117,6 @@
         line-height: 40px;
     }
 
-    #productW { height: 30%; padding: 10px; }
-
-    #productW_1 { 
-        width: 100%; 
-        height: 100%;
-        background-color: white;
-        border-radius: 15px;
-    }
-
-    #productW_1>p {
-        color: black;
-        text-align: center;
-        font-size: 18px;
-        line-height: 43px;
-    }
 
 
 
@@ -143,8 +128,8 @@
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
-    .prod { background-color: #fef7f8; }
     /* 배경색 스타일 미리 지정 */
+    .prod { background-color: #fef7f8; }
     
     .prodback0 { background-color: #fef7f8; }
     .prodback1 { background-color: #f9faf0; }
@@ -250,9 +235,6 @@
                                     </div>
                                     <div id="productP">
                                         <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
-                                    </div>
-                                    <div id="productW">
-                                        <div id="productW_1" style="cursor:pointer"><p><i class="fa-solid fa-cart-shopping"></i>&ensp;장바구니 담기</p></div>
                                     </div>
                                 </div>
                             </div>

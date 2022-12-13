@@ -8,6 +8,12 @@
 		<result column="PRODUCT_NO" property="productNo"/>
 		<result column="CART_AMOUNT" property="cartAmount"/>
 		<result column="CART_STATUS" property="cartStatus"/>
+		
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="PRODUCT_EXPLAIN" property="productExplain" />
+		<result column="PRODUCT_PRICE" property="productPrice" />
+		<result column="PRODUCT_IMG_PATH" property="productImgPath" />
+		
 	</resultMap>
 	
 	<resultMap id="orderResultSet" type="order">
@@ -54,10 +60,17 @@
 	</insert>
 	
 	<select id="selectCart" parameterType="_int" resultMap="cartResultSet">
-		SELECT CART_NO, PRODUCT_NO, CART_AMOUNT
-		FROM CART
-		WHERE MEMBER_NO = #{memberNo}
-		  AND CART_STATUS = 'Y'
+		SELECT CART_NO
+		     , PRODUCT_NO
+		     , CART_AMOUNT
+		     , PRODUCT_NAME
+		     , PRODUCT_EXPLAIN
+		     , PRODUCT_PRICE
+		     , PRODUCT_IMG_PATH
+		  FROM CART
+		  JOIN PRODUCT USING (PRODUCT_NO)
+		 WHERE MEMBER_NO = #{memberNo} 
+		   AND CART_STATUS = 'Y'
 	</select>
 	
 	<insert id="insertOrderCart" parameterType="orderCart">
@@ -87,10 +100,30 @@
 						, MEMBER_NO
 						, PRODUCT_NO
 						, CART_AMOUNT)
-				   VALUES (CART_NO.NEXTVAL
+				   VALUES (SEQ_CART_NO.NEXTVAL
 				   		 , #{memberNo}
 				   		 , #{productNo}
 				   		 , #{cartAmount})		
 	</insert>
+	
+	<select id="selectIsCart" parameterType="cart" resultType="_int">
+		SELECT NVL(MAX(CART_AMOUNT), 0) "CART_AMOUNT"
+		  FROM CART
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND PRODUCT_NO = #{productNo}
+	</select>
+	
+	<update id="updateCart" parameterType="cart">
+		UPDATE CART
+		   SET CART_AMOUNT = #{cartAmount}
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND PRODUCT_NO = #{productNo}
+	</update>
+	
+	<delete id="removeCart" parameterType="String">
+			DELETE CART
+			 WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
 	
 </mapper>

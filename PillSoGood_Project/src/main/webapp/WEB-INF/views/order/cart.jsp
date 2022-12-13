@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,8 +39,10 @@
         margin-left: 30px;
     }
 
-    #content_2_2>div>table>thead tr { border-bottom: solid lightgray; }
-    #content_2_2>div>table { color: black; width: 90%; }
+    #content_2_2 form>table>thead tr { border-bottom: solid lightgray; }
+    #content_2_2 form>table { width: 90%; }
+
+    table { color: black; }
 
     #content_2_2>div { width: 100%; height: auto; }
 
@@ -90,7 +93,7 @@
 
     <div class="wrap">
         <div id="navigator2">
-        	<jsp:include page="../common/menubar.jsp" />
+            <jsp:include page="../common/menubar.jsp" />
         </div>
         <div id="header"></div>
         <div id="content">
@@ -101,36 +104,40 @@
                 </div>
                 <div id="content_2_2" align="center">
                     <div>
+                        <form>
                         <table>
                             <thead>
                                 <tr height="50px">
-                                    <th width="25px" align="center"><input class="form-check-input" type="checkbox"></th>
-                                    <th colspan="3" align="left" >전체선택</th>
-                                    <th width="100px" align="center"><button type="button" class="btn btn-outline-danger btn-sm">선택삭제</button></th>
+                                    <th width="25px" align="center" style="padding-left: 5px"><input class="form-check-input" type="checkbox" name="allCheck"></th>
+                                    <th colspan="3" align="center">전체선택</th>
+                                    <th width="100px" style="text-align:right"><button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteValue();">선택삭제</button></th>
                                 </tr>
                             </thead>
                             <tbody>
+                            	<c:forEach var="c" items="${ list }">
+                         
                                 <tr>
-                                    <td rowspan="2" align="center"><input class="form-check-input" type="checkbox"></td>
-                                    <td rowspan="2" align="center" width="150px"><div style="width: 80px; height: 80px;"><img src="../../../resources/images/" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
-                                    <td height="30px">눈건강엔</td>
+                                    <td rowspan="2" align="center"><input class="form-check-input" type="checkbox" name="RowCheck" value="${ c.productNo }"></td>
+                                    <td rowspan="2" align="center" width="150px"><div style="width: 80px; height: 80px;"><img src="${ c.productImgPath }" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
+                                    <td height="30px">${ c.productExplain }엔</td>
                                     <td rowspan="2" width="150px">
                                         <table align="center">
                                             <tr>
                                                 <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('minus');">-</button></td>
-                                                <td style="width: 36px;"><input class="form-control" id="result" value="1" style="width: 36px;" readonly></td>
+                                                <td style="width: 36px;"><input class="form-control" id="result" value="${ c.cartAmount }" style="width: 44px; text-align: center;" readonly></td>
                                                 <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('plus');">+</button></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td rowspan="2" align="center" style="font-size: 23px;"><b>24,000원</b></td>
+                                    <td rowspan="2" align="right" style="font-size: 23px;"><b><fmt:formatNumber value="${ c.productPrice }" />원</b></td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid lightgray;">
-                                    <td style="font-size: 20px;"><b>루테인</b></td>
+                                    <td style="font-size: 20px;"><b>${ c.productName }</b></td>
                                 </tr>
-                           
+                           		</c:forEach>
                             </tbody>
                         </table>
+                        </form>
                     </div>
                     <div id="btns" style="margin-top: 10px;">
                         <button type="button" class="btn btn-outline-primary btn-lg" onclick="location.href='list.pr'">+ 제품 추가</button>
@@ -199,17 +206,70 @@
             var num = parseInt(number);
 
             if(type == "plus") {
-                if (num < 9) {
-                    num = num + 1;
-                }
+                
+                num = num + 1;
             } else if(type == "minus")  {
-                if (num != 0) {
+                if (num != 1) {
                     num = num - 1;
                 }
             }
 
             // 결과 출력
             $("#result").val(num);
+        }
+
+        
+        $(function() {
+            var chkObj = document.getElementsByName("RowCheck");
+            var rowCnt = chkObj.length;
+
+            $("input[name='allCheck']").click(function() {
+                var chk_listArr = $("input[name='RowCheck']");
+                for (var i = 0; i < chk_listArr.length; i++) {
+                    chk_listArr[i].checked = this.checked;
+                }
+            });
+            $("input[name='RowCheck']").click(function() { 
+                if($("input[name='RowCheck']:checked").length == rowCnt) {
+                    $("input[name='allCheck']")[0].checked = true;
+                }
+                else {
+                    $("input[name='allCheck']")[0].checked = false;
+                }
+            });
+        });
+        function deleteValue() {
+            var url = "delete.cart";
+            var valueArr = new Array();
+            var list = $("input[name='RowCheck']");
+            for(var i = 0; i < list.length; i++) {
+                if(list[i].checked) {
+                    valueArr.push(list[i].value);
+                }
+            }
+            if(valueArr.length == 0) {
+                alert("선택된 상품이 없습니다.");
+            }
+            else {
+                var chk = confirm("상품을 삭제하시겠습니까?");
+                $.ajax({
+                    url : "delete.cart",
+                    type : "post",
+                    traditional : true,
+                    data : {
+                        valueArr : valueArr
+                    },
+                    success: function(jdata) {
+                        if(jdata = 1) {
+                            alert("상품을 삭제했습니다.");
+                            location.replace("list.cart")
+                        }
+                        else {
+                            alert("상품 삭제 실패");
+                        }
+                    }
+                });
+            }
         }
     </script>
     

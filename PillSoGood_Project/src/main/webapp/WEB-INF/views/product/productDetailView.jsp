@@ -181,38 +181,43 @@
                      }
                      
                      $("#addCart").click(function() {
-                    	    	 
-                    	 var productNo = $("#productNo").val();
-                    	 var cartAmount = $("#result").val();
-                    	 
-                    	 var data = {
-                    		productNo : productNo,
-                    		cartAmount : cartAmount
-                		};
-                    	 
-                   		$.ajax({
-                   			url : "insert.cart",
-                   		    type : "post",
-                   		    data : data,
-                   		    success : function(result) {
-                   		    
-                   		    	if(result == 'fail') {
-                   		    	
-                   		     		alert("회원만 이용할 수 있는 서비스입니다.");
 
-                   		    	} else {
-                   		    	
-                   		     		if(confirm("장바구니에 성공적으로 담겼습니다.\n장바구니로 이동하시겠습니까?")) {
-                   		     			location.href = 'list.cart';
-                   		     		}
-                   		     			
-                   		    	}
-                   		   },
-                   		   error : function() {
-                   		   		
-                   			   alert("카트 담기 실패");
-                   		   }
-                   		});
+						if(${ empty loginUser }) {
+							alert("회원만 이용할 수 있는 서비스입니다.");
+						} else {
+                    	 
+	                    	 var productNo = $("#productNo").val();
+	                    	 var cartAmount = $("#result").val();
+	                    	 
+	                    	 var data = {
+	                    		productNo : productNo,
+	                    		cartAmount : cartAmount
+	                		};
+	                    	 
+	                   		$.ajax({
+	                   			url : "insert.cart",
+	                   		    type : "post",
+	                   		    data : data,
+	                   		    success : function(result) {
+	                   		    
+	                   		    	if(result == 'fail') {
+	                   		    	
+	                   		     		alert("장바구니에 담기지 않았습니다.");
+	
+	                   		    	} else {
+	                   		    	
+	                   		     		if(confirm("장바구니에 성공적으로 담겼습니다.\n장바구니로 이동하시겠습니까?")) {
+	                   		     			location.href = 'list.cart';
+	                   		     		}
+	                   		     			
+	                   		    	}
+	                   		   },
+	                   		   error : function() {
+	                   		   		
+	                   			   alert("카트 담기 실패");
+	                   		   }
+	                   		});
+						}
                    	});
                  </script>
             </div>
