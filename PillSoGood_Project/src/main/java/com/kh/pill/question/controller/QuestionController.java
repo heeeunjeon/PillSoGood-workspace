@@ -108,9 +108,10 @@ public class QuestionController {
 	@RequestMapping("update.qu")
 	public ModelAndView updateQuestion(Question q, MultipartFile reupfile, String imageCheck, HttpSession session, ModelAndView mv) {
 		
+		
 		if(!reupfile.getOriginalFilename().equals("")) {
 			
-			if(!q.getQuestionImage().equals("")) {
+			if(q.getQuestionImage() != null && !q.getQuestionImage().equals("")) {
 				new File(session.getServletContext().getRealPath(q.getQuestionImage())).delete();
 			}
 			
@@ -119,7 +120,7 @@ public class QuestionController {
 			q.setQuestionImage("resources/questionUploadFiles/" + questionImage);
 		}
 		
-		if(imageCheck.equals("check")) {
+		if(imageCheck != null && imageCheck.equals("check")) {
 			
 			new File(session.getServletContext().getRealPath(q.getQuestionImage())).delete();
 			q.setQuestionImage("");
