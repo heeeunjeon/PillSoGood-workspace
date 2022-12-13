@@ -1,7 +1,5 @@
 package com.kh.pill.review.model.vo;
 
-import java.sql.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +19,7 @@ public class ReviewReply {
 	private int memberNo;
 	private int reviewNo;
 	private String memberName;
+	private String memberId;
 	
 	
 }

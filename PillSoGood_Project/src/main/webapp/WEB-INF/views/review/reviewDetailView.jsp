@@ -341,7 +341,7 @@
 				                    </c:choose>
 			                    </tr>
 			                </thead>
-			                <tbody style="background-color: rgba(211, 211, 211, 0.359);">
+			                <tbody>
 			                </tbody>
 			            </table>
                         
@@ -376,13 +376,20 @@
 	  					
 	  					resultStr += "<tr>"
 	  							  		+ "<td><p class='replyName'>" + result[i].memberName + "</p></td>"
-	  							  		+ "<td class=''replyDate>" + result[i].replyDate + "</td>"
-	  							  		+ "<td>" + "<button class='btn btn-secondary' type='submit' onclick='deleteReply();' value='" + result[i].replyNo + "'>"
-	  							  		+ "삭제" + "</button>" + "</td>"
-	  							  + "</tr>"
-	  							  + "<tr>"
+	  							  		+ "<td class=''replyDate>" + result[i].replyDate + "</td>";
+	  							  		
+	  							  		if("${loginUser.memberId}" == result[i].memberId || "${loginUser.memberId}" == "admin1234") {
+	  							  			
+	  							  			resultStr += "<td>" 
+	  							  							+ "<button class='btn btn-secondary button' type='submit' onclick='deleteReply(" + result[i].replyNo + ");'>"
+		  							  						+ "삭제" + "</button>" 
+		  							  				   + "</td>";
+	  							  		}
+	  							  			
+	  					resultStr += "</tr>"
+	  							  		+ "<tr>"
 	  							  		+ "<td colspan='3'>" + "<p class='replyContent'>" + result[i].replyContent + "</p>" + "</td>"
-	  							  + "</tr>";
+	  							  		+ "</tr>";
 	  				}
 	  				
 	  				$("#replyArea>tbody").html(resultStr);
@@ -447,11 +454,9 @@
 	   			alertify.alert("댓글 작성 실패", "댓글 작성 후 등록을 요청해주세요.");
 	   		}
 	   	}
-	      /*
-	      function deleteReply() { // 댓글 삭제 요청용 ajax
+	      
+	      function deleteReply(replyNo) { // 댓글 삭제 요청용 ajax
 		  		
-		    	  	var replyNo = $(this).val();
-					console.log(replyNo);
 			   		// form 태그 내에서는 required 속성이 적용되지만,
 			   		// form 태그 밖에서는 required 속성이 적용안됨.
 			   		// => 댓글 내용이 있는지 검사 후 있다면 ajax 요청 보내기
@@ -462,22 +467,19 @@
 		   				data : {replyNo:replyNo},
 		   				success : function(result) {
 		   					
+		   					// console.log(result)
 		   					// "success" 또는 "fail" 문자열이 들어있음
 		   					if(result == "success") {
 		   						
 		   						// 댓글 삭제 성공 시 댓글 리스트를 불러올 것
 		   						selectReviewReplyList();
-		   						
 		   					}
 		   				},
 		   				error : function() {
 		   					console.log("댓글 삭제용 ajax 통신 실패!");
 		   				}
 		   			});
-			   		
 		   		}
-	      */
-	      
 	      
 	     </script>
     </body>

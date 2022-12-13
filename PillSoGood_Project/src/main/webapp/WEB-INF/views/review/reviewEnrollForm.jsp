@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: 1530px;
+        height: 1830px;
         margin : auto;
     }
 
@@ -24,9 +25,9 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1150px; }
+    #content { height: 1450px; }
     #content_2>div { width: 100%; }
-    #content_2_1 { height: 10%; float: left; }
+    #content_2_1 { height: 1%; float: left; }
     #content_2_2 { height: 80%; float: left; }
     #content_2_3 { height: 10%; float: left; }
 
@@ -49,8 +50,6 @@
 
     .innerContent { 
       display: flex;
-      float: left;
-      left: 1000px;
       position:relative;
       top: 5%;
       left: 5%;
@@ -72,19 +71,9 @@
         margin-bottom: 10px;
       }
 
-      #hashtag{
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
-
       #content{
         margin-top: 10px;
         margin-bottom: 10px;
-      }
-
-      th { 
-        padding-left: 10px;
-        padding-right: 20px;
       }
 
       #select {
@@ -96,7 +85,6 @@
         padding-bottom: 30px;
       }
       
-
       td>p {
         margin-bottom: 7px;
         padding-left: 13px;
@@ -106,6 +94,13 @@
       	cursor: pointer;
       }
 
+	  label {
+	  	width: 100px;
+	  }
+	  
+	  input, textarea {
+	  	width:800px;
+	  }
 </style>
 
 </head>
@@ -122,7 +117,7 @@
                 <!-- 로고 영역 -->
                 <div class="logoArea">
                       <jsp:include page="../common/logo.jsp" />
-                    <p style="display: inline; font-size: 20px;">제품후기</p>
+                    <p style="display: inline; font-size: 20px;">고객 후기</p>
                 </div>
               </div>
 
@@ -133,20 +128,19 @@
                       <table algin="center" class="reviewForm">
 
                             <tr>
-                                <td>
-                                    <p style="font-size: 16px;"><b>나중구현) orders 한 건의 주문 목록 String 컬럼</b></p>
-                                    <p style="font-size: 14px;">나중구현) 정기구독 한 팩 서비스</p>
-                                    <p style="font-size: 11px; color: lightgray;">나중구현) 30일분</p>
+                                <td colspan="2">
+                                    <span style="font-size: 16px;"><b>나중구현) orders 한 건의 주문 목록 String 컬럼</b></span>
+                                    <span style="font-size: 14px;">나중구현) 정기구독 한 팩 서비스</span>
                                 </td>
                             </tr>
 
                             <tr>
-                                <th><label for="title">제목</label></th>
-                                <td><input type="text" id="title" class="form-control" name="magazineTitle" placeholder="내용을 입력해주세요" required></td>
+                                <td><label for="title">제목</label></td>
+                                <td><input type="text" class="form-control" name="reviewTitle" required></td>
                             </tr>
                             
                             <tr>
-                                <th>별점</th>
+                                <td><label>별점</label></td>
                                 <td id="starTd">
                                     <i class="fa-solid fa-star" id="1"></i>
                                     <i class="fa-solid fa-star" id="2"></i>
@@ -165,15 +159,13 @@
 										var reviewGrade3 = Number($("#3").attr('id'));
 										var reviewGrade4 = Number($("#4").attr('id'));
 										var reviewGrade5 = Number($("#5").attr('id'));
-										//console.log(reviewGrade1);
 										
 										$("#starTd>i").click(function() {
 											// int reviewGrade 뽑기							
 											str = $(this).attr('id'); // id="1", "2", ... -> str
 											
 											$("#reviewGrade").val(str); // input value 에 str 넣음(String 상태)
-											reviewGrade = Number($("#reviewGrade").val()); // String -> int 인데, 할 필요가 없을 가능성
-											// console.log(reviewGrade);
+											var reviewGrade = Number($("#reviewGrade").val()); // String -> int
 											
 											// 시각화
 											if(reviewGrade == 1) {
@@ -195,24 +187,27 @@
 											else if (reviewGrade == 5) {
 												$("#starTd>i").attr('style', 'color:#78C2AD;');
 											}
-											// console.log(reviewGrade);
 										});
 									});
-									
 								</script>
                             </tr>
-
+                            
                             <tr>
-                                <th><label for="content">내용</label></th>
-                                <td><textarea id="content" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" required></textarea></td>
+                                <td><label for="content">내용</label></td>
+                                <td><textarea class="form-control" style="resize:none;" name="reviewContent" required></textarea></td>
                             </tr>
-
+							
                             <tr>
-                                <th><label for="upfile">사진</label></th>
-                                <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                                <td><label for="upfile">썸네일 사진</label></td>
+                                <td><input type="file" id="upfile1" class="form-control-file border" name="upfile"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="upfile">사진</label></td>
+                                <td><input type="file" id="upfile2" class="form-control-file border" name="upfile"></td>
                             </tr>  
                     </table>  
                     <div align="center" class="btnArea">
+                    	<input type="hidden" name="memberNo" class="form-control" value="${ loginUser.memberNo }">
                         <button type="submit" class="btn btn-primary">등록</button>
                         <button type="reset" class="btn btn-light">취소</button>
                     </div>
@@ -228,8 +223,6 @@
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
-    
-
     
 </body>
 </html>

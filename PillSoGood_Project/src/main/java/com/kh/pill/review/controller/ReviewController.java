@@ -2,6 +2,7 @@ package com.kh.pill.review.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -106,10 +107,10 @@ public class ReviewController {
 	// => Controller 의 메소드에서 MultipartFile[] upfile 또는 List<MultipartFile> upfile 로 받으면 됨
 	// (0 번째 인덱스에서부터 첨부파일의 정보들이 담겨있음 : 반복문 활용 가능)
 	@RequestMapping("insert.re")
-	public ModelAndView insertReview(Review r, MultipartFile upfile, HttpSession session, ModelAndView mv) {
+	public ModelAndView insertReview(Review r, List<MultipartFile> upfile, HttpSession session, ModelAndView mv) {
 		
-		// System.out.println(r);
-		// System.out.println(upfile);
+		System.out.println(r);
+		System.out.println(upfile);
 		// 요청 시 name 속성과 필드명을 정확하게 맞췄음에도 불구하고 제대로 된 전달값이 안들어옴
 		// 요청 시 분명히 파일을 넘겼음에도 불구하고 upfile 값이 null
 		// => 파일 업로드에 필요한 Spring 라이브러리를 pom.xml 에 추가하지 않았기 때문
@@ -120,9 +121,10 @@ public class ReviewController {
 		
 		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버로 업로드
 		// => 원본명, 서버에 업로드된 경로를 이어붙이기
+		/*
 		if(!upfile.getOriginalFilename().equals("")) {
 			
-			/*
+			
 			// 파일명 수정 작업 후 서버에 업로드 시키기
 			// 예) "flower.png" => "2022112210405012345.png"
 			// 1. 원본파일명 뽑아오기
@@ -149,7 +151,7 @@ public class ReviewController {
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
-			*/
+			
 			
 			// String changeName = saveFile(upfile, session);
 			
@@ -180,8 +182,9 @@ public class ReviewController {
 			// => 다음과 같이 메소드 체이닝도 가능
 			mv.addObject("errorMsg", "리뷰 작성 실패").setViewName("common/errorPage");
 		}
-		
+		*/
 		return mv;
+		
 	}
 	
 	@ResponseBody
@@ -209,16 +212,18 @@ public class ReviewController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="rdelete.re", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="rdelete.re", produces="text/html; charset=UTF-8")
 	public String ajaxDeleteReviewReply(int replyNo) {
 	 		
+			// System.out.println("replyNo : " + replyNo);
+		
 			int result = reviewService.deleteReviewReply(replyNo);
 	 
+			// System.out.println("result : " + result);
+			
 	 		return (result > 0 ) ? "success" : "fail";
 	}
 	 
-	
-	
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
 	// => Spring 의 Controller 메소드는 반드시 요청을 처리하는 역할이 아니어도 됨
 	/*

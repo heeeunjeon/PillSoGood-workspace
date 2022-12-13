@@ -23,6 +23,7 @@ public class Review {
 	private String reviewStatus; // REVIEW_STATUS	CHAR(1 BYTE)
 	
 	// 일반 리뷰 조회용 VO
+	private int memberNo;
 	private String memberName;
 	private String memberId;
 	private String subsStatus;

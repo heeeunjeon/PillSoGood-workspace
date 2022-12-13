@@ -155,15 +155,7 @@
                     			</tr>
                     		</table>
                     	</div>	
-	            		<%-- 
-	            			도당체 왜??
-			            	<c:out value="${loginUser.memberId}" />
-		                    <c:out value="${loginUser.getMemberId()}" />
-	                    	<script>
-		                    	var a = ${loginUser.memberId}; // 얘는 왜 String 으로 잡히지 않는 것인가
-		                    	var b = ${loginUser.getMemberId()}; // 얘도
-	                    	</script>
-	                    --%>
+	            		
 	                    <!-- 일반 리뷰 -->
 						<c:forEach var="i" begin="0" end="${ list.size()-1 }">
 							<table id="reviewT" class="reviewT" align="center">
@@ -230,7 +222,7 @@
 						</c:forEach>
 						<div align="right">
 							<%-- 
-	           					클릭 시 모달로 결제완료된 주문건이 드랍박스로 나오고 거기서 후기작성하기 누르면 후기 작성 폼으로 연결
+	           					클릭 시 모달로 결제완료건이 드랍박스로 나오고 거기서 후기작성하기 누르면 후기 작성 폼으로 연결
 	           					지금은 미구현 희원이한테서 결제 완성되면 받기
 	           				--%>
 	           				<a href="enrollForm.re"><button class="btn btn-primary" >작성하기</button></a>

@@ -31,6 +31,8 @@
 		<result column="MEMBER_No" property="memberNo" />
 		<result column="REVIEW_NO" property="reviewNo" />
 		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_ID" property="memberId" />
+		
 	</resultMap>
 	
 	<resultMap id="reviewListViewResultSet" type="review">
@@ -41,7 +43,6 @@
 		<result column="REVIEW_COUNT" property="reviewCount" />
 		<result column="REVIEW_GRADE" property="reviewGrade" />
 		<result column="REVIEW_STATUS" property="reviewStatus" />
-		<result column="REPLY_COUNT" property="replyCount" />
 		
 		<result column="MEMBER_NAME" property="memberName" />
 		<result column="MEMBER_ID" property="memberId" />
@@ -60,14 +61,13 @@
 			 , MEMBER_NAME
 			 , MEMBER_ID
 			 , SUBS_STATUS
-			 , REPLY_COUNT
 			 , MEMBER_ID
 			 , REVIEW_STATUS
   	   FROM REVIEW
        JOIN MEMBER USING (MEMBER_NO)
        JOIN ORDERS USING (ORDER_NO)
 		 WHERE REVIEW_STATUS = 'Y'
-	     ORDER BY REVIEW_GRADE DESC, REPLY_COUNT DESC
+	     ORDER BY REVIEW_GRADE DESC, REVIEW_COUNT DESC
 	</select>
 	
 	<select id="selectBestReviewFile" resultMap="reviewFileResultSet" parameterType="_int">
@@ -94,7 +94,6 @@
 			 , MEMBER_NAME
 			 , MEMBER_ID
 			 , SUBS_STATUS
-			 , REPLY_COUNT
 			 , REVIEW_STATUS
   	   FROM REVIEW
        JOIN MEMBER USING (MEMBER_NO)
@@ -147,7 +146,6 @@
 		     , REVIEW_GRADE
 		     , MEMBER_NAME
 		     , MEMBER_ID
-		     , REPLY_COUNT
 		     , SUBS_STATUS
 		  FROM REVIEW
        JOIN MEMBER USING (MEMBER_NO)
@@ -167,6 +165,7 @@
 	<select id="selectReviewReplyList" parameterType="_int" resultMap="reviewReplyResultSet">
 		SELECT REPLY_NO
 			 , MEMBER_NAME
+			 , MEMBER_ID
 			 , REPLY_CONTENT
 			 , TO_CHAR(REPLY_DATE, 'YYYY-MM-DD') AS "REPLY_DATE"
 			 , REPLY_STATUS
@@ -191,9 +190,8 @@
 	
 	<update id="deleteReviewReply" parameterType="_int">
 		UPDATE REVIEW_REPLY
-		   SET REVIEW_STATUS = 'N'
+		   SET REPLY_STATUS = 'N'
 		 WHERE REPLY_NO = #{replyNo}
-		   AND REPLY_STATUS = 'Y'
 	</update>
 
 </mapper>
