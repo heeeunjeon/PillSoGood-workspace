@@ -78,5 +78,29 @@
 				  		, #{productNo})
 	
 	</select>
+	
+	
+	<select id="selectPollResult" resultMap="pollResultDetailSet">
+		SELECT PRODUCT_NAME, PRODUCT_EXPLAIN, POLL_DATE, POLL_NO
+		  FROM (SELECT PRODUCT_NAME, PRODUCT_EXPLAIN, POLL_DATE, POLL_NO, DENSE_RANK() OVER(ORDER BY POLL_NO DESC) RANK
+		        FROM PRODUCT PRO
+		        JOIN POLL_RESULT PR USING(PRODUCT_NO)
+		        JOIN POLL USING(POLL_NO)
+		        WHERE MEMBER_NO = #{memberNo}
+		        AND POLL_STATUS = 'Y')
+		WHERE RANK &lt;= 3
+	</select>
+
+	<select id="selectPollList" resultMap="pollResultSet">
+		SELECT POLL_NO, POLL_DATE
+		  FROM (SELECT DISTINCT POLL_NO, POLL_DATE, DENSE_RANK() OVER(ORDER BY POLL_NO DESC) RANK
+		        FROM POLL
+		        JOIN POLL_RESULT USING(POLL_NO)
+		        WHERE POLL_LEVEL IN (1,2)
+		        AND MEMBER_NO = #{memberNo}
+		        AND POLL_STATUS = 'Y'
+		        ORDER BY POLL_NO DESC)
+		  WHERE RANK &lt;= 3
+	</select>
 
 </mapper>

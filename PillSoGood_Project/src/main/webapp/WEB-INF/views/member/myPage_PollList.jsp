@@ -154,39 +154,48 @@
                                 });
                             });
                         </script>
-
-                        <div class="survey">
-                            2022.11.21 <div><i class="fa-solid fa-xmark fa-lg"></i></div>
-                            <br><br>
-                            <b>#눈건강 #혈행개선 #근육건강</b><br>
-                            <sub>칼슘&마그네슘&비타민D,오메가3,루테인,프로바이오틱스,가르시니아슬림,테아닌,밀크씨슬</sub>
-                            <br><br>
-                            <button type="button" class="btn btn-outline-primary btn-sm"><small>설문결과 보기</small></button>
-                        </div>
-                        <hr>
-
-                        <div class="survey">
-                            2022.11.21 <div><i class="fa-solid fa-xmark fa-lg"></i></div>
-                            <br><br>
-                            <b>#눈건강 #혈행개선 #근육건강</b><br>
-                            <sub>칼슘&마그네슘&비타민D,오메가3,루테인,프로바이오틱스,가르시니아슬림,테아닌,밀크씨슬</sub>
-                            <br><br>
-                            <button type="button" class="btn btn-outline-primary btn-sm"><small>설문결과 보기</small></button>
-                        </div>
-                        <hr>
-
-                        <div class="survey">
-                            2022.11.21 <div><i class="fa-solid fa-xmark fa-lg"></i></div>
-                            <br><br>
-                            <b>#눈건강 #혈행개선 #근육건강</b><br>
-                            <sub>칼슘&마그네슘&비타민D,오메가3,루테인,프로바이오틱스,가르시니아슬림,테아닌,밀크씨슬</sub>
-                            <br><br>
-                            <button type="button" class="btn btn-outline-primary btn-sm"><small>설문결과 보기</small></button>
-                        </div>
-                        <hr>
-
-   
-                        <hr>
+						
+						<c:forEach var="i" begin="0" end="${ pollList.size() - 1}">
+							
+							
+							<div class="survey">
+	                            ${ pollList[i].pollDate } <div><i class="fa-solid fa-xmark fa-lg"></i></div>
+	                            <br><br>
+	                            <c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
+	                            	
+	                            	<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
+	                            	
+		                            	<b>
+			                            	# ${ pollResult[j].productExplain },
+			                            </b>
+		                            
+		                            </c:if>
+	                            
+	                            
+	                            </c:forEach>
+	                            
+	                            
+	                            <br>
+	                            <sub>
+	                            	
+	                            	<c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
+	                            		<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
+	                            		
+			                            	${ pollResult[j].productName },
+			                        
+		                            	</c:if>
+	                            	
+	                            	
+	                            	</c:forEach>
+	                            		
+	                            	
+	                            </sub>
+	                            <br><br>
+	                            <button type="button" class="btn btn-outline-primary btn-sm"><small>설문결과 보기</small></button>
+	                        </div>
+	                        <hr>
+						
+						</c:forEach>
 
                         <script>
                             $(function() {
