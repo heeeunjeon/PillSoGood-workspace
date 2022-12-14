@@ -184,9 +184,13 @@
                         </div>
                     </div>
                     <div id="btnss">
-                        <div><button type="button" class="btn btn-primary btn-lg">정기결제</button></div>
-                        <div><button type="button" class="btn btn-outline-secondary btn-lg">단품결제</button></div>
+                        <div><button type="button" class="btn btn-primary btn-lg" onclick="postPaySubmit(1)">정기결제</button></div>
+                        <div><button type="button" class="btn btn-outline-secondary btn-lg" onclick="postPaySubmit(2);">단품결제</button></div>
                     </div>
+                    
+                    <form id="postForm" action="pay.or" method="post">
+                    	<input type='hidden' name='num' value=''>
+                    </form>
                 </div>
                 <div style="height: 150px;"></div>
             </div>
@@ -257,7 +261,8 @@
                     type : "post",
                     traditional : true,
                     data : {
-                        valueArr : valueArr
+                        valueArr : valueArr,
+                        memberNo : ${ loginUser.memberNo }
                     },
                     success: function(jdata) {
                         if(jdata = 1) {
@@ -270,6 +275,13 @@
                     }
                 });
             }
+        }
+        
+		function postPaySubmit(num) {
+        	
+        	$("#postForm>input").val(num);
+        	
+        	$("#postForm").submit();
         }
     </script>
     

@@ -120,9 +120,10 @@
 		   AND PRODUCT_NO = #{productNo}
 	</update>
 	
-	<delete id="removeCart" parameterType="String">
+	<delete id="removeCart" parameterType="cart">
 			DELETE CART
 			 WHERE PRODUCT_NO = #{productNo}
+			   AND MEMBER_NO = #{memberNo}
 	</delete>
 	
 	

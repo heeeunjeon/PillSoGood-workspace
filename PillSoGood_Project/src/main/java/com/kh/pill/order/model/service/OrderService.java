@@ -38,5 +38,5 @@ public interface OrderService {
 	int updateCart(Cart c);
 	
 	// 장바구니 상품 삭제
-	int removeCart(String productNo);
+	int removeCart(Cart c);
 }

@@ -3,9 +3,12 @@ package com.kh.pill.order.controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.order.model.service.OrderService;
+import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
+import com.kh.pill.order.model.vo.OrderCart;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.request.CardInfo;
@@ -56,7 +61,7 @@ public class APIController {
 	
 	@ResponseBody
 	@RequestMapping(value="/subscribe/payments/onetime")
-	public IamportResponse<Payment> onetime(String merchant_uid, BigDecimal amount, String name, String card_number, String expiry, String birth, String pwd_2digit, Member m) throws IamportResponseException, IOException {
+	public IamportResponse<Payment> onetime(String merchant_uid, BigDecimal amount, String name, String card_number, String expiry, String birth, String pwd_2digit, Member m, String custom_data) throws IamportResponseException, IOException {
 		
 		String address = m.getAddress1();
 		if(m.getAddress2() != "") {
@@ -107,7 +112,6 @@ public class APIController {
 		return client.paymentByImpUid(impUid);
 	}
 	
-	
 	@RequestMapping(value="/iamport/webhook")
 	public void webhookTest(@RequestBody HashMap<String,Object> webhook) throws Exception {
 		
@@ -119,6 +123,17 @@ public class APIController {
 			
 			ObjectMapper mapper = new ObjectMapper();
 			String response = mapper.writeValueAsString(p);
+			
+			System.out.println(response);
+			System.out.println(p.getCustomData());
+			
+			JSONObject customData = (JSONObject)(new JSONParser().parse(p.getCustomData()));
+			
+			System.out.println(customData.toJSONString());
+			
+			int memberNo = Integer.parseInt(String.valueOf(customData.get("memberNo")));
+			
+			System.out.println(memberNo);
 			
 			Order o = new Order();
 			o.setOrderNo(p.getMerchantUid());
@@ -145,11 +160,34 @@ public class APIController {
 				}
 			}
 			
-			orderService.insertOrder(o);
+			// String result = new OrderController().insertOrder(o, memberNo);
+			// System.out.println(result);
+			int oresult = orderService.insertOrder(o);
 			
-			String merchantUid = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ((int)(Math.random() * 90000) + 10000);
+			// Cart 현재 갯수와 번호들
+			ArrayList<Cart> list = orderService.selectCart(memberNo);
 			
-			subscribeSchedule(merchantUid, response);
+			int ocresult = 1;
+			
+			if(oresult > 0) {
+				
+				for(int i = 0; i < list.size(); i++) {
+					
+					// OrderCart 에 insert
+					OrderCart oc = new OrderCart(list.get(i).getCartNo(), o.getOrderNo());
+					ocresult *= orderService.insertOrderCart(oc);
+				}
+				
+				// CART 테이블에 loginUser 상품들 STATUS = 'N'
+				if(ocresult > 0) {
+					orderService.deleteCart(memberNo);
+				}
+			}
+			
+			if(o.getSubsStatus().equals("Y")) {
+				String merchantUid = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ((int)(Math.random() * 90000) + 10000);
+				subscribeSchedule(merchantUid, response);
+			}
 		}
 	}
 	

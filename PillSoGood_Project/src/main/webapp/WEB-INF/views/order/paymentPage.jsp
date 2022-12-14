@@ -67,7 +67,6 @@
 	
 	
 	/* 배송지 정보 */
-	#bill_delivery>tbody td { padding: 0px 230px; }
 	#bill_delivery>tbody tr { height: 50px; }
 	#bill_delivery .form-control {
 		display: inline-block;
@@ -167,49 +166,53 @@
                     </table>
                     
                     <div style="height: 100px;"></div>
-                    <table id="bill_delivery">
+                    <table>
                         <thead>
                             <tr height="50px">
                                 <th align="left">배송지 정보</th>
                             </tr>
                         </thead>
                         <tbody>
-	                        <tr style="height: 30px!important;"></tr>
-	                        <tr>
-	                            <td>이름</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input class="form-control" value="${ loginUser.memberName }" readonly></td>
-	                        </tr>
-	                        <tr>
-	                            <td>전화번호</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input class="form-control" value="${ loginUser.phone }" readonly></td>
-	                        </tr>
-	                        <tr>
-	                            <td>우편번호</td>
-	                        </tr>
-	                        <tr>
-	                            <td>
-	                                <input type="text" class="form-control" name="addressZip" value="${ loginUser.addressZip }" id="address_zip" placeholder="우편번호">
-	                                <input type="button" class="btn btn-primary" id="address_btn" onclick="getAddress();" value="우편번호 찾기">
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td>주소</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input type="text" class="form-control" name="address1" value="${ loginUser.address1 }" id="address1" placeholder="도로명 주소"></td>
-	                        </tr>
-	                        <tr>
-	                            <td>상세주소</td>
-	                        </tr>
-	                        <tr>
-	                            <td>
-	                                <input type="text" class="form-control" name="address2" value="${ loginUser.address2 }" id="address2" placeholder="상세 주소 (선택)" style="display:inline-block;">
-	                            </td>
-	                        </tr>
+                        	<tr style="height: 30px!important;"></tr>
+                        	<tr><td><div align="center">
+	                        	<table id="bill_delivery">
+			                        <tr>
+			                            <td>이름</td>
+			                        </tr>
+			                        <tr>
+			                            <td><input class="form-control" value="${ loginUser.memberName }" readonly></td>
+			                        </tr>
+			                        <tr>
+			                            <td>전화번호</td>
+			                        </tr>
+			                        <tr>
+			                            <td><input class="form-control" value="${ loginUser.phone }" readonly></td>
+			                        </tr>
+			                        <tr>
+			                            <td>우편번호</td>
+			                        </tr>
+			                        <tr>
+			                            <td>
+			                                <input type="text" class="form-control" name="addressZip" value="${ loginUser.addressZip }" id="address_zip" placeholder="우편번호">
+			                                <input type="button" class="btn btn-primary" id="address_btn" onclick="getAddress();" value="우편번호 찾기">
+			                            </td>
+			                        </tr>
+			                        <tr>
+			                            <td>주소</td>
+			                        </tr>
+			                        <tr>
+			                            <td><input type="text" class="form-control" name="address1" value="${ loginUser.address1 }" id="address1" placeholder="도로명 주소"></td>
+			                        </tr>
+			                        <tr>
+			                            <td>상세주소</td>
+			                        </tr>
+			                        <tr>
+			                            <td>
+			                                <input type="text" class="form-control" name="address2" value="${ loginUser.address2 }" id="address2" placeholder="상세 주소 (선택)" style="display:inline-block;">
+			                            </td>
+			                        </tr>
+		                        </table>
+	                        </div></td></tr>
                         </tbody>
                     </table>
                     
@@ -311,7 +314,7 @@
                     
                     <div id="bill_btn" align="center">
                     	<c:choose>
-                    		<c:when test="${ empty loginUser }">
+                    		<c:when test="${ num eq 1 }">
                     			<!-- 정기결제 -->
                     			<button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#subscription">구독하기</button>
                     			
@@ -381,6 +384,11 @@
    				var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
    				var amount = parseInt($("#finalprice").text().substring(0, $("#finalprice").text().lastIndexOf(' ')).replace(',', ''));
 	    		amount = 100;
+	    		
+	    		var address = $("#address1").val();
+	    		if($("#address2").val() != '') {
+	    			address += ' ' + $("#address2").val();
+	    		}
    				
 	    		IMP.init("imp00813715"); // 가맹점 식별코드 초기화
 	    		
@@ -394,23 +402,23 @@
 	    			buyer_name: "${ loginUser.memberName }", // 구매자 이름
 	    			buyer_email: "${ loginUser.email }", // 구매자 이메일
 	    			buyer_postcode: $("#address_zip").val(),
-	    			buyer_addr: $("#address1").val() + ' ' + $("#address2").val()
+	    			buyer_addr: address,
+	    			custom_data: { memberNo: ${ loginUser.memberNo } }
 	    		}, rsp => { // callback
 	    			
 	    			$.ajax({
 	    				type: "post",
-	    				url: "/pill/verifyIamport/" + rsp.imp_uid
+	    				url: "verifyIamport/" + rsp.imp_uid
 	    			}).done(data => {
 	    				
 	    				if(rsp.paid_amount == data.response.amount) {
 	    					
-	    					alert("성공");
 	    					location.href = 'paid?ono=' + rsp.merchant_uid; 
 	    				
 	    				} else {
 	    					
 	    					alert("결제에 실패했습니다.");
-		    				// 장바구니로?
+		    				location.href = 'list.cart'
 	    				}
 	    			});
 	    			
@@ -448,7 +456,8 @@
 		    			email: "${ loginUser.email }",
 		    			addressZip: $("#address_zip").val(),
 		    			address1: $("#address1").val(),
-		    			address2: $("#address2").val()}
+		    			address2: $("#address2").val(),
+		    			custom_data: { memberNo: ${ loginUser.memberNo } }}
 				}).done(data => {
 					
 					console.log(data);

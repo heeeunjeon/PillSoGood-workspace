@@ -79,8 +79,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int removeCart(String productNo) {
-		return orderDao.removeCart(sqlSession, productNo);
+	public int removeCart(Cart c) {
+		return orderDao.removeCart(sqlSession, c);
 	}
 
 	

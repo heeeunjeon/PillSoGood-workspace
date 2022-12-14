@@ -74,14 +74,18 @@ public class CartController {
 	 * @return
 	 */
 	@RequestMapping("delete.cart")
-	public String removeCart(HttpServletRequest request) {
+	public String removeCart(int[] valueArr, int memberNo) {
 		
-		String[] ajaxMsg = request.getParameterValues("valueArr");
+		// String[] ajaxMsg = request.getParameterValues("valueArr");
 		
-		int size = ajaxMsg.length;
+		int size = valueArr.length;
 		
 		for(int i = 0; i < size; i++) {
-			orderService.removeCart(ajaxMsg[i]);
+			
+			Cart c = new Cart();
+			c.setProductNo(valueArr[i]);
+			c.setMemberNo(memberNo);
+			orderService.removeCart(c);
 		}
 		
 		return "redirect:list.cart";

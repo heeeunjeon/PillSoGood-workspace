@@ -16,7 +16,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: 1080px;
+        height: inherit;
         margin : auto;
     }
 
@@ -24,10 +24,10 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 600px; color: black;}
+    #content { display: flex; height: auto; }
     #content_2>div { width: 100%; }
-    #content_2_1 { height: 115px; float: left; }
-    #content_2_2 { height: 80%; float: left; }
+    #content_2_1, #content_2_3 { height: 115px; }
+    #content_2_2 { height: auto; color: black; }
 
     #header { height: 130px; }
 
@@ -36,13 +36,14 @@
         color: black;
         margin-top: 20px;
         margin-left: 30px;
+        font-weight: bold;
     }
 
     /* content 영역 */
     #content>div { height : 100%; float : left; }
-    #content_1 { width : 25%; }
-    #content_2 { width : 50%; }
-    #content_3 { width : 25%; }
+    #content_1 { width : 20%; }
+    #content_2 { width : 60%; }
+    #content_3 { width : 20%; }
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
@@ -61,8 +62,9 @@
 <body>
 
     <div class="wrap">
-        <jsp:include page="../common/menubar.jsp" />
-        <div id="navigator2"></div>
+        <div id="navigator2">
+            <jsp:include page="../common/menubar.jsp" />
+        </div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
@@ -81,9 +83,10 @@
                     </div>
                     <div align="center" style="margin-top: 20px">
                         <button type="button" class="btn btn-outline-primary">주문내역조회</button>
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/pill'">메인으로</button>
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/PillSoGood'">메인으로</button>
                     </div>
                 </div>
+                <div id="content_2_3"></div>
             </div>
             <div id="content_3"></div>
         </div>

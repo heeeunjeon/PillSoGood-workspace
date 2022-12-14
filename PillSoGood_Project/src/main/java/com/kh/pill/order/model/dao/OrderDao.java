@@ -56,8 +56,8 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.updateCart", c);
 	}
 	
-	public int removeCart(SqlSessionTemplate sqlSession, String productNo) {
-		return sqlSession.delete("orderMapper.removeCart", productNo);
+	public int removeCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.delete("orderMapper.removeCart", c);
 	}
 	
 	

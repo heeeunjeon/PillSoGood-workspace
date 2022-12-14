@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.order.model.service.OrderService;
@@ -28,12 +27,10 @@ public class OrderController {
 	private ProductService productService;
 	
 	@RequestMapping("pay.or")
-	public String payment(HttpSession session, Model model) {
+	public String payment(int num, HttpSession session, Model model) {
 		
-		// 구독 여부 전달받아서 같이 리턴해야 함
-		
-		// int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		int memberNo = 2;
+		// 구독 여부 num = 정기결제 1, 일반결제 2
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
 		// memberNo 가 담은 Cart 의 상품 정보들 조회
 		ArrayList<Cart> clist = orderService.selectCart(memberNo);
@@ -48,6 +45,7 @@ public class OrderController {
 		
 		model.addAttribute("clist", clist);
 		model.addAttribute("plist", plist);
+		model.addAttribute("num", num);
 		
 		return "order/paymentPage";	
 	}
@@ -58,34 +56,5 @@ public class OrderController {
 		return "order/paymentSuccess";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="insert.or", produces="text/html; charset=UTF-8")
-	public String insertOrder(Order o, HttpSession session, Model model) {
-		
-		int oresult = orderService.insertOrder(o);
-		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		
-		// Cart 현재 갯수와 번호들
-		ArrayList<Cart> list = orderService.selectCart(memberNo);
-		
-		int ocresult = 1;
-		int cresult = 0;
-		
-		if(oresult > 0) {
-			
-			for(int i = 0; i < list.size(); i++) {
-				
-				// OrderCart 에 insert
-				OrderCart oc = new OrderCart(list.get(i).getCartNo(), o.getOrderNo());
-				ocresult *= orderService.insertOrderCart(oc);
-			}
-			
-			// CART 테이블에 loginUser 상품들 STATUS = 'N'
-			if(ocresult > 0) {
-				cresult = orderService.deleteCart(memberNo);
-			}
-		}
-		
-		return (oresult * ocresult * cresult > 0) ? "success" : "fail";
-	}
+
 }
