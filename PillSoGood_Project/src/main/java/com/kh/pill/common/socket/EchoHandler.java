@@ -57,12 +57,7 @@ public class EchoHandler extends TextWebSocketHandler {
 				
 				WebSocketSession toIdSession = userSessionsMap.get(toId);
 				
-				if ("reply".equals(cmd) && toIdSession != null && !fromId.equals(toId)) {
-					TextMessage tmpMsg = new TextMessage(fromId + "님이 "
-							+ "<a href='/spring/detail.bo?bno="+ bno + "'  style='color: black'>"
-							+ title+" 에 댓글을 달았습니다!</a>");
-					toIdSession.sendMessage(tmpMsg);
-				} else if("question".equals(cmd)) {
+				 if("question".equals(cmd)) {
 					toId = "admin";
 					toIdSession = userSessionsMap.get(toId);
 					if(!fromId.equals(toId)) {
@@ -70,6 +65,12 @@ public class EchoHandler extends TextWebSocketHandler {
 								+ "문의를 작성하셨습니다. : " + title );
 						toIdSession.sendMessage(tmpMsg);
 					}
+					
+				} else if("answer".equals(cmd)) {
+					
+					TextMessage tmpMsg = new TextMessage("\n"+fromId + "님이 "
+							+ "문의에 대한 답변을 작성 하셨습니다. : \n" + title );
+					toIdSession.sendMessage(tmpMsg);
 					
 				}
 				

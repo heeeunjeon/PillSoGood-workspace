@@ -129,6 +129,14 @@
 	    -o-transition: right 0.7s;
 	    transition: right 0.7s;
 	 }
+	 #alarmTable * {
+	 	text-decoration : none;
+	 }
+	 
+	 #alarmTable *:hover {
+	 	text-decoration : none;
+	 	
+	 }
 
 </style>
 </head>
@@ -157,6 +165,7 @@
 		});
 		
 	    function onMessage(evt){
+	    	selectAlarmList();
 	        var data = evt.data;
 	        // toast
 	        	toastCount++;
@@ -172,7 +181,7 @@
                 $(".toast-" + toastCount).toast({ animation: true, delay: 4000 });
                 $(".toast-" + toastCount).toast("show");
                 $("#socketAlarmArea").addClass("slideon");
-	        
+                
 	    };	
 	</script>
 
@@ -246,27 +255,14 @@
             	
            		        <div id="alarmContainer">
 				            <button type="button" id="alarmAreaButton" class="btn btn-primary position-relative"><img src="resources/images/alarm.png" width="25px" onclick="alarmAreaControl();" alt="">
-				                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-				                    99+
+				                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="alarmCount">
+				                    
 				                </span>
 				            </button>
 				            <div id="alarmArea" style="display:none;">
 				                <table class="table table-hover" id="alarmTable">
-				                    <tr>
-				                        <td>한영섭님이 1대1 문의를 남기셨습니다.</td>
-				                    </tr>
-				                    <tr>
-				                        <td>한영섭님이 구매 하셨습니다.</td>
-				                    </tr>
-				                    <tr>
-				                        <td>한영섭님이 1대1 문의를 남기셨습니다.</td>
-				                    </tr>
-				                    <tr>
-				                        <td>한영섭님이 후기를 남기셨습니다.</td>
-				                    </tr>
-				                    <tr>
-				                        <td>알람1</td>
-				                    </tr>
+				                	<tbody>
+				                	</tbody>
 				                </table>
 				            </div>
 				        </div>
@@ -283,8 +279,43 @@
   </div>
   
   <script>
+  
+  	$(function() {
+  		selectAlarmList();	
+  	});
+  	
+  	
     function alarmAreaControl() {
         $("#alarmArea").toggle(200);
+    }
+    
+    function selectAlarmList() {
+    	console.log("?");
+    	$.ajax({
+    		url : "selectList.alarm",
+    		data : {
+    			memberNo : ${loginUser.memberNo}
+    		},
+    		success : function(result) {
+    			
+    			var resultStr= "";
+    			
+    			for(var i=0; i<result.length; i++ ) {
+    				
+    				resultStr += "<tr>"
+    						 	  +"<td><a href='"+result[i].alarmUrl+"'>" + result[i].alarmContent + "</a></td>"    				
+    						   + "<tr>";
+    				
+    			}
+    			
+    			$("#alarmTable>tbody").html(resultStr);
+    			$("#alarmCount").text(result.length);
+    		},
+    		error : function() {
+    			console.log("selectList.alarm ajax failure");
+    		}
+    	});
+    	
     }
 
   </script>

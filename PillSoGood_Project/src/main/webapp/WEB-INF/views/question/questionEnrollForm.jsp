@@ -118,7 +118,7 @@
                         <!-- 등록 버튼 -->
                         <div id="insert_btn">
                             <br><br>
-                            <button type="button" class="btn btn-primary" onclick="toAdminSocketMsg();">등록하기</button>
+                            <button type="submit" class="btn btn-primary" onclick="toAdminSocketMsg();">등록하기</button>
                             <button type="button" class="btn btn-secondary" onclick="location.href='list.qu'">뒤로가기</button>
                         </div>
 
@@ -139,10 +139,30 @@
     		
     		if(socket) {
     			let socketMsg = "question"+","+"${ loginUser.memberId },"+"admin," + "bno," + questionTitle;
-    			
+    			selectAlarmList();
     			socket.send(socketMsg);
     			//console.log(socket);
        		}
+    		
+    		
+    		$.ajax({
+    			url : "insertQuestion.alarm",
+    			data : {
+    				alarmContent : "${loginUser.memberId} 님이 1대1 문의를 작성하셨습니다.",
+    				fromId : "${loginUser.memberId}",
+    				toId : "admin"
+    				
+    			},
+    			success : function(result) {
+    				selectAlarmList();	
+    				console.log(result);
+    			},
+    			error : function() {
+    				console.log("toAdminAlarmInsert ajax failure");
+    			}
+    			
+    		});
+    		
     		
     	}
     

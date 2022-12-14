@@ -281,7 +281,7 @@
 			                                
 			                                <%-- 버튼 영역 --%>
 			                                <div align="right">
-			                                    <button id="btnInsert" type="button" class="btn btn-primary btn-sm" onclick="insertAnswer();">등록</button>
+			                                    <button id="btnInsert" type="button" class="btn btn-primary btn-sm" onclick="insertAnswer(); toUserSocketMsg();">등록</button>
 			                                </div>
 				                        </div>
 			                        </c:when>
@@ -311,12 +311,50 @@
 											alert("답변을 작성했습니다.");
                         					location.reload();
                         				}
+										
+										
+										
                         			},
                         			error : function() {
                         				console.log("1:1 문의 답변 작성용 ajax 통신 실패");
                         			}
                         		});
                         	}
+                        	
+                        	function toUserSocketMsg() {
+                        		
+                        		
+                        		
+                        		if(socket) {
+                        			let socketMsg = "answer"+","+"${ loginUser.memberId },"+"${q.memberNo}," + "bno," + "${q.questionTitle}";
+                        			selectAlarmList();
+                        			socket.send(socketMsg);
+                        			//console.log(socket);
+                           		}
+                        		
+                        		
+                        		$.ajax({
+                        			url : "insertAnswer.alarm",
+                        			data : {
+                        				alarmContent : "${loginUser.memberId} 님이 1대1 문의에 대한 답변을 작성 하셨습니다.",
+                        				fromId : "${loginUser.memberId}",
+                        				memberId : "${q.memberNo}",
+                        				alarmUrl : "detail.qu?qno=${q.questionNo}"
+                        			},
+                        			success : function(result) {
+                        				selectAlarmList();	
+                        				console.log(result);
+                        			},
+                        			error : function() {
+                        				console.log("toUserAlarmInsert ajax failure");
+                        			}
+                        			
+                        		});
+                        		
+                        		
+                        	}
+                        	
+                        	
                         </script>
                     </div>
 

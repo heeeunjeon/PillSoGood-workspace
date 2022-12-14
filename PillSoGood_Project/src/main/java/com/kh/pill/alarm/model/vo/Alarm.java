@@ -20,5 +20,6 @@ public class Alarm {
 	private int alarmRead;
 	private String alarmStatus;
 	private int memberNo;
+	private String alarmUrl;
 
 }
