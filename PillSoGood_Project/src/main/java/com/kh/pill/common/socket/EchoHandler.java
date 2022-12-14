@@ -28,9 +28,11 @@ public class EchoHandler extends TextWebSocketHandler {
 		// TODO Auto-generated method stub
 		// logger.info("Socket 연결");
 		sessions.add(session);
-		// logger.info(currentUserName(session));//현재 접속한 사람
+		//logger.info(currentUserName(session));//현재 접속한 사람
 		String senderId = currentUserName(session);
 		userSessionsMap.put(senderId,session);
+		
+		//logger.info(String.valueOf(userSessionsMap.size()));
 		
 	}
 	
@@ -60,12 +62,12 @@ public class EchoHandler extends TextWebSocketHandler {
 							+ "<a href='/spring/detail.bo?bno="+ bno + "'  style='color: black'>"
 							+ title+" 에 댓글을 달았습니다!</a>");
 					toIdSession.sendMessage(tmpMsg);
-				} else if("board".equals(cmd)) {
+				} else if("question".equals(cmd)) {
 					toId = "admin";
 					toIdSession = userSessionsMap.get(toId);
 					if(!fromId.equals(toId)) {
 						TextMessage tmpMsg = new TextMessage(fromId + "님이 "
-								+ bno + "에 글을 작성하셨습니다." );
+								+ "문의를 작성하셨습니다. : " + title );
 						toIdSession.sendMessage(tmpMsg);
 					}
 					

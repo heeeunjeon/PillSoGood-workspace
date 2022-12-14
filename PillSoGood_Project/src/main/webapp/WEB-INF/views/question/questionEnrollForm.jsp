@@ -97,7 +97,7 @@
                         <!-- 제목 부분 -->
                         <div>
                             <p>제목</p>
-                            <input type="text" class="form-control" name="questionTitle" placeholder="문의 제목을 입력해주세요 (30자 이내)" required>
+                            <input type="text" id="questionTitle" class="form-control" name="questionTitle" placeholder="문의 제목을 입력해주세요 (30자 이내)" required>
                         </div>
                         <br>
                         
@@ -118,7 +118,7 @@
                         <!-- 등록 버튼 -->
                         <div id="insert_btn">
                             <br><br>
-                            <button type="submit" class="btn btn-primary">등록하기</button>
+                            <button type="button" class="btn btn-primary" onclick="toAdminSocketMsg();">등록하기</button>
                             <button type="button" class="btn btn-secondary" onclick="location.href='list.qu'">뒤로가기</button>
                         </div>
 
@@ -130,6 +130,25 @@
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
+    
+    <script>
+    	var questionTitle = "";
+    	function toAdminSocketMsg() {
+    		
+    		questionTitle = $("#questionTitle").val();
+    		
+    		if(socket) {
+    			let socketMsg = "question"+","+"${ loginUser.memberId },"+"admin," + "bno," + questionTitle;
+    			
+    			socket.send(socketMsg);
+    			//console.log(socket);
+       		}
+    		
+    	}
+    
+    
+    </script>
+    
 
 </body>
 </html>

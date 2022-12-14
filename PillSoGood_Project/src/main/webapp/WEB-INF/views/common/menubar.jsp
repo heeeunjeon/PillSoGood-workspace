@@ -96,10 +96,11 @@
      #alarmArea {
          width : 400px;
          height : 500px;
-         overflow-y: scroll;
-         z-index: 999;
+         overflow-y: auto;
          position: absolute;
          background-color: white;
+         border : 1px solid gray;
+         border-radius : 10px;
      }
      #alarmContainer * {
          z-index: 999;
@@ -110,11 +111,24 @@
      #alarmContainer {
          position : absolute;
          right : 380px;
-         top : 25px;
+         top : 35px;
      }
      #alarmTable:hover {
          cursor:pointer;
      }
+     
+     #socketAlarmArea {
+	    position: fixed;
+	    bottom: 20px;
+	    right: 20px;
+	    background-color: transparent;
+	    z-index: 11;
+	    -webkit-transition: right 0.7s;
+	    -moz-transition: right 0.7s;
+	    -ms-transition: right 0.7s;
+	    -o-transition: right 0.7s;
+	    transition: right 0.7s;
+	 }
 
 </style>
 </head>
@@ -135,9 +149,9 @@
 		    // 웹소켓 연결
 		    sock = new SockJS("<c:url value="/echo-ws"/>");
 		    socket = sock;
-			
+			//console.log(socket);
 		    // 데이터를 전달 받았을때 
-		    console.log(sock.onmessage);
+		    //console.log(sock.onmessage);
 		    sock.onmessage = onMessage; // toast 생성
 	    
 		});
@@ -148,10 +162,10 @@
 	        	toastCount++;
                 let toast;
                 toast = "<div class='toast toast-" + toastCount + "' data - autohide='false' > ";
-                toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-                toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+                toast += "<div class='toast-header' style='background-color : #9fdfcd'><i class='fas fa-bell mr-2'>&nbsp;</i><strong class='mr-auto'>알림</strong>";
+                toast += "<button type='button' class='ml-n2 mb-n1 close' style='margin-left : 250px; border:none; background-color:#9fdfcd;' data-bs-dismiss='toast' aria-label='Close'>";
                 toast += "<span aria-hidden='true'>&times;</span></button>";
-                toast += "</div><div class='toast-body'>"+data;
+                toast += "</div><div class='toast-body'>"+"<img src='resources/images/Logo.PNG' width='70px'>     "+data;
                 ("</div></div>");
                 
                 $("#socketAlarmArea").append(toast);
@@ -186,7 +200,7 @@
             </div>
           </li>
           <li class="nav-item" id="menubarLi">
-            <a class="nav-link" href="#">후기</a>
+            <a class="nav-link" href="list.re">후기</a>
           </li>
           
           
@@ -231,7 +245,7 @@
             	<!-- 로그인 후 -->
             	
            		        <div id="alarmContainer">
-				            <button type="button" id="alarmAreaButton" class="btn btn-primary position-relative"><img src="resources/images/alarm.png" onclick="alarmAreaControl();" alt="">
+				            <button type="button" id="alarmAreaButton" class="btn btn-primary position-relative"><img src="resources/images/alarm.png" width="25px" onclick="alarmAreaControl();" alt="">
 				                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 				                    99+
 				                </span>
