@@ -1,7 +1,12 @@
 package com.kh.pill.review.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -95,98 +100,165 @@ public class ReviewController {
 		// 리턴
 		return "review/reviewListView";
 	}
-	
+	/*
 	@RequestMapping("enrollForm.re")
-	public String enrollForm() {
+	public String enrollForm(int memberNo) {
+		
+		// memberNo -> <ReviewOrder> rOrder -> ArrayList<ReviewOrder> rOrderList
+		// <ReviewOrder> : (int rOrder, String rOrderProductNames, String rOrderSubsStatus)
+		
+		// ReviewOrder rOrder = reviewService.selectROrderList(memberNo);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		return "review/reviewEnrollForm";
+		
 	}
-	
-	// * 다중파일 업로드 기능 구현시
-	// => jsp 에서 여러 개의 input type="file" 요소에 모두 동일한 name 속성을 부여 (ex.upfile)
-	// => Controller 의 메소드에서 MultipartFile[] upfile 또는 List<MultipartFile> upfile 로 받으면 됨
-	// (0 번째 인덱스에서부터 첨부파일의 정보들이 담겨있음 : 반복문 활용 가능)
+	*/
 	@RequestMapping("insert.re")
 	public ModelAndView insertReview(Review r, List<MultipartFile> upfile, HttpSession session, ModelAndView mv) {
 		
 		System.out.println(r);
 		System.out.println(upfile);
-		// 요청 시 name 속성과 필드명을 정확하게 맞췄음에도 불구하고 제대로 된 전달값이 안들어옴
-		// 요청 시 분명히 파일을 넘겼음에도 불구하고 upfile 값이 null
-		// => 파일 업로드에 필요한 Spring 라이브러리를 pom.xml 에 추가하지 않았기 때문
-		// 파일 업로드용 라이브러리 : commons-fileupload, commons-io
 		
-		// MultipartFile : 첨부파일을 선택했든 안했든 생성된 객체 (null 이 아님)
-		//				      다만, filename 필드에 원본명이 있냐 없냐의 차이
+		// 먼저 파일 여부와 무관하게 rawReview 를 insert
+		int rawResult = reviewService.insertRawReview(r);
 		
-		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버로 업로드
-		// => 원본명, 서버에 업로드된 경로를 이어붙이기
-		/*
-		if(!upfile.getOriginalFilename().equals("")) {
+		System.out.println(rawResult);
+		
+		if(rawResult > 0) { // 만들어졌으면 진행
 			
+			int memberNo = r.getMemberNo();
+			// r에 들어있는 memberNo로 만들어진 review 중에서 rawReview 를 select 해서 reviewNo, 
+			Review rawReview = reviewService.selectRawReview(memberNo);
+			int rawReviewNo = rawReview.getReviewNo();
 			
-			// 파일명 수정 작업 후 서버에 업로드 시키기
-			// 예) "flower.png" => "2022112210405012345.png"
-			// 1. 원본파일명 뽑아오기
-			String originName = upfile.getOriginalFilename(); // "flower.png"
+			// upfile 에 비었든 안 비었든 MultipartFIle 객체는 하나 이상 만들어짐(사용자가 파일첨부를 시도하고 취소하더라도 빈 MultipartFIle 객체가 만들어지기 때문)
 			
-			// 2. 시간 형식을 문자열로 뽑아내기
-			String currentTime =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			
-			// 3. 뒤에 붙을 5자리 랜덤값 뽑기
-			int ranNum = (int)(Math.random() * 90000) + 10000; // 5자리 랜덤값
-			
-			// 4. 원본 파일로부터 확장자만 뽑기
-			String ext = originName.substring(originName.lastIndexOf(".")); //
-			
-			// 5. 모두 이어 붙이기
-			String changeName = currentTime + ranNum + ext;
-			
-			// 6. 업로드 하고자 하는 서버의 물리적인 실제 경로 알아내기
-			String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
-			
-			// 7. 경로와 수정파일명을 합체 후 파일을 업로드해주기
-			try {
-				upfile.transferTo(new File(savePath + changeName));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
+			// 1. 0번 인덱스(썸네일 사진) 첨부파일 있는지 검사
+			String fileExist1 = upfile.get(0).getOriginalFilename();
+			if(!fileExist1.equals("")) { // 썸네일 사진 있음 => fileLevel = 1 로 REVIEW_FILE 테이블에 insert
+				
+				String currentTime =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+				
+				int ranNum = (int)(Math.random() * 90000) + 10000; // 5자리 랜덤값
+				
+				String ext = fileExist1.substring(fileExist1.lastIndexOf(".")); //
+				
+				String changeName = currentTime + ranNum + ext;
+				
+				String filePath = session.getServletContext().getRealPath("resources/reviewUploadFiles/");
+				// String filePath = "resources/reviewUploadFiles/";
+				
+				try {
+					upfile.get(0).transferTo(new File(filePath + changeName));
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+				
+				ReviewFile reviewFile = new ReviewFile();
+				
+				reviewFile.setChangeName(changeName);
+				reviewFile.setFilePath("resources/reviewUploadFiles/");
+				reviewFile.setFileLevel(1);
+				reviewFile.setReviewNo(rawReviewNo);
+				
+				reviewService.insertReviewFile(reviewFile);
 			}
-			
-			
-			// String changeName = saveFile(upfile, session);
-			
-			// 8. 원본명, 서버에 업로드 된 수정명을 Review r 에 담기
-			// => reviewTitle, reviewContent, reviewWriter 필드에만 값이 담겨있음
-			// => originName, changeName 필드에도 전달된 파일에 대한 정보를 담을것
-			// r.setOriginName(upfile.getOriginalFilename());
-			// r.setChangeName("resources/uploadFiles/" + changeName); 
-			// 실제 경로도 같이 이어붙일것(FILE_PATH 컬럼을 따로 빼두지 않음)
+			else {} // 썸네일 사진 없음 => 세부 사진 insert로 진행
+					
+			// 2. 이외 인덱스(세부 사진) 첨부파일 있는지 검사
+			for(int i = 1; i < upfile.size(); i++) {
+				String fileExist2 = upfile.get(i).getOriginalFilename();
+				if(!fileExist2.equals("")) { // 세부 사진 있음 => fileLevel = 2 로 REVIEW_FILE 테이블에 insert
+					
+					String currentTime =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+					
+					int ranNum = (int)(Math.random() * 90000) + 10000; // 5자리 랜덤값
+					
+					String ext = fileExist2.substring(fileExist2.lastIndexOf(".")); //
+					
+					String changeName = currentTime + ranNum + ext;
+					
+					String filePath = session.getServletContext().getRealPath("resources/reviewUploadFiles/");
+					// String filePath = "resources/reviewUploadFiles/";
+					// System.out.println(filePath);
+					
+					try {
+						upfile.get(i).transferTo(new File(filePath + changeName));
+					} catch (IllegalStateException | IOException e) {
+						e.printStackTrace();
+					}
+					
+					ReviewFile reviewFile = new ReviewFile();
+					
+					reviewFile.setChangeName(changeName);
+					reviewFile.setFilePath("resources/reviewUploadFiles/");
+					reviewFile.setFileLevel(2);
+					reviewFile.setReviewNo(rawReviewNo);
+					
+					reviewService.insertReviewFile(reviewFile);
+				}
+				else {} // 세부 사진 없음 => REVIEW_FILE 테이블에 insert 종료
+				
+				// REVIEW_FILE 테이블에 insert 끝났으면 rawReviewNo 인 ReviewFile 들 select
+				ArrayList<ReviewFile> flist = reviewService.selectNewReviewFile(rawReviewNo); 
+				
+				rawReview.setFlist(flist); // flist 를 Review 객체에 담음
+				
+				session.setAttribute("alertMsg", "리뷰가 성공적으로 등록되었습니다.");
+				mv.setViewName("redirect:/list.re");
+			}
 		}
-		
-		// 넘어온 첨부파일이 있을 경우 r : 제목, 작성자, 내용, 원본파일명, 경로 + 수정파일명
-		// 넘어온 첨부파일이 없을 경우 r : 제목, 작성자, 내용
-		int result = reviewService.insertReview(r);
-		
-		if(result > 0) { // 성공 => 게시글 리스트 페이지로 url 재요청(list.re)
-			
-			session.setAttribute("alertMsg", "성공적으로 리뷰가 등록되었습니다.");
-			
-			mv.setViewName("redirect:/list.re");
-		}
-		else { // 실패 => 에러페이지로 포워딩
-			
-			// mv.addObject("errorMsg", "리뷰 작성 실패");
-			// mv.setViewName("common/errorPage");
-			
-			// addObject 메소드의 반환형은 ModelAndView 타입임
-			// => 다음과 같이 메소드 체이닝도 가능
-			mv.addObject("errorMsg", "리뷰 작성 실패").setViewName("common/errorPage");
-		}
-		*/
+		else {
+			// 실패했으면 그냥 alert 하고 list.re 로 리다이렉트
+			mv.addObject("alertMsg", "리뷰 등록에 실패했습니다.");
+		} 
 		return mv;
-		
 	}
 	
+	@RequestMapping("detail.re")
+	public ModelAndView selectReview(int rno, ModelAndView mv) {
+	    
+		// System.out.println("rno 값 : " + rno);
+		// rno 에는 상세조회하고자 하는 해당 게시글 번호가 담겨있음 
+		// 1. 해당 게시글 조회수 증가용 서비스 먼저 호출 결과 받기 (update 하고 오기)
+		int result = reviewService.increaseCount(rno);
+		  
+		if(result > 0) { // 성공적으로 조회수 증가가 일어났다면
+		 
+			// 2. 상세조회 요청
+			// => reviewDetailView.jsp 상에 필요한 데이터 조회
+			Review r = reviewService.selectReview(rno);
+			
+			// 해당 리뷰에 첨부되어 있는 파일 리스트 조회 후 담기
+			ArrayList<ReviewFile> flist = reviewService.selectReviewFile(rno);
+			r.setFlist(flist);
+			
+			// 조회된 데이터를 담아서 review/reviewDetailView.jsp 로 포워딩 
+			mv.addObject("r", r).setViewName("review/reviewDetailView");
+			
+			// System.out.println("r : " + r);
+		
+		}
+		else { // 실패 
+			
+			mv.addObject("errorMsg", "리뷰 조회 실패").setViewName("common/errorPage");
+			
+		}
+		
+		return mv;
+	}
+	
+
 	@ResponseBody
 	@RequestMapping(value="rlist.re", produces="application/json; charset=UTF-8")
 	public String ajaxSelectReviewReplyList(int rno) {
@@ -222,77 +294,6 @@ public class ReviewController {
 			// System.out.println("result : " + result);
 			
 	 		return (result > 0 ) ? "success" : "fail";
-	}
-	 
-	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
-	// => Spring 의 Controller 메소드는 반드시 요청을 처리하는 역할이 아니어도 됨
-	/*
-	public String saveFile(MultipartFile upfile, HttpSession session) {
-		
-		// 파일명 수정 작업 후 서버에 업로드 시키기
-		// 예) "flower.png" => "2022112210405012345.png"
-		// 1. 원본파일명 뽑아오기
-		String originName = upfile.getOriginalFilename(); // "flower.png"
-		
-		// 2. 시간 형식을 문자열로 뽑아내기
-		// String currentTime =  new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		
-		// 3. 뒤에 붙을 5자리 랜덤값 뽑기
-		int ranNum = (int)(Math.random() * 90000) + 10000; // 5자리 랜덤값
-		
-		// 4. 원본 파일로부터 확장자만 뽑기
-		String ext = originName.substring(originName.lastIndexOf(".")); //
-		
-		// 5. 모두 이어 붙이기
-		// String changeName = currentTime + ranNum + ext;
-		
-		// 6. 업로드 하고자 하는 서버의 물리적인 실제 경로 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
-		
-		// 7. 경로와 수정파일명을 합체 후 파일을 업로드해주기
-		
-		try {
-			upfile.transferTo(new File(savePath + changeName));
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		
-		return changeName;
-		
-	}
-	*/
-	
-	@RequestMapping("detail.re")
-	public ModelAndView selectReview(int rno, ModelAndView mv) {
-	    
-		// System.out.println("rno 값 : " + rno);
-		// rno 에는 상세조회하고자 하는 해당 게시글 번호가 담겨있음 
-		// 1. 해당 게시글 조회수 증가용 서비스 먼저 호출 결과 받기 (update 하고 오기)
-		int result = reviewService.increaseCount(rno);
-		  
-		if(result > 0) { // 성공적으로 조회수 증가가 일어났다면
-		 
-			// 2. 상세조회 요청
-			// => reviewDetailView.jsp 상에 필요한 데이터 조회
-			Review r = reviewService.selectReview(rno);
-			
-			// 해당 리뷰에 첨부되어 있는 파일 리스트 조회 후 담기
-			ArrayList<ReviewFile> flist = reviewService.selectReviewFile(rno);
-			r.setFlist(flist);
-			
-			// 조회된 데이터를 담아서 review/reviewDetailView.jsp 로 포워딩 
-			mv.addObject("r", r).setViewName("review/reviewDetailView");
-			
-			// System.out.println("r : " + r);
-		
-		}
-		else { // 실패 
-			
-			mv.addObject("errorMsg", "리뷰 조회 실패").setViewName("common/errorPage");
-			
-		}
-		
-		return mv;
 	}
 	
 	@RequestMapping("delete.re")

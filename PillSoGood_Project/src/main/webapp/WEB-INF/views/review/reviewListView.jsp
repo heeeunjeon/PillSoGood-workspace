@@ -137,7 +137,7 @@
 		                                </c:forEach>
 		                                <input type="hidden" value="${ b.reviewNo }">
 		                                <p class="bestReviewService">${ b.reviewTitle }</p>
-		                                <p class="bestReviewContent">${fn:substring(b.reviewContent, 0, 15)}...</p>
+		                                <p class="bestReviewContent">${fn:substring(b.reviewContent, 0, 30)}...</p>
 		                                <p class="bestReviewName">${ fn:substring(b.memberName, 0, 1)}*${ fn:substring(b.memberName, 2, 1)}&emsp;${ b.reviewDate }</p>
 		                            </div>
 	                            </c:forEach>
@@ -149,7 +149,7 @@
                     	<div>
                     		<table>
                     			<tr>
-                    				<td width="900px;">총 <span style="color: #78C2AD;">${list.size()}</span>건</td>
+                    				<td width="900px;">총 <span style="color: #78C2AD;">${pi.listCount}</span>건</td>
                     				<td width="100px;"><button id="orderByNew" class="btn btn-primary" >최신순</button></td>
                     				<td width="100px;"><button id="orderByHot" class="btn btn-primary" >인기순</button></td>
                     			</tr>
@@ -163,7 +163,6 @@
 	                               <tr>
 	                               		<input type="hidden" value="${ list[i].reviewNo }">
 	                               		<td width="600px" style="font-size: 20px; padding-top: 20px;"><b>${ list[i].reviewTitle }</b></td>
-							            	<%-- 본인 로그인 경우에는 삭제수정 버튼, 관리자 로그인 경우에는 삭제 버튼 --%>
 							            	<c:choose>
 								            	<c:when test="${ not empty loginUser }">
 									            	<c:choose>
@@ -221,11 +220,12 @@
 	                           </table>
 						</c:forEach>
 						<div align="right">
-							<%-- 
-	           					클릭 시 모달로 결제완료건이 드랍박스로 나오고 거기서 후기작성하기 누르면 후기 작성 폼으로 연결
-	           					지금은 미구현 희원이한테서 결제 완성되면 받기
-	           				--%>
-	           				<a href="enrollForm.re"><button class="btn btn-primary" >작성하기</button></a>
+	           				<c:choose>
+				            	<c:when test="${ not empty loginUser }">
+					            	<a href="enrollForm.re"><button class="btn btn-primary">작성하기</button></a>
+					            </c:when>
+					            <c:otherwise></c:otherwise>
+			            	</c:choose>
 						</div>
 						<br>
 	                    <!-- 페이지 -->

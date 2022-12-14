@@ -94,10 +94,34 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
+	public int insertRawReview(Review r) {
+		return reviewDao.insertRawReview(sqlSession, r);
+	}
+	
+	@Override
+	public Review selectRawReview(int memberNo) {
+		return reviewDao.selectRawReview(sqlSession, memberNo);
+	}
+	
+	@Override
+	public int insertReviewFile(ReviewFile reviewFile) {
+		return reviewDao.insertReviewFile(sqlSession, reviewFile);
+	}
+	
+	@Override
+	public ArrayList<ReviewFile> selectNewReviewFile(int rawReviewNo) {
+		return reviewDao.selectNewReviewFile(sqlSession, rawReviewNo);
+	}
+	
+	@Override
 	public int insertReview(Review r) {
 
 		return reviewDao.insertReview(sqlSession, r);
 	}
+	
+	
+	
+
 	
 	
 

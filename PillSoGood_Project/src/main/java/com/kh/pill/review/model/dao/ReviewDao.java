@@ -82,10 +82,30 @@ public class ReviewDao {
 		return sqlSession.update("reviewMapper.deleteReviewReply", replyNo);
 	}
 
+	public int insertRawReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.insert("reviewMapper.insertRawReview", r);
+	}
+	
+	public Review selectRawReview(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("reviewMapper.selectRawReview", memberNo);
+	}
+	
+	public int insertReviewFile(SqlSessionTemplate sqlSession, ReviewFile reviewFile) {
+		return sqlSession.insert("reviewMapper.insertReviewFile", reviewFile);
+	}
+	
+	public ArrayList<ReviewFile> selectNewReviewFile(SqlSessionTemplate sqlSession, int rawReviewNo) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectNewReviewFile", rawReviewNo);
+	}
+	
 	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	
+	
+
 	
 
 

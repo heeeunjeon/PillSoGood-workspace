@@ -79,28 +79,58 @@
       #select {
         width: 200px;
       }
-
-      .btnArea {
-        padding-top: 60px;
-        padding-bottom: 30px;
-      }
-      
-      td>p {
-        margin-bottom: 7px;
-        padding-left: 13px;
-      }
       
       i {
       	cursor: pointer;
-      }
-
-	  label {
-	  	width: 100px;
 	  }
 	  
-	  input, textarea {
-	  	width:800px;
-	  }
+	  .filebox input[type="file"] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+	.filebox.bs3-primary .col-sm-10>label {
+		color: #fff;
+		background-color: #337ab7;
+		border-color: #2e6da4;
+	}
+	.filebox .col-sm-10>label {
+		display: inline-block;
+		padding: .5em .75em;
+		color: #999;
+		font-size: inherit;
+		font-weight: 600;
+		line-height: normal;
+		vertical-align: middle;
+		background-color: #fdfdfd;
+		cursor: pointer;
+		border: 1px solid #ebebeb;
+		border-bottom-color: #e2e2e2;
+		border-radius: .25em;
+	}
+	.filebox .upload-name {
+		display: inline-block;
+		width: 350px;
+		padding: .5em .75em;
+		/* label의 패딩값과 일치 */
+		font-size: inherit;
+		font-family: inherit;
+		line-height: normal;
+		vertical-align: middle;
+		background-color: #f5f5f5;
+		border: 1px solid #ebebeb;
+		border-bottom-color: #e2e2e2;
+		border-radius: .25em;
+		-webkit-appearance: none;
+		/* 네이티브 외형 감추기 */
+		-moz-appearance: none;
+		appearance: none;
+	}
 </style>
 
 </head>
@@ -124,31 +154,78 @@
               <div id="content_2_2">
                 <div class="innerContent" style="border: 2px solid;">
                   <form id="enrollForm" method="post" action="insert.re" enctype="multipart/form-data">
-                    <fieldset>
-                      <table algin="center" class="reviewForm">
+                      <div algin="center" class="reviewForm">
 
-                            <tr>
-                                <td colspan="2">
-                                    <span style="font-size: 16px;"><b>나중구현) orders 한 건의 주문 목록 String 컬럼</b></span>
-                                    <span style="font-size: 14px;">나중구현) 정기구독 한 팩 서비스</span>
-                                </td>
-                            </tr>
+                            <div>
+                                <div>
+                                    <%-- 
+                                    	레퍼런스 : <span style="font-size: 16px;"><b>나중구현) orders 한 건의 주문 목록 String 컬럼</b></span>
+                                    	
+                                    	구현 목표 : reviewListView 에서 작성하기 버튼 누를때 이동하면서 
+                                    	memberNo 의 rOrder(rOrderNo, rOrderProductNames, rOrderSubsStatus)들 
+                                    	ArrayList<ROrder> rOrderList 에 담아서 가져옴
+                                    --%> 
+                                    <select class="form-select">
+                                    	<c:forEach var="rOrder" items="${rOrderList}">
+                                      		<option value="주문번호 : ${rOrder.rOrderNo}(${rOrder.rOrderProductNames})"></option>
+										</c:forEach>
+                                    </select>
+                                    
+                                    <span id="rOrderSubsStatus" style="font-size: 14px;">정기구독/일시결제 나오는 곳</span>
+                                    
+                                    <%-- 
+                                    <script>
+                      					  // 선택한 결제 건의 결제형태 나오는 ajax
+									      $(function() {
+									  		
+									  		selectSubsStatus();
+									  		});
+									      
+									      function selectSubsStatus() {
+									  		
+									  		$.ajax({
+									  			url : "rOrderSubsStatus.re",
+									  			data : {rOrderNo:${ rOrderList.orderNo }},
+									  			success : function(result) { 
+									  				
+									  				var resultStr = "";
 
-                            <tr>
-                                <td><label for="title">제목</label></td>
-                                <td><input type="text" class="form-control" name="reviewTitle" required></td>
-                            </tr>
+									  							  		if(result.subsStatus == "Y") {
+									  							  			
+									  							  			resultStr += "정기구독";
+									  							  		}
+									  							  		else (result.subsStatus == "N") {
+									  							  			
+									  							  			resultStr += "일시결제";
+									  							  		}
+									  				
+									  				$("#rSubsStatus").html(resultStr);
+									  			},
+									  			error : function() {
+									  				console.log("결제 형태  조회용 ajax 통신 실패!");
+									  			}
+									  		});
+									  	}
+									</script>
+									--%>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div><label for="title">제목</label></div>
+                                <div><input type="text" class="form-control" name="reviewTitle" required></div>
+                            </div>
                             
-                            <tr>
-                                <td><label>별점</label></td>
-                                <td id="starTd">
+                            <div>
+                                <div><label>별점</label></div>
+                                <div id="starTd">
                                     <i class="fa-solid fa-star" id="1"></i>
                                     <i class="fa-solid fa-star" id="2"></i>
                                     <i class="fa-solid fa-star" id="3"></i>
                                     <i class="fa-solid fa-star" id="4"></i>
                                     <i class="fa-solid fa-star" id="5"></i>
                                 	<input id="reviewGrade" type="hidden" name="reviewGrade">
-                                </td>
+                                </div>
                                 
                                 <script>
 		
@@ -190,32 +267,105 @@
 										});
 									});
 								</script>
-                            </tr>
+                            </div>
                             
-                            <tr>
-                                <td><label for="content">내용</label></td>
-                                <td><textarea class="form-control" style="resize:none;" name="reviewContent" required></textarea></td>
-                            </tr>
-							
-                            <tr>
-                                <td><label for="upfile">썸네일 사진</label></td>
-                                <td><input type="file" id="upfile1" class="form-control-file border" name="upfile"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="upfile">사진</label></td>
-                                <td><input type="file" id="upfile2" class="form-control-file border" name="upfile"></td>
-                            </tr>  
-                    </table>  
-                    <div align="center" class="btnArea">
-                    	<input type="hidden" name="memberNo" class="form-control" value="${ loginUser.memberNo }">
-                        <button type="submit" class="btn btn-primary">등록</button>
-                        <button type="reset" class="btn btn-light">취소</button>
-                    </div>
-                  </fieldset>
-                </form>
-              </div>
+                            <div>
+                                <div><label for="content">내용</label></div>
+                                <div><textarea class="form-control" style="resize:none;" name="reviewContent" required></textarea></div>
+                            </div>
+                            
+                           	<div data-name="fileDiv" class="form-group filebox bs3-primary">
+								<label for="file_0" class="col-sm-2 control-label">사진</label>
+								<div class="col-sm-10">
+									<input type="text" class="upload-name" value="썸네일 사진을 등록해주세요." readonly />
+									<label for="file_0" class="control-label">찾아보기</label>
+									<input type="file" name="upfile" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />
+								
+									<button type="button" onclick="addFile()" class="btn btn-primary">
+										<i class="fa fa-plus" aria-hidden="true"></i>
+									</button>
+									<button type="button" onclick="removeFile(this)" class="btn btn-primary">
+										<i class="fa fa-minus" aria-hidden="true"></i>
+									</button>
+								</div>
+							</div>
+                            
+                            <div id="btnDiv" align="center">
+		                    	
+		                    	
+		                    	<%--
+		                    		<input type="hidden" name="memberNo" class="form-control" value="${ loginUser.memberNo }"> 
+		                    		지금 결제 완료된 orderNo 를 못 받아와서 일단 value=1로 고정 
+		                    		향후 memberNo 로 가져오게 쿼리 짜놓은 거로 수정
+		                    	--%>
+		                    	<input type="hidden" name="orderNo" class="form-control" value="1">
+		                        <button type="submit" class="btn btn-primary">등록</button>
+		                        <button type="reset" class="btn btn-light">취소</button>
+		                    </div>
+		                    
+		                    <script>
+						                            
+		                    let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
 
-         </div>
+		                    function addFile() {
+								/*
+		                    	const fileDivs = $('div[data-name="fileDiv"]');
+		                    	if (fileDivs.length > 2) {
+		                    		alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
+		                    		return false;
+		                    	}
+								*/
+								fileIdx++;
+								
+								var fileHtml = "";
+								fileHtml += "<div data-name='fileDiv' class='form-group filebox bs3-primary'>"
+			                    			+ "<label for='file_"+fileIdx+"' class='col-sm-2 control-label'></label>"
+			                    			+ "<div class='col-sm-10'>"
+			                    				+ "<input type='text' class='upload-name' value='세부 사진을 등록해주세요.' readonly />"
+			                    				+ "<label for='file_"+fileIdx+"' class='control-label'>찾아보기</label>"
+			                    				+ "<input type='file' name='upfile' id='file_"+fileIdx+"' class='upload-hidden' onchange='changeFilename(this);' />"
+			                    				+ "<button type='button' onclick='removeFile(this)' class='btn btn-primary'>"
+			                    				+ "<i class='fa fa-minus' aria-hidden='true'></i>"
+			                    				+ "</button>"
+			                    			+ "</div>"
+			                    		+ "</div>";
+		                    	$('#btnDiv').before(fileHtml);
+		                    }
+
+		                    function removeFile(elem) {
+
+		                    	const prevTag = $(elem).prev().prop('tagName');
+		                    	if (prevTag === 'BUTTON') {
+		                    		const file = $(elem).prevAll('input[type="file"]');
+		                    		const filename = $(elem).prevAll('input[type="text"]');
+		                    		file.val('');
+		                    		filename.val('파일 찾기');
+		                    		return false;
+		                    	}
+
+		                    	const target = $(elem).parents('div[data-name="fileDiv"]');
+		                    	target.remove();
+		                    }
+
+		                    function changeFilename(file) {
+
+		                    	file = $(file);
+		                    	const filename = file[0].files[0].name; // pill14.png
+		                    	
+		                    	console.log(file); // [type="hidden" 인 input]
+		                    	console.log(file[0]); // type="hidden" 인 input
+		                    	console.log(file[0].files); // [File]
+		                    	console.log(file[0].files[0]); // File
+		                    	console.log(file[0].files[0].name); // pill14.png
+		                    	const target = file.prevAll('input');
+		                    	console.log(target); // [type="text" 인 input]
+		                    	target.val(filename);
+		                    }
+						   </script>
+                  		</div>  
+                	</form>
+              	</div>
+         	</div>
             </div>
             <div id="content_2_3"></div>
             

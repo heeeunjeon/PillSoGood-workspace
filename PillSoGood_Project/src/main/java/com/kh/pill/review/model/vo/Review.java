@@ -29,4 +29,7 @@ public class Review {
 	private String subsStatus;
 	private int replyCount;
 	private ArrayList<ReviewFile> flist; // REVIEW_FILE 테이블에서 List 뽑아와서 List<Review>에 담을 변수
+	private int orderNo;
+	private String filePath; // FILE_PATH	VARCHAR2(1000 BYTE)
+
 }

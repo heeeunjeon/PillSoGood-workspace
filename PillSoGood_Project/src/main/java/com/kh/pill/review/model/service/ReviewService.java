@@ -43,8 +43,21 @@ public interface ReviewService {
 	// 리뷰 댓글 삭제용 서비스 (Ajax)
 	int deleteReviewReply(int replyNo);
 	
+	// 임시 리뷰 게시글 작성 서비스 
+	int insertRawReview(Review r);
+	// 임시 리뷰 게시글 조회 서비스
+	Review selectRawReview(int memberNo);
+
+	// 리뷰 사진 첨부 서비스 
+	int insertReviewFile(ReviewFile reviewFile);
+	
+	// 리뷰 첨부 사진 조회 서비스
+	ArrayList<ReviewFile> selectNewReviewFile(int rawReviewNo);
+
 	// 리뷰 게시글 작성 서비스
 	int insertReview(Review r);
+	
+	
 	
 	
 

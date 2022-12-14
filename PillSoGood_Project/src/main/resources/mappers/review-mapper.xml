@@ -48,7 +48,9 @@
 		<result column="MEMBER_ID" property="memberId" />
 		<result column="SUBS_STATUS" property="subsStatus" />
 		<result column="FILE_PATH" property="filePath" />
-		<result column="REPLY_NO" property="replyNo" />					
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="ORDER_NO" property="orderNo" />												
+		<result column="MEMBER_NO" property="memberNo" />												
 	</resultMap>
 	
 	<select id="selectBestList" resultMap="reviewListViewResultSet">
@@ -126,11 +128,58 @@
 		  AND REVIEW_NO = #{rno}
 	</select>
 
+	<insert id="insertRawReview" parameterType="review">
+		INSERT INTO REVIEW (REVIEW_NO
+						  , REVIEW_TITLE
+						  , REVIEW_CONTENT
+						  , REVIEW_COUNT
+						  , REVIEW_GRADE
+						  , MEMBER_NO
+						  , ORDER_NO)
+					VALUES (SEQ_REVIEW_NO.NEXTVAL
+						  , #{reviewTitle}
+						  , #{reviewContent}
+						  , #{reviewCount}
+						  , #{reviewGrade}
+						  , #{memberNo}
+						  , #{orderNo})
+	</insert>
+	
+	<select id="selectRawReview" resultMap="reviewListViewResultSet" parameterType="_int">
+		SELECT *
+        FROM (SELECT *
+                FROM REVIEW
+                WHERE REVIEW_STATUS = 'Y'
+                  AND MEMBER_NO = #{memberNo}
+                ORDER BY REVIEW_NO DESC)
+        WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insertReviewFile" parameterType="reviewFile">
+		INSERT INTO REVIEW_FILE (REVIEW_FILE_NO
+						  , CHANGE_NAME
+						  , FILE_PATH
+						  , FILE_LEVEL
+						  , REVIEW_NO)
+					VALUES (SEQ_REVIEW_FILE_NO.NEXTVAL
+						  , #{changeName}
+						  , #{filePath}
+						  , #{fileLevel}
+						  , #{reviewNo})
+	</insert>
+	
+	<select id="selectNewReviewFile" resultMap="reviewListViewResultSet" parameterType="_int">
+		SELECT *
+		FROM REVIEW_FILE
+		WHERE FILE_STATUS = 'Y'
+		  AND REVIEW_NO = #{rawReviewNo}
+	</select>
+	 
 	<insert id="insertReview" parameterType="review">
 		
 	</insert>
 	
-	<update id="increaseCount" parameterType="int">	     
+	<update id="increaseCount" parameterType="_int">	     
 	     UPDATE REVIEW
 		   SET REVIEW_COUNT = REVIEW_COUNT + 1
 		 WHERE REVIEW_NO = #{reviewNo}
@@ -182,7 +231,7 @@
 						 , REPLY_CONTENT
 						 , REVIEW_NO
 						 , MEMBER_NO)
-				   VALUES (REVIEW_REPLY_NO.NEXTVAL
+				   VALUES (SEQ_REVIEW_REPLY_NO.NEXTVAL
 				   		 , #{replyContent}
 				   		 , #{reviewNo}
 				   		 , #{memberNo})
