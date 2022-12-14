@@ -87,12 +87,12 @@ public class EventServiceImpl implements EventService {
 	}
 
 	/**
-	 * 
+	 * 이벤트 댓글 작성 
 	 */
 	@Override
-	public int insertReply(EventReply r) {
+	public int insertReply(EventReply er) {
 		
-		return 0;
+		return eventDao.insertReply(sqlSession, er);
 	}
 	
 	
@@ -143,6 +143,35 @@ public class EventServiceImpl implements EventService {
 		return eventDao.selectEvtLikeCount(sqlSession, eno);
 	}
 
+	/**
+	 * 이벤트 댓글 삭제
+	 */
+	@Override
+	public int deleteReply(int replyNo) {
+		
+		return eventDao.deleteReply(sqlSession, replyNo);
+	}
+
+	
+	/**
+	 * 이벤트 대댓글 작성 
+	 */
+	@Override
+	public int insertNestedReply(EventReply er) {
+		
+		return eventDao.insertNestedReply(sqlSession, er);
+	}
+
+	/**
+	 * 이벤트 대댓글 삭제 
+	 */
+	@Override
+	public int deleteNrReply(int replyNo) {
+		
+		return eventDao.deleteNrReply(sqlSession, replyNo);
+	}
+
+	
 	
 
 }

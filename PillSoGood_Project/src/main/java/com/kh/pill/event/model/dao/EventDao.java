@@ -122,6 +122,40 @@ public class EventDao {
 		return sqlSession.selectOne("eventMapper.selectEvtLikeCount", eno);
 	}
 
+	/**
+	 * 이벤트 댓글 작성
+	 */
+	public int insertReply(SqlSessionTemplate sqlSession, EventReply er) {
+		
+		return sqlSession.insert("eventMapper.insertReply", er);
+	}
+
+	
+	/**
+	 * 이벤트 댓글 삭제
+	 */
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
+		
+		return sqlSession.delete("eventMapper.deleteReply", replyNo);
+	}
+
+	/**
+	 * 이벤트 대댓글 작성 
+	 */
+	public int insertNestedReply(SqlSessionTemplate sqlSession, EventReply er) {
+		
+		return sqlSession.insert("eventMapper.insertNestedReply", er);
+	}
+
+
+	public int deleteNrReply(SqlSessionTemplate sqlSession, int replyNo) {
+		
+		return sqlSession.delete("eventMapper.deleteNrReply", replyNo);
+	}
+
+
+	
+
 
 	
 

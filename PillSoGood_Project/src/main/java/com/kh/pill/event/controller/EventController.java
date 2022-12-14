@@ -138,9 +138,11 @@ public class EventController {
 		
 		
 		ArrayList<EventReply> list = eventService.selectReplyList(eno);
-		
+	
 		
 		return new Gson().toJson(list);
+		
+		
 
 		
 	}
@@ -417,6 +419,71 @@ public class EventController {
 		
 		
 	}
+	
+	
+	/**
+	 * 이벤트 댓글 작성
+	 */
+	@ResponseBody
+	@RequestMapping(value="rinsert.ev", produces="text/html; charset=UTF-8")
+	public String ajaxInsertReply(EventReply er) {
+		
+		int result = eventService.insertReply(er);
+		
+		return (result > 0 ) ? "success" : "fail";
+		
+	}
+	
+	/**
+	 * 이벤트 댓글 삭제 
+	 */
+	@ResponseBody
+	@RequestMapping(value="rdelete.ev", produces="text/html; charset=UTF-8")
+	public String ajaxDeleteReply(int replyNo) {
+		
+		// System.out.println(replyNo);
+		
+		int result = eventService.deleteReply(replyNo);
+		
+		return (result > 0) ? "success" : "fail";
+		
+		
+	}
+	
+	
+	/**
+	 * 이벤트 대댓글 작성 
+	 */
+	@ResponseBody
+	@RequestMapping(value="nrinsert.ev", produces="text/html; charset=UTF-8")
+	public String ajaxInsertNestedReply(EventReply er) {
+		
+		System.out.println(er);
+
+		int result = eventService.insertNestedReply(er);
+		
+		System.out.println(er);
+		
+	
+		return (result > 0) ? "success" : "fail";
+		
+	}
+	
+	/**
+	 * 이벤트 대댓글 삭제
+	 */
+	@ResponseBody
+	@RequestMapping(value="nrdelete.ev", produces="text/html; charset=UTF-8")
+	public String ajaxDeleteNestedReply(int replyNo) {
+		
+		
+		
+		int result = eventService.deleteNrReply(replyNo);
+		
+		return (result > 0) ? "success" : "fail";
+		
+		
+	}
 		
 		
 	
@@ -427,24 +494,6 @@ public class EventController {
 	
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

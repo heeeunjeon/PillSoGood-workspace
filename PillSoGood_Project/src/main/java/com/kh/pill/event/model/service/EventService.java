@@ -32,7 +32,7 @@ public interface EventService {
 	ArrayList<EventReply> selectReplyList(int evtNo);
 	
 	// 이벤트 댓글 작성 서비스 (Ajax)
-	int insertReply(EventReply r);
+	int insertReply(EventReply er);
 
 	// 이벤트 좋아요 누른사람 추가 
 	int insertEvtLike(EventLike el);
@@ -48,6 +48,16 @@ public interface EventService {
 
 	// 이벤트 좋아요 삭제 
 	int deleteEvtLike(EventLike el);
+
+	// 이벤트 댓글 삭제
+	int deleteReply(int replyNo);
+
+	// 이벤트 대댓글 작성
+	int insertNestedReply(EventReply er);
+
+
+	// 이벤트 대댓글 삭제
+	int deleteNrReply(int replyNo);
 
 	
 

@@ -2,6 +2,7 @@ package com.kh.pill.event.model.vo;
 
 import java.sql.Date;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import lombok.ToString;
 public class EventReply {
 	private int replyNo; // REPLY_NO	NUMBER
 	private String replyContent; // REPLY_CONTENT	VARCHAR2(3000 BYTE)
-	private Date replyDate; // REPLY_DATE	DATE
+	private String replyDate; // REPLY_DATE	DATE
 	private int parentReply; // PARENT_REPLY	NUMBER
 	private String replyStatus; //REPLY_STATUS	CHAR(1 BYTE)
 	private int memberNo; // MEMBER_NO	NUMBER
