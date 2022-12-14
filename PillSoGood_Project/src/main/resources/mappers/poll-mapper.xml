@@ -73,7 +73,7 @@
 		INSERT INTO CART (CART_NO
 						, MEMBER_NO
 						, PRODUCT_NO)
-				  VALUES (CART_NO.NEXTVAL
+				  VALUES (SEQ_CART_NO.NEXTVAL
 				  		, #{memberNo}
 				  		, #{productNo})
 	

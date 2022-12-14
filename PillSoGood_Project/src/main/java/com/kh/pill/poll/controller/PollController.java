@@ -142,7 +142,7 @@ public class PollController {
 		
 		if(result > 0) {
 			
-			return "redirect:/";
+			return "redirect:/list.cart";
 			
 		} else {
 			

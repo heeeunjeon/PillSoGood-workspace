@@ -88,6 +88,33 @@
       padding-left: 100px;
       margin-top: 10%;
     }
+    
+    #alarmAreaButton {
+	    border: none;
+	    background-color: white;
+     }
+     #alarmArea {
+         width : 400px;
+         height : 500px;
+         overflow-y: scroll;
+         z-index: 999;
+         position: absolute;
+         background-color: white;
+     }
+     #alarmContainer * {
+         z-index: 999;
+     }
+     #alarmArea * {
+         position: relative;
+     }
+     #alarmContainer {
+         position : absolute;
+         right : 380px;
+         top : 25px;
+     }
+     #alarmTable:hover {
+         cursor:pointer;
+     }
 
 </style>
 </head>
@@ -202,6 +229,33 @@
             	</c:when>
             	<c:otherwise>
             	<!-- 로그인 후 -->
+            	
+           		        <div id="alarmContainer">
+				            <button type="button" id="alarmAreaButton" class="btn btn-primary position-relative"><img src="resources/images/alarm.png" onclick="alarmAreaControl();" alt="">
+				                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+				                    99+
+				                </span>
+				            </button>
+				            <div id="alarmArea" style="display:none;">
+				                <table class="table table-hover" id="alarmTable">
+				                    <tr>
+				                        <td>한영섭님이 1대1 문의를 남기셨습니다.</td>
+				                    </tr>
+				                    <tr>
+				                        <td>한영섭님이 구매 하셨습니다.</td>
+				                    </tr>
+				                    <tr>
+				                        <td>한영섭님이 1대1 문의를 남기셨습니다.</td>
+				                    </tr>
+				                    <tr>
+				                        <td>한영섭님이 후기를 남기셨습니다.</td>
+				                    </tr>
+				                    <tr>
+				                        <td>알람1</td>
+				                    </tr>
+				                </table>
+				            </div>
+				        </div>
 		            <a class="text-decoration-none" href="list.cart" style="color:rgb(92, 93, 96)">장바구니 |</a>    
 		            <a class="text-decoration-none" href="logout.me" style="color:rgb(92, 93, 96)">로그아웃 |</a> 
 		            <a class="text-decoration-none" href="myPage.or" style="color:rgb(92, 93, 96)">마이페이지</a>      	
@@ -213,6 +267,13 @@
     </div>
   </nav>
   </div>
+  
+  <script>
+    function alarmAreaControl() {
+        $("#alarmArea").toggle(200);
+    }
+
+  </script>
 
 
 
