@@ -16,8 +16,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        /* 전체 길이 개별 커스텀 */
-        height: 1750px;
+        height: inherit;
         margin : auto;
     }
 
@@ -25,11 +24,10 @@
 
     #navigator2 { height: 100px; }
 
-    /* 내용 길이 개별 wrap - 350px */
-    #content { height: 1400px; }
+    #content { display: flex; height: auto; }
     #content_2>div { width: 100%; }
-    #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_1, #content_2_3 { height: 115px; }
+    #content_2_2 { height: auto; color: black; }
 
     #header { height: 130px; }
 
@@ -38,6 +36,7 @@
         color: black;
         margin-top: 20px;
         margin-left: 30px;
+        font-weight: bold;
     }
 
     /* content 영역 */

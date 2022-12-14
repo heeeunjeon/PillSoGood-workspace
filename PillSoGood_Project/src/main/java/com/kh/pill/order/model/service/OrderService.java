@@ -24,6 +24,9 @@ public interface OrderService {
 	// 주문 취소 (삭제)
 	int deleteOrder(int orderNo);
 	
+	// 기존 결제의 장바구니 번호 조회
+	ArrayList<OrderCart> selectCartNoForSubs(int memberNo);
+	
 	
 	
 	

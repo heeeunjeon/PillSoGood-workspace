@@ -40,7 +40,9 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.deleteOrder", orderNo);
 	}
 	
-	
+	public ArrayList<OrderCart> selectCartNoForSubs(SqlSessionTemplate sqlSession, int memberNo) {
+		return (ArrayList)sqlSession.selectList("orderMapper.selectCartNoForSubs", memberNo);
+	}
 	
 	
 	

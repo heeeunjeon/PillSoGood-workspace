@@ -55,7 +55,11 @@ public class OrderServiceImpl implements OrderService {
 	public int deleteOrder(int orderNo) {
 		return orderDao.deleteOrder(sqlSession, orderNo);
 	}
-
+	
+	@Override
+	public ArrayList<OrderCart> selectCartNoForSubs(int memberNo) {
+		return orderDao.selectCartNoForSubs(sqlSession, memberNo);
+	}
 	
 	
 	

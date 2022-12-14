@@ -326,7 +326,6 @@
 												<h5 class="modal-title">카드 정보 입력</h5>
 												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 											</div>
-											<form action="" method="post">
 											<div class="modal-body">
 												<table id="customer_uid">
 													<tr>
@@ -355,7 +354,6 @@
 												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 												<button type="button" class="btn btn-primary" onclick="subscription();">정기구독 결제하기</button>
 											</div>
-											</form>
 										</div>
 									</div>
 								</div>
@@ -431,13 +429,19 @@
     	
 		function subscription() {
 			
-			var amount = parseInt($("#finalprice").text().substring(0, $("#finalprice").text().lastIndexOf(' ')).replace(',', ''));
-			amount = 100;
-			
 			if($("#address1").val().length != 0) {
     			
    			 	var date = moment(new Date()).format('YYYYMMDDHHmmss');
    				var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
+   				var amount = parseInt($("#finalprice").text().substring(0, $("#finalprice").text().lastIndexOf(' ')).replace(',', ''));
+	    		amount = 100;
+	    		
+	    		var customerUid = "${ loginUser.memberNo }" + '_' + $("#card_number").val().substring(15);
+	    		
+	    		var address = $("#address1").val();
+	    		if($("#address2").val() != '') {
+	    			address += ' ' + $("#address2").val();
+	    		}
 			
 				// 빌링키 발급, 저장 동시에 첫 결제
 				$.ajax({
@@ -446,18 +450,19 @@
 					data: {
 						merchant_uid: orderNo,
 		    			amount: amount,
+		    			customer_uid: customerUid,
+		    			pg: "nice",
 		    			name: $("#product_name").text() + ' 외 1개',
+		    			buyer_name: "${ loginUser.memberName }",
+		    			buyer_email: "${ loginUser.email }",
+		    			buyer_postcode: $("#address_zip").val(),
+		    			buyer_addr: address,
+		    			custom_data: JSON.stringify({ "memberNo" : 2 }),
 						card_number: $("#card_number").val(),
 						expiry: $("#expiry").val(),
 						birth: $("#birth").val(),
-						pwd_2digit: $("#pwd_2digit").val(),
-						memberId: "${ loginUser.memberId }",
-						memberName: "${ loginUser.memberName }",
-		    			email: "${ loginUser.email }",
-		    			addressZip: $("#address_zip").val(),
-		    			address1: $("#address1").val(),
-		    			address2: $("#address2").val(),
-		    			custom_data: { memberNo: ${ loginUser.memberNo } }}
+						pwd_2digit: $("#pwd_2digit").val()
+					}
 				}).done(data => {
 					
 					console.log(data);

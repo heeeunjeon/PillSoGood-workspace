@@ -19,6 +19,7 @@
 		<result column="ORDER_NO" property="orderNo"/>
 		<result column="ORDER_DATE" property="orderDate"/>
 		<result column="ORDER_PRICE" property="orderPrice"/>
+		<result column="MEMBER_NO" property="memberNo"/>
 		<result column="SUBS_COUNT" property="subsCount"/>
 		<result column="CUSTOMER_UID" property="customerUid"/>
 		<result column="ORDER_RECEIPT" property="orderReceipt"/>
@@ -37,12 +38,14 @@
 		SELECT NVL(MAX(SUBS_COUNT), 0) "SUBS_COUNT"
 		FROM ORDERS
 		WHERE CUSTOMER_UID = #{customerUid}
+		  AND ORDER_STATUS = 'N'
 	</select>
 	
 	<insert id="insertOrder" parameterType="order">
 		INSERT INTO ORDERS (ORDER_NO
 						  , ORDER_DATE
 						  , ORDER_PRICE
+						  , MEMBER_NO
 						  , SUBS_COUNT
 						  , CUSTOMER_UID
 						  , ORDER_RECEIPT
@@ -51,6 +54,7 @@
 					VALUES (#{orderNo}
 						  , TO_DATE(#{orderDate}, 'YYYYMMDDHH24MISS')
 						  , #{orderPrice}
+						  , #{memberNo}
 						  , #{subsCount}
 						  , #{customerUid}
 						  , #{orderReceipt}
@@ -90,6 +94,17 @@
 	<update id="deleteOrder" parameterType="_int">
 	
 	</update>
+	
+	<select id="selectCartNoForSubs" parameterType='_int' resultMap="orderCartResultSet">
+		SELECT CART_NO
+		FROM ORDER_CART
+		WHERE ORDER_NO = (SELECT ORDER_NO
+						  FROM ORDERS
+						  WHERE MEMBER_NO = #{memberNo}
+						    AND SUBS_STATUS = 'Y'
+							AND ORDER_STATUS = 'N'
+							AND SUBS_COUNT = 1)
+	</select>
 	
 	
 	

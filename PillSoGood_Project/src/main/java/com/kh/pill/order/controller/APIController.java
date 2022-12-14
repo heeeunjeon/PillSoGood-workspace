@@ -61,22 +61,9 @@ public class APIController {
 	
 	@ResponseBody
 	@RequestMapping(value="/subscribe/payments/onetime")
-	public IamportResponse<Payment> onetime(String merchant_uid, BigDecimal amount, String name, String card_number, String expiry, String birth, String pwd_2digit, Member m, String custom_data) throws IamportResponseException, IOException {
+	public IamportResponse<Payment> onetime(OnetimePaymentData onetimeData) throws IamportResponseException, Exception {
 		
-		String address = m.getAddress1();
-		if(m.getAddress2() != "") {
-			address += " " + m.getAddress2();
-		}
-		
-		OnetimePaymentData onetimeData = new OnetimePaymentData(merchant_uid, amount, new CardInfo(card_number, expiry, birth, pwd_2digit));
-		onetimeData.setPg("nice");
-		String customer_uid = m.getMemberId() + "_" + card_number.substring(15);
-		onetimeData.setCustomer_uid(customer_uid);
-		onetimeData.setName(name);
-		onetimeData.setBuyerName(m.getMemberName());
-		onetimeData.setBuyerEmail(m.getEmail());
-		onetimeData.setBuyerPostcode(m.getAddressZip());
-		onetimeData.setBuyerAddr(address);
+		System.out.println(onetimeData);
 		
 		return client.onetimePayment(onetimeData);
 	}
@@ -93,6 +80,7 @@ public class APIController {
 		entry.setName(payment.get("name").getAsString());
 		entry.setBuyerName(payment.get("buyerName").getAsString());
 		entry.setBuyerEmail(payment.get("buyerEmail").getAsString());
+		entry.setCustomData(payment.get("customData").getAsString());
 		
 		ScheduleData scheduleData = new ScheduleData(payment.get("customerUid").getAsString());
 		scheduleData.addSchedule(entry);
@@ -113,7 +101,7 @@ public class APIController {
 	}
 	
 	@RequestMapping(value="/iamport/webhook")
-	public void webhookTest(@RequestBody HashMap<String,Object> webhook) throws Exception {
+	public void webhook(@RequestBody HashMap<String,Object> webhook) throws Exception {
 		
 		if(webhook.get("status").toString().equals("paid")) {
 			
@@ -125,24 +113,14 @@ public class APIController {
 			String response = mapper.writeValueAsString(p);
 			
 			System.out.println(response);
-			System.out.println(p.getCustomData());
 			
 			JSONObject customData = (JSONObject)(new JSONParser().parse(p.getCustomData()));
 			
-			System.out.println(customData.toJSONString());
-			
 			int memberNo = Integer.parseInt(String.valueOf(customData.get("memberNo")));
 			
-			System.out.println(memberNo);
-			
-			Order o = new Order();
-			o.setOrderNo(p.getMerchantUid());
-			o.setOrderDate(p.getMerchantUid().substring(0, 14));
-			o.setOrderPrice(p.getAmount().intValue());
-			o.setSubsCount(1);
-			o.setOrderReceipt(p.getReceiptUrl());
-			o.setSubsStatus("N");
-			o.setAddress("(" + p.getBuyerPostcode() + ") " + p.getBuyerAddr());
+			Order o = new Order(p.getMerchantUid(), p.getMerchantUid().substring(0, 14), 
+					p.getAmount().intValue(), String.valueOf(customData.get("memberNo")), 1, 
+					p.getReceiptUrl(), "N", "(" + p.getBuyerPostcode() + ") " + p.getBuyerAddr());
 			
 			// 구독일 경우
 			// p.getCustomerUid() 로 select 검사
@@ -160,27 +138,44 @@ public class APIController {
 				}
 			}
 			
-			// String result = new OrderController().insertOrder(o, memberNo);
-			// System.out.println(result);
 			int oresult = orderService.insertOrder(o);
 			
-			// Cart 현재 갯수와 번호들
-			ArrayList<Cart> list = orderService.selectCart(memberNo);
-			
-			int ocresult = 1;
-			
-			if(oresult > 0) {
+			// 첫 결제때만 장바구니에 상품이 들어있을 것
+			if(o.getSubsCount() == 1) {
 				
-				for(int i = 0; i < list.size(); i++) {
+				// Cart 현재 갯수와 번호들
+				ArrayList<Cart> list = orderService.selectCart(memberNo);
+				
+				int ocresult = 1;
+				
+				if(oresult > 0) {
 					
-					// OrderCart 에 insert
-					OrderCart oc = new OrderCart(list.get(i).getCartNo(), o.getOrderNo());
-					ocresult *= orderService.insertOrderCart(oc);
+					for(int i = 0; i < list.size(); i++) {
+						
+						// OrderCart 에 insert
+						OrderCart oc = new OrderCart(list.get(i).getCartNo(), o.getOrderNo());
+						ocresult *= orderService.insertOrderCart(oc);
+					}
+					
+					// CART 테이블에 loginUser 상품들 STATUS = 'N'
+					if(ocresult > 0) {
+						orderService.deleteCart(memberNo);
+					}
 				}
+			} else {
 				
-				// CART 테이블에 loginUser 상품들 STATUS = 'N'
-				if(ocresult > 0) {
-					orderService.deleteCart(memberNo);
+				// 구독 자동 재결제일 경우
+				// ORDERS 테이블에서 구독여부가 Y 인 memberNo 의 orderNo 으로 OrderCart 에 있는 cartNo 을 가져옴
+				ArrayList<OrderCart> list = orderService.selectCartNoForSubs(memberNo);
+				
+				if(oresult > 0) {
+					
+					for(int i = 0; i < list.size(); i++) {
+						
+						// OrderCart 에 insert
+						OrderCart oc = new OrderCart(list.get(i).getCartNo(), o.getOrderNo());
+						orderService.insertOrderCart(oc);
+					}
 				}
 			}
 			
