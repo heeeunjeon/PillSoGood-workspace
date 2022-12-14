@@ -39,4 +39,7 @@ public interface OrderService {
 	
 	// 장바구니 상품 삭제
 	int removeCart(Cart c);
+	
+	// 장바구니 상품 수정
+	int modifyCart(Cart c);
 }

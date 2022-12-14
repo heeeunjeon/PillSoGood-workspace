@@ -39,8 +39,8 @@
         margin-left: 30px;
     }
 
-    #content_2_2 form>table>thead tr { border-bottom: solid lightgray; }
-    #content_2_2 form>table { width: 90%; }
+    #content_2_2 div>table>thead tr { border-bottom: solid lightgray; }
+    #content_2_2 div>table { width: 90%; }
 
     table { color: black; }
 
@@ -104,18 +104,17 @@
                 </div>
                 <div id="content_2_2" align="center">
                     <div>
-                        <form>
                         <table>
                             <thead>
                                 <tr height="50px">
                                     <th width="25px" align="center" style="padding-left: 5px"><input class="form-check-input" type="checkbox" name="allCheck"></th>
-                                    <th colspan="3" align="center">전체선택</th>
-                                    <th width="100px" style="text-align:right"><button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteValue();">선택삭제</button></th>
+                                    <th colspan="3" align="left">전체선택</th>
+                                    <th width="110px" style="text-align:right"><button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteValue();">선택삭제</button></th>
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach var="c" items="${ list }">
-                         
+                                <c:forEach var="c" items="${ list }">
+                                    
                                 <tr>
                                     <td rowspan="2" align="center"><input class="form-check-input" type="checkbox" name="RowCheck" value="${ c.productNo }"></td>
                                     <td rowspan="2" align="center" width="150px"><div style="width: 80px; height: 80px;"><img src="${ c.productImgPath }" style="width:100%; height: 100%; margin: auto; object-fit: contain;"></div></td>
@@ -123,21 +122,23 @@
                                     <td rowspan="2" width="150px">
                                         <table align="center">
                                             <tr>
-                                                <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('minus');">-</button></td>
-                                                <td style="width: 36px;"><input class="form-control" id="result" value="${ c.cartAmount }" style="width: 44px; text-align: center;" readonly></td>
-                                                <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('plus');">+</button></td>
+                                                <td><button type="button" class="btn btn-light minus" style="background-color:white; border: 1px solid #ced4da;">-</button></td>
+                                                <td style="width: 36px;"><input class="form-control result" value="${ c.cartAmount }" style="width: 44px; text-align: center;" readonly></td>
+                                                <td><button type="button" class="btn btn-light plus" style="background-color:white; border: 1px solid #ced4da;">+</button></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td rowspan="2" align="right" style="font-size: 23px;"><b><fmt:formatNumber value="${ c.productPrice }" />원</b></td>
+                                    <td rowspan="2" align="right" style="font-size: 23px;" class="pricePri">
+                                        <p style="margin:0px; font-weight: bold;" class="totalP"><fmt:formatNumber value="${ c.cartAmount * c.productPrice }" pattern="#,###.##"/>원</p>
+                                        <input type="hidden" class="priceP" value="${ c.productPrice }">
+                                    </td>
                                 </tr>
                                 <tr style="border-bottom: 1px solid lightgray;">
                                     <td style="font-size: 20px;"><b>${ c.productName }</b></td>
                                 </tr>
-                           		</c:forEach>
+                                </c:forEach>
                             </tbody>
                         </table>
-                        </form>
                     </div>
                     <div id="btns" style="margin-top: 10px;">
                         <button type="button" class="btn btn-outline-primary btn-lg" onclick="location.href='list.pr'">+ 제품 추가</button>
@@ -149,8 +150,8 @@
                                 <td colspan="2">결제 예상 금액</td>
                             </tr>
                             <tr style="border-top: solid lightgray;" height="50px">
-                                <td style="font-size: 20px;" width="740px"><b>총 제품 금액</b></td>
-                                <td style="font-size: 20px;"><b>24,000원</b></td>
+                                <td style="font-size: 20px;" width="700px"><b>총 제품 금액</b></td>
+                                <td style="font-size: 20px;" align="right"><p style="margin:0px; font-weight: bold;" id="totalPri"></p></td>
                             </tr>
                         </table>
                     </div>
@@ -185,7 +186,7 @@
                     </div>
                     <div id="btnss">
                         <div><button type="button" class="btn btn-primary btn-lg" onclick="postPaySubmit(1)">정기결제</button></div>
-                        <div><button type="button" class="btn btn-outline-secondary btn-lg" onclick="postPaySubmit(2);">단품결제</button></div>
+                        <div><button type="button" class="btn btn-secondary btn-lg" onclick="postPaySubmit(2);">단품결제</button></div>
                     </div>
                     
                     <form id="postForm" action="pay.or" method="post">
@@ -201,28 +202,6 @@
     </div>
 
     <script>
-        function count(type)  {
-            // 결과를 표시할 element
-            const resultElement = document.getElementById("result");
-            
-            // 현재 화면에 표시된 값
-            let number = $(resultElement).val();
-            var num = parseInt(number);
-
-            if(type == "plus") {
-                
-                num = num + 1;
-            } else if(type == "minus")  {
-                if (num != 1) {
-                    num = num - 1;
-                }
-            }
-
-            // 결과 출력
-            $("#result").val(num);
-        }
-
-        
         $(function() {
             var chkObj = document.getElementsByName("RowCheck");
             var rowCnt = chkObj.length;
@@ -242,6 +221,7 @@
                 }
             });
         });
+
         function deleteValue() {
             var url = "delete.cart";
             var valueArr = new Array();
@@ -262,12 +242,12 @@
                     traditional : true,
                     data : {
                         valueArr : valueArr,
-                        memberNo : ${ loginUser.memberNo }
+                        memberNo : "${ loginUser.memberNo }"
                     },
                     success: function(jdata) {
                         if(jdata = 1) {
                             alert("상품을 삭제했습니다.");
-                            location.replace("list.cart")
+                            location.replace("list.cart");
                         }
                         else {
                             alert("상품 삭제 실패");
@@ -282,7 +262,91 @@
         	$("#postForm>input").val(num);
         	
         	$("#postForm").submit();
-        }
+        };
+
+
+        $(function() {
+
+            var proPrice = $(".priceP").val();
+            var count = $(".result").val();
+
+            result2 = proPrice * count;
+
+            $("#totalPri").text(result2.toLocaleString('ko-KR') + '원');
+        });
+        
+        $(".plus").on("click", function() {
+
+            var result = $(this).parent().siblings().children(".result");
+            var quantity = result.val();
+            $(result).val(++quantity);
+
+            var price = $(this).parents("table").parent().siblings().children(".priceP").val();
+            var total =  price * quantity;
+
+            $(this).parents("table").parent().siblings(".pricePri").children('p').text(total.toLocaleString('ko-KR') + '원');
+
+            var productNo = $(this).parents("table").parent().siblings().children(".form-check-input").val();
+
+            var totalP = $('.totalP').text().split('원');
+            var total2 = 0;
+
+            for(var i = 0; i < totalP.length - 1; i++) {
+                total2 += parseInt(totalP[i].replace(',', ''));
+            }
+
+            $("#totalPri").text(total2.toLocaleString('ko-KR') + '원');
+
+
+            $.ajax({
+                url: "update.cart",
+                data: {
+                    cartAmount: quantity,
+                    productNo: productNo,
+                    memberNo: "${ loginUser.memberNo }"
+                },
+                error: function() {
+                    console.log("puls ajax error")
+                }
+            });
+        });
+
+        $(".minus").on("click", function() {
+
+            var result = $(this).parent().siblings().children(".result");
+            var quantity = result.val();
+            if(quantity > 1) {
+                $(result).val(--quantity);
+            }
+
+            var price = $(this).parents("table").parent().siblings().children(".priceP").val();
+            var total =  price * quantity;
+
+            $(this).parents("table").parent().siblings(".pricePri").children('p').text(total.toLocaleString('ko-KR') + '원');
+
+            var productNo = $(this).parents("table").parent().siblings().children(".form-check-input").val();
+
+            var totalP = $('.totalP').text().split('원');
+            var total2 = 0;
+
+            for(var i = 0; i < totalP.length - 1; i++) {
+                total2 += parseInt(totalP[i].replace(',', ''));
+            }
+
+            $("#totalPri").text(total2.toLocaleString('ko-KR') + '원');
+
+            $.ajax({
+                url: "update.cart",
+                data: {
+                    cartAmount: quantity,
+                    productNo: productNo,
+                    memberNo: "${ loginUser.memberNo }"
+                },
+                error: function() {
+                    console.log("minus ajax error")
+                }
+            });
+        });
     </script>
     
 </body>

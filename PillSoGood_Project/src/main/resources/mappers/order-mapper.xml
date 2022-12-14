@@ -13,7 +13,6 @@
 		<result column="PRODUCT_EXPLAIN" property="productExplain" />
 		<result column="PRODUCT_PRICE" property="productPrice" />
 		<result column="PRODUCT_IMG_PATH" property="productImgPath" />
-		
 	</resultMap>
 	
 	<resultMap id="orderResultSet" type="order">
@@ -125,6 +124,5 @@
 			 WHERE PRODUCT_NO = #{productNo}
 			   AND MEMBER_NO = #{memberNo}
 	</delete>
-	
 	
 </mapper>

@@ -91,6 +91,18 @@ public class CartController {
 		return "redirect:list.cart";
 	}
 	
+	/**
+	 * @param 장바구니 상품 수정
+	 */
+	@ResponseBody
+	@RequestMapping("update.cart")
+	public String updateCart(Cart c) {
+		
+		int result = orderService.updateCart(c);
+		
+		return (result > 0) ? "success" : "fail";
+	}
+	
 	
 	
 	

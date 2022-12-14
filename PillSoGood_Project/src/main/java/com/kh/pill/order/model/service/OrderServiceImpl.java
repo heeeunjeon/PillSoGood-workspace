@@ -83,6 +83,11 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.removeCart(sqlSession, c);
 	}
 
+	@Override
+	public int modifyCart(Cart c) {
+		return orderDao.modifyCart(sqlSession, c);
+	}
+
 	
 
 }
