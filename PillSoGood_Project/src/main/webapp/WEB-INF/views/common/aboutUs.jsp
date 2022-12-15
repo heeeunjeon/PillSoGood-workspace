@@ -19,7 +19,7 @@
         /* 전체를 감싸는 wrap */
         .wrap {
             width: 98%;
-            height: 7180px;
+            height: auto;
             margin : auto; /* 가운데로 좌, 우 자동 정렬*/
         }
 
@@ -30,15 +30,15 @@
         .wrap>div { width : 100%; }
 
         #navigator2 { height: 150px; }
-
-        #content { height: 6800px;}
-        #content_2>div { width: 100%;}
+        
+        #content { height: auto; display:flex; }
+        #content_2>div { width: 100%; }
         #content_2_1 { height: 150px; }
         #content_2_2 { height: 6650px; }
-
+/* 
         #header { 
             height: 230px;
-        }
+        } */
 
         #header>div { height: 100%; float: left; }
 
@@ -337,7 +337,6 @@
         <div id="content">
             <div id="content_1"></div>
             <div id="content_2">
-                <div id="content_2_1"></div>
                 <div id="content_2_2">
 
                     <!-- 영섭 작업 영역 시작-->

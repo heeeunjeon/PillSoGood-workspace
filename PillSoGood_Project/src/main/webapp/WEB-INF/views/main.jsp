@@ -547,18 +547,19 @@
                         </table>
 
                         <table style="width: 1000px;" align="center">
-                            <tr>
-                                <td rowspan="6" style="width: 60%; vertical-align: top; padding-right: 30px; padding-top: 30px;" align="center" >
-                                    <img src="" style="width:100%; height: 350px;">
-                                    <p style="text-align: left; width: 100%;">
-                                        <a href="" style="text-decoration: none; color:rgb(40, 40, 40);">
-                                            <b style="padding-top: 20px; display: block; font-size: 20px;">속 쓰릴때 도움되는 영양제</b> 
-                                        <br>
-                                        하는 것이다 보라 청춘을 ! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 
-                                        우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한
-                                        </a>
-                                    </p>
-                                </td>
+                                <tr>
+                                    <td rowspan="6" style="width: 60%; vertical-align: top; padding-right: 30px; padding-top: 30px;" align="center" >
+                                        <img src="" style="width:100%; height: 350px;">
+                                        <p style="text-align: left; width: 100%;">
+                                            <a href="" style="text-decoration: none; color:rgb(40, 40, 40);">
+                                                <b style="padding-top: 20px; display: block; font-size: 20px;">속 쓰릴때 도움되는 영양제</b> 
+                                            <br>
+                                            하는 것이다 보라 청춘을 ! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 
+                                            우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한
+                                            </a>
+                                        </p>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="width: 100%; height: 200px; vertical-align: top; padding-top: 30px;">
                                         <img src="" style="width:100%; height: 200px;">

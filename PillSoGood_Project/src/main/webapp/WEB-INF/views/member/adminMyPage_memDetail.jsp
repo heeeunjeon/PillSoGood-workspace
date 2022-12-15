@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>ADMIN PAGE 회원 관리</title>
+<title>ADMIN PAGE 회원 상세조회</title>
 <style>
 
     div {
@@ -93,41 +93,22 @@
         font-weight: bold;
     }
 
-    /* ----- 회원조회 style ----- */
-    /* 검색창 정렬 */
-    #admin_menu {
-        height: 45px;
-        position: relative;
-    }
-    #search_mem {
-        float: right;
-        width: 300px;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-    }
-
-    /* 검색창, 버튼 글씨 크기 */
-    #search_mem>input, #search_mem>button { font-size: 15px; }
-
+     /* ----- 회원상세 style ----- */
     /* 목록 테이블 */
-    #member_list {
-        margin-top: 30px;
-        color: black;
-        text-align: center;
+    #member_info { margin-top: 20px; }
+    #member_info>tbody>tr { height: 50px; }
+
+    /* 처리 버튼 */
+    #process_btn>button {
+        width: 110px;
+        height: 40px;
+        margin: 0px 5px;
     }
-    #member_list>thead { background-color: #78c2ad36; }
-    #member_list>tbody td { vertical-align: middle; padding:15px; }
-
-    #member_list>tbody>tr:hover { cursor: pointer; }
-
 </style>
-
 </head>
 <body>
 
     <div class="wrap">
-  
         <div id="navigator2">
         	<jsp:include page="../common/menubar.jsp" />
         </div>
@@ -165,73 +146,66 @@
                         <hr>
 
                         <div id="admin_menu">
-                            <p>[ 회원 목록 ]</p>
-                            <form class="input-group" id="search_mem">
-                                <input type="text" class="form-control" name="" placeholder="아이디 / 이름 / 이메일 검색">
-                                <button class="btn btn-primary" type="submit">검색</button>
-                            </form>
+                            <p>[ 회원 정보 ]</p>
                         </div>
                         
-                        <table class="table table-hover" id="member_list">
-                            <thead>
-                                <tr>
-                                    <th width="10%">No</th>
-                                    <th width="15%">아이디</th>
-                                    <th width="15%">이름</th>
-                                    <th width="30%">이메일</th>
-                                    <th width="20%">가입일자</th>
-                                    <th width="10%">상태</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            	<c:forEach var="m" items="${ list }">
-	                                <tr>
-	                                    <td>${ m.memberNo }</td>
-	                                    <td>${ m.memberId }</td>
-	                                    <td>${ m.memberName }</td>
-	                                    <td>${ m.email }</td>
-	                                    <td>${ m.memberEnrollDate }</td>
-	                                    <td>${ m.memberStatus }</td>
-	                                </tr>
-                                </c:forEach>
-                            </tbody>
+                        <table id="member_info">
+                            <tr>
+                                <th width="25%">회원번호</th>
+                                <td width="75%">123123</td>
+                            </tr>
+
+                            <tr>
+                                <th>아이디</th>
+                                <td>user01</td>
+                            </tr>
+                            <tr>
+                                <th>이름</th>
+                                <td>홍길동</td>
+                            </tr>
+                            <tr>
+                                <th>휴대폰번호</th>
+                                <td>01012345678</td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td>user01@naver.com</td>
+                            </tr>
+                            <tr>
+                                <th>성별</th>
+                                <td>남자</td>
+                            </tr>
+                            <tr>
+                                <th>주소</th>
+                                <td>(51324) 서울 영등포구 선유로23길 405호</td>
+                            </tr>
+                            <tr>
+                                <th>출생연도</th>
+                                <td>1985 년</td>
+                            </tr>
+                            <tr>
+                                <th>키</th>
+                                <td>180 cm</td>
+                            </tr>
+                            <tr>
+                                <th>몸무게</th>
+                                <td>75 kg</td>
+                            </tr>
+                            <tr>
+                                <th>가입일</th>
+                                <td>2021-12-15</td>
+                            </tr>
+                            <tr>
+                                <th>상태</th>
+                                <td>가입</td>
+                            </tr>
+
                         </table>
-                        <br>
+                        <br><br>
 
-                        <script>
-                            $(function() {
-                                $("#member_list>tbody>tr").click(function() {
-									
-                                	location.href="adMyPageDetail.me?mno=" + $(this).children().eq(0).text();
-                                    // 클릭시 상세조회로 이동
-                                });
-                            });
-                        </script>
-
-                        <div>
-                            <ul class="pagination">
-                                <c:choose> 
-		                    		<c:when test="${ pi.currentPage eq 1 }">
-		                    			<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-		                    		</c:when>
-		                    		<c:otherwise>
-		                    			<li class="page-item"><a class="page-link" href="list.ev?cpage=${ pi.currentPage - 1 }">1</a></li>
-		                    		</c:otherwise>
-	                    		</c:choose>
-	                    	
-		                    	<c:forEach var="e" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                    		<li class="page-item"><a class="page-link" href="list.ev?cpage=${ e }">${ e }</a></li>
-		                    	</c:forEach>
-	                    	
-		                    	<c:choose>
-		                    		<c:when test="${pi.currentPage eq pi.maxPage }">
-		                    			<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-		                    		</c:when>
-		                    		<c:otherwise>
-		                    			<li class="page-item"><a class="page-link" href="list.ev?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-		                    		</c:otherwise>
-		                    	</c:choose>
-                            </ul>
+                        <div id="process_btn" align="center">
+                            <button type="button" class="btn btn-warning">정보수정</button>
+                            <button type="button" class="btn btn-danger">탈퇴처리</button>
                         </div>
 
                     </div>
@@ -242,10 +216,9 @@
             <div id="content_3"></div>
         </div>
         
-       
     </div>
-    
-     <div>
+
+    <div>
         <jsp:include page="../common/footer.jsp" />
     </div>
     
