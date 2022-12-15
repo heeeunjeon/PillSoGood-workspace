@@ -8,7 +8,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
+    <title>Pill So Good</title>
     <style>
         div {
             /* border: 1px solid #78C2AD; */

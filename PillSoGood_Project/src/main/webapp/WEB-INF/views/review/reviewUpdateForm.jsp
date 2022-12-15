@@ -108,7 +108,7 @@
 <body>
 
     <div class="wrap">
-      <jsp:include page="/views/common/menubar.jsp" />
+      <jsp:include page="../common/menubar.jsp" />
         <div id="navigator2"></div>
         <div id="header"></div>
         <div id="content">
@@ -117,7 +117,7 @@
               <div id="content_2_1">
                 <!-- 로고 영역 -->
                 <div class="logoArea">
-                      <jsp:include page="/views/common/logo.jsp" />
+                      <jsp:include page="../common/logo.jsp" />
                     <p style="display: inline; font-size: 20px;">제품후기</p>
                 </div>
               </div>
@@ -179,7 +179,7 @@
             
             <div id="content_3"></div>
         </div>
-        <jsp:include page="/views/common/footer.jsp" />
+        <jsp:include page="../common/footer.jsp" />
     </div>
     
 </body>
