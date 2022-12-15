@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>Event</title>
 <style>
 
@@ -15,7 +16,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: auto;
         margin : auto;
     }
