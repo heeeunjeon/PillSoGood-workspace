@@ -163,7 +163,7 @@
 								<c:otherwise>
 								
 									<c:forEach var="o" items="${ olist }" varStatus="status">
-			                            <table>
+			                            <table class="olist">
 			                                <tr>
 			                                    <td>
 			                                    	<c:choose>
@@ -179,7 +179,7 @@
 			                                    	</c:choose>
 			                                        &nbsp;${ o.orderDate }
 			                                    </td>
-			                                    <th style="text-align: right;">&gt;</th>
+			                                    <th style="text-align: right;"><a href="">&gt;</a></th>
 			                                </tr>
 			                                <tr height="40px">
 			                                    <th width="80%">

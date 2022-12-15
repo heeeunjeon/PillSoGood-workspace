@@ -17,7 +17,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: inherit;
+        height: 1150px;
         margin : auto;
     }
 
@@ -25,10 +25,10 @@
 
     #navigator2 { height: 100px; }
 
-    #content { display: flex; height: auto; }
+    #content { height: 800px; }
     #content_2>div { width: 100%; }
-    #content_2_1, #content_2_3 { height: 115px; }
-    #content_2_2 { height: auto; color: black; }
+    #content_2_1 { height: 115px; }
+    #content_2_2 { color: black; }
 
     #header { height: 130px; }
 
@@ -78,12 +78,14 @@
                         <i class="fa-sharp fa-solid fa-circle-check" ></i>
                     </div>
                     <div align="center" id="completeMsg">
-                    	주문번호 : ${ ono } <br>
                         상품 결제가 <br> 
                         완료 되었습니다!
                     </div>
+                    <br>
+                    <p style="text-align: center; font-size: large;">주문번호 [ ${ ono } ]</p>
+                    <br>
                     <div align="center" style="margin-top: 20px">
-                        <button type="button" class="btn btn-outline-primary">주문내역조회</button>
+                        <button type="button" class="btn btn-outline-primary" onclick="location.href='myPage.or'">주문내역조회</button>
                         <button type="button" class="btn btn-outline-secondary" onclick="location.href='/PillSoGood'">메인으로</button>
                     </div>
                 </div>

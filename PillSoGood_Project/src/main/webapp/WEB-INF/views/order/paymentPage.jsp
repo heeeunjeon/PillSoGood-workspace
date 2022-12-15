@@ -306,8 +306,6 @@
 				        	var discount = total * 0.1;
 				        	
 				        	$('#total').text(total.toLocaleString('ko-KR') + ' 원');
-				        	$('#discount').text('- ' + discount.toLocaleString('ko-KR') + ' 원');
-				        	$('#finalprice').text((total - discount).toLocaleString('ko-KR') + ' 원');
 				        	
 				        	var date = new Date();
 				        	date.setMonth(date.getMonth() + 1);
@@ -317,19 +315,42 @@
 				        }); 
                     </script>
                     
-                    <c:if test="${ num eq 2 }">
-                    	<script>
-                    		$(function() {
-                    			
-                    			var total = parseInt($('#total').text().substring(0, $('#total').text().indexOf(' 원')).replace(',',''));
-
-								if(total < 50000) {
-									$("#deliverPay").text('+ 3,000 원');
-									$("#finalprice").text((total + 3000).toLocaleString('ko-KR') + ' 원');
-								}
-                    		});
-                    	</script>
-                    </c:if>
+                    <c:choose>
+	                    <c:when test="${ num eq 2 }">
+	                    	<script>
+	                    		$(function() {
+	                    			
+	                    			var total = parseInt($('#total').text().substring(0, $('#total').text().indexOf(' 원')).replace(',',''));
+	                    			var deliverPay = 0;
+	
+									if(total < 50000) {
+										$("#deliverPay").text('+ 3,000 원');
+										deliverPay = 3000;
+									}
+									
+									$("#finalprice").text((total + deliverPay).toLocaleString('ko-KR') + ' 원');
+	                    		});
+	                    	</script>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<script>
+			                    $(function() {
+						        	
+			                    	var total = parseInt($('#total').text().substring(0, $('#total').text().indexOf(' 원')).replace(',',''));
+						        	var discount = total * 0.1;
+						        	
+						        	$('#discount').text('- ' + discount.toLocaleString('ko-KR') + ' 원');
+						        	$('#finalprice').text((total - discount).toLocaleString('ko-KR') + ' 원');
+						        	
+						        	var date = new Date();
+						        	date.setMonth(date.getMonth() + 1);
+						        	date = moment(date).format('YYYY.MM.DD');
+						        	
+						        	$("#price_info>tfoot div").html('다음 결제 예정일&nbsp;&nbsp;&nbsp;' + date);
+						        }); 
+	                    </script>
+	                    </c:otherwise>
+                    </c:choose>
                     
                     <div id="bill_btn" align="center">
                     	<c:choose>
@@ -420,8 +441,7 @@
 	    			buyer_email: "${ loginUser.email }", // 구매자 이메일
 	    			buyer_postcode: $("#address_zip").val(),
 	    			buyer_addr: address,
-	    			custom_data: { memberNo: ${ loginUser.memberNo } },
-	    			notice_url: "tcp://0.tcp.jp.ngrok.io:18400/PillSoGood/iamport/webhook"
+	    			custom_data: { memberNo: ${ loginUser.memberNo } }
 	    		}, rsp => { // callback
 	    			
 	    			console.log(rsp);
@@ -490,8 +510,7 @@
 						card_number: $("#card_number").val(),
 						expiry: $("#expiry").val(),
 						birth: $("#birth").val(),
-						pwd_2digit: $("#pwd_2digit").val(),
-						notice_url: "tcp://0.tcp.jp.ngrok.io:18400/PillSoGood/iamport/webhook"
+						pwd_2digit: $("#pwd_2digit").val()
 					}
 				}).done(data => {
 					

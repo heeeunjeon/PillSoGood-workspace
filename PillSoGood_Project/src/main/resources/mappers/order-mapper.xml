@@ -49,6 +49,7 @@
 						  , SUBS_COUNT
 						  , CUSTOMER_UID
 						  , ORDER_RECEIPT
+						  , ORDER_STATUS
 						  , SUBS_STATUS
 						  , ADDRESS)
 					VALUES (#{orderNo}
@@ -58,6 +59,7 @@
 						  , #{subsCount}
 						  , #{customerUid}
 						  , #{orderReceipt}
+						  , #{orderStatus}
 						  , #{subsStatus}
 						  , #{address})
 	</insert>

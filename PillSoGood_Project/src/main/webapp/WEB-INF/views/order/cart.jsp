@@ -180,7 +180,8 @@
                                 </div>
                                 <div id="textCV">
                                     <p>
-                                        + 배송비 3000원
+                                        + 배송비 3000원 <br>
+                                        + 50,000원 이상 구매시 무료배송
                                     </p>
                                 </div>
                             </div>
@@ -236,25 +237,26 @@
                 alert("선택된 상품이 없습니다.");
             }
             else {
-                var chk = confirm("상품을 삭제하시겠습니까?");
-                $.ajax({
-                    url : "remove.cart",
-                    type : "post",
-                    traditional : true,
-                    data : {
-                        valueArr : valueArr,
-                        memberNo : "${ loginUser.memberNo }"
-                    },
-                    success: function(jdata) {
-                        if(jdata = 1) {
-                            alert("상품을 삭제했습니다.");
-                            location.replace("list.cart");
+                if(confirm("상품을 삭제하시겠습니까?")) {
+                	$.ajax({
+                        url : "remove.cart",
+                        type : "post",
+                        traditional : true,
+                        data : {
+                            valueArr : valueArr,
+                            memberNo : "${ loginUser.memberNo }"
+                        },
+                        success: function(jdata) {
+                            if(jdata = 1) {
+                                alert("상품을 삭제했습니다.");
+                                location.replace("list.cart");
+                            }
+                            else {
+                                alert("상품 삭제 실패");
+                            }
                         }
-                        else {
-                            alert("상품 삭제 실패");
-                        }
-                    }
-                });
+                    });
+                }
             }
         }
         

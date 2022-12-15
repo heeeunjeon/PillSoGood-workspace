@@ -62,9 +62,6 @@ public class APIController {
 	@ResponseBody
 	@RequestMapping(value="/subscribe/payments/onetime")
 	public IamportResponse<Payment> onetime(OnetimePaymentData onetimeData) throws IamportResponseException, Exception {
-		
-		System.out.println(onetimeData);
-		
 		return client.onetimePayment(onetimeData);
 	}
 	

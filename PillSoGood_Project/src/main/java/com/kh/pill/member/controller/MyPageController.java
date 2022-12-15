@@ -55,8 +55,6 @@ public class MyPageController {
 			
 			str += plist.get(plist.size() - 1).getProductName();
 			
-			System.out.println(plist.toString());
-			System.out.println(str);
 			o.setProductNames(str);
 		}
 		
