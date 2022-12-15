@@ -24,5 +24,7 @@ public interface PollService {
 	ArrayList<PollResult> pollResult(Poll p);
 	
 	int deletePoll(int pollNo);
+	
+	int deleteCart(int memberNo);
 
 }

@@ -56,5 +56,24 @@
 		   SET ALARM_READ = 2
 		 WHERE ALARM_NO = #{alramNo}
 	</update>
+	
+	<update id="deleteAlarm">
+		UPDATE ALARM
+		   SET ALARM_STATUS = 'N'
+		 WHERE ALARM_NO = #{alarmNo}
+	</update>
+	
+	<update id="readAllAlarm">
+		UPDATE ALARM
+		   SET ALARM_READ = 2
+		 WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="deleteReadAlarm">
+		UPDATE ALARM
+		   SET ALARM_STATUS = 'N'
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND ALARM_READ = 2
+	</update>
 
 </mapper>

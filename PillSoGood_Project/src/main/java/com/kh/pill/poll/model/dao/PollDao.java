@@ -54,5 +54,9 @@ public class PollDao {
 		
 		return sqlSession.update("pollMapper.deletePoll", pollNo);
 	}
-
+	
+	public int deleteCart(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.delete("pollMapper.deleteCart", memberNo);
+	}
 }

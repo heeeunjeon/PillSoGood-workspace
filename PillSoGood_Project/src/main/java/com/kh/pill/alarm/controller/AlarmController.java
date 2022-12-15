@@ -17,6 +17,7 @@ public class AlarmController {
 	@Autowired
 	private AlarmService alarmService;
 	
+	@ResponseBody
 	@RequestMapping("insertQuestion.alarm")
 	public void insertQuestionAlarm(Alarm a, String toId) {
 		
@@ -46,7 +47,7 @@ public class AlarmController {
 		return new Gson().toJson(list);
 	}
 	
-	
+	@ResponseBody
 	@RequestMapping("insertAnswer.alarm")
 	public void insertAnswerAlarm(Alarm a, String memberId) {
 		
@@ -58,13 +59,34 @@ public class AlarmController {
 	}
 	
 	
+	@ResponseBody
 	@RequestMapping("alarmReadUpdate.alarm")
 	public void alarmReadUpdate(int alarmNo) {
 		
 		int result = alarmService.alarmReadUpdate(alarmNo);
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteAlarm.alarm")
+	public void deleteAlarm(int alarmNo) {
 		
+		int result = alarmService.deleteAlarm(alarmNo);
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping("readAllAlarm.alarm")
+	public void readAllAlarm(int memberNo) {
+		
+		int result = alarmService.readAllAlarm(memberNo);
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteReadAlarm.alarm")
+	public void deleteReadAlarm(int memberNo) {
+		
+		int result = alarmService.deleteReadAlarm(memberNo);
 	}
 	
 

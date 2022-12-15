@@ -48,4 +48,22 @@ public class AlarmServiceImpl implements AlarmService {
 		return alarmDao.alarmReadUpdate(sqlSession, alarmNo);
 	}
 
+	@Override
+	public int deleteAlarm(int alarmNo) {
+		
+		return alarmDao.deleteAlarm(sqlSession, alarmNo);
+	}
+
+	@Override
+	public int readAllAlarm(int memberNo) {
+		
+		return alarmDao.readAllAlarm(sqlSession, memberNo);
+	}
+
+	@Override
+	public int deleteReadAlarm(int memberNo) {
+
+		return alarmDao.deleteReadAlarm(sqlSession, memberNo);
+	}
+
 }

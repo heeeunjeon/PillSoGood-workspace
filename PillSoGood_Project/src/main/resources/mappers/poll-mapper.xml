@@ -93,7 +93,7 @@
 
 	<select id="selectPollList" resultMap="pollResultSet" >
 		SELECT POLL_NO, POLL_DATE
-		  FROM (SELECT DISTINCT POLL_NO, POLL_DATE, DENSE_RANK() OVER(ORDER BY POLL_NO DESC) RANK
+		  FROM (SELECT DISTINCT POLL_NO, TO_CHAR(POLL_DATE,'YYYY-MM-DD') POLL_DATE, DENSE_RANK() OVER(ORDER BY POLL_NO DESC) RANK
 		        FROM POLL
 		        JOIN POLL_RESULT USING(POLL_NO)
 		        WHERE POLL_LEVEL IN (1,2)
@@ -127,5 +127,11 @@
 		   SET POLL_STATUS = 'N'
 		 WHERE POLL_NO = ${pollNo}
 	</update>
+	
+	<delete id="deleteCart">
+		DELETE CART
+		 WHERE MEMBER_NO = #{memberNo}
+		   AND CART_STATUS = 'Y'
+	</delete>
 
 </mapper>

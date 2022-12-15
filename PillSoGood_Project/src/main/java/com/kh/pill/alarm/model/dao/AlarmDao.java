@@ -36,4 +36,19 @@ public class AlarmDao {
 		return sqlSession.update("alarmMapper.alarmReadUpdate", alarmNo);
 	}
 	
+	public int deleteAlarm(SqlSessionTemplate sqlSession, int alarmNo) {
+		
+		return sqlSession.update("alarmMapper.deleteAlarm", alarmNo);
+	}
+	
+	public int readAllAlarm(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.update("alarmMapper.readAllAlarm", memberNo);
+	}
+	
+	public int deleteReadAlarm(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.update("alarmMapper.deleteReadAlarm", memberNo);
+	}
+	
 }

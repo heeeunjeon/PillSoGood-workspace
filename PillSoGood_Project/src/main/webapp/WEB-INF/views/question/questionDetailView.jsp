@@ -343,10 +343,12 @@
                         				alarmUrl : "detail.qu?qno=${q.questionNo}"
                         			},
                         			success : function(result) {
+                        				
                         				selectAlarmList();	
                         				console.log(result);
                         			},
                         			error : function() {
+                        				
                         				console.log("toUserAlarmInsert ajax failure");
                         			}
                         			

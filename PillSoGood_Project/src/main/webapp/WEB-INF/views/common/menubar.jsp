@@ -99,7 +99,7 @@
          overflow-y: auto;
          position: absolute;
          background-color: white;
-         border : 1px solid gray;
+         border : 1px solid rgba(0, 0, 0, 0.175);
          border-radius : 10px;
      }
      #alarmContainer * {
@@ -270,7 +270,13 @@
 				            </button>
 				            <div id="alarmArea" style="display:none;">
 				                <table class="table table-hover" id="alarmTable">
+				                	<thead>
+				                		<tr align="center">
+				                			<td><button class="btn btn-secondary" onclick="readAllAlarm();">모두 읽음</button><button style="margin-left:20px;" class="btn btn-secondary" onclick="deleteReadAlarm();">읽은 메세지 삭제</button></td>
+				                		</tr>
+				                	</thead>
 				                	<tbody>
+				                		
 				                	</tbody>
 				                </table>
 				            </div>
@@ -322,24 +328,24 @@
 	    		success : function(result) {
 	    			
 	    			var resultStr= "";
-	    			
+	    			var count =0;
 	    			for(var i=0; i<result.length; i++ ) {
 	    				if(result[i].alarmRead == 1) {
-		    				
+		    				++count;
 	    					resultStr += "<tr>"
-		    						 	  +"<td onclick='alarmReadUpdate("+ result[i].alarmNo +");'><a href='"+result[i].alarmUrl+"'><strong>" + result[i].alarmContent + "</strong></a></td>"    				
+		    						 	  +"<td><a style='margin-left : 10px; color:gray;' onclick='alarmReadUpdate("+ result[i].alarmNo +");' href='"+result[i].alarmUrl+"'><strong>" + result[i].alarmContent + "</strong></a><button type='button' style='float:right;' class='btn-close' onclick='deleteAlarm("+result[i].alarmNo+")' /></td>"    				
 		    						   + "<tr>";
 	    				} else {
 	    					
 	    					resultStr += "<tr>"
-									 	  +"<td onclick='alarmReadUpdate("+ result[i].alarmNo +");'><a href='"+result[i].alarmUrl+"'>" + result[i].alarmContent + "</a></td>"    				
+									 	  +"<td><a style='margin-left : 10px; color:gray;' href='"+result[i].alarmUrl+"'>" + result[i].alarmContent + "</a><button type='button' style='float:right;' class='btn-close' onclick='deleteAlarm("+result[i].alarmNo+")' /></td>"    				
 									   + "<tr>";
 	    					
 	    				}
 	    			}
 	    			
 	    			$("#alarmTable>tbody").html(resultStr);
-	    			$("#alarmCount").text(result.length);
+	    			$("#alarmCount").text(count);
 	    		},
 	    		error : function() {
 	    			console.log("selectList.alarm ajax failure");
@@ -357,12 +363,69 @@
     		url : "alarmReadUpdate.alarm",
     		data : { alarmNo : alarmNo },
     		success : function() {
-    			selectList.alarm();
+    			selectAlarmList();
     		},
     		error : function() {
     			console.log("alarmReadUpdate ajax failure");
     		}
     		
+    		
+    	});
+    	
+    }
+    
+    
+    function deleteAlarm(alarmNo) {
+    	
+    	$.ajax({
+    		
+    		url : "deleteAlarm.alarm",
+    		data : { alarmNo : alarmNo } ,
+    		success : function() {
+    			
+    			selectAlarmList();
+    		},
+    		error : function() {
+    			console.log("deleteAlarm ajax failure");
+    		}
+    		
+    	});
+    	
+    }
+    
+    
+    function readAllAlarm() {
+    	
+    	$.ajax({
+    		
+    		url : "readAllAlarm.alarm",
+    		data : { memberNo : "${loginUser.memberNo}" },
+    		success : function() {
+    			
+    			selectAlarmList();
+    		},
+    		error : function() {
+    			
+    			console.log("readAllAlarm ajax failure");
+    		}
+    		
+    	});
+    	
+    }
+    
+    function deleteReadAlarm() {
+    	
+    	$.ajax({
+    		
+    		url : "deleteReadAlarm.alarm",
+    		data : { memberNo : "${loginUser.memberNo}" },
+    		success : function() {
+    			
+    			selectAlarmList();
+    		},
+    		error : function() {
+    			console.log("deleteReadAlarm ajax failure");
+    		}
     		
     	});
     	

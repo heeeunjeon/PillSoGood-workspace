@@ -77,4 +77,11 @@ public class PollServiceImpl implements PollService {
 		return pollDao.deletePoll(sqlSession, pollNo);
 	}
 
+
+	@Override
+	public int deleteCart(int memberNo) {
+		
+		return pollDao.deleteCart(sqlSession, memberNo);
+	}
+
 }

@@ -15,5 +15,11 @@ public interface AlarmService {
 	ArrayList<Alarm> selectAlarmList(int memberNo);
 	
 	int alarmReadUpdate(int alarmNo);
+	
+	int deleteAlarm(int alarmNo);
+	
+	int readAllAlarm(int memberNo);
+	
+	int deleteReadAlarm(int memberNo);
 
 }

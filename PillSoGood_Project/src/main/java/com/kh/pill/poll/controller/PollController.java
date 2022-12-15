@@ -125,6 +125,7 @@ public class PollController {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		int memberNo= m.getMemberNo();
+		pollService.deleteCart(memberNo);
 		int result = 1;
 		for(int i=0; i < productCheck.length ; i++) {
 			
