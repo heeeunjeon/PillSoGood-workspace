@@ -73,7 +73,7 @@ public class CartController {
 	 * @param 장바구니 상품 삭제
 	 * @return
 	 */
-	@RequestMapping("delete.cart")
+	@RequestMapping("remove.cart")
 	public String removeCart(int[] valueArr, int memberNo) {
 		
 		// String[] ajaxMsg = request.getParameterValues("valueArr");

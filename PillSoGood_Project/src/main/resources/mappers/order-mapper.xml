@@ -85,6 +85,7 @@
 		UPDATE CART
 		SET CART_STATUS = 'N'
 		WHERE MEMBER_NO = #{memberNo}
+		  AND CART_STATUS = 'Y'
 	</update>
 	
 	<update id="updateOrder" parameterType="order">
@@ -125,6 +126,7 @@
 		  FROM CART
 		 WHERE MEMBER_NO = #{memberNo}
 		   AND PRODUCT_NO = #{productNo}
+		   AND CART_STATUS = 'Y'
 	</select>
 	
 	<update id="updateCart" parameterType="cart">
@@ -132,12 +134,14 @@
 		   SET CART_AMOUNT = #{cartAmount}
 		 WHERE MEMBER_NO = #{memberNo}
 		   AND PRODUCT_NO = #{productNo}
+		   AND CART_STATUS = 'Y'
 	</update>
 	
 	<delete id="removeCart" parameterType="cart">
 			DELETE CART
 			 WHERE PRODUCT_NO = #{productNo}
 			   AND MEMBER_NO = #{memberNo}
+			   AND CART_STATUS = 'Y'
 	</delete>
 	
 </mapper>

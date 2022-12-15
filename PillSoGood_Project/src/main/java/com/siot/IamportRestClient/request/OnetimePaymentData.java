@@ -65,6 +65,9 @@ public class OnetimePaymentData {
 
     @SerializedName("custom_data")
     private String custom_data;
+    
+    @SerializedName("notice_url")
+    private String notice_url;
 
     @SerializedName("card_number")
     protected String card_number;

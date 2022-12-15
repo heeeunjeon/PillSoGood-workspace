@@ -402,7 +402,8 @@
 	    			buyer_email: "${ loginUser.email }", // 구매자 이메일
 	    			buyer_postcode: $("#address_zip").val(),
 	    			buyer_addr: address,
-	    			custom_data: { memberNo: ${ loginUser.memberNo } }
+	    			custom_data: { memberNo: ${ loginUser.memberNo } },
+	    			notice_url: "tcp://0.tcp.jp.ngrok.io:18400/PillSoGood/iamport/webhook"
 	    		}, rsp => { // callback
 	    			
 	    			$.ajax({
@@ -462,7 +463,8 @@
 						card_number: $("#card_number").val(),
 						expiry: $("#expiry").val(),
 						birth: $("#birth").val(),
-						pwd_2digit: $("#pwd_2digit").val()
+						pwd_2digit: $("#pwd_2digit").val(),
+						notice_url: "tcp://0.tcp.jp.ngrok.io:18400/PillSoGood/iamport/webhook"
 					}
 				}).done(data => {
 					

@@ -38,6 +38,7 @@
         color: black;
         margin-top: 20px;
         margin-left: 30px;
+        font-weight: bold;
     }
 
     #content_2_2 div>table>thead tr { border-bottom: solid lightgray; }
@@ -224,7 +225,6 @@
         });
 
         function deleteValue() {
-            var url = "delete.cart";
             var valueArr = new Array();
             var list = $("input[name='RowCheck']");
             for(var i = 0; i < list.length; i++) {
@@ -238,7 +238,7 @@
             else {
                 var chk = confirm("상품을 삭제하시겠습니까?");
                 $.ajax({
-                    url : "delete.cart",
+                    url : "remove.cart",
                     type : "post",
                     traditional : true,
                     data : {
