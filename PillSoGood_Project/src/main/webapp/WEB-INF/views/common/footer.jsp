@@ -13,11 +13,14 @@
             font-size: 13px;
         }
         .innerFooter {
-            display: block;
+            /* display: block; */
+            display:flex;
             margin: 0 auto;
+            left: 20%;
         }
         .footerContent { 
             margin: auto; 
+            
         }
         /*
         .innerFooter {
@@ -29,9 +32,6 @@
             /* position: relative; */
             height : auto;
             
-        }
-        .innerFooter {
-            left: 20%;
         }
         /* img {
             border: 1px solid;
