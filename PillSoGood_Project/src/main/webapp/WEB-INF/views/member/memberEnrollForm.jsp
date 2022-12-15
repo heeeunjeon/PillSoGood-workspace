@@ -136,18 +136,20 @@
                             </tr>
                             <tr style="display: inline-block;">
                                 <td>
-                                    <input type="text" class="form-control" placeholder="이메일 입력" style="width: 190px;" required name="email" id="email">
+                                    <input type="text" class="form-control" placeholder="이메일 입력" style="width: 190px;" required id="email1" maxlength="30">
                                 </td>
-                                <td width="10px">@</td>
+                                <td><span style="width:10px;" id="middle">@</span></td>
+
                                 <td>
-                                    <select class="form-select" style="width: 190px;" name="eamilSelection">
-                                    	<option value="1">직접입력</option>
+                                    <select class="form-select" style="width: 190px;" id="email2" required>
                                         <option value="naver.com">naver.com</option>
                                         <option value="google.com">google.com</option>
                                         <option value="kakao.com">kakao.com</option>
                                     </select>
                                 </td>
+                                <input type="hidden" name="email" id="email" value="">
                             </tr>
+
                             <tr>
                                 <th>주소</th>
                             </tr>
@@ -276,7 +278,7 @@
           var checkPwd = document.getElementById("checkPwd");
           var memberName = document.getElementById("memberName");
           var phone = document.getElementById("phone");
-          var email = document.getElementById("email");
+          var email = document.getElementById("email1");
           
           var regExp = /^[a-z\d]{5,20}$/i;
           
@@ -326,38 +328,32 @@
               
               return false;
           }
-          
           var regExp = /^([0-9a-zA-Z_\.-]+)$/i;
           if(!regExp.test(email.value)) {
               alert("숫자 또는 영어만 입력해주세요.");
               email.select(); // 재입력 유도
               return false;
           }
+    
       	document.enrollForm.submit();
       }
+      
+      $(function() {
+          $("#enrollbtn").click(function() {
+              var email = "" + $("#email1").val() + "@" + $("#email2 option:selected").val();
+              $("#email").val(email);
+          });
+      });
+
+             
   </script>
   
   
-  <!-- 이메일  -->
-  <script>
-  	$(function(){
-  		$(document).ready(function() {
-  			$('select[name=emailSelection]').change(function() {
-  				
-  				if($(this).val()== "1") {
-  					$('#email').val("");
-  				
-  				} else {
-  					$('#email').val($(this).val());
-  					$('#email').attr("readonly", true);
-  				}
-  				
-  			});
-  		});
-  		
-  	});
-  
-  </script>
+
+<script>
+
+
+</script>
 
 </body>
 </html>
