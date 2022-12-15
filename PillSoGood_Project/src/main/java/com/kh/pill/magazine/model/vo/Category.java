@@ -9,8 +9,8 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class MagazineHashtag {
-	
-	private int magazineNo; //MAGAZINE_NO	NUMBER
-	private String magazineHashtag;// MAGAZINE_HASHTAG	VARCHAR2(100 BYTE)
+public class Category {
+
+	private int categoryNo; //CATEGORY_NO	NUMBER
+	private String categoryName; //CATEGORY_NAME	VARCHAR2(30 BYTE)
 }

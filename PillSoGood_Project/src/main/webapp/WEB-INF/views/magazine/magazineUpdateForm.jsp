@@ -127,25 +127,24 @@
                   <form id="updateForm" method="post" action="update.mag" enctype="multipart/form-data">
                     <fieldset>
                       <table align="center">
-                        
+                        <input type="hidden" name="magazineNo" value="${ mag.magazineNo }" >
                         <tr>
                             <th><label for="title">제목</label></th>
-                            <td><input type="text" id="title" class="form-control" name="magazineTitle" required></td>
+                            <td><input type="text" id="title" class="form-control" name="magazineTitle" value="${ mag.magazineTitle }" required></td>
                         </tr>
                         
                         <tr>
                           <th>카테고리</th>
-                          <td><select class="form-select" id="select" name="magazineSelect">
-                            <option>전체</option>
-                            <option>라이프</option>
-                            <option>시즌</option>
-                            <option>이슈</option>
+                          <td><select class="form-select" id="select" name="categoryNo" value="${ mag.categoryNo }">
+                            <option value="2">라이프</option>
+                            <option value="3">시즌</option>
+                            <option value="4">이슈</option>
                           </select></td>
                         </tr>
-
+							
                         <tr>
                           <th><label for="content">내용</label></th>
-                          <td><textarea id="content" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" required></textarea></td>
+                          <td><textarea id="content" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" value="${ mag.magazineContent }" required> </textarea></td>
                         </tr>
 
                         <tr>
@@ -155,12 +154,12 @@
 
                         <tr>
                           <th><label for="hashtag">해시태그</label></th>
-                          <td><input type="text" id="hashtag" class="form-control" value="#" name="magazineWriter"></td>
+                          <td><input type="text" id="hashtag" class="form-control" value="${ mag.magazineHashtag }" name="magazineHashtag"></td>
                         </tr>
                     </table>  
                     <div align="center" class="btnArea">
                           <button type="submit" class="btn btn-secondary">수정</button>
-                          <button type="reset" class="btn btn-light">취소</button>
+                          <button type="button" class="btn btn-light" onclick="javascript:history.go(-1);">취소</button>
                     </div>
                   </fieldset>
                 </form>
@@ -174,6 +173,12 @@
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
+    
+    <script>
+    	var input = document.querySelector('input[name=magazineHashtag]')
+    
+    	new Tagify(input)
+    </script>
     
 </body>
 </html>

@@ -80,10 +80,8 @@
 
         #magazineSelectOpt { height: 35px; font-size: 12px; width: 140px; }
 
-        .magazineListArea { position: relative; margin-left: 817px; }
+        #magazineListArea { position: relative; margin-left: 750px; }
 
-        .magazineListNew { text-decoration: none; color: black; font-size: 13px; }
-        .magazineListPop { text-decoration: none; color:rgb(167, 167, 167); font-size: 13px; }
 
         .thumbnailAll{
         margin-top: 20px;
@@ -150,8 +148,8 @@
         }
 
 		#pagingArea {
-			position: relative;
-            left: 50%;
+	        padding: 20px;
+	        height: 200px;
 		}
 
 		.logoArea>p{
@@ -203,22 +201,24 @@
                         <tr>
                             <td>
                                 <div class="magazineSelect">
-                                    <select class="form-select" id="magazineSelectOpt" name="categoryName" ${ m.categoryName }>
-                                        <option>전체</option>
-                                        <option>라이프</option>
-                                        <option>시즌</option>
-                                        <option>이슈</option>
+                                    <select class="form-select" id="magazineSelectOpt" name="categoryNo">
+                                        <c:forEach items="${magazine}" var="magazine">
+	                                        <option value="${magazine.categoryNo}">${magazine.categoryName}</option>
+                                    	</c:forEach>
                                     </select>
                                 </div>
                             </td>
-                            <td>
-                                <div class="magazineListArea">
-                                    <a class="magazineListNew">최신순</a>
-                                    <a class="magazineListPop"> | 인기순</a>
-                                </div>
-                            </td>
+							<td>
+							<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="magazineListArea">
+							  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="" onclick="recentForm();">
+							  	<label class="btn btn-outline-primary" for="btnradio1">최신순</label>
+							  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked="" onclick="popularForm();">
+							 	<label class="btn btn-outline-primary" for="btnradio2">인기순</label>
+							</div>
+							</td>
                         </tr>
                     </table>
+             
 
                 </div>
               
@@ -233,6 +233,7 @@
                                   <c:when test="${ !empty list }">   		
          	                    	<div class="thumbnail" align="center">
          		                    	<input type="hidden" name="magazineNo" class="magazineNo" value="${ mag.magazineNo }">
+         		                    	<input type="hidden" name="magazineCount" class="magazineCount" value="${ mag.magazineCount }">
          			                        <img src="${ mag.magazineImgName }" width="250px" height="200px">
                                             <p name="magazineTitle">
                                                 ${ mag.magazineTitle }
@@ -253,7 +254,8 @@
                                             	</script>
                                             </div>
                                             <div class="likeArea">
-                                                <i class="fa-regular fa-comment">&nbsp;1</i>
+                                                <img src="resources/images/UnLike.png" alt="" width="10" height="10">
+		                                    	<span id="countLike"></span>
                                             </div>
                                     </div>
                                  </c:when>
@@ -266,13 +268,13 @@
 
                       <!-- 페이지 -->
  			 <div id="pagingArea">
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                 	<c:choose>
                 		<c:when test="${ pi.currentPage eq 1 }">
                 			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
                 		</c:when>
                 		<c:otherwise>
-                			<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }">&raquo;</a></li>
+                			<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
                 		</c:otherwise>
                 	</c:choose>
                     
@@ -282,7 +284,7 @@
                     
                     <c:choose>
                     	<c:when test="${ pi.currentPage eq pi.maxPage }">
-                    		<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                    		<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
                     	</c:when>
                     	<c:otherwise>
                     		<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>

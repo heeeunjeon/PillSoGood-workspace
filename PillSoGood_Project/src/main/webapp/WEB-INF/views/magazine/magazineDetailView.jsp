@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -28,14 +29,14 @@
 
         .wrap>div { width : 100%; }
 
-        #navigator2 { height: 100px; }
+        #navigator2 { height: 0px; }
 
         #content { display: flex; height: auto; }
         #content_2>div { width: 100%; }
         #content_2_1, #content_2_3 { height: 115px; }
         #content_2_2 { height: auto; color: black; }
 
-        #header { height: 130px; }
+        #header { height: 0px; }
         #content_2_1>p {
             font-size: 35px;
             color: black;
@@ -67,9 +68,11 @@
         }
         .thumbnailArea>p {
             font-size: 40px;
-            position: absolute;
-            margin-top: -20%;
-            margin-left: 35%;
+			text-align: center;
+			margin-top: -5.5em;
+            padding-bottom: 180px;
+            width: 970px;
+  			margin-left: 7.4%;
         }
 
         .thumbnailArea>.badge {
@@ -87,6 +90,7 @@
             margin-left: 10%;
             margin-top: 90px;
             margin-bottom: 20px;
+            
         }
 
         .magazineContentPic>img {
@@ -164,7 +168,7 @@
         }
 
         .pageContentTable a {
-            margin-left: 15px;
+            margin-left: 10%;
             font-size: 13px;
             text-decoration: none;
             color: black;
@@ -177,7 +181,7 @@
 
         .listBtnArea {
             margin-top: 25%;
-            margin-left: 40%;
+            margin-left: 45%;
         }
 
         .listBtn {
@@ -193,6 +197,12 @@
         .listBtn:hover {
             cursor: pointer;
         }
+        
+        .logoArea>p{
+			position: relative;
+            left: -32%;
+           
+		}
     </style>
 
     </head>
@@ -207,33 +217,55 @@
                 <div id="content_2">
                     <div id="content_2_1">
                         <div class="logoArea">
-                            <jsp:include page="../common/logo.jsp" />
                           <p style="display: inline; font-size: 20px;">Magazine</p>
                       </div>
                     </div>
                     <div id="content_2_2">
                         <!-- 삭세 수정 버튼 영역 -->
+                        <c:if test="${ loginUser.memberId eq 'admin' }">
                         <div class="btnArea">
-                            <button type="submit" class="btn btn-secondary">삭제</button>
-                            <button type="reset" class="btn btn-light">수정</button>
+                            <button type="submit" class="btn btn-secondary" onclick="magazineFormSubmit(1);">삭제</button>
+                            <button type="reset" class="btn btn-light" onclick="magazineFormSubmit(2);">수정</button>
                         </div>
+                        </c:if>
+                        
+                        <form id="magazineForm" action="" method="post">
+                        	<input type="hidden" name="magazineNo" value="${ mag.magazineNo }">
+                        
+                        </form>
+                        
+                        <script>
+                        	function magazineFormSubmit(num) {
+
+                        		if(num == 2) { 
+                        			
+                        			$("#magazineForm").attr("action", "updateForm.mag").submit();
+                        		
+                        		} else { 
+                        			
+                        			$("#magazineForm").attr("action", "delete.mag").submit();
+                        		}
+                        	}
+                        </script>
 
                         <!-- 썸네일/기사 내용 영역 -->
-                        <div class="thumbnailArea">
+                        <div class="thumbnailArea" style="padding-bottom:100px;">
                             <img src="" class="thumbnailPic">
-                            <span class="badge bg-primary">${ mag.categoryName }</span>
-                            <p align="center">${ mag.magazineTitle }</p>
+                            <span class="badge bg-primary">${ mag.categoryNo }</span>
+                            <p>${ mag.magazineTitle }</p>
                         </div>
                         
-                        <div class="magazineContent">
-                            <p align="center">
-                           		${ mag.magazineContent }
-                            </p>
                             <div class="magazineContentPic">
                                 <img src="${ mag.magazineImgName }">
                             </div>
                             <br>
-                            <hr style="width: 100px; border-top : 2px solid black; margin-left : 45%;" >
+                            <hr style="width: 100px; border-top : 2px solid black; margin-left : 45.5%;" >
+
+							<div class="magazineContent">
+                            	<p align="center">
+                           			${ mag.magazineContent }
+                           		</p>
+                          	</div>
 
                             <div class="magazineContentSub">
  
@@ -245,31 +277,53 @@
                                     <span class="badge bg-light">${mag.magazineHashtag}</span>
                                     </div>
                             </div>
-                        </div>
+                      
 
                         <div class="pageContent">
                             <table class="pageContentTable">
                                 <tr>
+                                <c:choose>
+                                	<c:when test="${ empty prev }">
+                                    <td>
+                                        <a style="display: inline;">이전글이 없습니다.</a>
+                                    </td>
+                                    </c:when>
+                                    <c:otherwise>
                                     <td>
                                         <p class="pageContentPre" style="display: inline;">이전글</p>
-                                        <img scr="" style="display: inline;">
-                                        <a style="display: inline;" href="#">스트레스와 관련된 녹차의 '이 성분</a>
+                                        <a style="display: inline;" href="detail.mag?magazineNo=${ prev.magazineNo }">${ prev.magazineTitle }</a>
                                     </td>
+                                    </c:otherwise>
+                                </c:choose>
                                 </tr>
-
-                                <tr>
-                                    <td>
-                                        <p class="pageContentNext" style="display: inline;">다음글</p>
-                                        <img scr="" style="display: inline;">
-                                        <a style="display: inline;" href="#">나 가을 타나 봐~</a>
+								<tr>
+                                <c:choose>
+                                	<c:when test="${ empty next }">
+                                    <td>                                        
+                                    	<a style="display: inline;">다음글이 없습니다.</a>
                                     </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                    <td>
+                                        <p class="pageContentPre" style="display: inline;">다음글</p>
+                                        <a style="display: inline;" href="detail.mag?magazineNo=${ next.magazineNo }">${ next.magazineTitle }</a>
+                                    </td>
+                                    </c:otherwise>
+                                </c:choose>
                                 </tr>
                             </table>
                         </div>
 
                         <div class="listBtnArea">
-                            <button class="listBtn">더보기</button>
+                            <button class="listBtn" onclick="list()">목록</button>
                         </div>
+                        
+                        <script>
+                        	function list() {
+                        		
+                        		location.href = "list.mag";
+                        	}
+                        </script>
                     </div>
                     <div id="content_2_3"></div>
                 </div>

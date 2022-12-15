@@ -140,12 +140,13 @@
                         
                         <tr>
                           <th>카테고리</th>
-                          <td><select class="form-select" id="select" name="categoryName">
-                            <option>전체</option>
-                            <option>라이프</option>
-                            <option>시즌</option>
-                            <option>이슈</option>
-                          </select></td>
+                          	<td>
+                              <select class="form-select" id="magazineSelectOpt" name="categoryNo">
+                                  <c:forEach items="${magazine}" var="magazine">
+                                   <option value="${magazine.categoryNo}">${magazine.categoryName}</option>
+                              	</c:forEach>
+                              </select>
+                          </td>
                         </tr>
 
                         <tr>
@@ -166,7 +167,7 @@
                     </table>  
                     <div align="center" class="btnArea">
                       <button type="submit" class="btn btn-primary">등록</button>
-                      <button type="reset" class="btn btn-light">취소</button>
+                      <button type="button" class="btn btn-light" onclick="javascript:history.go(-1);">취소</button>
                     </div>
                   </fieldset>
                 </form>

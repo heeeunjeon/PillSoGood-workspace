@@ -16,6 +16,8 @@
 		
 		<typeAlias type="com.kh.pill.magazine.model.vo.Magazine" alias="magazine" />
 		<typeAlias type="com.kh.pill.magazine.model.vo.MagazineLike" alias="magazineLike" />
+		<typeAlias type="com.kh.pill.magazine.model.vo.Category" alias="category" />
+		<typeAlias type="com.kh.pill.magazine.model.vo.MagazinePage" alias="magazinePage" />
 		
 		<typeAlias type="com.kh.pill.order.model.vo.Order" alias="order" />
 		<typeAlias type="com.kh.pill.order.model.vo.OrderCart" alias="orderCart" />

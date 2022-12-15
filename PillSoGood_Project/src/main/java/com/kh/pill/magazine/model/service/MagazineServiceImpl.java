@@ -1,6 +1,7 @@
 package com.kh.pill.magazine.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.magazine.model.dao.MagazineDao;
 import com.kh.pill.magazine.model.vo.Magazine;
-import com.kh.pill.magazine.model.vo.MagazineLike;
+import com.kh.pill.magazine.model.vo.MagazinePage;
 
 @Service
 public class MagazineServiceImpl implements MagazineService {
@@ -55,6 +56,27 @@ public class MagazineServiceImpl implements MagazineService {
 		
 		return magazineDao.updateMagazine(sqlSession, mag);
 	}
+
+	@Override
+	public int updateViewCount(int magazineNo) {
+		
+		return magazineDao.updateViewCount(sqlSession, magazineNo);
+	}
+
+	@Override
+	public MagazinePage magazinePage(int magazineNo) {
+		
+		return magazineDao.magazinePage(sqlSession, magazineNo);
+	}
+
+	@Override
+	public List<Magazine> getMagazine(int categoryNo) {
+		
+		List<Magazine> list = magazineDao.magazineCategoryResult(sqlSession, categoryNo);
+		
+		return list;
+	}
+
 
 	
 

@@ -5,13 +5,21 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,11 +28,12 @@ import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
 import com.kh.pill.magazine.model.service.MagazineService;
 import com.kh.pill.magazine.model.vo.Magazine;
+import com.kh.pill.magazine.model.vo.MagazinePage;
+import com.kh.pill.notice.model.vo.NoticeDetail;
 
 @Controller
 public class MagazineController {
 
-	
 	@Autowired
 	private MagazineService magazineService;
 	
@@ -33,7 +42,7 @@ public class MagazineController {
 		
 		int listCount = magazineService.selectListCount();
 		
-		int pageLimit = 10; 
+		int pageLimit = 5; 
 		int boardLimit = 6; 
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
@@ -102,29 +111,39 @@ public class MagazineController {
 
 		return ChangeName;
 	}
-	
+
 	
 	@RequestMapping("detail.mag")
-	public ModelAndView selectMagazine(int magazineNo, ModelAndView mv) {
+	public String selectMagazine(int magazineNo, Model model) {
+
 		
-		Magazine mag = magazineService.selectMagazine(magazineNo);
+		int result = magazineService.updateViewCount(magazineNo);
 		
-		if(mag == null) {
+		if(result > 0) {
 			
-			mv.addObject("errorMsg", "게시글 상세 조회에 실패했습니다.").setViewName("common/errorPage");
+			Magazine m = magazineService.selectMagazine(magazineNo);
+			
+			Magazine prev = magazineService.selectMagazine(magazineNo - 1);
+			Magazine next = magazineService.selectMagazine(magazineNo + 1);
+			
+			// 이전글, 다음글 로직 수정
+			model.addAttribute("prev", prev);
+			model.addAttribute("next", next);
+			
+			model.addAttribute("mag" , m);
+	
+			
+			return "magazine/magazineDetailView";
 			
 		} else {
 			
-			mv.addObject("mag", mag).setViewName("magazine/magazineDetailView");
-	
+			return null;
 		}
-		
-		return mv;
-		
 	}
-
+	
 	@RequestMapping("delete.mag")
 	public String deleteMagazine(int magazineNo, String magazineImgName, HttpSession session, Model model) {
+		
 		
 		int result = magazineService.deleteMagazine(magazineNo);
 		
@@ -150,7 +169,7 @@ public class MagazineController {
 	
 	@RequestMapping("updateForm.mag")
 	public String updateForm(int magazineNo, Model model) {
-			
+		
 		Magazine mag = magazineService.selectMagazine(magazineNo);
 		
 		model.addAttribute("mag", mag);
@@ -208,8 +227,15 @@ public class MagazineController {
 	}
 	
 
-	
-	
-	
-	
+	 @RequestMapping("/magazine/detail/{categoryNo}")
+	 public String list(@PathVariable("categoryNo") int categoryNo, Model model) {
+
+		List<Magazine> magazine = magazineService.getMagazine(categoryNo);
+
+		model.addAttribute("magazine", magazine);
+
+        model.addAttribute("categoryNo", categoryNo);
+
+        return "magazine/magazineDetailView";
+    }
 }
