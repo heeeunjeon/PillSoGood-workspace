@@ -2,8 +2,6 @@ package com.kh.pill.review.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
+import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.review.model.service.ReviewService;
 import com.kh.pill.review.model.vo.Review;
 import com.kh.pill.review.model.vo.ReviewFile;
@@ -37,7 +36,7 @@ public class ReviewController {
 	// 메뉴바 클릭시 => list.re (기본적으로 1번 페이지 요청)
 	// 페이징바 클릭 시 => list.re?cpage=요청하는페이지수&order=~~
 	@RequestMapping("list.re")
-	public String selectList(@RequestParam(value="cpage", defaultValue="1")int currentPage, @RequestParam(value="order", defaultValue="default")String order, Model model) {
+	public String selectList(@RequestParam(value="cpage", defaultValue="1")int currentPage, @RequestParam(value="order", defaultValue="default")String order, Model model, String rOrderProductNames) {
 		
 		// 베스트 리뷰 조회
 		ArrayList<Review> bestListAll = reviewService.selectBestList(); // 일반 리뷰 전체를 베스트 기준으로 조회 후 ArrayList bestListAll 에 담음
@@ -100,47 +99,108 @@ public class ReviewController {
 		// 리턴
 		return "review/reviewListView";
 	}
-	/*
+	
+	// productName 이 담기기는 하는데, 컬럼이 없어서 조회 때 보여줄 길이 없음. 인증 조건 정도로 해야하거나, 선생님한테 여쭤보기
 	@RequestMapping("enrollForm.re")
-	public String enrollForm(int memberNo) {
+	public String enrollForm(int memberNo, Model model) {
 		
-		// memberNo -> <ReviewOrder> rOrder -> ArrayList<ReviewOrder> rOrderList
-		// <ReviewOrder> : (int rOrder, String rOrderProductNames, String rOrderSubsStatus)
+		// memberNo 회원의 GROUP 화 된 ORDER_NO(int OrderNo) 들을 배열로 받아옴 
+		ArrayList<Review> rOrderList = reviewService.selectROrderList(memberNo);
+		// System.out.println("rOrderLIst : " + rOrderList);
 		
-		// ReviewOrder rOrder = reviewService.selectROrderList(memberNo);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		for( int i = 0; i < rOrderList.size(); i++ ) {
+			
+			// rOrderList 의 <Review> 타입 reviewOrder 들 추출
+			Review reviewOrder = rOrderList.get(i);
+			// 그 안에 있는 OrderNo 추출해서 rOrderNo 로 지정
+			int orderNo = reviewOrder.getOrderNo();
+			
+			// System.out.println("orderNo : " + orderNo);
+			
+			// rOrderNo에 해당하는 productName 들 추출해서 배열로 담음
+			ArrayList<Review> rOrderProductNameList = reviewService.selectROrderProductNameList(orderNo);
+			
+			// 배열 -> 문자열 가공
+			String rOrderProductNames = "";
+			
+			if ( rOrderProductNameList.size() == 1 ) { // 상품 한 개
+				
+				rOrderProductNames += rOrderProductNameList.get(0).getProductName();
+			}
+			else if ( rOrderProductNameList.size() > 1 ){ // 상품 두 개 이상
+				
+				rOrderProductNames += rOrderProductNameList.get(0).getProductName();
+				for( int j = 1; j < rOrderProductNameList.size(); j++) {
+					
+					rOrderProductNames += ", ";
+					rOrderProductNames += rOrderProductNameList.get(j).getProductName();
+				
+				}
+			}
+			
+			// System.out.println("rOrderProductNames : " + rOrderProductNames);
+			
+			// reviewOrder 안에 문자열 담음
+			reviewOrder.setProductName(rOrderProductNames);
+			reviewOrder.setMemberNo(memberNo);
+			// System.out.println("reviewOrder : " + reviewOrder);
+			
+		}
+		// System.out.println("rOrderList : " + rOrderList);
+		model.addAttribute("rOrderList", rOrderList);
 		return "review/reviewEnrollForm";
-		
 	}
-	*/
+	
+	// productName 이 담기기는 하는데, 컬럼이 없어서 조회 때 보여줄 길이 없음. 인증 조건 정도로 해야하거나, 선생님한테 여쭤보기
 	@RequestMapping("insert.re")
-	public ModelAndView insertReview(Review r, List<MultipartFile> upfile, HttpSession session, ModelAndView mv) {
+	public ModelAndView insertReview(int orderNo, Review r, List<MultipartFile> upfile, HttpSession session, ModelAndView mv) {
 		
+		// System.out.println(r);
+		// System.out.println(upfile);
+		// System.out.println(orderNo);
+		
+		// rOrderNo에 해당하는 productName 들 추출해서 배열로 담음
+		ArrayList<Review> rOrderProductNameList = reviewService.selectROrderProductNameList(orderNo);
+		
+		// 배열 -> 문자열 가공
+		String rOrderProductNames = "";
+		
+		if( rOrderProductNameList.size() == 1 ) { // 상품 한 개
+			
+			rOrderProductNames += rOrderProductNameList.get(0).getProductName();
+		}
+		else if ( rOrderProductNameList.size() > 1 ){ // 상품 두 개 이상
+			
+			rOrderProductNames += rOrderProductNameList.get(0).getProductName();
+			for( int j = 1; j < rOrderProductNameList.size(); j++) {
+				
+				rOrderProductNames += ", ";
+				rOrderProductNames += rOrderProductNameList.get(j).getProductName();
+			}
+		}
+		System.out.println("rOrderProductNames : " + rOrderProductNames);
+		
+
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		r.setMemberNo(memberNo);
+
 		System.out.println(r);
-		System.out.println(upfile);
 		
 		// 먼저 파일 여부와 무관하게 rawReview 를 insert
 		int rawResult = reviewService.insertRawReview(r);
-		
-		System.out.println(rawResult);
+		r.setProductName(rOrderProductNames);
+
+		// System.out.println(rawResult);
 		
 		if(rawResult > 0) { // 만들어졌으면 진행
 			
-			int memberNo = r.getMemberNo();
 			// r에 들어있는 memberNo로 만들어진 review 중에서 rawReview 를 select 해서 reviewNo, 
 			Review rawReview = reviewService.selectRawReview(memberNo);
+			rawReview.setProductName(rOrderProductNames);
+			// System.out.println("rawReview : " + rawReview); 
+			// productName 이 담기기는 하는데, 컬럼이 없어서 조회 때 보여줄 길이 없음. 인증 조건 정도로 해야하거나, 선생님한테 여쭤보기
+
 			int rawReviewNo = rawReview.getReviewNo();
-			
 			// upfile 에 비었든 안 비었든 MultipartFIle 객체는 하나 이상 만들어짐(사용자가 파일첨부를 시도하고 취소하더라도 빈 MultipartFIle 객체가 만들어지기 때문)
 			
 			// 1. 0번 인덱스(썸네일 사진) 첨부파일 있는지 검사
@@ -212,16 +272,17 @@ public class ReviewController {
 				// REVIEW_FILE 테이블에 insert 끝났으면 rawReviewNo 인 ReviewFile 들 select
 				ArrayList<ReviewFile> flist = reviewService.selectNewReviewFile(rawReviewNo); 
 				
-				rawReview.setFlist(flist); // flist 를 Review 객체에 담음
-				
+				rawReview.setFlist(flist);
+				// flist 를 Review 객체에 담음
 				session.setAttribute("alertMsg", "리뷰가 성공적으로 등록되었습니다.");
-				mv.setViewName("redirect:/list.re");
 			}
+			// System.out.println("rawReview : " + rawReview);
 		}
 		else {
 			// 실패했으면 그냥 alert 하고 list.re 로 리다이렉트
-			mv.addObject("alertMsg", "리뷰 등록에 실패했습니다.");
-		} 
+			session.setAttribute("alertMsg", "리뷰 등록에 실패했습니다.");
+		}
+		mv.setViewName("redirect:/list.re");
 		return mv;
 	}
 	

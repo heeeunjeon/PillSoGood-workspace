@@ -98,6 +98,12 @@ public class ReviewDao {
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectNewReviewFile", rawReviewNo);
 	}
 	
+	public ArrayList<Review> selectROrderList(SqlSessionTemplate sqlSession, int memberNo) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectROrderList", memberNo);
+	}
+	public ArrayList<Review> selectROrderProductNameList(SqlSessionTemplate sqlSession, int orderNo) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectROrderProductNameList", orderNo);
+	}
 	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
 		// TODO Auto-generated method stub
 		return 0;

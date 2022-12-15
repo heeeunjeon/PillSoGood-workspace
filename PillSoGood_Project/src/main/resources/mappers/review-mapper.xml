@@ -51,6 +51,17 @@
 		<result column="REPLY_NO" property="replyNo" />
 		<result column="ORDER_NO" property="orderNo" />												
 		<result column="MEMBER_NO" property="memberNo" />												
+		<result column="CART_NO" property="cartNo" />												
+		<result column="CART_STATUS" property="cartStatus" />												
+		<result column="PRODUCT_NAME" property="productName" />												
+		<result column="PRODUCT_NO" property="productNo" />												
+	</resultMap>
+	
+	<resultMap id="reviewROrderProductNameResultSet" type="review">
+		<result column="PRODUCT_NAME" property="productName" />
+		<result column="PRODUCT_NO" property="productNo" />
+		<result column="CART_NO" property="cartNo" />
+		<result column="ORDER_NO" property="orderNo" />
 	</resultMap>
 	
 	<select id="selectBestList" resultMap="reviewListViewResultSet">
@@ -174,6 +185,26 @@
 		WHERE FILE_STATUS = 'Y'
 		  AND REVIEW_NO = #{rawReviewNo}
 	</select>
+	
+	<select id="selectROrderList" resultMap="reviewListViewResultSet" parameterType="_int">
+		SELECT ORDER_NO
+  		FROM ORDER_CART
+ 		WHERE CART_NO IN (SELECT CART_NO
+                     	  FROM CART
+                    	  WHERE MEMBER_NO = #{memberNo}
+                      	  AND CART_STATUS = 'N')
+ 		GROUP BY ORDER_NO
+	</select>
+
+	<select id="selectROrderProductNameList" resultMap="reviewListViewResultSet" parameterType="_int">
+		SELECT PRODUCT_NAME
+  		FROM PRODUCT
+ 		WHERE PRODUCT_NO IN(SELECT PRODUCT_NO
+                       		FROM CART
+                      		WHERE CART_NO IN(SELECT CART_NO
+                                         	 FROM ORDER_CART
+                                        	 WHERE ORDER_NO = #{orderNo}))
+	</select> 
 	 
 	<insert id="insertReview" parameterType="review">
 		

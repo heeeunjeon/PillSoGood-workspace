@@ -19,7 +19,7 @@ public class Review {
 	private String reviewContent; // REVIEW_CONTENT	VARCHAR2(3000 BYTE)
 	private Date reviewDate; // REVIEW_DATE	DATE
 	private int reviewCount; // REVIEW_COUNT	NUMBER
-	private int reviewGrade; // REVIEW_GRADE	NUMBER
+	private String reviewGrade; // REVIEW_GRADE	NUMBER
 	private String reviewStatus; // REVIEW_STATUS	CHAR(1 BYTE)
 	
 	// 일반 리뷰 조회용 VO
@@ -31,5 +31,10 @@ public class Review {
 	private ArrayList<ReviewFile> flist; // REVIEW_FILE 테이블에서 List 뽑아와서 List<Review>에 담을 변수
 	private int orderNo;
 	private String filePath; // FILE_PATH	VARCHAR2(1000 BYTE)
-
+	private String productName;
+	private ArrayList<Review> rOrderList; // 리뷰 작성 시 결제 건들이 들어있는 리스트
+	private int productNo;
+	private int cartNo;
+	private ArrayList<String> rOrderProductNameList;
+	private String rOrderProductNames;
 }

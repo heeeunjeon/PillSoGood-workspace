@@ -191,13 +191,13 @@
 	                               <tr>
 	                               		<c:choose>
 	                               			<c:when test="${ list[i].subsStatus eq 'N'}">
-	                               				<td>list[i].ORDERS테이블에서 주문건에 있는 제품들 String 하나로 길게 변수해서 가져오기&ensp;
-	                               				${ list[i].memberName }&ensp;
+	                               				<td>${ list[i].productName }</td>
+	                               				<td>${ list[i].memberName }&ensp;
 	                               				<span style="color: #78C2AD;">일시결제</span>&ensp;</td>
 	                               			</c:when>
 	                               			<c:when test="${ list[i].subsStatus eq 'Y'}">
-	                               				<td>list[i].ORDERS테이블에서 주문건에 있는 제품들 String 하나로 길게 변수해서 가져오기&ensp;
-	                               				${ list[i].memberName }&ensp;
+	                               				<td>${ list[i].productName }</td>
+	                               				<td>${ list[i].memberName }&ensp;
 	                               				<span style="color: #78C2AD;">정기결제</span>&ensp;</td>
 	                               			</c:when>
 	                               		</c:choose>
@@ -219,14 +219,17 @@
 	                           </tbody>
 	                           </table>
 						</c:forEach>
-						<div align="right">
-	           				<c:choose>
-				            	<c:when test="${ not empty loginUser }">
-					            	<a href="enrollForm.re"><button class="btn btn-primary">작성하기</button></a>
-					            </c:when>
-					            <c:otherwise></c:otherwise>
-			            	</c:choose>
-						</div>
+						<form method="post" action="enrollForm.re" >
+							<div align="right">
+		           				<c:choose>
+					            	<c:when test="${ not empty loginUser }">
+					            		<input type="hidden" name="memberNo" class="form-control" value="${ loginUser.memberNo }"> 
+						            	<button type="submit" class="btn btn-primary">작성하기</button>
+						            </c:when>
+						            <c:otherwise></c:otherwise>
+				            	</c:choose>
+							</div>
+						</form>
 						<br>
 	                    <!-- 페이지 -->
                         <div id="noticePagination">

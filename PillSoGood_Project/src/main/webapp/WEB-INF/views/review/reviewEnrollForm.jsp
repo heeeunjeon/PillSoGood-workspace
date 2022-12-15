@@ -159,55 +159,23 @@
                             <div>
                                 <div>
                                     <%-- 
-                                    	레퍼런스 : <span style="font-size: 16px;"><b>나중구현) orders 한 건의 주문 목록 String 컬럼</b></span>
-                                    	
-                                    	구현 목표 : reviewListView 에서 작성하기 버튼 누를때 이동하면서 
-                                    	memberNo 의 rOrder(rOrderNo, rOrderProductNames, rOrderSubsStatus)들 
-                                    	ArrayList<ROrder> rOrderList 에 담아서 가져옴
-                                    --%> 
-                                    <select class="form-select">
-                                    	<c:forEach var="rOrder" items="${rOrderList}">
-                                      		<option value="주문번호 : ${rOrder.rOrderNo}(${rOrder.rOrderProductNames})"></option>
+                                    	결제 건 선택하는 select
+                                    	select 되면 orderNo 전달
+                                    --%>
+                                    <select id="orderNoChange" class="form-select" name="orderNo">
+                                    	<option value="null">후기를 작성할 상품 목록을 선택해주세요.</option>
+                                    	<c:forEach var="Review" items="${rOrderList}">
+                                      		<option value="${Review.orderNo}">${Review.productName}</option>
 										</c:forEach>
                                     </select>
-                                    
-                                    <span id="rOrderSubsStatus" style="font-size: 14px;">정기구독/일시결제 나오는 곳</span>
-                                    
-                                    <%-- 
                                     <script>
-                      					  // 선택한 결제 건의 결제형태 나오는 ajax
-									      $(function() {
-									  		
-									  		selectSubsStatus();
-									  		});
-									      
-									      function selectSubsStatus() {
-									  		
-									  		$.ajax({
-									  			url : "rOrderSubsStatus.re",
-									  			data : {rOrderNo:${ rOrderList.orderNo }},
-									  			success : function(result) { 
-									  				
-									  				var resultStr = "";
-
-									  							  		if(result.subsStatus == "Y") {
-									  							  			
-									  							  			resultStr += "정기구독";
-									  							  		}
-									  							  		else (result.subsStatus == "N") {
-									  							  			
-									  							  			resultStr += "일시결제";
-									  							  		}
-									  				
-									  				$("#rSubsStatus").html(resultStr);
-									  			},
-									  			error : function() {
-									  				console.log("결제 형태  조회용 ajax 통신 실패!");
-									  			}
-									  		});
-									  	}
-									</script>
-									--%>
+                                    	$(document).ready(function() {
+                                    		$("#orderNoChange").change(function() {
+                                    			console.log($(this).val());
+                                    			$("#orderNoValue").val($(this).val());
+                                    		});
+                                    	});
+                                    </script>
                                 </div>
                             </div>
 
@@ -284,7 +252,7 @@
 									<button type="button" onclick="addFile()" class="btn btn-primary">
 										<i class="fa fa-plus" aria-hidden="true"></i>
 									</button>
-									<button type="button" onclick="removeFile(this)" class="btn btn-primary">
+									<button type="button" onclick="removeFile(this)" class="btn btn-secondary">
 										<i class="fa fa-minus" aria-hidden="true"></i>
 									</button>
 								</div>
@@ -292,9 +260,7 @@
                             
                             <div id="btnDiv" align="center">
 		                    	
-		                    	
 		                    	<%--
-		                    		<input type="hidden" name="memberNo" class="form-control" value="${ loginUser.memberNo }"> 
 		                    		지금 결제 완료된 orderNo 를 못 받아와서 일단 value=1로 고정 
 		                    		향후 memberNo 로 가져오게 쿼리 짜놓은 거로 수정
 		                    	--%>
@@ -324,7 +290,7 @@
 			                    				+ "<input type='text' class='upload-name' value='세부 사진을 등록해주세요.' readonly />"
 			                    				+ "<label for='file_"+fileIdx+"' class='control-label'>찾아보기</label>"
 			                    				+ "<input type='file' name='upfile' id='file_"+fileIdx+"' class='upload-hidden' onchange='changeFilename(this);' />"
-			                    				+ "<button type='button' onclick='removeFile(this)' class='btn btn-primary'>"
+			                    				+ "<button type='button' onclick='removeFile(this)' class='btn btn-secondary'>"
 			                    				+ "<i class='fa fa-minus' aria-hidden='true'></i>"
 			                    				+ "</button>"
 			                    			+ "</div>"
