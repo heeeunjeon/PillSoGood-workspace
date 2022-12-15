@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>주문서 작성</title>
 <!-- daum 우편번호검색 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
