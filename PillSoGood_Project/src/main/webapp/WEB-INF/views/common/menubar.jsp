@@ -312,39 +312,40 @@
     }
     
     function selectAlarmList() {
-    	console.log("?");
-    	$.ajax({
-    		url : "selectList.alarm",
-    		async : false,
-    		data : {
-    			memberNo : ${loginUser.memberNo}
-    		},
-    		success : function(result) {
-    			
-    			var resultStr= "";
-    			
-    			for(var i=0; i<result.length; i++ ) {
-    				if(result[i].alarmRead == 1) {
-	    				
-    					resultStr += "<tr>"
-	    						 	  +"<td onclick='alarmReadUpdate("+ result[i].alarmNo +");'><a href='"+result[i].alarmUrl+"'><strong>" + result[i].alarmContent + "</strong></a></td>"    				
-	    						   + "<tr>";
-    				} else {
-    					
-    					resultStr += "<tr>"
-						 	  +"<td onclick='alarmReadUpdate("+ result[i].alarmNo +");'><a href='"+result[i].alarmUrl+"'>" + result[i].alarmContent + "</a></td>"    				
-						   + "<tr>";
-    					
-    				}
-    			}
-    			
-    			$("#alarmTable>tbody").html(resultStr);
-    			$("#alarmCount").text(result.length);
-    		},
-    		error : function() {
-    			console.log("selectList.alarm ajax failure");
-    		}
-    	});
+    	if("${ loginUser }" != "") {
+	    	$.ajax({
+	    		url : "selectList.alarm",
+	    		async : false,
+	    		data : {
+	    			memberNo : "${loginUser.memberNo}"
+	    		},
+	    		success : function(result) {
+	    			
+	    			var resultStr= "";
+	    			
+	    			for(var i=0; i<result.length; i++ ) {
+	    				if(result[i].alarmRead == 1) {
+		    				
+	    					resultStr += "<tr>"
+		    						 	  +"<td onclick='alarmReadUpdate("+ result[i].alarmNo +");'><a href='"+result[i].alarmUrl+"'><strong>" + result[i].alarmContent + "</strong></a></td>"    				
+		    						   + "<tr>";
+	    				} else {
+	    					
+	    					resultStr += "<tr>"
+									 	  +"<td onclick='alarmReadUpdate("+ result[i].alarmNo +");'><a href='"+result[i].alarmUrl+"'>" + result[i].alarmContent + "</a></td>"    				
+									   + "<tr>";
+	    					
+	    				}
+	    			}
+	    			
+	    			$("#alarmTable>tbody").html(resultStr);
+	    			$("#alarmCount").text(result.length);
+	    		},
+	    		error : function() {
+	    			console.log("selectList.alarm ajax failure");
+	    		}
+	    	});
+    	}
     	
     }
     
