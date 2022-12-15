@@ -152,52 +152,68 @@
                         <table id="member_info">
                             <tr>
                                 <th width="25%">회원번호</th>
-                                <td width="75%">123123</td>
+                                <td width="75%">${ m.memberNo }</td>
                             </tr>
 
                             <tr>
                                 <th>아이디</th>
-                                <td>user01</td>
+                                <td>${ m.memberId }</td>
                             </tr>
                             <tr>
                                 <th>이름</th>
-                                <td>홍길동</td>
+                                <td>${ m.memberName }</td>
                             </tr>
                             <tr>
                                 <th>휴대폰번호</th>
-                                <td>01012345678</td>
+                                <td>${ m.phone }</td>
                             </tr>
                             <tr>
                                 <th>이메일</th>
-                                <td>user01@naver.com</td>
+                                <td>${ m.email }</td>
                             </tr>
                             <tr>
                                 <th>성별</th>
-                                <td>남자</td>
+                                <td>${ m.gender }</td>
                             </tr>
                             <tr>
                                 <th>주소</th>
-                                <td>(51324) 서울 영등포구 선유로23길 405호</td>
+                                <td>${ m.addressZip }</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>${ m.address1 }</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>${ m.address2 }</td>
                             </tr>
                             <tr>
                                 <th>출생연도</th>
-                                <td>1985 년</td>
+                                <td>${ m.memberBirthYear }</td>
                             </tr>
                             <tr>
                                 <th>키</th>
-                                <td>180 cm</td>
+                                <td>${ m.height } cm</td>
                             </tr>
                             <tr>
                                 <th>몸무게</th>
-                                <td>75 kg</td>
+                                <td>${ m.weight } kg</td>
                             </tr>
                             <tr>
                                 <th>가입일</th>
-                                <td>2021-12-15</td>
+                                <td>${ m.memberEnrollDate }</td>
                             </tr>
                             <tr>
                                 <th>상태</th>
-                                <td>가입</td>
+                                <c:choose>
+                                	<c:when test="${ m.memberStatus.equals('Y') }">
+                                		<td>가입</td>
+                                	</c:when>
+                                	<c:otherwise>
+                                		<td>탈퇴</td>
+                                	</c:otherwise>
+                                
+                                </c:choose>
                             </tr>
 
                         </table>

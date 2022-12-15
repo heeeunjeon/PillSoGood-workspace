@@ -55,7 +55,7 @@ public class adminMypageController {
 	public String selectDetailMemberAdMypage(int mno, Model model) {
 		
 		Member m = adMypageService.selectMember(mno);
-		
+
 		if( m == null) {
 			
 			model.addAttribute("errorMsg", "게시글 상세조회 실패");
