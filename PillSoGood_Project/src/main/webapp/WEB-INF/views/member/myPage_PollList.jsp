@@ -80,8 +80,8 @@
 
     /* ----- 설문조회 style ----- */
     #go_survey {
-        background-color: #78C2AD;
-        color: white;
+        background-color: #78c2ad36;
+        color: black;
         height: 60px;
         line-height: 56px;
         border-radius: 10px;
