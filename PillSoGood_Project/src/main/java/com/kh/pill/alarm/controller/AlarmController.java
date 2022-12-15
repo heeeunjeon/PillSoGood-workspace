@@ -63,7 +63,7 @@ public class AlarmController {
 		
 		int result = alarmService.alarmReadUpdate(alarmNo);
 		
-		System.out.println(result);
+		
 		
 	}
 	

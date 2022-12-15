@@ -277,7 +277,7 @@
 				        </div>
 		            <a class="text-decoration-none" href="list.cart" style="color:rgb(92, 93, 96)">장바구니 |</a>    
 		            <a class="text-decoration-none" href="logout.me" style="color:rgb(92, 93, 96)">로그아웃 |</a> 
-		            <a class="text-decoration-none" href="myPage.or" style="color:rgb(92, 93, 96)">마이페이지</a>      	
+		            <a class="text-decoration-none" style="color:rgb(92, 93, 96); cursor:pointer;" onclick="myPageControl();">마이페이지</a>      	
             	</c:otherwise>
             </c:choose>
 
@@ -288,6 +288,19 @@
   </div>
   
   <script>
+  
+  	function myPageControl() {
+	   	
+	   if("${loginUser.memberId}" == "admin") {
+	   	 
+			 location.href="adminMypage.me";
+	     
+	   } else {
+	   	 
+	  	location.href="myPage.or";
+	   	 
+	   }
+	}
   
   	$(function() {
   		selectAlarmList();	
