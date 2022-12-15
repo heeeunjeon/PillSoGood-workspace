@@ -57,5 +57,15 @@ public class AlarmController {
 		alarmService.insertQuestionAlarm(a);
 	}
 	
+	
+	@RequestMapping("alarmReadUpdate.alarm")
+	public void alarmReadUpdate(int alarmNo) {
+		
+		int result = alarmService.alarmReadUpdate(alarmNo);
+		
+		System.out.println(result);
+		
+	}
+	
 
 }

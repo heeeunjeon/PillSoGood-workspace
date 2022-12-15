@@ -42,4 +42,10 @@ public class AlarmServiceImpl implements AlarmService {
 		return alarmDao.selectAlarmList(sqlSession, memberNo);
 	}
 
+	@Override
+	public int alarmReadUpdate(int alarmNo) {
+		
+		return alarmDao.alarmReadUpdate(sqlSession, alarmNo);
+	}
+
 }

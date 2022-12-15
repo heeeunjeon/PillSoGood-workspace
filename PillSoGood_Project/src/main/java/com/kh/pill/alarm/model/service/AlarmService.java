@@ -13,5 +13,7 @@ public interface AlarmService {
 	int insertQuestionAlarm(Alarm a);
 	
 	ArrayList<Alarm> selectAlarmList(int memberNo);
+	
+	int alarmReadUpdate(int alarmNo);
 
 }

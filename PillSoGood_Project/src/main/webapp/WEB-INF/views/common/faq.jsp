@@ -5,114 +5,146 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>FAQ</title>
-<style>
+ <style>
 
-	/* [샛별] 파일 받으면 이 부분 지우기 */
-	div {
-		/* border : 1px solid rgb(120, 194, 173); */
-		box-sizing : border-box;
-	}
+        /* [샛별] 파일 받으면 이 부분 지우기 */
+        div {
+            
+            box-sizing : border-box;
+        }
 
-	/* 전체를 감싸는 wrap */
-	.wrap {
-		/* height: 1580px; */
-		height: auto;
-		width: 98%;
-		margin : auto; /* 가운데로 좌, 우 자동 정렬*/
-	}
+        /* 전체를 감싸는 wrap */
+        .wrap {
+			height: 1580px;
+            width: 98%;
+            margin : auto; /* 가운데로 좌, 우 자동 정렬*/
+        }
 
-	.wrap>div { height: 100%; display: flex; }
+        .wrap>div { width : 100%; }
 
-	#navigator2 { height: 150px; }
+        #navigator2 { height: 150px; }
 
-	#content_2>div { width: 100%; display: block; }
-	#content_2_1 { height: 100px; }
-	#content_2_2 { height: auto; display: flex; }
+		#content_2>div { 
+			width: 100%;
+			display: block;
+		}
+        #content_2_1 { height: 75px; }
+        #content_2_2 { 
+			height: auto;
+			display: flex;
+		}
 
-	/* 제목 본문 영역 */
-	#contentTable { height: 100%; }
+		/* 제목 본문 영역 */
+		#content_2_2>div {
+			width: 100%;
+		}
+		#contentTitle {
+			height: 180px;
+		}
+		#contentTable {
+			height: 85%;
+		}
 
-	#header { height: 230px; }
+        #header { 
+            height: 230px;
+        }
 
-	#header>div { height: 100%; float: left; }
+        #header>div { height: 100%; float: left; }
 
-	#header_1 { width: 70%; }
+        #header_1 { width: 70%; }
 
-	#header_1>p {
-		box-sizing: border-box;
-		font-size: 45px;
-		font-weight: bold;
-		margin-top: 130px;
-		margin-left: 150px;
-		color: white;
-	}
+        #header_1>p {
+            box-sizing: border-box;
+            font-size: 45px;
+            font-weight: bold;
+            margin-top: 130px;
+            margin-left: 150px;
+            color: white;
+        }
 
-	#header_2 { width: 30%; }
+        #header_2 { width: 30%; }
 
-	#header_2>img {
-		height: 60%;
-		margin-left: 150px;
-		margin-top: 70px;
-	}
+        #header_2>img {
+            height: 60%;
+            margin-left: 150px;
+            margin-top: 70px;
+        }
 
-	/* content 영역 */
-	#content>div { height : 100%; float : left; }
-	#content_1 { width : 25%; }
-	#content_2 { width : 50%; }
-	#content_3 { width : 25%; }
+        /* content 영역 */
+        #content>div { height : 100%; float : left; }
+        #content_1 { width : 25%; height:100vh!important;}
+        #content_2 { width : 50%; }
+        #content_3 { width : 25%; height:100vh!important;}
 
-	/* 영섭 작업 영역 시작 */
+		/* 영섭 작업 영역 시작 */
 
-	table { width: 100%; }
+		table {
+			width: 100%;
+			height: 100%;	  
+		}
 
-	.upperHr { border-bottom: 1px solid lightgrey; }
+		tbody {
+			width: 100%;
+			height: 100%;     
+		}
 
-	.upperHr:hover {
-		cursor: pointer;
-		background-color: rgb(240, 240, 240);
-	}
+		.upperHr, #contentTitle {
+			border-top: 2px solid lightgrey;
+		}
 
-	.category { width: 15%; text-align: center; }
+		.upperHr:hover {
+			cursor: pointer;
+			background-color: rgb(240, 240, 240);
+		}
 
-	.question { width: 80%; }
+		.category {
+			width: 15%;
+			text-align: center;
+		}
 
-	.button { width: 5%; }
+		.question {
+			width: 80%;
+		}
 
-	.question>p, i {
-		font-size: 17px;
-		color: black;
-		font-weight: bold;
-		margin: 15px;
-	}
+		.button {
+			width: 5%;
+		}
 
-	.category>button { width: 90px; }
+		.question>p, i {
+			font-size: 20px;
+			color: black;
+			font-weight: bold;
+			margin: 15px;
+		}
 
-	.answer { height: 0px; }
+		.category>button {
+			width: 110px;
+			font-size: 18px;
+		}
 
-	.answer>p {
-		font-size: 13px;
-		color: black;
-		margin: 25px;
-		display : none;
-		box-sizing : border-box;
-		line-height: 35px;
-		padding-left: 70px;
-	}
+		.answer {
+			height: 0px;
+		}
 
-	#content_2_1>p {
-		margin-top: 40px;
-		margin-left: 30px;
-		font-size: 35px;
-		color: black;
-		font-weight: bold;
-	}
+		.answer>p {
+			font-size: 17px;
+			color: black;
+			margin: 25px;
+			display : none;
+			box-sizing : border-box;
+			line-height: 35px;
+			padding-left: 70px;
+		}
 
-	table>tr { height: 50px; }
+		#contentTitle>p {
+			padding-left: 30px;
+			font-size: 80px;
+			color: black;
+		}
 
-	.button>i { color: #78C2AD;}
-
-	/* 영섭 작업 영역 끝 */
+		/* 영섭 작업 영역 끝 */
 </style>
 </head>
 <body>

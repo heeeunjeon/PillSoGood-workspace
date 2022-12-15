@@ -94,7 +94,7 @@
 	    background-color: white;
      }
      #alarmArea {
-         width : 400px;
+         width : 450px;
          height : 500px;
          overflow-y: auto;
          position: absolute;
@@ -149,20 +149,29 @@
 		<c:remove var="alertMsg" scope="session" />
 	</c:if>
 	
+	<c:if test="${ loginUser ne null }">
+		<script>
+			$(document).ready(function(){
+			    // 웹소켓 연결
+			    sock = new SockJS("<c:url value="/echo-ws"/>");
+			    socket = sock;
+				//console.log(socket);
+			    // 데이터를 전달 받았을때 
+			    //console.log(sock.onmessage);
+			    sock.onmessage = onMessage; // toast 생성
+		    
+			});	
+
+	    </script>
+	</c:if>	
+
+	
   <script>
 		var toastCount = 0;
 		// 전역변수 설정
 		var socket  = null;
-		$(document).ready(function(){
-		    // 웹소켓 연결
-		    sock = new SockJS("<c:url value="/echo-ws"/>");
-		    socket = sock;
-			//console.log(socket);
-		    // 데이터를 전달 받았을때 
-		    //console.log(sock.onmessage);
-		    sock.onmessage = onMessage; // toast 생성
-	    
-		});
+		
+
 		
 	    function onMessage(evt){
 	    	selectAlarmList();
@@ -199,7 +208,7 @@
       <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav me-auto" id="menubarUl">
           <li class="nav-item" id="menubarLi">
-            <a class="nav-link" href="#">소개</a>
+            <a class="nav-link" href="aboutUs.pill">소개</a>
           </li>
           <li class="nav-item dropdown" id="menubarLi"> 
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">제품</a>
@@ -227,7 +236,7 @@
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="list.no">공지사항</a>
-              <a class="dropdown-item" href="faq">FAQ</a>
+              <a class="dropdown-item" href="faq.pill">FAQ</a>
               <c:choose>
               	<c:when test="${ loginUser.memberId eq 'admin' }">
               		<a class="dropdown-item" href="qlist.ad">1:1 문의</a>
@@ -293,6 +302,7 @@
     	console.log("?");
     	$.ajax({
     		url : "selectList.alarm",
+    		async : false,
     		data : {
     			memberNo : ${loginUser.memberNo}
     		},
@@ -301,11 +311,18 @@
     			var resultStr= "";
     			
     			for(var i=0; i<result.length; i++ ) {
-    				
-    				resultStr += "<tr>"
-    						 	  +"<td><a href='"+result[i].alarmUrl+"'>" + result[i].alarmContent + "</a></td>"    				
-    						   + "<tr>";
-    				
+    				if(result[i].alarmRead == 1) {
+	    				
+    					resultStr += "<tr>"
+	    						 	  +"<td onclick='alarmReadUpdate("+ result[i].alarmNo +");'><a href='"+result[i].alarmUrl+"'><strong>" + result[i].alarmContent + "</strong></a></td>"    				
+	    						   + "<tr>";
+    				} else {
+    					
+    					resultStr += "<tr>"
+						 	  +"<td onclick='alarmReadUpdate("+ result[i].alarmNo +");'><a href='"+result[i].alarmUrl+"'>" + result[i].alarmContent + "</a></td>"    				
+						   + "<tr>";
+    					
+    				}
     			}
     			
     			$("#alarmTable>tbody").html(resultStr);
@@ -314,6 +331,25 @@
     		error : function() {
     			console.log("selectList.alarm ajax failure");
     		}
+    	});
+    	
+    }
+    
+    
+    function alarmReadUpdate(alarmNo) {
+    	   	
+    	$.ajax({
+    		
+    		url : "alarmReadUpdate.alarm",
+    		data : { alarmNo : alarmNo },
+    		success : function() {
+    			selectList.alarm();
+    		},
+    		error : function() {
+    			console.log("alarmReadUpdate ajax failure");
+    		}
+    		
+    		
     	});
     	
     }

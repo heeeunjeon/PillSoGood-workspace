@@ -61,15 +61,15 @@ public class EchoHandler extends TextWebSocketHandler {
 					toId = "admin";
 					toIdSession = userSessionsMap.get(toId);
 					if(!fromId.equals(toId)) {
-						TextMessage tmpMsg = new TextMessage(fromId + "님이 "
-								+ "문의를 작성하셨습니다. : " + title );
+						TextMessage tmpMsg = new TextMessage("<br>"+fromId + "님이 "
+								+ "문의를 작성하셨습니다. <br>" + title );
 						toIdSession.sendMessage(tmpMsg);
 					}
 					
 				} else if("answer".equals(cmd)) {
 					
-					TextMessage tmpMsg = new TextMessage("\n"+fromId + "님이 "
-							+ "문의에 대한 답변을 작성 하셨습니다. : \n" + title );
+					TextMessage tmpMsg = new TextMessage("<br>"+fromId + "님이 "
+							+ "문의에 대한 답변을 작성 하셨습니다. <br>" + title );
 					toIdSession.sendMessage(tmpMsg);
 					
 				}

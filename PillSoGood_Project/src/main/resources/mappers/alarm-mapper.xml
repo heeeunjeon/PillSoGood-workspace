@@ -50,5 +50,11 @@
 		 WHERE MEMBER_NO = #{memberNo}
 		   AND ALARM_STATUS = 'Y'
 	</select>
+	
+	<update id="alarmReadUpdate" parameterType="_int">
+		UPDATE ALARM
+		   SET ALARM_READ = 2
+		 WHERE ALARM_NO = #{alramNo}
+	</update>
 
 </mapper>

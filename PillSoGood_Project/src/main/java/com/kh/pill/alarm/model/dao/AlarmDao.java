@@ -31,4 +31,9 @@ public class AlarmDao {
 		return (ArrayList)sqlSession.selectList("alarmMapper.selectAlarmList", memberNo);
 	}
 	
+	public int alarmReadUpdate(SqlSessionTemplate sqlSession, int alarmNo) {
+		
+		return sqlSession.update("alarmMapper.alarmReadUpdate", alarmNo);
+	}
+	
 }

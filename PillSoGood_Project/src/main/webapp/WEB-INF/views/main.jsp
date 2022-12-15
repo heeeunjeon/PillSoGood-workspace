@@ -234,7 +234,7 @@
                         <div style="font-weight : bold;">나에게 맞는 영양제, 간편하게 확인하세요.</div>
                         <br><br>
                         <button class="btn btn-secondary"
-                            style="font-size: 18px; font-weight:bold; width: 200px; height: 50px;">
+                            style="font-size: 18px; font-weight:bold; width: 200px; height: 50px;" onclick="location.href='survey.po'">
                             건강 설문 시작하기
                         </button>
                     </div>
