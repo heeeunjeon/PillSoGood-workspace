@@ -8,11 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.common.template.Pagination;
 import com.kh.pill.member.model.service.MyPageService;
 import com.kh.pill.member.model.vo.Member;
+import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
+import com.kh.pill.product.model.vo.Product;
 
 @Controller
 public class MyPageController {
@@ -27,7 +32,36 @@ public class MyPageController {
 	 * @return
 	 */
 	@RequestMapping("myPage.or")
-	public String myPageOrderList() {
+	public String myPageOrderList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		int listCount = myPageService.selectMyOrderListCount(memberNo);
+		int pageLimit = 5;
+		int boardLimit = 5;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Order> olist = myPageService.selectMyOrderList(pi, memberNo);
+		
+		for(Order o : olist ) {
+			
+			ArrayList<Product> plist = myPageService.selectMyOrderProducts(o.getOrderNo());
+			String str = "";
+			
+			for(int i = 0; i < plist.size() - 1; i++) {
+				str += plist.get(i).getProductName() + "&";
+			}
+			
+			str += plist.get(plist.size() - 1).getProductName();
+			
+			System.out.println(plist.toString());
+			System.out.println(str);
+			o.setProductNames(str);
+		}
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("olist", olist);
 		
 		return "member/myPage_OrderList";
 	}

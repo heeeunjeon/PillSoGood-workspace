@@ -112,7 +112,7 @@ public class APIController {
 			ObjectMapper mapper = new ObjectMapper();
 			String response = mapper.writeValueAsString(p);
 			
-			System.out.println(response);
+			// System.out.println(response);
 			
 			JSONObject customData = (JSONObject)(new JSONParser().parse(p.getCustomData()));
 			
@@ -120,7 +120,7 @@ public class APIController {
 			
 			Order o = new Order(p.getMerchantUid(), p.getMerchantUid().substring(0, 14), 
 					p.getAmount().intValue(), String.valueOf(customData.get("memberNo")), 1, 
-					p.getReceiptUrl(), "N", "(" + p.getBuyerPostcode() + ") " + p.getBuyerAddr());
+					p.getReceiptUrl(), "Y", "N", "(" + p.getBuyerPostcode() + ") " + p.getBuyerAddr());
 			
 			// 구독일 경우
 			// p.getCustomerUid() 로 select 검사

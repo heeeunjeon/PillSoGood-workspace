@@ -261,22 +261,19 @@
                                             <th id="total"></th>
                                         </tr>
                                         <!-- 정기구독 여부 Y 일 경우에만 보이기 -->
-                                        <tr>
-                                            <td>정기 구독 10% 할인</td>
-                                            <th id="discount"></th>
-                                        </tr>
+                                        <c:if test="${ num eq 1 }">
+	                                        <tr>
+	                                            <td>정기 구독 10% 할인</td>
+	                                            <th id="discount"></th>
+	                                        </tr>
+                                        </c:if>
+                                        
                                         <tr>
                                             <td>배송비</td>
                                             <!-- 정기구독 여부 N 이고 5만원 미만일 때만 -->
-                                            <c:choose>
-                                            	<c:when test="">
-                                            		<th>3,000 원</th>
-                                            	</c:when>
-                                            	<c:otherwise>
-                                            		<th>0 원</th>
-                                            	</c:otherwise>
-                                            </c:choose>
+                                       		<th id="deliverPay">0 원</th>
                                         </tr>
+                                        <tr style="height:10px!important;"></tr>
                                     </thead>
                                     <tbody>
                                     	<tr>
@@ -284,11 +281,13 @@
                                     		<th id="finalprice"></th>
                                     	</tr>
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                        	<th colspan="2"><div>다음 결제 예정일&nbsp;&nbsp;&nbsp;2022.12.23</div></th>
-                                        </tr>
-                                    </tfoot>
+                                    <c:if test="${ num eq 1 }">
+	                                    <tfoot>
+	                                        <tr>
+	                                        	<th colspan="2"><div></div></th>
+	                                        </tr>
+	                                    </tfoot>
+                                    </c:if>
                                 </table>
 	                            </div></td></tr>
                         </tbody>
@@ -310,8 +309,27 @@
 				        	$('#discount').text('- ' + discount.toLocaleString('ko-KR') + ' 원');
 				        	$('#finalprice').text((total - discount).toLocaleString('ko-KR') + ' 원');
 				        	
+				        	var date = new Date();
+				        	date.setMonth(date.getMonth() + 1);
+				        	date = moment(date).format('YYYY.MM.DD');
+				        	
+				        	$("#price_info>tfoot div").html('다음 결제 예정일&nbsp;&nbsp;&nbsp;' + date);
 				        }); 
                     </script>
+                    
+                    <c:if test="${ num eq 2 }">
+                    	<script>
+                    		$(function() {
+                    			
+                    			var total = parseInt($('#total').text().substring(0, $('#total').text().indexOf(' 원')).replace(',',''));
+
+								if(total < 50000) {
+									$("#deliverPay").text('+ 3,000 원');
+									$("#finalprice").text((total + 3000).toLocaleString('ko-KR') + ' 원');
+								}
+                    		});
+                    	</script>
+                    </c:if>
                     
                     <div id="bill_btn" align="center">
                     	<c:choose>
@@ -406,22 +424,31 @@
 	    			notice_url: "tcp://0.tcp.jp.ngrok.io:18400/PillSoGood/iamport/webhook"
 	    		}, rsp => { // callback
 	    			
-	    			$.ajax({
-	    				type: "post",
-	    				url: "verifyIamport/" + rsp.imp_uid
-	    			}).done(data => {
+	    			console.log(rsp);
+	    		
+	    			if(rsp.error_code == 'STOP') {
+	    				alert(rsp.error_msg);
+	    				location.href = 'list.cart';
+	    			} else {
 	    				
-	    				if(rsp.paid_amount == data.response.amount) {
-	    					
-	    					location.href = 'paid?ono=' + rsp.merchant_uid; 
-	    				
-	    				} else {
-	    					
-	    					alert("결제에 실패했습니다.");
-		    				location.href = 'list.cart'
-	    				}
-	    			});
-	    			
+	    				$.ajax({
+		    				type: "post",
+		    				url: "verifyIamport/" + rsp.imp_uid
+		    			}).done(data => {
+		    				
+		    				console.log(data);
+		    				
+		    				if(rsp.paid_amount == data.response.amount) {
+		    					
+		    					location.href = 'paid?ono=' + rsp.merchant_uid; 
+		    				
+		    				} else {
+		    					
+		    					alert("결제에 실패했습니다.");
+		    					location.href = 'list.cart';
+		    				}
+		    			});
+	    			}
 	    		});
     		} else {
     			alert("배송지 정보를 입력해주세요.");

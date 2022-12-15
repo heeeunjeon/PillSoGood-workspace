@@ -123,6 +123,13 @@
 		 
 	</insert>
     
-    
+    <select id="selectMyOrderProducts" parameterType="string" resultMap="productResultSet">
+		SELECT PRODUCT_NAME
+		FROM PRODUCT P, ORDER_CART OC, CART C, ORDERS O
+		WHERE P.PRODUCT_NO = C.PRODUCT_NO
+		  AND C.CART_NO = OC.CART_NO
+		  AND OC.ORDER_NO = O.ORDER_NO
+		  AND O.ORDER_NO = #{orderNo}
+	</select>
 
 </mapper>

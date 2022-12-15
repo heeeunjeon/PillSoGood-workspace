@@ -23,8 +23,10 @@ public class Order {
 	private int delivery;
 	private String address;
 	
+	private String productNames;
+	
 	public Order(String orderNo, String orderDate, int orderPrice, String memberNo, int subsCount,
-			String orderReceipt, String subsStatus, String address) {
+			String orderReceipt, String orderStatus, String subsStatus, String address) {
 		super();
 		this.orderNo = orderNo;
 		this.orderDate = orderDate;
@@ -32,6 +34,7 @@ public class Order {
 		this.memberNo = memberNo;
 		this.subsCount = subsCount;
 		this.orderReceipt = orderReceipt;
+		this.orderStatus = orderStatus;
 		this.subsStatus = subsStatus;
 		this.address = address;
 	}

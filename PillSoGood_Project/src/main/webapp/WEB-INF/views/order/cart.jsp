@@ -276,7 +276,7 @@
                 result2 += parseInt(totalP[i].replace(',', ''));
             }
 
-            if(result2 < 50000) {
+            if(result2 > 0 && result2 < 50000) {
                 buyOne = result2 + 3000;
             }
             else {
@@ -309,7 +309,7 @@
             for(var i = 0; i < totalP.length - 1; i++) {
                 total2 += parseInt(totalP[i].replace(',', ''));
             }
-            if(total2 < 50000) {
+            if(total2 > 0 && total2 < 50000) {
                 buyOne = total2 + 3000;
             }
             else {
@@ -356,7 +356,7 @@
             for(var i = 0; i < totalP.length - 1; i++) {
                 total2 += parseInt(totalP[i].replace(',', ''));
             }
-            if(total2 < 50000) {
+            if(total2 > 0 && total2 < 50000) {
                 buyOne = total2 + 3000;
             }
             else {

@@ -107,9 +107,6 @@
 							AND SUBS_COUNT = 1)
 	</select>
 	
-	
-	
-	
 	<insert id="insertCart" parameterType="cart">
 		INSERT INTO CART (CART_NO
 						, MEMBER_NO
@@ -143,5 +140,24 @@
 			   AND MEMBER_NO = #{memberNo}
 			   AND CART_STATUS = 'Y'
 	</delete>
+	
+	<select id="selectMyOrderListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDERS
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectMyOrderList" parameterType="_int" resultMap="orderResultSet">
+		SELECT ORDER_NO
+			 , TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') "ORDER_DATE"
+			 , ORDER_PRICE
+			 , SUBS_COUNT
+			 , ORDER_STATUS
+			 , SUBS_STATUS
+		FROM ORDERS
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	
 	
 </mapper>

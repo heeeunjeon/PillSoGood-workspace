@@ -98,14 +98,14 @@
                         <!-- 제목 부분 -->
                         <div>
                             <p>제목</p>
-                            <input type="text" id="questionTitle" class="form-control" name="questionTitle" placeholder="문의 제목을 입력해주세요 (30자 이내)" required>
+                            <input type="text" id="questionTitle" class="form-control" name="questionTitle" placeholder="문의 제목을 입력해주세요 (30자 이내)" maxlength="30" required>
                         </div>
                         <br>
                         
                         <!-- 내용 부분 -->
                         <div>
                             <p>내용</p>
-                            <textarea name="questionContent" cols="20" rows="15" class="form-control" placeholder="문의 내용을 입력해주세요 (1000자 이내)" style="resize: none;" required></textarea>
+                            <textarea name="questionContent" cols="20" rows="15" class="form-control" placeholder="문의 내용을 입력해주세요 (1000자 이내)" maxlength="1000" style="resize: none;" required></textarea>
                         </div>
                         <br>
                         

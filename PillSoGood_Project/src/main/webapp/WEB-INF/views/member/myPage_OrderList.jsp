@@ -17,7 +17,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: inherit;
+        height: 1750px;
         margin : auto;
     }
 
@@ -25,10 +25,10 @@
 
     #navigator2 { height: 100px; }
 
-    #content { display: flex; height: auto; }
+    #content { height: 1400px; }
     #content_2>div { width: 100%; }
-    #content_2_1, #content_2_3 { height: 115px; }
-    #content_2_2 { height: auto; color: black; }
+    #content_2_1 { height: 115px; }
+    #content_2_2 { color: black; }
 
     #header { height: 130px; }
 
@@ -151,125 +151,107 @@
                         <br>
 
                         <div id="order_list">
-
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm" disabled>결제완료</button>
-                                        &nbsp;2022.11.21
-                                    </td>
-                                    <th style="text-align: right;">&gt;</th>
-                                </tr>
-                                <tr height="40px">
-                                    <th width="80%">일반구매</th>
-                                    <th rowspan="2" style="text-align: right;">91,000</th>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: small;">생기엔 멀티비타민&미네랄 우먼케어</td>
-                                </tr>
-                            </table>
-                            <br><hr>
-
-                            <!-- 주문 갯수만큼 table 반복 -->
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm" disabled>결제완료</button>
-                                        &nbsp;2022.11.21
-                                    </td>
-                                    <th style="text-align: right;">&gt;</th>
-                                </tr>
-                                <tr height="40px">
-                                    <th width="80%">일반구매</th>
-                                    <th rowspan="2" style="text-align: right;">91,000</th>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: small;">생기엔 멀티비타민&미네랄 우먼케어</td>
-                                </tr>
-                            </table>
-                            <br><hr>
-                            
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm" disabled>결제완료</button>
-                                        &nbsp;2022.11.21
-                                    </td>
-                                    <th style="text-align: right;">&gt;</th>
-                                </tr>
-                                <tr height="40px">
-                                    <th width="80%">일반구매</th>
-                                    <th rowspan="2" style="text-align: right;">91,000</th>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: small;">생기엔 멀티비타민&미네랄 우먼케어</td>
-                                </tr>
-                            </table>
-                            <br><hr>
-                            
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm" disabled>결제완료</button>
-                                        &nbsp;2022.11.21
-                                    </td>
-                                    <th style="text-align: right;">&gt;</th>
-                                </tr>
-                                <tr height="40px">
-                                    <th width="80%">일반구매</th>
-                                    <th rowspan="2" style="text-align: right;">91,000</th>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: small;">생기엔 멀티비타민&미네랄 우먼케어</td>
-                                </tr>
-                            </table>
-                            <br><hr>
-                            
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm" disabled>결제완료</button>
-                                        &nbsp;2022.11.21
-                                    </td>
-                                    <th style="text-align: right;">&gt;</th>
-                                </tr>
-                                <tr height="40px">
-                                    <th width="80%">일반구매</th>
-                                    <th rowspan="2" style="text-align: right;">91,000</th>
-                                </tr>
-                                <tr>
-                                    <td style="font-size: small;">생기엔 멀티비타민&미네랄 우먼케어</td>
-                                </tr>
-                            </table>
-                            <br><hr>
+							
+							<c:choose>
+								<c:when test="${ empty olist }">
+									<table>
+										<tr height="100px">
+											<th style="text-align: center;">주문내역이 없습니다.</th>
+										</tr>
+									</table>
+								</c:when>
+								<c:otherwise>
+								
+									<c:forEach var="o" items="${ olist }" varStatus="status">
+			                            <table>
+			                                <tr>
+			                                    <td>
+			                                    	<c:choose>
+			                                    		<c:when test="${ o.orderStatus eq 'Y' }">
+			                                    			<button class="btn btn-primary btn-sm" disabled>결제완료</button>
+			                                    		</c:when>
+			                                    		<c:when test="${ o.orderStatus eq 'C' }">
+			                                    			<button class="btn btn-dark btn-sm" disabled>주문취소</button>
+			                                    		</c:when>
+			                                    		<c:otherwise>
+			                                    			<button class="btn btn-dark btn-sm" disabled>미결제</button>
+			                                    		</c:otherwise>
+			                                    	</c:choose>
+			                                        &nbsp;${ o.orderDate }
+			                                    </td>
+			                                    <th style="text-align: right;">&gt;</th>
+			                                </tr>
+			                                <tr height="40px">
+			                                    <th width="80%">
+			                                    	<c:choose>
+			                                    		<c:when test="${ o.subsStatus eq 'N' }">
+			                                    			일반구매
+			                                    		</c:when>
+			                                    		<c:otherwise>
+			                                    			정기구독 <b style="color: #78C2AD;">${ o.subsCount } 회차</b>
+			                                    		</c:otherwise>
+			                                    	</c:choose>
+			                                    </th>
+			                                    <th rowspan="2" style="text-align: right;">${ o.orderPrice }</th>
+			                                </tr>
+			                                <tr>
+			                                    <td style="font-size: small;">${ o.productNames }</td>
+			                                </tr>
+			                            </table>
+			                            <br><hr>
+		                            </c:forEach>
+		                            
+								</c:otherwise>
+							</c:choose>
                             
                         </div>
-
-                        <div>
-                            <ul class="pagination pagination-sm">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#">&laquo;</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">4</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">5</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">&raquo;</a>
-                                </li>
-                            </ul>
-                        </div>
+						
+						<c:if test="${ not empty olist }">
+	                        <div>
+	                            <ul class="pagination pagination-sm">
+	                            	<c:choose>
+				                		<c:when test="${ pi.currentPage eq 1 }">
+				                			<li class="page-item disabled">
+			                                    <a class="page-link" href="#">&laquo;</a>
+			                                </li>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<li class="page-item">
+			                                    <a class="page-link" href="myPage.or?cpage=${ pi.currentPage - 1 }">&laquo;</a>
+			                                </li>
+				                		</c:otherwise>
+				                	</c:choose>
+				                	
+				                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				                    	<c:choose>
+				               				<c:when test="${ pi.currentPage eq p }">
+				               					<li class="page-item active">
+				                                    <a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a>
+				                                </li>
+											</c:when>
+				               				<c:otherwise>
+				               					<li class="page-item">
+				                                    <a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a>
+				                                </li>
+				               				</c:otherwise>
+				               			</c:choose>
+				                    </c:forEach>
+	                                
+	                                <c:choose>
+				                		<c:when test="${ pi.currentPage eq pi.maxPage }">
+				                			<li class="page-item disabled">
+			                                    <a class="page-link" href="#">&raquo;</a>
+			                                </li>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<li class="page-item">
+			                                    <a class="page-link" href="myPage.or?cpage=${ pi.currentPage + 1 }">&raquo;</a>
+			                                </li>
+				                		</c:otherwise>
+				                	</c:choose>
+	                            </ul>
+	                        </div>
+                        </c:if>
 
                     </div>
 
@@ -285,7 +267,7 @@
                     });
 
                 </script>
-
+				
             </div>
             <div id="content_3"></div>
         </div>

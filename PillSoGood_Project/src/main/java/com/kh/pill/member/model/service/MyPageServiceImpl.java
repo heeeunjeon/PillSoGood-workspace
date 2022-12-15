@@ -6,9 +6,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.member.model.dao.MyPageDao;
+import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
+import com.kh.pill.product.model.vo.Product;
 
 @Service
 public class MyPageServiceImpl implements MyPageService {
@@ -19,6 +22,32 @@ public class MyPageServiceImpl implements MyPageService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	
+	/**
+	 * 전체 주문내역 수
+	 */
+	@Override
+	public int selectMyOrderListCount(int memberNo) {
+		return myPageDao.selectMyOrderListCount(sqlSession, memberNo);
+	}
+	
+	/**
+	 * 주문내역 전체 조회
+	 */
+	@Override
+	public ArrayList<Order> selectMyOrderList(PageInfo pi, int memberNo) {
+		return myPageDao.selectMyOrderList(sqlSession, pi, memberNo);
+	}
+
+	/**
+	 * 주문내역의 제품명 조회
+	 */
+	@Override
+	public ArrayList<Product> selectMyOrderProducts(String orderNo) {
+		return myPageDao.selectMyOrderProducts(sqlSession, orderNo);
+	}
+	
+	
 	
 	
 	/**
@@ -40,5 +69,8 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		return myPageDao.selectPollList(sqlSession, memberNo);
 	}
+
+
+
 
 }
