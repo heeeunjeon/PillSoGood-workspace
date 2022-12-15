@@ -270,15 +270,23 @@
 
             var totalP = $(".totalP").text().split("원");
             var result2 = 0;
+            var buyOne = 0;
 
             for(var i = 0; i < totalP.length - 1; i++) {
                 result2 += parseInt(totalP[i].replace(',', ''));
             }
 
+            if(result2 < 50000) {
+                buyOne = result2 + 3000;
+            }
+            else {
+                buyOne = result2;
+            }
+
             var discount = result2 * 0.1;
 
             $("#totalPri").text(result2.toLocaleString('ko-KR') + '원');
-            $("#buyOne").text(result2.toLocaleString('ko-KR') + '원');
+            $("#buyOne").text(buyOne.toLocaleString('ko-KR') + '원');
             $("#buySub").text((result2 - discount).toLocaleString('ko-KR') + ' 원');
         });
         
@@ -301,11 +309,17 @@
             for(var i = 0; i < totalP.length - 1; i++) {
                 total2 += parseInt(totalP[i].replace(',', ''));
             }
+            if(total2 < 50000) {
+                buyOne = total2 + 3000;
+            }
+            else {
+                buyOne = total2;
+            }
 
             var discount = total2 * 0.1;
 
             $("#totalPri").text(total2.toLocaleString('ko-KR') + '원');
-            $("#buyOne").text(total2.toLocaleString('ko-KR') + '원');
+            $("#buyOne").text(buyOne.toLocaleString('ko-KR') + '원');
             $("#buySub").text((total2 - discount).toLocaleString('ko-KR') + ' 원');
 
             $.ajax({
@@ -342,11 +356,17 @@
             for(var i = 0; i < totalP.length - 1; i++) {
                 total2 += parseInt(totalP[i].replace(',', ''));
             }
+            if(total2 < 50000) {
+                buyOne = total2 + 3000;
+            }
+            else {
+                buyOne = total2;
+            }
 
             var discount = total2 * 0.1;
 
             $("#totalPri").text(total2.toLocaleString('ko-KR') + '원');
-            $("#buyOne").text(total2.toLocaleString('ko-KR') + '원');
+            $("#buyOne").text(buyOne.toLocaleString('ko-KR') + '원');
             $("#buySub").text((total2 - discount).toLocaleString('ko-KR') + ' 원');
 
             $.ajax({
