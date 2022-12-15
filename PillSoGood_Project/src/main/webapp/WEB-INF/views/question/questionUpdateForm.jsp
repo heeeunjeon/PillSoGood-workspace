@@ -118,7 +118,7 @@
                         <!-- 사진첨부 부분 -->
                         <div>
                             <p>사진첨부(선택)</p>
-                            <input type="file" class="form-control" name="reupfile" value="${ q.questionImage }">
+                            <input type="file" class="form-control" name="reupfile" value="${ q.questionImage }" onchange="checkFile();">
                             
                             <c:if test="${ not empty q.questionImage }">
                             	<img id="question_image" src="${ q.questionImage }" width="200px" height="200px">
@@ -140,6 +140,34 @@
                         <!-- 영섭 작업 영역 끝 -->
                     </form>
                 </div>
+                
+                <script>
+	                function checkFile() {
+	            		
+	            		var file = $("input[type=file]");
+	            		
+	            		if(file.val() != "") {
+	            			
+	        	    		var maxSize = 10 * 1024 * 1024;
+	        	    		var fileSize = file[0].files[0].size;
+	        	    		
+	        	    		if(fileSize > maxSize) {
+	        	    			alert('10MB 이하의 파일만 등록할 수 있습니다.');
+	        	    			file.val("");
+	        	    			return;
+	        	    		}
+	        	    		
+	        	    		var ext = file.val().substring(file.val().lastIndexOf(".")).toLowerCase();
+	        	    		
+	        	    		if($.inArray(ext, ['jpg', 'jpeg', 'gif', 'png']) == -1) {
+	        	    			alert('jpg, jpeg, gif, png 파일만 업로드 할 수 있습니다.');
+	        	    			file.val("");
+	        	    			return;
+	        	    		}
+	            		}
+	            	}
+                </script>
+                
                 <div id="content_2_3"></div>
             </div>
             <div id="content_3"></div>

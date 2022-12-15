@@ -112,10 +112,10 @@
                         <!-- 사진첨부 부분 -->
                         <div>
                             <p>사진첨부(선택)</p>
-                            <input type="file" class="form-control" name="upfile">
+                            <input type="file" class="form-control" name="upfile" onchange="checkFile();">
                         </div>
                         <br><br>
-
+                        
                         <!-- 등록 버튼 -->
                         <div id="insert_btn">
                             <br><br>
@@ -163,11 +163,32 @@
     			}
     			
     		});
-    		
-    		
     	}
-    
-    
+    	
+    	function checkFile() {
+    		
+    		var file = $("input[type=file]");
+    		
+    		if(file.val() != "") {
+    			
+	    		var maxSize = 10 * 1024 * 1024;
+	    		var fileSize = file[0].files[0].size;
+	    		
+	    		if(fileSize > maxSize) {
+	    			alert('10MB 이하의 파일만 등록할 수 있습니다.');
+	    			file.val("");
+	    			return;
+	    		}
+	    		
+	    		var ext = file.val().substring(file.val().lastIndexOf(".")).toLowerCase();
+	    		
+	    		if($.inArray(ext, ['jpg', 'jpeg', 'gif', 'png']) == -1) {
+	    			alert('jpg, jpeg, gif, png 파일만 업로드 할 수 있습니다.');
+	    			file.val("");
+	    			return;
+	    		}
+    		}
+    	}
     </script>
     
 
