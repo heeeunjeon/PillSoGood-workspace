@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
 import com.kh.pill.member.model.vo.Member;
+import com.kh.pill.product.model.vo.Product;
 import com.kh.pill.review.model.service.ReviewService;
 import com.kh.pill.review.model.vo.Review;
 import com.kh.pill.review.model.vo.ReviewFile;
@@ -36,7 +37,7 @@ public class ReviewController {
 	// 메뉴바 클릭시 => list.re (기본적으로 1번 페이지 요청)
 	// 페이징바 클릭 시 => list.re?cpage=요청하는페이지수&order=~~
 	@RequestMapping("list.re")
-	public String selectList(@RequestParam(value="cpage", defaultValue="1")int currentPage, @RequestParam(value="order", defaultValue="default")String order, Model model, String rOrderProductNames) {
+	public String selectList(@RequestParam(value="cpage", defaultValue="1")int currentPage, @RequestParam(value="order", defaultValue="default")String order, Model model) {
 		
 		// 베스트 리뷰 조회
 		ArrayList<Review> bestListAll = reviewService.selectBestList(); // 일반 리뷰 전체를 베스트 기준으로 조회 후 ArrayList bestListAll 에 담음
@@ -306,6 +307,76 @@ public class ReviewController {
 			
 			// 조회된 데이터를 담아서 review/reviewDetailView.jsp 로 포워딩 
 			mv.addObject("r", r).setViewName("review/reviewDetailView");
+			/* 
+			 * 여기에 맞춤 상품 (list.pr 인데 )
+			 * 
+			 * SELECT PRODUCT_NO
+			 * FROM CART
+			 * WHERE CART_NO IN(SELECT CART_NO
+			 * FROM ORDER_CART
+			 * WHERE ORDER_NO IN (SELECT ORDER_NO
+			 * FROM REVIEW
+			 * WHERE REVIEW_NO = #{rno}))
+			 * 
+			 * 하면 여러 개 나옴 => 이걸 어떤 타입으로 받아야하지? { 1, 2, 3, ... } 이런거
+			 * 
+			 * 그 다음 그거를 for( : ) {} 로 하나씩 뱉고 그 값으로 
+			 * Product p = productService.selectProduct(pno); 
+			 * 
+			 * 그 다음 ArrayList<Product> 에 담고 
+			 * mv.addObject("p", p).setViewName("review/reviewDetailView");
+			 * 
+			 * 상세 페이지 가서 
+			 * <div id="product">
+								
+                            <c:forEach var="p" items="${ list }">
+                            <div id="product_1">
+                                <div id="product_1_1" class="prod" style="cursor:pointer;">
+                                    <div id="productT">
+                                        <div id="productTT">
+                                        	<input type="hidden" value="${ p.productNo }">
+                                            <div id="productTT_1"><p>${ p.productExplain }엔</p></div>
+                                            <div id="productTT_2"><p>${ p.productName }</p></div>
+                                            <div id="productTT_3"><p>30일분</p></div>
+                                        </div>
+                                        <div id="productPP"><img src="${ p.productImgPath }"></div>
+                                    </div>
+                                    <div id="productP">
+                                        <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </c:forEach>
+                            
+
+                        </div>
+                        
+                        <script>
+			            	$(function() {
+			            		$(".prod").click(function() {
+			            			
+			            			location.href = "detail.pr?pno=" + $(this).children().eq(0).children().eq(0).children().eq(0).val();
+			            		});
+
+                                var $prods = $(".prod");
+
+                                $.each($prods, function(index, prod) {
+
+                                    let indexNum = index % 9;
+
+                                    $(prod).addClass("prodback" + indexNum);
+                                });
+			            	});	
+			            </script>
+			 * 
+			 * 하고 더보기 클릭만 javascript 로 생각해보기
+			 * 
+			 * 
+			 * 
+			 * 
+			 * 
+			 */
 			
 			// System.out.println("r : " + r);
 		

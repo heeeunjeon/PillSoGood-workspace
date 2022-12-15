@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
     <title>Document</title>
 <style>
 
@@ -150,8 +151,8 @@
                     		<table>
                     			<tr>
                     				<td width="900px;">총 <span style="color: #78C2AD;">${pi.listCount}</span>건</td>
-                    				<td width="100px;"><button id="orderByNew" class="btn btn-primary" >최신순</button></td>
-                    				<td width="100px;"><button id="orderByHot" class="btn btn-primary" >인기순</button></td>
+                    				<td width="100px;"><a href="list.re?cpage=1&order=new"><button id="orderByNew" class="btn btn-primary" >최신순</button></a></td>
+                    				<td width="100px;"><a href="list.re?cpage=1&order=hot"><button id="orderByHot" class="btn btn-primary" >인기순</button></a></td>
                     			</tr>
                     		</table>
                     	</div>	
