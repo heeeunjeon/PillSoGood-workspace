@@ -162,7 +162,7 @@
                             <div style="border: 1px solid #78C2AD;">
                                 <div id="textC">
                                     <div id="textC_1"><p>정기구독시</p></div>
-                                    <div id="textC_2"><p>19,200원</p></div>
+                                    <div id="textC_2"><p id="buySub"></p></div>
                                 </div>
                                 <div id="textCV">
                                     <p>
@@ -176,7 +176,7 @@
                             <div style="border: 1px solid #F3969A;">
                                 <div id="textC">
                                     <div id="textC_1"><p>단품구매시</p></div>
-                                    <div id="textC_2"><p>27,000원</p></div>
+                                    <div id="textC_2"><p id="buyOne"></p></div>
                                 </div>
                                 <div id="textCV">
                                     <p>
@@ -268,12 +268,18 @@
 
         $(function() {
 
-            var proPrice = $(".priceP").val();
-            var count = $(".result").val();
+            var totalP = $(".totalP").text().split("원");
+            var result2 = 0;
 
-            result2 = proPrice * count;
+            for(var i = 0; i < totalP.length - 1; i++) {
+                result2 += parseInt(totalP[i].replace(',', ''));
+            }
+
+            var discount = result2 * 0.1;
 
             $("#totalPri").text(result2.toLocaleString('ko-KR') + '원');
+            $("#buyOne").text(result2.toLocaleString('ko-KR') + '원');
+            $("#buySub").text((result2 - discount).toLocaleString('ko-KR') + ' 원');
         });
         
         $(".plus").on("click", function() {
@@ -296,8 +302,11 @@
                 total2 += parseInt(totalP[i].replace(',', ''));
             }
 
-            $("#totalPri").text(total2.toLocaleString('ko-KR') + '원');
+            var discount = total2 * 0.1;
 
+            $("#totalPri").text(total2.toLocaleString('ko-KR') + '원');
+            $("#buyOne").text(total2.toLocaleString('ko-KR') + '원');
+            $("#buySub").text((total2 - discount).toLocaleString('ko-KR') + ' 원');
 
             $.ajax({
                 url: "update.cart",
@@ -334,7 +343,11 @@
                 total2 += parseInt(totalP[i].replace(',', ''));
             }
 
+            var discount = total2 * 0.1;
+
             $("#totalPri").text(total2.toLocaleString('ko-KR') + '원');
+            $("#buyOne").text(total2.toLocaleString('ko-KR') + '원');
+            $("#buySub").text((total2 - discount).toLocaleString('ko-KR') + ' 원');
 
             $.ajax({
                 url: "update.cart",
