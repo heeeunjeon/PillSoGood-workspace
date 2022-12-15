@@ -26,9 +26,9 @@
 		FROM MEMBER
 	</select>
 	
-	<select id="selectMember" resultMap="" parameterType="">
+	<!-- <select id="selectMember" resultMap="" parameterType="">
 	
 	
-	</select>
+	</select> -->
 	
 </mapper>
