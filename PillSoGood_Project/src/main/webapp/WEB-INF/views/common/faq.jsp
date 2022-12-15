@@ -7,144 +7,101 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>FAQ</title>
- <style>
+<style>
 
-        /* [샛별] 파일 받으면 이 부분 지우기 */
-        div {
-            
-            box-sizing : border-box;
-        }
+	/* [샛별] 파일 받으면 이 부분 지우기 */
+	div {
+		/* border : 1px solid rgb(120, 194, 173); */
+		box-sizing : border-box;
+	}
 
-        /* 전체를 감싸는 wrap */
-        .wrap {
-			height: 1580px;
-            width: 98%;
-            margin : auto; /* 가운데로 좌, 우 자동 정렬*/
-        }
+	/* 전체를 감싸는 wrap */
+	.wrap {
+		/* height: 1580px; */
+		height: auto;
+		width: 98%;
+		margin : auto; /* 가운데로 좌, 우 자동 정렬*/
+	}
 
-        .wrap>div { width : 100%; }
+	.wrap>div { width: 100%; }
 
-        #navigator2 { height: 150px; }
+	#navigator2 { height: 150px; }
+	#header { height: 130px; }
 
-		#content_2>div { 
-			width: 100%;
-			display: block;
-		}
-        #content_2_1 { height: 75px; }
-        #content_2_2 { 
-			height: auto;
-			display: flex;
-		}
+	#content { height: auto; display: flex;}
+	#content_2>div { width: 100%; float: left; }
+	#content_2_1 { height: 115px; }
+	#content_2_2 { height: auto;  }
 
-		/* 제목 본문 영역 */
-		#content_2_2>div {
-			width: 100%;
-		}
-		#contentTitle {
-			height: 180px;
-		}
-		#contentTable {
-			height: 85%;
-		}
 
-        #header { 
-            height: 230px;
-        }
+	/* 제목 본문 영역 */
+	#contentTable { height: auto; width: 100%; }
 
-        #header>div { height: 100%; float: left; }
+	/* content 영역 */
+	#content>div { height : 100%; float : left; }
+	#content_1 { width : 25%; }
+	#content_2 { width : 50%; }
+	#content_3 { width : 25%; }
 
-        #header_1 { width: 70%; }
+	/* 영섭 작업 영역 시작 */
 
-        #header_1>p {
-            box-sizing: border-box;
-            font-size: 45px;
-            font-weight: bold;
-            margin-top: 130px;
-            margin-left: 150px;
-            color: white;
-        }
+	table { width: 100%; }
 
-        #header_2 { width: 30%; }
+	.upperHr { border-bottom: 1px solid lightgrey; }
 
-        #header_2>img {
-            height: 60%;
-            margin-left: 150px;
-            margin-top: 70px;
-        }
+	.upperHr:hover {
+		cursor: pointer;
+		background-color: rgb(240, 240, 240);
+	}
 
-        /* content 영역 */
-        #content>div { height : 100%; float : left; }
-        #content_1 { width : 25%; height:100vh!important;}
-        #content_2 { width : 50%; }
-        #content_3 { width : 25%; height:100vh!important;}
+	.category { width: 15%; text-align: center; }
 
-		/* 영섭 작업 영역 시작 */
+	.question {
+		width: 80%;
+	}
 
-		table {
-			width: 100%;
-			height: 100%;	  
-		}
+	.button {
+		width: 5%;
+	}
 
-		tbody {
-			width: 100%;
-			height: 100%;     
-		}
+	.question>p, i {
+		font-size: 17px;
+		color: black;
+		font-weight: bold;
+		margin: 15px;
+	}
 
-		.upperHr, #contentTitle {
-			border-top: 2px solid lightgrey;
-		}
+	.category>button {
+		width: 90px;
+	}
 
-		.upperHr:hover {
-			cursor: pointer;
-			background-color: rgb(240, 240, 240);
-		}
+	.answer {
+		height: 0px;
+	}
 
-		.category {
-			width: 15%;
-			text-align: center;
-		}
+	.answer>p {
+		font-size: 13px;
+		color: black;
+		margin: 25px;
+		display : none;
+		box-sizing : border-box;
+		line-height: 35px;
+		padding-left: 70px;
+	}
 
-		.question {
-			width: 80%;
-		}
+	#content_2_1>p {
+		margin-top: 40px;
+		margin-left: 30px;
+		font-size: 35px;
+		color: black;
+		font-weight: bold;
+	}
 
-		.button {
-			width: 5%;
-		}
+	table>tr { height: 50px; }
 
-		.question>p, i {
-			font-size: 20px;
-			color: black;
-			font-weight: bold;
-			margin: 15px;
-		}
+	.button>i { color: #78C2AD;}
 
-		.category>button {
-			width: 110px;
-			font-size: 18px;
-		}
-
-		.answer {
-			height: 0px;
-		}
-
-		.answer>p {
-			font-size: 17px;
-			color: black;
-			margin: 25px;
-			display : none;
-			box-sizing : border-box;
-			line-height: 35px;
-			padding-left: 70px;
-		}
-
-		#contentTitle>p {
-			padding-left: 30px;
-			font-size: 80px;
-			color: black;
-		}
-
-		/* 영섭 작업 영역 끝 */
+	/* 영섭 작업 영역 끝 */
 </style>
 </head>
 <body>
@@ -161,7 +118,6 @@
                 <div id="content_2_2">
 
 					<!-- 영섭 작업 영역 시작-->
-			
 					<div id="contentTable">
 						<table align="center" class="list-area">
 							<tbody style="border-top: 2px solid black">
@@ -330,37 +286,36 @@
 										</p>
 									</td>
 								</tr>
-								
 							</tbody>
 						</table>
 					</div>
-					
-					<!-- 질문 클릭시 아코디언 함수 -->
-					<script>
-						$(function() {
-							$(".upperHr").click(function() {
-
-								let $answer = $(this).next().children().children();
-
-								if($answer.css("display") == "none") {
-
-									$(this).nextAll("tr").children(".answer").children("p").slideUp(100);
-									$(this).prevAll("tr").children(".answer").children("p").slideUp(100);
-									$answer.slideDown(100);
-
-								} else {
-									$answer.slideUp(100);
-								}
-							});
-						});
-					</script>
-					<!-- 영섭 작업 영역 끝 -->
-                </div>
+	
+				</div>
 				<div style="height: 150px"></div>
+			</div>
             <div id="content_3"></div>
         </div>
         <jsp:include page="../common/footer.jsp" />
 	</div>
+
+	<script>
+		$(function() {
+			$(".upperHr").click(function() {
+
+				let $answer = $(this).next().children().children();
+
+				if($answer.css("display") == "none") {
+
+					$(this).nextAll("tr").children(".answer").children("p").slideUp(100);
+					$(this).prevAll("tr").children(".answer").children("p").slideUp(100);
+					$answer.slideDown(100);
+
+				} else {
+					$answer.slideUp(100);
+				}
+			});
+		});
+	</script>
 
 </body>
 </html>

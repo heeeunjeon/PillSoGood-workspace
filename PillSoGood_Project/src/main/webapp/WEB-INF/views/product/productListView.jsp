@@ -163,7 +163,11 @@
                         </div>
                     </div>
                     <div id="write">
-                        <div align="right"><button type="button" class="btn btn-primary" onclick="location.href='enrollForm.pr'">제품 등록</button></div>
+                    <c:choose>
+                    		<c:when test="${ loginUser.memberId eq 'admin' }">
+                        		<div align="right"><button type="button" class="btn btn-primary" onclick="location.href='enrollForm.pr'">제품 등록</button></div>
+                       		</c:when>
+                    </c:choose>
                     </div>
                 </div>
                 <div id="content_2_2">

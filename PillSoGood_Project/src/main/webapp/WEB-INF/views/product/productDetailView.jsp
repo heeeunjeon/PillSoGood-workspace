@@ -87,8 +87,12 @@
                         <thead>
                             <tr align="right" height="115px">
                                 <td colspan="4">
-                                    <button type="button" class="btn btn-warning" onclick="postFormSubmit(1);">수정</button>
-                                    <button type="button" class="btn btn-danger" onclick="postFormSubmit(2);">삭제</button>
+                                	<c:choose>
+                    					<c:when test="${ loginUser.memberId eq 'admin' }">
+		                                    <button type="button" class="btn btn-warning" onclick="postFormSubmit(1);">수정</button>
+		                                    <button type="button" class="btn btn-danger" onclick="postFormSubmit(2);">삭제</button>
+		                                </c:when>
+                    				</c:choose>
                                 </td>
                             </tr>
 
