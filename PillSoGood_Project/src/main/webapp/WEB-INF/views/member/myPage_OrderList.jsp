@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>PillSoGood</title>
+<title>MY PAGE 주문 조회</title>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
 
@@ -131,7 +131,7 @@
                     
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">홍길동</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
                             <br>
                             <p><a href="myPage.or">주문 조회</a></p>
                             <p><a href="myPage.subs">정기구독 관리</a></p>
@@ -235,7 +235,7 @@
 			                                    	</c:choose>
 			                                        &nbsp;${ o.orderDate }
 			                                    </td>
-			                                    <th style="text-align: right;"><a href="detail.or" style="text-decoration: none;">&gt;</a></th>
+			                                    <th style="text-align: right;"><a href="detail.or?ono=${ o.orderNo }" style="text-decoration: none; color: rgb(243, 150, 154); font-size: 20px;">&gt;</a></th>
 			                                </tr>
 			                                <tr height="40px">
 			                                    <th width="80%">
@@ -326,7 +326,6 @@
                         </c:if>
 
                     </div>
-
                 </div>
 
             </div>

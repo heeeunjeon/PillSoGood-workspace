@@ -1,7 +1,6 @@
 package com.kh.pill.member.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,6 +16,7 @@ import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
 import com.kh.pill.member.model.service.MyPageService;
 import com.kh.pill.member.model.vo.Member;
+import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
@@ -50,15 +50,13 @@ public class MyPageController {
 		for(Order o : olist) {
 			
 			ArrayList<Product> plist = myPageService.selectMyOrderProducts(o.getOrderNo());
-			String str = "";
+			String[] str = new String[plist.size()];
 			
-			for(int i = 0; i < plist.size() - 1; i++) {
-				str += plist.get(i).getProductName() + " & ";
+			for(int i = 0; i < plist.size(); i++) {
+				 str[i] = plist.get(i).getProductName();
 			}
+			o.setProductNames(String.join(" & ", str));
 			
-			str += plist.get(plist.size() - 1).getProductName();
-			
-			o.setProductNames(str);
 		}
 		
 		model.addAttribute("pi", pi);
@@ -82,20 +80,16 @@ public class MyPageController {
 		LocalDate startDate = null;
 		LocalDate endDate = today;
 		
-		if(s.equals("3")) {
-			startDate = today.withMonth(today.getMonthValue() - 3);
-		} else if(s.equals("6")) {
-			startDate = today.withMonth(today.getMonthValue() - 6);
-		} else if(s.equals("12")) {
-			startDate = today.withYear(today.getYear() - 1);
+		if(s.equals("3") || s.equals("6") || s.equals("12")) {
+			startDate = today.minusMonths(Integer.parseInt(s));
 		} else {
 			startDate = LocalDate.parse(s);
 			endDate = LocalDate.parse(e);
 		}
 		
 		HashMap<String, String> map = new HashMap<>();
-		map.put("startDate", startDate.toString());
-		map.put("endDate", endDate.toString());
+		map.put("startDate", startDate.toString() + " 00:00:00");
+		map.put("endDate", endDate.toString() + " 23:59:59");
 		map.put("memberNo", String.valueOf(memberNo));
 		
 		int listCount = myPageService.searchOrderListByDateCount(map);
@@ -109,15 +103,13 @@ public class MyPageController {
 		for(Order od : olist) {
 			
 			ArrayList<Product> plist = myPageService.selectMyOrderProducts(od.getOrderNo());
-			String str = "";
+			String[] str = new String[plist.size()];
 			
-			for(int i = 0; i < plist.size() - 1; i++) {
-				str += plist.get(i).getProductName() + " & ";
+			for(int i = 0; i < plist.size(); i++) {
+				 str[i] = plist.get(i).getProductName();
 			}
 			
-			str += plist.get(plist.size() - 1).getProductName();
-			
-			od.setProductNames(str);
+			od.setProductNames(String.join(" & ", str));
 		}
 		
 		model.addAttribute("pi", pi);
@@ -127,6 +119,26 @@ public class MyPageController {
 		model.addAttribute("e", e);
 		
 		return "member/myPage_OrderList";
+	}
+	
+	/**
+	 * 주문 상세조회
+	 * @return
+	 */
+	@RequestMapping("detail.or")
+	public String selectMyOrder(String ono, Model model) {
+		
+		Order o = myPageService.selectMyOrder(ono);
+		
+		ArrayList<Cart> clist = myPageService.selectMyOrderCarts(ono);
+		
+		ArrayList<Product> plist = myPageService.selectMyOrderProducts(ono);
+		
+		model.addAttribute("o", o);
+		model.addAttribute("clist", clist);
+		model.addAttribute("plist", plist);
+		
+		return "member/myPage_OrderDetail";
 	}
 	
 	
@@ -140,6 +152,46 @@ public class MyPageController {
 		
 		return "member/myPage_SubsList";
 	}
+	
+	/**
+	 * 구독 상세조회
+	 * @return
+	 */
+	@RequestMapping("detail.subs")
+	public String selectMySubs(HttpSession session, Model model) {
+		
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		Order o = myPageService.selectMySubs(memberNo);
+		
+		ArrayList<Product> plist = myPageService.selectMyOrderProducts(o.getOrderNo());
+		String str = "";
+		
+		for(int i = 0; i < plist.size(); i++) {
+			 str = plist.get(0).getProductName();
+			 break;
+		}
+		
+		str += " 외 " + (plist.size() - 1);
+		
+		o.setProductNames(str);
+		
+		// 현재 진행중인 구독의 첫 결제일
+		String date = myPageService.selectMyFirstSubs(memberNo);
+		
+		// 다음 결제 예정일
+		LocalDate next = LocalDate.parse(o.getOrderDate());
+		next = next.plusMonths(1);
+		
+		model.addAttribute("o", o);
+		model.addAttribute("plist", plist);
+		model.addAttribute("next", next.toString());
+		model.addAttribute("date", date);
+		
+		return "member/myPage_SubsDetail";
+	}
+	
+	
 	
 	
 	

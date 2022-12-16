@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
@@ -64,6 +65,39 @@ public class MyPageDao {
 		
 		return (ArrayList)sqlSession.selectList("orderMapper.searchOrderListByDate", map, rowBounds);
 	}
+	
+	/**
+	 * 주문 상세조회
+	 * @param sqlSession
+	 * @param orderNo
+	 * @return
+	 */
+	public Order selectMyOrder(SqlSessionTemplate sqlSession, String orderNo) {
+		return sqlSession.selectOne("orderMapper.selectMyOrder", orderNo);
+	}
+	
+	public ArrayList<Cart> selectMyOrderCarts(SqlSessionTemplate sqlSession, String orderNo) {
+		return (ArrayList)sqlSession.selectList("orderMapper.selectMyOrderCarts", orderNo);
+	}
+	
+	/**
+	 * 구독 상세조회
+	 * @param memberNo
+	 * @return
+	 */
+	public Order selectMySubs(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("orderMapper.selectMySubs", memberNo);
+	}
+	
+	/**
+	 * 구독 첫결제일 조회
+	 * @param memberNo
+	 * @return
+	 */
+	public String selectMyFirstSubs(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("orderMapper.selectMyFirstSubs", memberNo);
+	}
+	
 	
 	
 	

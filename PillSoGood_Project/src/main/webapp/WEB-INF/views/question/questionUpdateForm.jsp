@@ -159,7 +159,7 @@
 	        	    		
 	        	    		var ext = file.val().substring(file.val().lastIndexOf(".")).toLowerCase();
 	        	    		
-	        	    		if($.inArray(ext, ['jpg', 'jpeg', 'gif', 'png']) == -1) {
+	        	    		if($.inArray(ext, ['.jpg', '.jpeg', '.gif', '.png']) == -1) {
 	        	    			alert('jpg, jpeg, gif, png 파일만 업로드 할 수 있습니다.');
 	        	    			file.val("");
 	        	    			return;

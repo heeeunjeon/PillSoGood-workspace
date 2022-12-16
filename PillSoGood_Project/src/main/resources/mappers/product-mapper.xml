@@ -124,7 +124,11 @@
 	</insert>
     
     <select id="selectMyOrderProducts" parameterType="string" resultMap="productResultSet">
-		SELECT PRODUCT_NAME
+		SELECT P.PRODUCT_NO
+			 , PRODUCT_NAME
+			 , PRODUCT_EXPLAIN
+			 , PRODUCT_PRICE
+			 , PRODUCT_IMG_PATH
 		FROM PRODUCT P, ORDER_CART OC, CART C, ORDERS O
 		WHERE P.PRODUCT_NO = C.PRODUCT_NO
 		  AND C.CART_NO = OC.CART_NO

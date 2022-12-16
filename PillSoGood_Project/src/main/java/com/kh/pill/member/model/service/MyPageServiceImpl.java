@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.member.model.dao.MyPageDao;
+import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
@@ -59,6 +60,39 @@ public class MyPageServiceImpl implements MyPageService {
 	public ArrayList<Order> searchOrderListByDate(PageInfo pi, HashMap<String, String> map) {
 		return myPageDao.searchOrderListByDate(sqlSession, pi, map);
 	}
+	
+	/**
+	 * 주문 상세조회
+	 */
+	@Override
+	public Order selectMyOrder(String orderNo) {
+		return myPageDao.selectMyOrder(sqlSession, orderNo);
+	}
+	
+	/**
+	 * 주문 상품의 수량 조회
+	 */
+	@Override
+	public ArrayList<Cart> selectMyOrderCarts(String orderNo) {
+		return myPageDao.selectMyOrderCarts(sqlSession, orderNo);
+	}
+	
+	/**
+	 * 구독 상세조회
+	 */
+	@Override
+	public Order selectMySubs(int memberNo) {
+		return myPageDao.selectMySubs(sqlSession, memberNo);
+	}
+	
+	/**
+	 * 구독 첫결제일 조회
+	 */
+	@Override
+	public String selectMyFirstSubs(int memberNo) {
+		return myPageDao.selectMyFirstSubs(sqlSession, memberNo);
+	}
+	
 	
 	
 	

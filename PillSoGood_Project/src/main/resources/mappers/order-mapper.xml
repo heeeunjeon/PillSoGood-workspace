@@ -25,7 +25,7 @@
 		<result column="ORDER_RECEIPT" property="orderReceipt"/>
 		<result column="ORDER_STATUS" property="orderStatus"/>
 		<result column="SUBS_STATUS" property="subsStatus"/>
-		<result column="DELEVERY" property="delivery"/>
+		<result column="DELIVERY" property="delivery"/>
 		<result column="ADDRESS" property="address"/>
 	</resultMap>
 	
@@ -106,9 +106,8 @@
 						  FROM ORDERS
 						  WHERE MEMBER_NO = #{memberNo}
 						    AND SUBS_STATUS = 'Y'
-							AND ORDER_STATUS = 'N'
-							AND SUBS_COUNT = 1
-						  ORDER BY ORDER_NO)
+							AND ORDER_STATUS = 'Y'
+							AND SUBS_COUNT = 1)
 		ORDER BY CART_NO
 	</select>
 	
@@ -168,7 +167,7 @@
 		SELECT COUNT(*)
 		FROM ORDERS
 		WHERE MEMBER_NO = #{memberNo}
-		  AND ORDER_DATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')
+		  AND ORDER_DATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(#{endDate}, 'YYYY-MM-DD HH24:MI:SS')
 	</select>
 	
 	<select id="searchOrderListByDate" parameterType="hashmap" resultMap="orderResultSet">
@@ -180,8 +179,53 @@
 			 , SUBS_STATUS
 		FROM ORDERS
 		WHERE MEMBER_NO = #{memberNo}
-		  AND ORDER_DATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')
+		  AND ORDER_DATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(#{endDate}, 'YYYY-MM-DD HH24:MI:SS')
 		ORDER BY ORDER_NO DESC
+	</select>
+	
+	<select id="selectMyOrder" parameterType="string" resultMap="orderResultSet">
+		SELECT ORDER_NO
+			 , TO_CHAR(ORDER_DATE, 'YYYY-MM-DD HH24:MI:SS') "ORDER_DATE"
+			 , ORDER_PRICE
+			 , SUBS_COUNT
+			 , ORDER_RECEIPT
+			 , ORDER_STATUS
+			 , SUBS_STATUS
+			 , DELIVERY
+			 , ADDRESS
+		FROM ORDERS
+		WHERE ORDER_NO = #{orderNo}
+	</select>
+	
+	<select id="selectMyOrderCarts" parameterType="string" resultMap="cartResultSet">
+		SELECT PRODUCT_NO
+			 , CART_AMOUNT
+		FROM CART
+		JOIN ORDER_CART USING (CART_NO)
+		WHERE ORDER_NO = ${orderNo}
+	</select>
+	
+	<select id="selectMySubs" parameterType="_int" resultMap="orderResultSet">
+		SELECT ORDER_NO
+			 , TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') "ORDER_DATE"
+			 , ORDER_PRICE
+			 , ADDRESS
+		FROM ORDERS
+		WHERE SUBS_STATUS = 'Y'
+		  AND ORDER_STATUS = 'Y'
+		  AND SUBS_COUNT = (SELECT MAX(SUBS_COUNT)
+		  					FROM ORDERS
+		  					WHERE MEMBER_NO = #{memberNo})
+		  AND MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectMyFirstSubs" parameterType="_int" resultType="string">
+		SELECT TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') "ORDER_DATE"
+		FROM ORDERS
+		WHERE SUBS_STATUS = 'Y'
+		  AND ORDER_STATUS = 'Y'
+		  AND SUBS_COUNT = 1
+		  AND MEMBER_NO = #{memberNo}
 	</select>
 	
 </mapper>
