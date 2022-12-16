@@ -49,6 +49,11 @@
         #content_2 { width : 60%; height: auto !important;}
         #content_3 { width : 20%; }
 
+        #content>div {
+            height: auto;
+            float: left;
+        }
+
         body { font-family: 'Noto Sans KR', sans-serif !important; }
     
         .btnArea {

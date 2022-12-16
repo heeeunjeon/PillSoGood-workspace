@@ -142,12 +142,28 @@
                         
                         <tr>
                           <th>카테고리</th>
-                          <td><select class="form-select" id="select" name="categoryNo" >
+                          <td>
+                          <select class="form-select" id="magazineSelectOpt" name="categoryNo" >
                                  <option value="2" data-sub="라이프">라이프</option>
                                  <option value="3" data-sub="시즌">시즌</option>
                                  <option value="4" data-sub="이슈">이슈</option>
-                          </select></td>
+                          </select>
+                          </td>
                         </tr>
+                        
+                        <script>
+                        	$(function() {
+                        		
+                        		var categoryOptions = $("#magazineSelectOpt>option"); // [option, option, option]
+                        		
+                        		categoryOptions.each(function() {
+                        			
+                        			if($(this).text() == "${ mag.categoryNo }") {
+                        				$(this).attr("selected", true);
+                        			}
+                        		});
+                        	});
+                        </script>
 							
                         <tr>
                           <th><label for="content">내용</label></th>
@@ -156,13 +172,12 @@
 
                         <tr>
                           <th><label for="reupfile">사진</label></th>
-                          <td><input type="file" id="reupfile" class="form-control-file border" name="reupfile">
-                          	  
-                          	  <c:if test="${ not empty mag.magazineImgName }">
-                              	<input type="hidden" name="${ mag.magazineImgName }">
-                              </c:if>
-                              
-                          </td>
+	                          <td><input type="file" id="reupfile" class="form-control-file border" name="reupfile"></td> <!-- 썸네일 -->
+	                          <td><input type="file" id="reupfile2" class="form-control-file border" name="reupfile2"></td>	  
+	                          	  
+	                          	  <c:if test="${ not empty mag.magazineImgName }">
+	                              	<input type="hidden" name="${ mag.magazineImgName }">
+	                              </c:if>
                         </tr>  
 
                         <tr>

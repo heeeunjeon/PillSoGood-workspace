@@ -12,6 +12,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
     .outer {
         color : white;
         width : 1000px;
@@ -38,7 +39,7 @@
     }
 
     div {
-             /* border : 1px solid #78C2AD;  */
+
             box-sizing : border-box;
         }
     
@@ -69,7 +70,7 @@
         }
     
         /* content 영역 */
-        #content>div { height : 100%; float : left; }
+        #content>div { height : 1150px; float : left; }
         #content_1 { width : 20%; }
         #content_2 { width : 60%; }
         #content_3 { width : 20%; }
@@ -218,9 +219,9 @@
                             </td>
 							<td>
 							<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="magazineListArea">
-							  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="" onclick="recentForm();">
+							  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="" onclick="location.href='list.mag';">
 							  	<label class="btn btn-outline-primary" for="btnradio1">최신순</label>
-							  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked="" onclick="popularForm();">
+							  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked="" onclick="location.href='list.mag?popular=y';">
 							 	<label class="btn btn-outline-primary" for="btnradio2">인기순</label>
 							</div>
 							</td>
@@ -276,6 +277,9 @@
                              </c:choose>
                            </c:forEach>
                         </div>
+                        
+                        
+                        
 
                       <!-- 페이지 -->
  			 <div id="pagingArea">

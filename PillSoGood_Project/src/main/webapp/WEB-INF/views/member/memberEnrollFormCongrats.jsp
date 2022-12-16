@@ -101,9 +101,9 @@
                     <div align="center" id="completeMsg">
                     	
                    	<label> 
-                   	
-                   	<%= request.getParameter("memberName") %> 님 환영합니다. <br>
-                   	 회원가입을 축하합니다.
+                   	회원가입을 축하합니다.
+                   	<%= request.getParameter("memberName") %>님 환영합니다. <br>
+                   	 
                    	</label>
     			        
                     </div>

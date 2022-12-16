@@ -157,7 +157,7 @@
 
                         <tr>
                           <th><label for="upfile">사진</label></th>
-                          <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                          <td><input type="file" id="upfile" class="form-control-file border" name="upfile" multiple></td>
                         </tr>  
 
                         <tr>
