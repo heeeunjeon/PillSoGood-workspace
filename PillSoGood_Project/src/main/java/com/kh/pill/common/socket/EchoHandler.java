@@ -68,10 +68,26 @@ public class EchoHandler extends TextWebSocketHandler {
 					
 				} else if("answer".equals(cmd)) {
 					
-					TextMessage tmpMsg = new TextMessage("<br>"+fromId + "님이 "
+					TextMessage tmpMsg = new TextMessage("<br> 관리자님이 "
 							+ "문의에 대한 답변을 작성 하셨습니다. <br>" + title );
 					toIdSession.sendMessage(tmpMsg);
 					
+				} else if("review".equals(cmd)) {
+					
+					TextMessage tmpMsg = new TextMessage("<br>"+ fromId + "님이 "
+							+ "리뷰를 작성 하셨습니다. <br>" + title);
+					toIdSession.sendMessage(tmpMsg);
+				} else if("reply".equals(cmd)) {
+					
+					TextMessage tmpMsg = new TextMessage("<br>" + fromId + "님이 "
+							+ "리뷰에 댓글을 다셨습니다. <br>"+ title);
+					toIdSession.sendMessage(tmpMsg);
+							
+				} else if("order".equals(cmd)) {
+					
+					TextMessage tmpMsg = new TextMessage("<br>" + fromId + "님이 "
+							+ "상품을 구매하셨습니다.");
+					toIdSession.sendMessage(tmpMsg);
 				}
 				
 			}
@@ -81,8 +97,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {//연결 해제
-		// TODO Auto-generated method stub
-		// logger.info("Socket 끊음");
+		
 		sessions.remove(session);
 		userSessionsMap.remove(currentUserName(session),session);
 		

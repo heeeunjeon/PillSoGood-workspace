@@ -14,7 +14,7 @@
 <style>
 
     div {
-        /* border : 1px solid #78C2AD; */
+        /*border : 1px solid #78C2AD; */
         box-sizing : border-box;
     }
 
@@ -29,7 +29,7 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1450px; }
+    #content { height: 1590px; }
     #content_2>div { width: 100%; }
     #content_2_1 { height: 230px; float: left; }
     #content_2_2 { height: auto; float: left; }
@@ -185,9 +185,12 @@
                                 <div>
                                     <div class="container-fluid">
                                     	<div class="d-flex"> <!-- 반복 돌렸을 때 옆으로 배치되게 바꾸기 -->
+                                    	<c:set var="count" value="1"/>
                                     	<c:forEach var="i" begin="0" end="${ prlist.size() - 1 }">
+                                    		
+                                    		
                                     		<c:if test="${ prlist[i].pollLevel eq 1 }">
-                                  				      
+                                  							<c:set var="count" value="${ count + 1 }"/>	      
 				                                            <div style="margin-right : 10px;">
 				                                                <div id="circle"><img src="${ prlist[i].productEffectPath }"></div>
 				                                                <div id="pictoT"><p>${ prlist[i].productEffect }</p></div>
@@ -201,8 +204,10 @@
                                 </div>
                             </div>
                         </div>
+                        <c:if test="${ count ne 10 }">
                         
-                        <div id="icon_2" >
+                        
+                        	<div id="icon_2" >
                             <div id="iconn">
                                 <div id="icon2_btn" class="btnn"><div><button type="button" class="btn btn-outline-danger">권장</button></div></div>
                                 <div id="icon2_text" class="textt" ><p style="color : #FF7852;">관심을 가져주세요.</p></div>
@@ -213,6 +218,7 @@
                                     <div class="container-fluid">
                                         <div class="d-flex"> <!-- 반복 돌렸을 때 옆으로 배치되게 바꾸기 -->
                                         	<c:forEach var="i" begin="0" end="${ prlist.size() -1 }">
+                                        		
                                         		<c:if test="${ prlist[i].pollLevel eq 2 }">
                                         			<div style="margin-right : 10px;">
 		                                                <div id="icon2_circle"><img src="${ prlist[i].productEffectPath }"></div>
@@ -226,10 +232,17 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
+                        
+                        
+                        
+                        </c:if>
+                        
+                        </div>
                     
                     <div style="height: 100px;"></div>
                     
+                    <br clear="both">
                     <div align="center">
                         <div id="tuijian" style="border: 2px solid #78C2AD; width: 70%; border-radius: 10px;">
                         	<form action="insertCart.po" method="post">

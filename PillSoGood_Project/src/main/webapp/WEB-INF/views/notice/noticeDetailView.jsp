@@ -17,7 +17,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: 1530px;
+        
         margin : auto;
     }
 
@@ -25,7 +25,7 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1150px; }
+    #content { display:flex; }
     #content_2>div { width: 100%; }
     #content_2_1 { height: 10%; float: left; }
     #content_2_2 { height: 80%; float: left; }
@@ -46,7 +46,7 @@
     #content_2 { width : 60%; }
     #content_3 { width : 20%; }
 
-    body { font-family: 'Noto Sans KR', sans-serif !important; }
+    body * { font-family: 'Noto Sans KR', sans-serif !important; }
 
     #noticeModify {
         margin-right : 20px;
@@ -83,6 +83,9 @@
         font-weight: bold;
     }
     
+    #content_2 table *, #content_2 pre {
+    	color : black;
+    }
     
 </style>
 
@@ -150,7 +153,7 @@
                     </div>
 
                     <div>
-                        <textarea name="" id="noticeContent" class="form-control" readonly>${ n.noticeContent}</textarea>
+                        <pre>${ n.noticeContent}</pre>
 
                         <br>
                         <table class="table table-hover" id="noticePrevNextTable">
@@ -179,6 +182,12 @@
                          
                          
                      <script>
+                     
+                     	const textarea = $("#noticeContent");
+                     	const handlesize = ()=> {
+                     		textarea.current.style.height = 'auto';
+                     		textarea.current.style.height = textarea.current.scrollHeight + 'px';
+                     	}
 						$(function() {
 							
 							$("#noticePrevNextTable>tbody>tr").click(function() {
@@ -194,7 +203,7 @@
 
                 </div>
                 <div id="content_2_3">
-                    <div class="col text-center" style="height:100%;">
+                    <div class="col text-center" style="height:100px;">
                         <button class="btn btn-primary btn-lg" onclick="location.href='/PillSoGood/list.no'"> 목록으로 </button>
                     </div>
                 </div>
