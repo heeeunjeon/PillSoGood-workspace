@@ -113,7 +113,7 @@
                     </div>
                     <div align="center" id="btn">
                         <button class="btn btn-light" onclick="location.href='index.jsp'">메인으로</button> &ensp;
-                        <button class="btn btn-secondary">건강설문 시작하기</button>
+                        <button class="btn btn-secondary" onclick="location.href='survey.po'">건강설문 시작하기</button>
                     </div>
                 </div>
                 <div id="content_2_3"></div>
