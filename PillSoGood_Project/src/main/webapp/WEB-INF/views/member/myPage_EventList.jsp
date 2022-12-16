@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>PillSoGood</title>
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+<title>찜한 이벤트 조회</title>
 
 <style>
 
@@ -103,11 +104,8 @@
 
 </style>
 
-
 </head>
 <body>
-
-
 
     <div class="wrap">
         <div id="navigator2">
@@ -121,10 +119,9 @@
                     <p>MY PAGE</p>
                 </div>
                 <div id="content_2_2" style="padding-top:10px;">
-                    
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">홍길동</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
                             <br>
                             <p><a href="myPage.or">주문 조회</a></p>
                             <p><a href="myPage.subs">정기구독 관리</a></p>
@@ -139,58 +136,75 @@
                     <div id="mypage_content">
                         <h4>찜한 이벤트</h4>
                         <hr>
-
+						
+						<c:forEach var="e" begin="0" end="${ myList.size()-1}">
+							<table id="eventT" class="eventT" align="center">
+                                <tr>
+                                    <td><input type="hidden" value="${ myList[e].eventwNo }"></td>
+                                    <td width="600px" style="font-size: 20px; padding-top: 20px;"><b>${ myList[e].eventTitle }</b></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="${ myList[e].evtImgName }" width="70" height="70" ></td>
+                                </tr>
+	                        </table>
+						</c:forEach>
+						
+						<%-- 레퍼런스 
                         <div align="center">
                             <!-- a href 속성 : 이벤트 상세 -->
                             <div class="likes" align="center">
                                 <a href=""><img src="../../pill2.png" width="90%" height="80%"></a>
                                 <b>정기구독 이벤트!</b>
                             </div>
-                            
-                            <!-- 찜이벤트 갯수만큼 반복 (4개씩 페이징) -->
-                            <div class="likes" align="center">
-                                <a href=""><img src="../../pill2.png" width="90%" height="80%"></a>
-                                <b>정기구독 이벤트!</b>
-                            </div>
-
-                            <div class="likes" align="center">
-                                <a href=""><img src="../../pill2.png" width="90%" height="80%"></a>
-                                <b>정기구독 이벤트!</b>
-                            </div>
-
-                            <div class="likes" align="center">
-                                <a href=""><img src="../../pill2.png" width="90%" height="80%"></a>
-                                <b>정기구독 이벤트!</b>
-                            </div>
                         </div>
                         <br>
+						--%>
+						
+                        <!-- 페이지 -->
+                        <div id="noticePagination">
+	                        <nav aria-label="Page navigation">
+	                            <ul class="pagination  justify-content-center">
+	                            	<c:choose>
+				                		<c:when test="${ pi.currentPage eq 1 }">
+				                			<li class="page-item disabled" ><a class="page-link">&lt;</a></li>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<li class="page-item"><a class="page-link" href="myPage.ev?cpage=${ pi.currentPage - 1 }">&lt;</a></li>	
+				                		</c:otherwise>
+				                	</c:choose>
 
-                        <div style="float: left;">
-                            <ul class="pagination pagination-sm">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#">&laquo; prev</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div style="float: right;">
-                            <ul class="pagination pagination-sm">
-                                <li class="page-item">
-                                    <a class="page-link" href="#">next &raquo;</a>
-                                </li>
-                            </ul>
-                        </div>
-
+									<div style="width: 70%;"></div>
+	            	                
+				                    <c:choose>
+				                		<c:when test="${ (pi.currentPage eq pi.maxPage) or (pi.maxPage eq 0) }">
+				                			<li class="page-item disabled" ><a class="page-link">&gt;</a></li>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<li class="page-item"><a class="page-link" href="myPage.ev?cpage=${ pi.currentPage + 1 }">&gt;</a></li>	
+				                		</c:otherwise>
+				                	</c:choose>
+	                            </ul>
+	                        </nav>
+                    	</div>
                     </div>
-
                 </div>
-
             </div>
             <div id="content_3"></div>
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
     
-
+    <script>
+		
+        // 이벤트 상세 조회
+        $(function() {
+            $(".reviewT").click(function() {
+                var eno = $(this).children('tr').eq(0).children('td').eq(0).children('input').eq(0).val();
+                location.href = "detail.ev?eno=" + eno;
+            });
+        });
+        
+    </script>
 
 </body>
 </html>

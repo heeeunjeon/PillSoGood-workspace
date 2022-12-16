@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
+import com.kh.pill.event.model.vo.Event;
 import com.kh.pill.member.model.service.MyPageService;
 import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.order.model.vo.Cart;
@@ -21,6 +22,8 @@ import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
 import com.kh.pill.product.model.vo.Product;
+import com.kh.pill.review.model.vo.Review;
+import com.kh.pill.review.model.vo.ReviewFile;
 
 @Controller
 public class MyPageController {
@@ -248,27 +251,70 @@ public class MyPageController {
 	 * @return
 	 */
 	@RequestMapping("myPage.re")
-	public String myPageReviewList() {
+	public String myPageReviewList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+				
+				// 내 리뷰 전체 조회용 페이징
+				int listCount = myPageService.selectMyReviewListCount(memberNo);
+				// System.out.println("listCount : " + listCount);
+				int pageLimit = 5;
+				int boardLimit = 5;
+				
+				PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+				model.addAttribute("pi", pi);
+				System.out.println("pi : " + pi);
+				
+				// 내 리뷰 전체 조회
+				ArrayList<Review> myList = myPageService.selectMyReviewList(pi, memberNo);
+				// System.out.println("myList : " + myList);
+				
+				for(int i = 0; i < myList.size()-1; i++) {
+					
+					Review review = myList.get(i);
+					
+					int rno = 0;
+					rno = review.getReviewNo();
+						
+					ArrayList<ReviewFile> flist = myPageService.selectReviewFile(rno);
+					int replyCount = myPageService.selectReplyCount(rno);
+					
+					review.setFlist(flist);
+					review.setReplyCount(replyCount);
+				}
+				model.addAttribute("myList", myList);
 		
 		return "member/myPage_ReviewList";
 	}
 	
-	
-	
-	
 	/**
 	 * 
-	 * 이벤트 좋아요 페이지 
+	 * 찜한 이벤트 페이지 
 	 * @return
 	 */
 	@RequestMapping("myPage.ev")
-	public String myPageEventList() {
+	public String myPageEventList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		// 내 리뷰 전체 조회용 페이징
+		int listCount = myPageService.selectMyEventListCount(memberNo);
+		// System.out.println("listCount : " + listCount);
+		int pageLimit = 5;
+		int boardLimit = 5;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		model.addAttribute("pi", pi);
+		// System.out.println("pi : " + pi);
+		
+		// 내가 찜한 이벤트 전체 조회
+
+		ArrayList<Event> myList = myPageService.selectMyEventList(pi, memberNo);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("myList", myList);
 		
 		return "member/myPage_EventList";
 	}
 	
-	
-	
-	
-
 }

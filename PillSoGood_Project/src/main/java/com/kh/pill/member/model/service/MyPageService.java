@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.event.model.vo.Event;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
 import com.kh.pill.product.model.vo.Product;
+import com.kh.pill.review.model.vo.Review;
+import com.kh.pill.review.model.vo.ReviewFile;
 
 public interface MyPageService {
 	
@@ -37,5 +40,20 @@ public interface MyPageService {
 	// 설문 결과 조회용
 	ArrayList<Poll> selectPollList(int memberNo);
 	ArrayList<PollResult> selectPollResult(int memberNo);
+
+	// 후기 조회 리스트 카운트
+	int selectMyReviewListCount(int memberNo);
+	// 후기 조회
+	ArrayList<Review> selectMyReviewList(PageInfo pi, int memberNo);
+	// 후기 첨부파일 조회
+	ArrayList<ReviewFile> selectReviewFile(int rno);
+	// 후기 조회수
+	int selectReplyCount(int rno);
+	
+	// 이벤트 조회 리스트 카운트
+	int selectMyEventListCount(int memberNo);
+	// 이벤트 조회
+	ArrayList<Event> selectMyEventList(PageInfo pi, int memberNo);
+	
 
 }

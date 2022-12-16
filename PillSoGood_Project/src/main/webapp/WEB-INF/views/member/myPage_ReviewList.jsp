@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+<title>내 후기 조회</title>
 
 <style>
 
@@ -93,7 +95,6 @@
 </head>
 <body>
 
-
     <div class="wrap">
         <div id="navigator2">
             <jsp:include page="../common/menubar.jsp" />
@@ -106,10 +107,9 @@
                     <p>MY PAGE</p>
                 </div>
                 <div id="content_2_2" style="padding-top:10px;">
-                    
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">홍길동</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
                             <br>
                             <p><a href="myPage.or">주문 조회</a></p>
                             <p><a href="myPage.subs">정기구독 관리</a></p>
@@ -120,141 +120,100 @@
                             <p><a href="myPage.ev">찜한 이벤트</a></p>
                         </div>
                     </div>
-
                     <div id="mypage_content">
                         <h4>내 후기 조회</h4>
                         <hr>
+						<c:forEach var="i" begin="0" end="${ myList.size()-1}">
+							<table id="reviewT" align="center">
+	                               <thead>
+		                                <tr>
+		                               		<td><input type="hidden" value="${ myList[i].reviewNo }"></td>
+		                               		<td width="600px" style="font-size: 20px; padding-top: 20px;"><b>${ myList[i].reviewTitle }</b></td>
+											<td><button type="submit" class="btn btn-secondary btn-delete" onclick="location.href='delete.re?rno=${ myList[i].reviewNo }'">삭제</button></td>
+							        	</tr>
+							        </thead>
+							        <tbody class="reviewT">
+		                                <tr>
+		                                   <td>
+		                                       <span style="color: #78C2AD;">
+		                                       		<c:forEach var="j" begin="1" end="${ myList[i].reviewGrade}">
+	                                					<i class="fa-solid fa-star"></i>
+	                                				</c:forEach>
+		                                       </span>
+		                                   </td>
+		                                   <td>${ myList[i].reviewDate }</td>
+		                                </tr>
+		                                <tr height="100px">
+		                                    <td><P>${fn:substring(myList[i].reviewContent, 0, 20)}...</P></td>
+		                                </tr>
+		                                <tr>
+		                                   <td>
+		                                   		<c:forEach var="f" items="${myList[i].flist}">
+		                                   			<img src="${ f.filePath }${ f.changeName }" width="70" height="70" >
+		                                   		</c:forEach>
+		                                   </td>
+		                                </tr>
+	                            </tbody>
+	                            </table>
+						</c:forEach>
 
-                        <div>
-                            <table>
-                                <tr>
-                                    <td rowspan="2" width="15%"><img src="../../pill2.png" width="100%;" style="padding: 15px 15px 15px 0px;"></td>
-                                    <th width="70%" style="padding-left: 15px;">프로바이오틱스</th>
-                                    <th width="15%">2022.11.22</th>
-                                </tr>
-                                <tr height="70px">
-                                    <td class="review_content">
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <hr>
+                        <!-- 페이지 -->
+                        <div id="noticePagination">
+	                        <nav aria-label="Page navigation">
+	                            <ul class="pagination  justify-content-center">
+	                            	<c:choose>
+				                		<c:when test="${ pi.currentPage eq 1 }">
+				                			<li class="page-item disabled" ><a class="page-link">&lt;</a></li>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<li class="page-item"><a class="page-link" href="myPage.re?cpage=${ pi.currentPage - 1 }">&lt;</a></li>	
+				                		</c:otherwise>
+				                	</c:choose>
 
-                        <div>
-                            <table>
-                                <tr>
-                                    <td rowspan="2" width="15%"><img src="../../pill2.png" width="100%;" style="padding: 15px 15px 15px 0px;"></td>
-                                    <th width="70%" style="padding-left: 15px;">프로바이오틱스</th>
-                                    <th width="15%">2022.11.22</th>
-                                </tr>
-                                <tr height="70px">
-                                    <td class="review_content">
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <hr>
-
-                        <div>
-                            <table>
-                                <tr>
-                                    <td rowspan="2" width="15%"><img src="../../pill2.png" width="100%;" style="padding: 15px 15px 15px 0px;"></td>
-                                    <th width="70%" style="padding-left: 15px;">프로바이오틱스</th>
-                                    <th width="15%">2022.11.22</th>
-                                </tr>
-                                <tr height="70px">
-                                    <td class="review_content">
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <hr>
-
-                        <div>
-                            <table>
-                                <tr>
-                                    <td rowspan="2" width="15%"><img src="../../pill2.png" width="100%;" style="padding: 15px 15px 15px 0px;"></td>
-                                    <th width="70%" style="padding-left: 15px;">프로바이오틱스</th>
-                                    <th width="15%">2022.11.22</th>
-                                </tr>
-                                <tr height="70px">
-                                    <td class="review_content">
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <hr>
-
-                        <div>
-                            <table>
-                                <tr>
-                                    <td rowspan="2" width="15%"><img src="../../pill2.png" width="100%;" style="padding: 15px 15px 15px 0px;"></td>
-                                    <th width="70%" style="padding-left: 15px;">프로바이오틱스</th>
-                                    <th width="15%">2022.11.22</th>
-                                </tr>
-                                <tr height="70px">
-                                    <td class="review_content">
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                        먹기도 편하게 되어있고 이거 먹은 뒤로 간이 좀 건강해지는 느낌이 드네요 
-                                        요새 피로감이 많았는데 그것도 많이 줄었어요
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <hr>
-
-
-                        <div>
-                            <ul class="pagination pagination-sm">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#">&laquo;</a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">4</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">5</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">&raquo;</a>
-                                </li>
-                            </ul>
-                        </div>
-
+									<div style="width: 70%;"></div>
+	            	                
+				                    <c:choose>
+				                		<c:when test="${ (pi.currentPage eq pi.maxPage) or (pi.maxPage eq 0) }">
+				                			<li class="page-item disabled" ><a class="page-link">&gt;</a></li>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<li class="page-item"><a class="page-link" href="myPage.re?cpage=${ pi.currentPage + 1 }">&gt;</a></li>	
+				                		</c:otherwise>
+				                	</c:choose>
+	                            </ul>
+	                        </nav>
+                    	</div>
                     </div>
-
                 </div>
-
             </div>
             <div id="content_3"></div>
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
     
+    <script>
+		
+        // 내 리뷰 조회수 증가
+        $(function() {
+            $(".reviewT").click(function() {
+                var rno = $(this).parent('table').children('thead').eq(0).children('tr').eq(0).children('td').eq(0).children('input').eq(0).val();
+                // console.log(rno);
+                // var rno = $(this).children("tbody").eq(0).children("tr").eq(0).children("input").eq(0).val();
+                location.href = "detail.re?rno=" + rno;
+            });
+        });
+        
+        // 내 리뷰 삭제
+        $(function() {
+            $(".btn-delete").click(function() {
+                
+                var rno = $(this).parent('td').prev().prev('td').children('input').eq(0).val();
+                // console.log(rno);
+                location.href = "myDelete.re?rno=" + rno;
+            });
+        });
+			
+    </script>  	
 
 </body>
 </html>

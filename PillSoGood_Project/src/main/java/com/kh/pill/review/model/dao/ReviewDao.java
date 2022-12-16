@@ -58,15 +58,17 @@ public class ReviewDao {
 	public Review selectReview(SqlSessionTemplate sqlSession, int reviewNo) {
 		return sqlSession.selectOne("reviewMapper.selectReview", reviewNo);
 	}
-
-	public int deleteReview(SqlSessionTemplate sqlSession, int reviewNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public ArrayList<Integer> selectProductNoList(SqlSessionTemplate sqlSession, int rno) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectProductNoList", rno);
 	}
 
-	public int updateReview(SqlSessionTemplate sqlSession, Review r) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteReview(SqlSessionTemplate sqlSession, int rno2) {
+		return sqlSession.update("reviewMapper.deleteReview", rno2);
+	}
+	
+	public int deleteReviewFile(SqlSessionTemplate sqlSession, int rno2) {
+		return sqlSession.update("reviewMapper.deleteReviewFile", rno2);
 	}
 
 	public ArrayList<ReviewReply> selectReviewReplyList(SqlSessionTemplate sqlSession, int reviewNo) {
@@ -104,16 +106,6 @@ public class ReviewDao {
 	public ArrayList<Review> selectROrderProductNameList(SqlSessionTemplate sqlSession, int orderNo) {
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectROrderProductNameList", orderNo);
 	}
-	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
-	
-	
-
-	
-
-
 	
 }

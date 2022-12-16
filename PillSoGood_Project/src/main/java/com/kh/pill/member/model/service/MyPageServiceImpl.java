@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.event.model.vo.Event;
 import com.kh.pill.member.model.dao.MyPageDao;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
 import com.kh.pill.product.model.vo.Product;
+import com.kh.pill.review.model.vo.Review;
+import com.kh.pill.review.model.vo.ReviewFile;
 
 @Service
 public class MyPageServiceImpl implements MyPageService {
@@ -117,7 +120,42 @@ public class MyPageServiceImpl implements MyPageService {
 		return myPageDao.selectPollList(sqlSession, memberNo);
 	}
 
+	/**
+	 * 후기 조회용 서비스
+	 */
+	@Override
+	public int selectMyReviewListCount(int memberNo) {
+		return myPageDao.selectMyReviewListCount(sqlSession, memberNo);
+	}
 
+	@Override
+	public ArrayList<Review> selectMyReviewList(PageInfo pi, int memberNo) {
+		return myPageDao.selectMyReviewList(sqlSession, pi, memberNo);
+	}
+
+	/**
+	 * 이벤트 조회용 서비스
+	 */
+	@Override
+	public int selectMyEventListCount(int memberNo) {
+		return myPageDao.selectMyEventListCount(sqlSession, memberNo);
+	}
+
+	@Override
+	public ArrayList<Event> selectMyEventList(PageInfo pi, int memberNo) {
+		return myPageDao.selectMyEventList(sqlSession, pi, memberNo);
+	}
+
+	@Override
+	public ArrayList<ReviewFile> selectReviewFile(int rno) {
+		return myPageDao.selectReviewFile(sqlSession, rno);
+	}
+
+	@Override
+	public int selectReplyCount(int rno) {
+		return myPageDao.selectReplyCount(sqlSession, rno);
+	}
+	
 
 
 }

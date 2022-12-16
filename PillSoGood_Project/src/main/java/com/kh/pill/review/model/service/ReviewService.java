@@ -22,20 +22,19 @@ public interface ReviewService {
 	ArrayList<ReviewFile> selectReviewFile(int rno);
 	// 일반 리뷰 게시글 댓글개수 rno별 조회
 	int selectReplyCount(int rno);
+	
 	// 리뷰 게시글 상세 조회 서비스
 	// 리뷰 게시글 조회수 증가
 	int increaseCount(int reviewNo);
 	// 리뷰 게시글 상세 조회 요청
 	Review selectReview(int ReviewNo);
-	
+	// 리뷰 게시글 상품번호 조회 서비스
+	ArrayList<Integer> selectProductNoList(int rno);
 	
 	// 리뷰 게시글 삭제 서비스
-	int deleteReview(int reviewNo);
-	
-	
-	// 리뷰 게시글 수정 서비스
-	int updateReview(Review r);
-	
+	int deleteReview(int rno2);
+	// 리뷰 게시글 첨부파일 삭제 서비스
+	int deleteReviewFile(int rno2);
 	
 	// 리뷰 댓글 관련
 	// 리뷰 댓글 리스트 조회용 서비스 (Ajax)
@@ -61,10 +60,6 @@ public interface ReviewService {
 
 	
 	
-	
-	
-	// 리뷰 게시글 작성 서비스
-	int insertReview(Review r);
 	
 
 	

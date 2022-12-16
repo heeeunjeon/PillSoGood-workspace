@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
 import com.kh.pill.member.model.vo.Member;
+import com.kh.pill.product.model.service.ProductService;
 import com.kh.pill.product.model.vo.Product;
 import com.kh.pill.review.model.service.ReviewService;
 import com.kh.pill.review.model.vo.Review;
@@ -33,6 +34,9 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private ProductService productService;
 	
 	// 메뉴바 클릭시 => list.re (기본적으로 1번 페이지 요청)
 	// 페이징바 클릭 시 => list.re?cpage=요청하는페이지수&order=~~
@@ -101,7 +105,6 @@ public class ReviewController {
 		return "review/reviewListView";
 	}
 	
-	// productName 이 담기기는 하는데, 컬럼이 없어서 조회 때 보여줄 길이 없음. 인증 조건 정도로 해야하거나, 선생님한테 여쭤보기
 	@RequestMapping("enrollForm.re")
 	public String enrollForm(int memberNo, Model model) {
 		
@@ -152,7 +155,6 @@ public class ReviewController {
 		return "review/reviewEnrollForm";
 	}
 	
-	// productName 이 담기기는 하는데, 컬럼이 없어서 조회 때 보여줄 길이 없음. 인증 조건 정도로 해야하거나, 선생님한테 여쭤보기
 	@RequestMapping("insert.re")
 	public ModelAndView insertReview(int orderNo, Review r, List<MultipartFile> upfile, HttpSession session, ModelAndView mv) {
 		
@@ -179,13 +181,13 @@ public class ReviewController {
 				rOrderProductNames += rOrderProductNameList.get(j).getProductName();
 			}
 		}
-		System.out.println("rOrderProductNames : " + rOrderProductNames);
+		// System.out.println("rOrderProductNames : " + rOrderProductNames);
 		
 
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		r.setMemberNo(memberNo);
 
-		System.out.println(r);
+		// System.out.println(r);
 		
 		// 먼저 파일 여부와 무관하게 rawReview 를 insert
 		int rawResult = reviewService.insertRawReview(r);
@@ -305,81 +307,27 @@ public class ReviewController {
 			ArrayList<ReviewFile> flist = reviewService.selectReviewFile(rno);
 			r.setFlist(flist);
 			
-			// 조회된 데이터를 담아서 review/reviewDetailView.jsp 로 포워딩 
-			mv.addObject("r", r).setViewName("review/reviewDetailView");
-			/* 
-			 * 여기에 맞춤 상품 (list.pr 인데 )
-			 * 
-			 * SELECT PRODUCT_NO
-			 * FROM CART
-			 * WHERE CART_NO IN(SELECT CART_NO
-			 * FROM ORDER_CART
-			 * WHERE ORDER_NO IN (SELECT ORDER_NO
-			 * FROM REVIEW
-			 * WHERE REVIEW_NO = #{rno}))
-			 * 
-			 * 하면 여러 개 나옴 => 이걸 어떤 타입으로 받아야하지? { 1, 2, 3, ... } 이런거
-			 * 
-			 * 그 다음 그거를 for( : ) {} 로 하나씩 뱉고 그 값으로 
-			 * Product p = productService.selectProduct(pno); 
-			 * 
-			 * 그 다음 ArrayList<Product> 에 담고 
-			 * mv.addObject("p", p).setViewName("review/reviewDetailView");
-			 * 
-			 * 상세 페이지 가서 
-			 * <div id="product">
-								
-                            <c:forEach var="p" items="${ list }">
-                            <div id="product_1">
-                                <div id="product_1_1" class="prod" style="cursor:pointer;">
-                                    <div id="productT">
-                                        <div id="productTT">
-                                        	<input type="hidden" value="${ p.productNo }">
-                                            <div id="productTT_1"><p>${ p.productExplain }엔</p></div>
-                                            <div id="productTT_2"><p>${ p.productName }</p></div>
-                                            <div id="productTT_3"><p>30일분</p></div>
-                                        </div>
-                                        <div id="productPP"><img src="${ p.productImgPath }"></div>
-                                    </div>
-                                    <div id="productP">
-                                        <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            </c:forEach>
-                            
-
-                        </div>
-                        
-                        <script>
-			            	$(function() {
-			            		$(".prod").click(function() {
-			            			
-			            			location.href = "detail.pr?pno=" + $(this).children().eq(0).children().eq(0).children().eq(0).val();
-			            		});
-
-                                var $prods = $(".prod");
-
-                                $.each($prods, function(index, prod) {
-
-                                    let indexNum = index % 9;
-
-                                    $(prod).addClass("prodback" + indexNum);
-                                });
-			            	});	
-			            </script>
-			 * 
-			 * 하고 더보기 클릭만 javascript 로 생각해보기
-			 * 
-			 * 
-			 * 
-			 * 
-			 * 
-			 */
+			// 해당 리뷰에 첨부되어 있는 상품 번호 리스트 조회 후 담기
+			ArrayList<Integer> pNoList = reviewService.selectProductNoList(rno); 
+			// System.out.println("pNoList : " + pNoList);
 			
+			ArrayList<Product> pList = new ArrayList<>();
+
+			for( int pno : pNoList) {
+				
+				Product p = productService.selectProduct(pno);
+				pList.add(p);
+				// System.out.println("p : " + p);
+			}
+			
+			r.setPList(pList);
+			// System.out.println("pList : " + pList);
 			// System.out.println("r : " + r);
-		
+			
+			// 조회된 데이터를 담아서 review/reviewDetailView.jsp 로 포워딩
+			mv.addObject("pList", pList);
+			mv.addObject("r", r).setViewName("review/reviewDetailView");
+			
 		}
 		else { // 실패 
 			
@@ -429,47 +377,71 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("delete.re")
-	public String deleteReview(int rno, String filePath, HttpSession session, Model model) {
-		
-		// System.out.println(rno);
-		
-		int result = reviewService.deleteReview(rno);
-		
-		if(result > 0) { // 리뷰 삭제 성공
-			
-			// 첨부파일이 있을 경우 => 파일 삭제
-			// filePath 에는 해당 게시글의 수정파일명이 들어있음
-			// filePath 값이 빈 문자열이 아니라면 첨부파일이 있었던 경우임
-			if(!filePath.equals("")) {
+	public String deleteReview(String rno, HttpSession session, Model model) {
 				
-				String realPath = session.getServletContext().getRealPath(filePath);
-				new File(realPath).delete();
-			}
-			
-			// 게시판 리스트 페이지 url 재요청
+		int rno2 = Integer.parseInt(rno);
+		
+		// 리뷰에 첨부되어 있는 파일들 삭제
+		int result1 = reviewService.deleteReviewFile(rno2);
+		System.out.println("result1 : " + result1);
+
+		// 리뷰 삭제
+		int result = reviewService.deleteReview(rno2);
+		System.out.println("result : " + result);
+		
+		if( result > 0 ) {
+			// 리뷰 리스트 페이지 url 재요청
 			session.setAttribute("alertMsg", "성공적으로 리뷰가 삭제되었습니다.");
-			
 			return "redirect:/list.re";
 		}
 		else { // 리뷰 삭제 실패
 			
-			model.addAttribute("errorMsg", "리뷰 삭제 실패");
-			
-			return "common/errorPage";
+			model.addAttribute("alertMsg", "리뷰 삭제 실패");
+			return "redirect:/list.re";
 		}
+		
 	}
-  
+		
+	@RequestMapping("myDelete.re")
+	public String deleteMyReview(String rno, HttpSession session, Model model) {
+				
+		int rno2 = Integer.parseInt(rno);
+		
+		// 리뷰에 첨부되어 있는 파일들 삭제
+		int result1 = reviewService.deleteReviewFile(rno2);
+		System.out.println("result1 : " + result1);
+
+		// 리뷰 삭제
+		int result = reviewService.deleteReview(rno2);
+		System.out.println("result : " + result);
+		
+		if( result > 0 ) {
+			// 리뷰 리스트 페이지 url 재요청
+			session.setAttribute("alertMsg", "성공적으로 리뷰가 삭제되었습니다.");
+			return "redirect:/myPage.re";
+		}
+		else { // 리뷰 삭제 실패
+			
+			model.addAttribute("alertMsg", "리뷰 삭제 실패");
+			return "redirect:/myPage.re";
+		}
+		
+	}
+	
+  	/*
 	@RequestMapping("updateForm.re")
 	public String updateForm(int rno, Model model) {
 		
 		// 리뷰 수정 페이지를 포워딩 하기 전에 우선적으로 해당 리뷰 정보 조회
 		Review r = reviewService.selectReview(rno); // 기존의 상세보기 서비스 재활용
+		System.out.println("r : " + r);
 		
 		model.addAttribute("r", r);
 		
 		return "review/reviewUpdateForm";
 	}
-	
+	*/
+	/*
 	@RequestMapping("update.re")
 	public String updateReview(Review r, MultipartFile reupfile, HttpSession session, Model model) {
 		
@@ -484,7 +456,7 @@ public class ReviewController {
 			// r 의 changeName : 기존 첨부파일의 수정명
 			
 			// 1. 기존 첨부파일이 있었을 경우 => 기존 첨부파일을 찾아서 삭제
-			/*
+			
 			if(r.getOriginName() != null) {
 				String realPath = session.getServletContext().getRealPath(r.getChangeName());
 				new File(realPath).delete();
@@ -496,9 +468,9 @@ public class ReviewController {
 			// 3. r 객체에 새로 넘어온 첨부파일에 대한 원본명, 수정파일명 필드에 담기
 			r.setOriginName(reupfile.getOriginalFilename());
 			r.setChangeName("resources/uploadFiles/" + changeName);
-			*/
+			
 		}
-		
+		*/
 		/*
 		 * r 에 무조건 담겨있는 내용
 		 * reviewNo, reviewTitle, reviewContent
@@ -517,7 +489,7 @@ public class ReviewController {
 		 * => originName : 새로 첨부된 파일의 원본명
 		 *    changeName : 새로 첨부된 파일의 수정명 + 파일경로
 		 */
-		
+		/*
 		// Service 단으로 r 보내기
 		int result = reviewService.updateReview(r);
 		
@@ -536,9 +508,6 @@ public class ReviewController {
 		}
 		
 	}
-
-	
-	
-	
+	*/
 	
 }

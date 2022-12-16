@@ -54,7 +54,6 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.selectReplyCount(sqlSession, rno);
 	}
 
-
 	@Override
 	public int increaseCount(int reviewNo) {
 		
@@ -66,18 +65,22 @@ public class ReviewServiceImpl implements ReviewService {
 		
 		return reviewDao.selectReview(sqlSession, reviewNo);
 	}
-
+	
 	@Override
-	public int deleteReview(int reviewNo) {
-		return reviewDao.deleteReview(sqlSession, reviewNo);
+	public ArrayList<Integer> selectProductNoList(int rno) {
+		return reviewDao.selectProductNoList(sqlSession, rno);
 	}
 
 	@Override
-	public int updateReview(Review r) {
-
-		return reviewDao.updateReview(sqlSession, r);
+	public int deleteReview(int rno2) {
+		return reviewDao.deleteReview(sqlSession, rno2);
 	}
 
+	@Override
+	public int deleteReviewFile(int rno2) {
+		return reviewDao.deleteReviewFile(sqlSession, rno2);
+	}
+	
 	@Override
 	public ArrayList<ReviewReply> selectReviewReplyList(int reviewNo) {
 		return reviewDao.selectReviewReplyList(sqlSession, reviewNo);
@@ -119,16 +122,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 	@Override
 	public ArrayList<Review> selectROrderProductNameList(int orderNo) {
-		return (ArrayList)reviewDao.selectROrderProductNameList(sqlSession, orderNo);
+		return reviewDao.selectROrderProductNameList(sqlSession, orderNo);
 	}
-	@Override
-	public int insertReview(Review r) {
-
-		return reviewDao.insertReview(sqlSession, r);
-	}
-
-	
-	
 	
 	
 

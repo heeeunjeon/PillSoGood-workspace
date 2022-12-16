@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -9,14 +9,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-        <title>Document</title>
+        <title>후기 상세 조회</title>
     <style>
     
-        
-    div {
-
-        box-sizing : border-box;
-        }
+        div { box-sizing : border-box; }
 
         /* 전체를 감싸는 wrap */
         .wrap {
@@ -184,6 +180,53 @@
         	color: black;
         }
         
+        /* 샛별 상품 목록 스타일 */
+        #product>div { 
+        width: 33.3%; 
+        height: 200px; 
+        float: left;
+        padding: 15px;
+        }
+
+        #product>div>div { 
+            width: 100%;
+            height: 100%;
+            float: left; 
+            border-radius: 15px;
+        }
+
+        #product>div>div>div { width: 100%; float: left; }
+
+        #productT { height: 65%; }
+        #productP { height: 35%; }
+
+        #productT>div { height: 100%; float: left; }
+        #productTT { width: 60%; }
+        #productPP { width: 40%; }
+
+        #productPP>img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            margin: auto;
+        }
+
+        #productTT>div { width: 100%; height: 33.3%; float: left; }
+        
+        #productTT p { margin: 0px; margin-left: 20px; color: black; }
+        #productTT_1>p { font-size: 15px; line-height: 55px; }
+        #productTT_3>p { font-size: 15px; line-height: 45px; }
+        #productTT_2>p { font-size: 20px; line-height: 50px; font-weight: bold; }
+
+
+        #productP>p {
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            margin-left: 20px;
+            line-height: 40px;
+        }
+        
     </style>
     
     </head>
@@ -197,17 +240,20 @@
                 <div id="content_1"></div>
                 <div id="content_2">
                     <div id="content_2_1">
-                         <!-- 로고 영역 -->
+                        <!-- 로고 영역 -->
                         <div class="logoArea">
                             <jsp:include page="../common/logo.jsp" />
-                        <p style="display: inline; font-size: 20px;">고객후기</p>
-                    </div>
+                            <p style="display: inline; font-size: 20px;">고객후기</p>
+                        </div>
                     </div>
                     <div id="content_2_2" >
-
                         <div class="btnArea">
-                            <button type="submit" class="btn btn-secondary">삭제</button>
-                            <button type="reset" class="btn btn-light">수정</button>
+                        	<button type="submit" class="btn btn-secondary btn-delete" onclick="location.href='delete.re?rno=${ r.reviewNo }'">삭제</button>
+                            <%-- 
+                            	수정 기능 미구현
+                            	<button type="reset" class="btn btn-light btn-update" onclick="location.href='updateForm.re?rno=${ r.reviewNo }'">수정</button>
+                            	'실 결제건에 대한 댓글이 달리는 후기이므로, 수정 기능을 제공하지 않습니다.'
+                            --%>
                         </div>
 
                         <hr>
@@ -216,10 +262,14 @@
                         <div class="reviewDetailArea">
                             <table class="reviewDetail">
                                 <tr>
-                                    <td>나중에 희원이한테 받을 결제 상품 목록</td>
+                                    <td>
+                                    	<c:forEach var="p" items="${pList}">
+                                    		<span>${p.productName}&nbsp;</span>
+                                    	</c:forEach>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td">
+                                    <td>
                                         <span style="color: #78C2AD;">
 	                                       		<c:forEach var="j" begin="0" end="${ r.reviewGrade -1 }">
                                 					<i class="fa-solid fa-star"></i>
@@ -232,12 +282,14 @@
                                     <td>
 										<c:choose>
 	                               			<c:when test="${ r.subsStatus eq 'N'}">
-	                               				<td>${ r.memberName }&ensp;
-	                               				<span style="color: #78C2AD;">일시결제</span>&ensp;</td>
+	                               				<td>
+                                                    ${ r.memberName }&ensp;<span style="color: #78C2AD;">일시결제</span>&ensp;
+                                                </td>
 	                               			</c:when>
 	                               			<c:when test="${ r.subsStatus eq 'Y'}">
-	                               				<td>${ r.memberName }&ensp;
-	                               				<span style="color: #78C2AD;">정기결제</span>&ensp;</td>
+	                               				<td>
+                                                    ${ r.memberName }&ensp;<span style="color: #78C2AD;">정기결제</span>&ensp;
+                                                </td>
 	                               			</c:when>
 	                               		</c:choose>
 	                               </td>
@@ -259,63 +311,46 @@
                         </div>
 
                         <hr>
+                        
                         <div class="pillIngredi">
-                            <p style="font-size: 13px;"><span style="color: #78C2AD;">${r.memberName}</span>님의 맞춤 영양성분</p>
-							<%-- 샛별 장바구니, 희원 결제 마치면 붙이기
-							<c:choose>
-								<c:when test="${ r.plist <= 3 }">
-									<c:forEach var="p" begin="0" end="${r.plist.size() - 1  라고 나중에 할 것}">
-			                            <div class="pillCart" style="background-color: rgba(59, 59, 255, 0.084);">
-			                                <span>
-			                                    <p style="font-size:13px;" class="pContent">장 건강엔</p>
-			                                    <img src="" style="width: 80px; height: 80px;" class="pPic">
-			                                    <p style="font-size:16px;" class="pName">프리바이오틱스</p>
-			                                    <p style="font-size:11px;" class="pCounts">30일분</p>
-			                                    <p style="font-size:14px;" class="pAmount">22,000원</p>
-			                                </span>
-			                                <button class="cartBtn">장바구니 담기</button>
-			                            </div>
-		                            </c:forEach>
-                            	</c:when>
-                            	<c:when test="${ r.plist.size() - 1 > 3 }">
-									<c:forEach var="p" begin="0" end="2">
-			                            <div class="pillCart" style="background-color: rgba(59, 59, 255, 0.084);">
-			                                <span>
-			                                    <p style="font-size:13px;" class="pContent">장 건강엔</p>
-			                                    <img src="" style="width: 80px; height: 80px;" class="pPic">
-			                                    <p style="font-size:16px;" class="pName">프리바이오틱스</p>
-			                                    <p style="font-size:11px;" class="pCounts">30일분</p>
-			                                    <p style="font-size:14px;" class="pAmount">22,000원</p>
-			                                </span>
-			                                <button class="cartBtn">장바구니 담기</button>
-			                            </div>
-		                            </c:forEach>
-		                            
-		                            <div class="moreBtnArea" style="padding-bottom: 200px;">
-			                            
-			                            <button class="moreBtn" onclick="moreBtn();">더보기</button>
-			                            
-			                            <script>
-			                            	$(function moreBtn() {
-			                            		$(function() {
-			                            			~~~~~~
-			                            		})
-			                            	})
-			                            </script>
-			                            
-			                            <c:forEach var="p" begin="3" end="${r.plist.size() - 1}">
-				                            <div class="morePillCart" style="background-color: rgba(59, 59, 255, 0.084);">
-				                           		 
-				                            </div>
-			                            </c:forEach>
-			                        </div>
-			                        
-		                            
-                            	</c:when>
-                            </c:choose>
-                            --%>
+                            <p style="font-size: 13px;"><span style="color: #78C2AD;">${r.memberName}</span>님의 후기 상품이에요!</p>
+								<c:forEach var="p" items="${pList}">
+		                            <div id="product_1">
+		                                <div id="product_1_1" class="prod" style="cursor:pointer;">
+		                                    <div id="productT">
+		                                        <div id="productTT">
+		                                        	<input type="hidden" value="${ p.productNo }">
+		                                            <div id="productTT_1"><p>${ p.productExplain }엔</p></div>
+		                                            <div id="productTT_2"><p>${ p.productName }</p></div>
+		                                            <div id="productTT_3"><p>30일분</p></div>
+		                                        </div>
+		                                        <div id="productPP"><img style="height: 100px; width: 100px;" src="${ p.productImgPath }"></div>
+		                                    </div>
+		                                    <div id="productP">
+		                                        <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
+		                                    </div>
+		                                </div>
+		                            </div>
+	                            </c:forEach>
+	                            
+	                            <script>
+					            	$(function() {
+					            		$(".prod").click(function() {
+					            			location.href = "detail.pr?pno=" + $(this).children().eq(0).children().eq(0).children().eq(0).val();
+					            		});
+		
+		                                var $prods = $(".prod");
+		
+		                                $.each($prods, function(index, prod) {
+		
+		                                    let indexNum = index % 9;
+		                                    $(prod).addClass("prodback" + indexNum);
+		                                });
+					            	});	
+					            </script>
+                            <a href="list.pr"><button type="button" class="btn btn-primary btn-lg">더 많은 제품 보러가기</button></a>
                         </div>
-
+						
                         <!-- 댓글 -->
                         <table id="replyArea" class="table" align="center">
 			                <thead>
@@ -342,8 +377,7 @@
 				                    </c:choose>
 			                    </tr>
 			                </thead>
-			                <tbody>
-			                </tbody>
+			                <tbody></tbody>
 			            </table>
                         
                         <div class="listBtnArea">
@@ -358,129 +392,116 @@
         </div>
         <script>
                       
-	      $(function() {
+	        $(function() {
 	  		
-	  		selectReviewReplyList();
+	  		    selectReviewReplyList();
 	  		});
 	      
-	      function selectReviewReplyList() { // 해당 게시글에 있는 댓글리스트 조회용 ajax 요청
+	        function selectReviewReplyList() { // 해당 게시글에 있는 댓글리스트 조회용 ajax 요청
 	  		
-	  		$.ajax({
-	  			url : "rlist.re",
-	  			data : {rno:${ r.reviewNo }},
-	  			success : function(result) { 
-	  				
-	  				// console.log(result);
-	  				var resultStr = "";
-	  				
-	  				for(var i = 0; i < result.length; i++) {
-	  					
-	  					resultStr += "<tr>"
-	  							  		+ "<td><p class='replyName'>" + result[i].memberName + "</p></td>"
-	  							  		+ "<td class=''replyDate>" + result[i].replyDate + "</td>";
-	  							  		
-	  							  		if("${loginUser.memberId}" == result[i].memberId || "${loginUser.memberId}" == "admin1234") {
-	  							  			
-	  							  			resultStr += "<td>" 
-	  							  							+ "<button class='btn btn-secondary button' type='submit' onclick='deleteReply(" + result[i].replyNo + ");'>"
-		  							  						+ "삭제" + "</button>" 
-		  							  				   + "</td>";
-	  							  		}
-	  							  			
-	  					resultStr += "</tr>"
-	  							  		+ "<tr>"
-	  							  		+ "<td colspan='3'>" + "<p class='replyContent'>" + result[i].replyContent + "</p>" + "</td>"
-	  							  		+ "</tr>";
-	  				}
-	  				
-	  				$("#replyArea>tbody").html(resultStr);
-	  				
-	  				// 댓글 개수 출력
-	  				$("#rcount").text(result.length);
-	  			},
-	  			error : function() {
-	  				console.log("댓글리스트 조회용 ajax 통신 실패!");
-	  			}
-	  		});
-	  	}
+                $.ajax({
+                    url : "rlist.re",
+                    data : {rno:${ r.reviewNo }},
+                    success : function(result) { 
+                        
+                        var resultStr = "";
+                        
+                        for(var i = 0; i < result.length; i++) {
+                            
+                            resultStr += "<tr>"
+                                            + "<td><p class='replyName'>" + result[i].memberName + "</p></td>"
+                                            + "<td class=''replyDate>" + result[i].replyDate + "</td>";
+                                            
+                                            if("${loginUser.memberId}" == result[i].memberId || "${loginUser.memberId}" == "admin1234") {
+                                                
+                                                resultStr += "<td>" 
+                                                                + "<button class='btn btn-secondary button' type='submit' onclick='deleteReply(" + result[i].replyNo + ");'>"
+                                                                + "삭제" + "</button>" 
+                                                            + "</td>";
+                                            }
+                                                
+                            resultStr += "</tr>"
+                                            + "<tr>"
+                                            + "<td colspan='3'>" + "<p class='replyContent'>" + result[i].replyContent + "</p>" + "</td>"
+                                            + "</tr>";
+                        }
+                        
+                        $("#replyArea>tbody").html(resultStr);
+                        
+                        // 댓글 개수 출력
+                        $("#rcount").text(result.length);
+                    },
+                    error : function() {
+                        console.log("댓글리스트 조회용 ajax 통신 실패!");
+                    }
+                });
+	  	    }
 	      
-	      // 댓글 작성 글자수 체크
-	      $("#textAreaCount").keyup(function (e) {
-	      	var textAreaContent = $(this).val();
-	          
-	      	// console.log(textAreaContent);
-	          // 글자수 세기
-	          $("#textCount").text(textAreaContent.length);
-	         
-	          // 글자수 제한
-	          if (textAreaContent.length > 200) {
-	          	// 200자 부터는 타이핑 되지 않도록
-	              $(this).val($(this).val().substring(0, 200));
-	          };
-	      });
+            // 댓글 작성 글자수 체크
+            $("#textAreaCount").keyup(function (e) {
+                var textAreaContent = $(this).val();
+                
+                // 글자수 세기
+                $("#textCount").text(textAreaContent.length);
+                
+                // 글자수 제한
+                if (textAreaContent.length > 200) {
+                    // 200자 부터는 타이핑 되지 않도록
+                    $(this).val($(this).val().substring(0, 200));
+                };
+            });
+            
+            function addReply() { // 댓글 작성 요청용 ajax
+                
+                if($("#textAreaCount").val().trim().length != 0) {
+                    
+                    $.ajax({
+                        url : "rinsert.re",
+                        data : { // ajax 요청 또한 커맨드객체 방식 가능 (키값을 필드명이랑 맞춰준다)
+                            reviewNo:${r.reviewNo},
+                            memberNo:"${loginUser.memberNo}",
+                            replyContent:$("#textAreaCount").val()
+                        },
+                        success : function(result) {
+                            
+                            // "success" 또는 "fail" 문자열이 들어있음
+                            if(result == "success") {
+                                
+                                // 댓글 작성 성공 시 댓글 리스트를 불러올 것
+                                selectReviewReplyList();
+                                // 댓글 작성 창 초기화 효과
+                                $("#textAreaCount").val("");
+                            }
+                        },
+                        error : function() {
+                            console.log("댓글 작성용 ajax 통신 실패!");
+                        }
+                    });
+                } else {
+                    alertify.alert("댓글 작성 실패", "댓글 작성 후 등록을 요청해주세요.");
+                }
+            }
 	      
-	      function addReply() { // 댓글 작성 요청용 ajax
-	  		
-	   		// form 태그 내에서는 required 속성이 적용되지만,
-	   		// form 태그 밖에서는 required 속서이 적용안됨.
-	   		// => 댓글 내용이 있는지 검사 후 있다면 ajax 요청 보내기
-	   		//	  (textarea 요소에 value 속성값 기준으로 공백 제거 후 길이가 0 이 아닌 경우)
-	   		if($("#textAreaCount").val().trim().length != 0) {
-	   			
-	   			$.ajax({
-	   				url : "rinsert.re",
-	   				data : { // ajax 요청 또한 커맨드객체 방식 가능 (키값을 필드명이랑 맞춰준다)
-	   					reviewNo:${r.reviewNo},
-	   					memberNo:"${loginUser.memberNo}",
-	   					replyContent:$("#textAreaCount").val()
-	   				},
-	   				success : function(result) {
-	   					
-	   					// "success" 또는 "fail" 문자열이 들어있음
-	   					if(result == "success") {
-	   						
-	   						// 댓글 작성 성공 시 댓글 리스트를 불러올 것
-	   						selectReviewReplyList();
-	   						
-	   						// 댓글 작성 창 초기화 효과
-	   						$("#textAreaContent").val("");
-	   					}
-	   				},
-	   				error : function() {
-	   					console.log("댓글 작성용 ajax 통신 실패!");
-	   				}
-	   			});
-	   		} else {
-	   			
-	   			alertify.alert("댓글 작성 실패", "댓글 작성 후 등록을 요청해주세요.");
-	   		}
-	   	}
-	      
-	      function deleteReply(replyNo) { // 댓글 삭제 요청용 ajax
-		  		
-			   		// form 태그 내에서는 required 속성이 적용되지만,
-			   		// form 태그 밖에서는 required 속성이 적용안됨.
-			   		// => 댓글 내용이 있는지 검사 후 있다면 ajax 요청 보내기
-			   		//	  (textarea 요소에 value 속성값 기준으로 공백 제거 후 길이가 0 이 아닌 경우)
-			   		
-		   			$.ajax({
-		   				url : "rdelete.re",
-		   				data : {replyNo:replyNo},
-		   				success : function(result) {
-		   					
-		   					// console.log(result)
-		   					// "success" 또는 "fail" 문자열이 들어있음
-		   					if(result == "success") {
-		   						
-		   						// 댓글 삭제 성공 시 댓글 리스트를 불러올 것
-		   						selectReviewReplyList();
-		   					}
-		   				},
-		   				error : function() {
-		   					console.log("댓글 삭제용 ajax 통신 실패!");
-		   				}
-		   			});
-		   		}
-	     </script>
+            function deleteReply(replyNo) { // 댓글 삭제 요청용 ajax
+                    
+                $.ajax({
+                    url : "rdelete.re",
+                    data : {replyNo:replyNo},
+                    success : function(result) {
+                        
+                        // console.log(result)
+                        // "success" 또는 "fail" 문자열이 들어있음
+                        if(result == "success") {
+                            
+                            // 댓글 삭제 성공 시 댓글 리스트를 불러올 것
+                            selectReviewReplyList();
+                        }
+                    },
+                    error : function() {
+                        console.log("댓글 삭제용 ajax 통신 실패!");
+                    }
+                });
+            }
+	    </script>
     </body>
     </html>

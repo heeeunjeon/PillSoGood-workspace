@@ -3,6 +3,8 @@ package com.kh.pill.review.model.vo;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import com.kh.pill.product.model.vo.Product;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,4 +39,6 @@ public class Review {
 	private int cartNo;
 	private ArrayList<String> rOrderProductNameList;
 	private String rOrderProductNames;
+	private ArrayList<Integer> pNoList;
+	private ArrayList<Product> pList;
 }

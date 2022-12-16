@@ -8,11 +8,14 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.event.model.vo.Event;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
 import com.kh.pill.poll.model.vo.PollResult;
 import com.kh.pill.product.model.vo.Product;
+import com.kh.pill.review.model.vo.Review;
+import com.kh.pill.review.model.vo.ReviewFile;
 
 @Repository
 public class MyPageDao {
@@ -125,6 +128,81 @@ public class MyPageDao {
 		
 		return (ArrayList)sqlSession.selectList("pollMapper.selectPollList", memberNo);
 	}
+	
+	/**
+	 * 후기 리스트 카운트 메소드
+	 * @param sqlSession
+	 * @param memberNo
+	 * @return
+	 */
+	public int selectMyReviewListCount(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("reviewMapper.selectMyReviewListCount", memberNo);
+	}
+
+	/**
+	 * 후기 조회용 메소드
+	 * @param sqlSession
+	 * @param memberNo
+	 * @param pi
+	 * @return
+	 */
+	public ArrayList<Review> selectMyReviewList(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectMyReviewList", memberNo, rowBounds);
+	}
+	/**
+	 * 후기 첨부파일 조회용 메소드
+	 * @param sqlSession
+	 * @param rno
+	 * @return
+	 */
+	public ArrayList<ReviewFile> selectReviewFile(SqlSessionTemplate sqlSession, int rno) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectReviewFile", rno);
+	}
+
+	/**
+	 * 후기 조회수 메소드
+	 * @param sqlSession
+	 * @param rno
+	 * @return
+	 */
+	public int selectReplyCount(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.selectOne("reviewMapper.selectReplyCount", rno);
+	}
+
+	/**
+	 * 이벤트 리스트 카운트 메소드
+	 * @param sqlSession
+	 * @param memberNo
+	 * @return
+	 */
+	public int selectMyEventListCount(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("eventMapper.selectMyEventListCount", memberNo);
+	}
+	
+	/**
+	 * 이벤트 조회용 메소드
+	 * @param sqlSession
+	 * @param memberNo
+	 * @param pi
+	 * @return
+	 */
+	public ArrayList<Event> selectMyEventList(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("eventMapper.selectMyEventList", memberNo, rowBounds);
+	}
+
+	
 	
 
 }
