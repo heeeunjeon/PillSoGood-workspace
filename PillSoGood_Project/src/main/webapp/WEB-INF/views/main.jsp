@@ -194,6 +194,10 @@
             margin-top: 50px;
             margin-left: 50px;
         }
+        
+        .swiper-slide:hover {
+        	cursor : pointer;
+        }
 
 
     </style>
@@ -273,7 +277,7 @@
                                         <td>
                                             <div id="healthIcon" onclick="location.href=''"
                                                 style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
+                                                <p><img src="resources/images/liver.png" width="35px"></p>
                                                 <div style="text-align: center; padding-top: 10px;">간건강</div>
                                             </div>
                                         </td>
@@ -403,7 +407,7 @@
                                     <h4 style="color: rgb(40, 40, 40); font-weight:bold;">Best Pick!</h4>
                                 </td>
                                 <td style="width: 20%; vertical-align: top; padding-top: 90px;">
-                                    <a href=""
+                                    <a href="list.pr"
                                         style="float: right; text-decoration: none; color: rgb(40, 40, 40); font-weight: bold;">
                                         더보기
                                         <i class="fa-solid fa-chevron-right"></i>
@@ -415,47 +419,47 @@
                         <!-- 약 제품 슬라이드 -->
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
+                                <div class="swiper-slide" onclick="location.href='detail.pr?pno=1'">
                                     <div>
                                         <img src="resources/images/pill01.png">
                                     </div>
-                                    <h5 style="padding-top: 30px;">약</h5>
-                                    <p>12,000원</p>
+                                    <h5 style="padding-top: 30px;">루테인</h5>
+                                    <p>22,000원</p>
                                 </div>
-                                <div class="swiper-slide">
+                                <div class="swiper-slide" onclick="location.href='detail.pr?pno=2'">
                                     <div>
                                         <img src="resources/images/pill02.png">
                                     </div>
-                                    <h5 style="padding-top: 30px;">약</h5>
-                                    <p>12,000원</p>
+                                    <h5 style="padding-top: 30px;">비타민 B</h5>
+                                    <p>24,000원</p>
                                 </div>
-                                <div class="swiper-slide">
+                                <div class="swiper-slide" onclick="location.href='detail.pr?pno=3'">
                                     <div>
                                         <img src="resources/images/pill03.png">
                                     </div>
-                                    <h5 style="padding-top: 30px;">약</h5>
-                                    <p>12,000원</p>
+                                    <h5 style="padding-top: 30px;">셀레늄</h5>
+                                    <p>25,000원</p>
                                 </div>
-                                <div class="swiper-slide">
+                                <div class="swiper-slide" onclick="location.href='detail.pr?pno=4'">
                                     <div>
                                         <img src="resources/images/pill04.png">
                                     </div>
-                                    <h5 style="padding-top: 30px;">약</h5>
-                                    <p>12,000원</p>
+                                    <h5 style="padding-top: 30px;">밀크씨슬</h5>
+                                    <p>20,000원</p>
                                 </div>
-                                <div class="swiper-slide">
+                                <div class="swiper-slide" onclick="location.href='detail.pr?pno=5'">
                                     <div>
                                         <img src="resources/images/pill05.png">
                                     </div>
-                                    <h5 style="padding-top: 30px;">약</h5>
-                                    <p>12,000원</p>
+                                    <h5 style="padding-top: 30px;">엠에스엠</h5>
+                                    <p>28,000원</p>
                                 </div>
-                                <div class="swiper-slide">
+                                <div class="swiper-slide" onclick="location.href='detail.pr?pno=6'">
                                     <div>
                                         <img src="resources/images/pill06.png">
                                     </div>
-                                    <h5 style="padding-top: 30px;">약</h5>
-                                    <p>12,000원</p>
+                                    <h5 style="padding-top: 30px;">오메가 3</h5>
+                                    <p>30,000원</p>
                                 </div>
                             </div>
                         

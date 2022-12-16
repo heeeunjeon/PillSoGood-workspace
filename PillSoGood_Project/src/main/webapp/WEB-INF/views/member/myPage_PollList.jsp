@@ -161,7 +161,7 @@
 		                            	<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
 		                            	
 			                            	<b>
-				                            	# ${ pollResult[j].productExplain },
+				                            	# ${ pollResult[j].productExplain }
 				                            </b>
 			                            
 			                            </c:if>
