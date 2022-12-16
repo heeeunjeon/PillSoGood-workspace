@@ -100,8 +100,13 @@
             <div id="content_2">
                 <div id="content_2_1">
                     <p>공지사항
-                            <button style="float:right;" class="btn btn-primary btn-danger" onclick="postFormSubmit(2);" >삭제</button>
-                            <button style="float:right;" class="btn btn-primary btn-warning" onclick="postFormSubmit(1);" id="noticeModify">수정</button>
+                   		<c:choose>
+	                   		<c:when test="${ loginUser.memberId eq 'admin' }">
+	                   			<button style="float:right;" class="btn btn-primary btn-danger" onclick="postFormSubmit(2);" >삭제</button>
+                            	<button style="float:right;" class="btn btn-primary btn-warning" onclick="postFormSubmit(1);" id="noticeModify">수정</button>	
+	                   		</c:when>
+                    	</c:choose>
+                            
                     </p>
                 <form id="postForm" action="" method="post">
 	            	
