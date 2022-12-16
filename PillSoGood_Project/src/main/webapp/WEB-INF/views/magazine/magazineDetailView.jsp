@@ -231,7 +231,7 @@
                         
                         <form id="magazineForm" action="" method="post">
                         	<input type="hidden" name="magazineNo" value="${ mag.magazineNo }">
-                        
+                        	<input type="hidden" name="filePath" value="${ mag.magazineImgName }" >
                         </form>
                         
                         <script>

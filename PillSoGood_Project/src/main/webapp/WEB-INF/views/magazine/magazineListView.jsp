@@ -168,6 +168,12 @@
             left: 55%;
 			margin-bottom: 10px;
 		}
+		
+		#categoryBadge {
+			position: relative;
+			paddin-bottom: -30px;
+
+		}
 </style>
 </head>
 <body>
@@ -201,11 +207,13 @@
                         <tr>
                             <td>
                                 <div class="magazineSelect">
-                                    <select class="form-select" id="magazineSelectOpt" name="categoryNo">
-                                        <c:forEach items="${magazine}" var="magazine">
-	                                        <option value="${magazine.categoryNo}">${magazine.categoryName}</option>
-                                    	</c:forEach>
-                                    </select>
+                                	<select class="form-select" id="magazineSelectOpt" name="categoryNo">
+                                	   <option value="4" data-sub="전체" selected>전체</option>
+                                	   <option value="1" data-sub="라이프">라이프</option>
+	                                   <option value="2" data-sub="시즌">시즌</option>
+	                                   <option value="3" data-sub="이슈">이슈</option>
+                             	 	</select>
+
                                 </div>
                             </td>
 							<td>
@@ -238,6 +246,7 @@
                                             <p name="magazineTitle">
                                                 ${ mag.magazineTitle }
                                             </p>
+                                            <span class="badge bg-primary" id="categoryBadge">${ mag.categoryNo }</span>
                                             <div class="hashtagArea">
                                                 <span class="badge bg-light" id="hashtag_${ i.count }"></span>
                                             	<script>
@@ -255,7 +264,9 @@
                                             </div>
                                             <div class="likeArea">
                                                 <img src="resources/images/UnLike.png" alt="" width="10" height="10">
-		                                    	<span id="countLike"></span>
+		                                    	<span id="countLike">
+		                                    	
+		                                    	</span>
                                             </div>
                                     </div>
                                  </c:when>
@@ -322,14 +333,10 @@
 
 </script>
 
+   
+    
     <script>
-
-        let myStr = "value"
-
-        myStr = myStr.replace(/\/!/g, "");
-
-        console.log(myStr);
-        
+    
     </script>
 
 </html>

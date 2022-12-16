@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,9 +143,9 @@
                           <th>카테고리</th>
                           	<td>
                               <select class="form-select" id="magazineSelectOpt" name="categoryNo">
-                                  <c:forEach items="${magazine}" var="magazine">
-                                   <option value="${magazine.categoryNo}">${magazine.categoryName}</option>
-                              	</c:forEach>
+	                                   <option value="2" data-sub="라이프">라이프</option>
+	                                   <option value="3" data-sub="시즌">시즌</option>
+	                                   <option value="4" data-sub="이슈">이슈</option>
                               </select>
                           </td>
                         </tr>
@@ -187,6 +188,15 @@
     
     	new Tagify(input)
     </script>
+    
+    <script>
+	    $(function () {
+	        $("#magazineSelectOpt").on("change", function () {
+	            var value = $(this).val();
+	            var subValue = $(this).find("option:selected").data("sub");
+	        });
+	    });
+	</script>
     
 </body>
 </html>

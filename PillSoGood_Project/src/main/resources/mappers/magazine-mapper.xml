@@ -44,11 +44,12 @@
 
 	<select id="selectMagazineList" resultMap="magazineResultSet" >
 		SELECT MAGAZINE_NO
-			 , CATEGORY_NO
+			 , CATEGORY_NAME AS "CATEGORY_NO"
 		     , MAGAZINE_TITLE
 			 , MAGAZINE_IMG_NAME
 			 , MAGAZINE_HASHTAG
 		  FROM MAGAZINE
+		  JOIN CATEGORY USING (CATEGORY_NO)
 		 WHERE MAGAZINE_STATUS = 'Y'
 		 ORDER BY MAGAZINE_NO DESC
 	</select>
@@ -112,7 +113,6 @@
 		            WHERE MAGAZINE_STATUS = 'Y'
 		            ORDER BY MAGAZINE_NO DESC) RESULT
 		WHERE MAGAZINE_NO = #{magazineNo}
-		
 	</select>
 
 	<!-- 조회수  -->

@@ -142,28 +142,30 @@ public class MagazineController {
 	}
 	
 	@RequestMapping("delete.mag")
-	public String deleteMagazine(int magazineNo, String magazineImgName, HttpSession session, Model model) {
-		
-		
+	public String deleteMagazine(int magazineNo, String filePath, HttpSession session, Model model) {
+
 		int result = magazineService.deleteMagazine(magazineNo);
 		
-		if(result > 0) { 
+		if(result > 0) {
 
-			String realPath = session.getServletContext().getRealPath(magazineImgName);
+			if(!filePath.equals("")) {
+				
+				String realPath = session.getServletContext().getRealPath(filePath);
+				new File(realPath).delete();
+				
+			}
 			
-			new File(realPath).delete();
-
 			session.setAttribute("alertMsg", "게시글이 삭제되었습니다.");
 			
 			return "redirect:/list.mag";
 			
-		} else {
+		} else { 
 			
-			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
+			model.addAttribute("errorMsg", "게시글 삭제이 실패했습니다.");
 			
 			return "common/errorPage";
 		}
-		
+				
 	}
 	
 	
@@ -182,7 +184,7 @@ public class MagazineController {
 	@RequestMapping("update.mag")
 	public String updateMagazine(Magazine mag, MultipartFile reupfile, HttpSession session, Model model) throws IllegalStateException, IOException {
 
-		if(!reupfile.getOriginalFilename().contentEquals("")) {
+		if(!reupfile.getOriginalFilename().equals("")) {
  
 			if(mag.getMagazineImgName() != null) {
 				
@@ -227,15 +229,5 @@ public class MagazineController {
 	}
 	
 
-	 @RequestMapping("/magazine/detail/{categoryNo}")
-	 public String list(@PathVariable("categoryNo") int categoryNo, Model model) {
 
-		List<Magazine> magazine = magazineService.getMagazine(categoryNo);
-
-		model.addAttribute("magazine", magazine);
-
-        model.addAttribute("categoryNo", categoryNo);
-
-        return "magazine/magazineDetailView";
-    }
 }

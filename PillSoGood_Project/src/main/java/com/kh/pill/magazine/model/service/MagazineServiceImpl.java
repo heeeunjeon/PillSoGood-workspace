@@ -69,14 +69,6 @@ public class MagazineServiceImpl implements MagazineService {
 		return magazineDao.magazinePage(sqlSession, magazineNo);
 	}
 
-	@Override
-	public List<Magazine> getMagazine(int categoryNo) {
-		
-		List<Magazine> list = magazineDao.magazineCategoryResult(sqlSession, categoryNo);
-		
-		return list;
-	}
-
 
 	
 

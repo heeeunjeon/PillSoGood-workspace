@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,7 @@
 
     .wrap>div { width : 100%; }
 
-    #navigator2 { height: 100px; }
+    #navigator2 { height: 0px; }
 
     #content { height: 1150px; }
     #content_2>div { width: 100%; }
@@ -35,7 +36,7 @@
     #content_2_2 { height: 80%; float: left; }
     #content_2_3 { height: 10%; float: left; }
 
-    #header { height: 130px; }
+    #header { height: 0px; }
 
     #content_2_1>p {
         font-size: 35px;
@@ -101,6 +102,13 @@
         padding-bottom: 40px;
       }
       
+     .logoArea>p {
+     	 position:relative;
+     	 margin-left:-270px;
+     	 padding-top:-100px;
+
+      }
+
 
 </style>
 
@@ -117,7 +125,6 @@
               <div id="content_2_1">
                 <!-- 로고 영역 -->
                 <div class="logoArea">
-                      <jsp:include page="../common/logo.jsp" />
                     <p style="display: inline; font-size: 20px;">Magazine</p>
                 </div>
               </div>
@@ -135,26 +142,34 @@
                         
                         <tr>
                           <th>카테고리</th>
-                          <td><select class="form-select" id="select" name="categoryNo" value="${ mag.categoryNo }">
-                            <option value="2">라이프</option>
-                            <option value="3">시즌</option>
-                            <option value="4">이슈</option>
+                          <td><select class="form-select" id="select" name="categoryNo" >
+                                 <option value="2" data-sub="라이프">라이프</option>
+                                 <option value="3" data-sub="시즌">시즌</option>
+                                 <option value="4" data-sub="이슈">이슈</option>
                           </select></td>
                         </tr>
 							
                         <tr>
                           <th><label for="content">내용</label></th>
-                          <td><textarea id="content" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" value="${ mag.magazineContent }" required> </textarea></td>
+                          <td><textarea id="content" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" required>${ mag.magazineContent }</textarea></td>
                         </tr>
 
                         <tr>
-                          <th><label for="upfile">사진</label></th>
-                          <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                          <th><label for="reupfile">사진</label></th>
+                          <td><input type="file" id="reupfile" class="form-control-file border" name="reupfile">
+                          	  
+                          	  <c:if test="${ not empty mag.magazineImgName }">
+                              	<input type="hidden" name="${ mag.magazineImgName }">
+                              </c:if>
+                              
+                          </td>
                         </tr>  
 
                         <tr>
                           <th><label for="hashtag">해시태그</label></th>
-                          <td><input type="text" id="hashtag" class="form-control" value="${ mag.magazineHashtag }" name="magazineHashtag"></td>
+                          <td><input type="tag" id="hashtag" class="form-control" name="magazineHashtag" value="${ mag.magazineHashtag }">
+                          
+                          </td>
                         </tr>
                     </table>  
                     <div align="center" class="btnArea">
@@ -179,6 +194,8 @@
     
     	new Tagify(input)
     </script>
+    
+
     
 </body>
 </html>

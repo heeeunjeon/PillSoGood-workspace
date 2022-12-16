@@ -46,6 +46,7 @@ public class MagazineDao {
 	
 
 	public int deleteMagazine(SqlSessionTemplate sqlSession, int magazineNo) {
+		
 		return sqlSession.update("magazineMapper.deleteMagazine", magazineNo);
 	}
 

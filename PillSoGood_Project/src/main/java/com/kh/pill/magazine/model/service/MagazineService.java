@@ -27,6 +27,5 @@ public interface MagazineService {
 	// 이전글 최신글
 	MagazinePage magazinePage(int magazineNo);
 
-	// 카테고리
-	List<Magazine> getMagazine(int categoryNo);
+
 }
