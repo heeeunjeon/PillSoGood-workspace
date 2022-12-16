@@ -255,7 +255,7 @@
                                     <h4 style="color: rgb(40, 40, 40); font-weight:bold;">고민별 상품보기</h4>
                                 </td>
                                 <td style="vertical-align: top; padding-top: 90px;">
-                                    <a href=""
+                                    <a href="list.pr"
                                         style="float: right; text-decoration: none; color: rgb(40, 40, 40); font-weight: bold;">
                                         더보기
                                         <i class="fa-solid fa-chevron-right"></i>
@@ -263,92 +263,71 @@
                                 </td>
                             </tr>
                         </table>
-                        <div id="scrollDiv">
+                        <div id="scrollDiv" style="margin:auto;">
                             <table style="margin:auto;" id="content2Table">
                                 <div style="width: 1100px;">
-                                    <tr>
+                                    <tr id="content2Tr">
                                         <td>
-                                            <div id="healthIcon" onclick="location.href=''"
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=1'"
                                                 style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">피로/활력</div>
+                                                <p><img src="resources/images/eye.png" width="35px"></p>
+                                                <div style="text-align: center; padding-top: 10px;">눈건강</div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div id="healthIcon" onclick="location.href=''"
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=4'"
                                                 style="text-decoration: none; cursor: pointer;">
                                                 <p><img src="resources/images/liver.png" width="35px"></p>
                                                 <div style="text-align: center; padding-top: 10px;">간건강</div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div id="healthIcon" onclick="location.href=''"
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=5'"
                                                 style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
+                                                <p><img src="resources/images/bone.png" width="35px"></p>
+                                                <div style="text-align: center; padding-top: 10px;">관절</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=6'"
+                                                style="text-decoration: none; cursor: pointer;">
+                                                <p><img src="resources/images/blood-vessel.png" width="35px"></p>
+                                                <div style="text-align: center; padding-top: 10px;">혈행개선</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=8'"
+                                                style="text-decoration: none; cursor: pointer;">
+                                                <p><img src="resources/images/diet.png" width="35px"></p>
+                                                <div style="text-align: center; padding-top: 10px;">체지방감소</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=13'"
+                                                style="text-decoration: none; cursor: pointer;">
+                                                <p><img src="resources/images/intestine.png" width="35px"></p>
                                                 <div style="text-align: center; padding-top: 10px;">장건강</div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div id="healthIcon" onclick="location.href=''"
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=14'"
                                                 style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">위/소화</div>
+                                                <p><img src="resources/images/skin.png" width="35px"></p>
+                                                <div style="text-align: center; padding-top: 10px;">피부보습</div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div id="healthIcon" onclick="location.href=''"
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=16'"
                                                 style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">변비</div>
+                                                <p><img src="resources/images/blood-pressure.png" width="35px"></p>
+                                                <div style="text-align: center; padding-top: 10px;">고혈압감소</div>
                                             </div>
                                         </td>
                                         <td>
-                                            <div id="healthIcon" onclick="location.href=''"
+                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=19'"
                                                 style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">눈건강</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href=''"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">다이어트</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href=''"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">마음건강</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href=''"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">피부</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href=''"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">항산화</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href=''"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">모발/두피</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href=''"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><i class="fa-solid fa-bolt"></i></p>
-                                                <div style="text-align: center; padding-top: 10px;">유/소아</div>
+                                                <p><img src="resources/images/health.png" width="35px"></p>
+                                                <div style="text-align: center; padding-top: 10px;">종합건강</div>
                                             </div>
                                         </td>
                                     </tr>
@@ -621,6 +600,8 @@
                         disableOnInteraction: false,
                     }
                 });
+                
+                
             </script>
 
             
