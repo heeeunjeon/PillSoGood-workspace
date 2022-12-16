@@ -1,6 +1,7 @@
 package com.kh.pill.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -50,6 +51,20 @@ public class MyPageDao {
 	public ArrayList<Product> selectMyOrderProducts(SqlSessionTemplate sqlSession, String orderNo) {
 		return (ArrayList)sqlSession.selectList("productMapper.selectMyOrderProducts", orderNo);
 	}
+	
+	public int searchOrderListByDateCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("orderMapper.searchOrderListByDateCount", map);
+	}
+	
+	public ArrayList<Order> searchOrderListByDate(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.searchOrderListByDate", map, rowBounds);
+	}
+	
 	
 	
 	

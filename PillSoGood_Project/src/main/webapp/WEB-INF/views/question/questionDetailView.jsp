@@ -222,8 +222,8 @@
 		                        <br>
 		                        
 		                        <script>
-		                        	$(function() {
-		                        		$("#btnUpdate").on("click", function() {
+		                        	$(() => {
+		                        		$("#btnUpdate").on("click", () => {
 		                        			$("#answer_update").show();
 		                        			$("#answer_update>textarea").select();
 		                        		});
@@ -237,14 +237,14 @@
 		                        				questionNo: ${ q.questionNo },
 		                        				answer: $("#answer_update>textarea").val()
 		                        			},
-		                        			success : function(result) {
+		                        			success : result => {
 		                        				
 		                        				if(result == "success") {
 		                        					alert("답변을 수정했습니다.");
 		                        					location.reload();
 		                        				}
 		                        			},
-		                        			error : function() {
+		                        			error : () => {
 		                        				console.log("1:1 문의 답변 수정용 ajax 통신 실패");
 		                        			}
 		                        		});
@@ -257,14 +257,14 @@
 		                        			$.ajax({
 		                        				url : "andelete.ad",
 		                        				data : { qno: ${ q.questionNo } },
-		                        				success : function(result) {
+		                        				success : result => {
 		                        					
 		                        					if(result == "success") {
 		                        						alert("답변을 삭제했습니다.");
 			                        					location.reload();
 			                        				}
 		                        				},
-		                        				error : function() {
+		                        				error : () => {
 		                        					console.log("1:1 문의 답변 삭제용 ajax 통신 실패");
 		                        				}
 		                        			});
@@ -306,17 +306,14 @@
                         				questionNo: ${ q.questionNo },
                         				answer: $("#answer_enroll>textarea").val()
                         			},
-                        			success : function(result) {
+                        			success : result => {
                         				
 										if(result == "success") {
 											alert("답변을 작성했습니다.");
                         					location.reload();
                         				}
-										
-										
-										
                         			},
-                        			error : function() {
+                        			error : () => {
                         				console.log("1:1 문의 답변 작성용 ajax 통신 실패");
                         			}
                         		});

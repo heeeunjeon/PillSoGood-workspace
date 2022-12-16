@@ -38,7 +38,7 @@
 		SELECT NVL(MAX(SUBS_COUNT), 0) "SUBS_COUNT"
 		FROM ORDERS
 		WHERE CUSTOMER_UID = #{customerUid}
-		  AND ORDER_STATUS = 'N'
+		  AND ORDER_STATUS = 'Y'
 	</select>
 	
 	<insert id="insertOrder" parameterType="order">
@@ -76,6 +76,7 @@
 		  JOIN PRODUCT USING (PRODUCT_NO)
 		 WHERE MEMBER_NO = #{memberNo} 
 		   AND CART_STATUS = 'Y'
+		 ORDER BY CART_NO
 	</select>
 	
 	<insert id="insertOrderCart" parameterType="orderCart">
@@ -106,7 +107,9 @@
 						  WHERE MEMBER_NO = #{memberNo}
 						    AND SUBS_STATUS = 'Y'
 							AND ORDER_STATUS = 'N'
-							AND SUBS_COUNT = 1)
+							AND SUBS_COUNT = 1
+						  ORDER BY ORDER_NO)
+		ORDER BY CART_NO
 	</select>
 	
 	<insert id="insertCart" parameterType="cart">
@@ -158,8 +161,27 @@
 			 , SUBS_STATUS
 		FROM ORDERS
 		WHERE MEMBER_NO = #{memberNo}
+		ORDER BY ORDER_NO DESC
 	</select>
 	
+	<select id="searchOrderListByDateCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDERS
+		WHERE MEMBER_NO = #{memberNo}
+		  AND ORDER_DATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')
+	</select>
 	
+	<select id="searchOrderListByDate" parameterType="hashmap" resultMap="orderResultSet">
+		SELECT ORDER_NO
+			 , TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') "ORDER_DATE"
+			 , ORDER_PRICE
+			 , SUBS_COUNT
+			 , ORDER_STATUS
+			 , SUBS_STATUS
+		FROM ORDERS
+		WHERE MEMBER_NO = #{memberNo}
+		  AND ORDER_DATE BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD')
+		ORDER BY ORDER_NO DESC
+	</select>
 	
 </mapper>

@@ -1,6 +1,9 @@
 package com.kh.pill.member.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -44,13 +47,13 @@ public class MyPageController {
 		
 		ArrayList<Order> olist = myPageService.selectMyOrderList(pi, memberNo);
 		
-		for(Order o : olist ) {
+		for(Order o : olist) {
 			
 			ArrayList<Product> plist = myPageService.selectMyOrderProducts(o.getOrderNo());
 			String str = "";
 			
 			for(int i = 0; i < plist.size() - 1; i++) {
-				str += plist.get(i).getProductName() + "&";
+				str += plist.get(i).getProductName() + " & ";
 			}
 			
 			str += plist.get(plist.size() - 1).getProductName();
@@ -60,6 +63,68 @@ public class MyPageController {
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("olist", olist);
+		
+		return "member/myPage_OrderList";
+	}
+	
+	/**
+	 * 주문조회 기간별 검색
+	 * @return
+	 */
+	@RequestMapping("search.or")
+	public String searchOrderListByDate(@RequestParam(value="cpage", defaultValue="1")int currentPage, String s, String e, HttpSession session, Model model) {
+		
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		// s == 시작날짜 (3, 6, 12 / 지정한 날짜)
+		// e == 종료날짜 (0 오늘 / 지정한 날짜)
+		LocalDate today = LocalDate.now();
+		LocalDate startDate = null;
+		LocalDate endDate = today;
+		
+		if(s.equals("3")) {
+			startDate = today.withMonth(today.getMonthValue() - 3);
+		} else if(s.equals("6")) {
+			startDate = today.withMonth(today.getMonthValue() - 6);
+		} else if(s.equals("12")) {
+			startDate = today.withYear(today.getYear() - 1);
+		} else {
+			startDate = LocalDate.parse(s);
+			endDate = LocalDate.parse(e);
+		}
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("startDate", startDate.toString());
+		map.put("endDate", endDate.toString());
+		map.put("memberNo", String.valueOf(memberNo));
+		
+		int listCount = myPageService.searchOrderListByDateCount(map);
+		int pageLimit = 5;
+		int boardLimit = 5;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Order> olist = myPageService.searchOrderListByDate(pi, map);
+		
+		for(Order od : olist) {
+			
+			ArrayList<Product> plist = myPageService.selectMyOrderProducts(od.getOrderNo());
+			String str = "";
+			
+			for(int i = 0; i < plist.size() - 1; i++) {
+				str += plist.get(i).getProductName() + " & ";
+			}
+			
+			str += plist.get(plist.size() - 1).getProductName();
+			
+			od.setProductNames(str);
+		}
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("olist", olist);
+		
+		model.addAttribute("s", s);
+		model.addAttribute("e", e);
 		
 		return "member/myPage_OrderList";
 	}

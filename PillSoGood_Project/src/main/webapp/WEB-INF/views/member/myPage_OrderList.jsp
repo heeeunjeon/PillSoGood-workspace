@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>PillSoGood</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
 
     div {
@@ -100,7 +101,16 @@
 
     /* button 들이 div 테두리를 밑으로 벗어나서 맞춤 */
     #search_date>button, #search_date>input[type=button] { vertical-align: top; }
-
+	
+	#all {
+		margin: 0px 3px;
+		box-sizing: border-box;
+		color: #78C2AD!important;
+	}
+	#all:hover {
+		color: white;
+	}
+	
 </style>
 </head>
 <body>
@@ -137,18 +147,64 @@
                         <h4>주문 조회</h4>
                         <hr>
                         <div id="search_date" align="center">
-                            <button type="button" class="btn btn-outline-primary">3개월</button>
-                            <button type="button" class="btn btn-outline-dark">6개월</button>
-                            <button type="button" class="btn btn-outline-dark">9개월</button>
-                            <button type="button" class="btn btn-outline-dark">전체 3년</button>
-
-                            <input type="date"> - 
-                            <input type="date">   
+                            <button type="button" class="btn btn-outline-dark" id="m3">3개월</button>
+                            <button type="button" class="btn btn-outline-dark" id="m6">6개월</button>
+                            <button type="button" class="btn btn-outline-dark" id="m12">12개월</button>
+                            <input type="button" class="btn btn-outline-primary" id="all" value="전체" onclick="location.href='myPage.or'">
+							
+                            <input type="date" id="startDate"> - 
+                            <input type="date" id="endDate">
                             
-                            <input type="button" class="btn btn-primary" style="width: 90px; margin-left: 10px;" value="검색">
+                            <input type="button" class="btn btn-primary" id="searchBtn" style="width: 90px; margin-left: 10px; color: white;" value="검색">
                         </div>
                         <hr>
                         <br>
+                        
+                        <c:if test="${ not empty s and s ne '3' and s ne '6' and s ne '12' }">
+                      		<script>
+                      			$(() => {
+                      				$("#startDate").val(new Date("${ s }").toISOString().substring(0, 10));
+                      				$("#endDate").val(new Date("${ e }").toISOString().substring(0, 10));
+                      			});
+                      		</script>
+                      	</c:if>
+                        
+                        <script>
+		                	$(() => {
+		                		
+		                		$("#search_date>button").on("click", function() {
+		                            
+		                			$(this).attr("class", "btn btn-outline-primary");
+		                            $(this).siblings("button").attr("class", "btn btn-outline-dark");
+		                        	
+		                       		location.href = 'search.or?cpage=1&s=' + $(this).attr("id").substring(1) + '&e=0';
+		                		});
+		                		
+		                		$("#searchBtn").on("click", function() {
+		                			
+		                			var start = $("#startDate").val();
+		                			var end = $("#endDate").val();
+		                			
+		                			// validate
+		                			var startDate = new Date(start);
+		                			startDate.setHours(0, 0, 0, 0);
+		                			var endDate = new Date(end);
+		                			endDate.setHours(0, 0, 0, 0);
+		                			
+		                			if(start == "" || end == "") {
+		                				alert("날짜를 입력해주세요");
+		                				return false;
+		                			} else {
+		                				if(endDate < startDate) {
+		                					alert("조회하신 기간이 올바르지 않습니다.");
+		                					return false;
+		                				} else {
+		                					location.href = 'search.or?cpage=1&s=' + start + '&e=' + end;
+		                				}
+		                			}
+		                		});
+		                	});
+		                </script>
 
                         <div id="order_list">
 							
@@ -179,7 +235,7 @@
 			                                    	</c:choose>
 			                                        &nbsp;${ o.orderDate }
 			                                    </td>
-			                                    <th style="text-align: right;"><a href="">&gt;</a></th>
+			                                    <th style="text-align: right;"><a href="detail.or" style="text-decoration: none;">&gt;</a></th>
 			                                </tr>
 			                                <tr height="40px">
 			                                    <th width="80%">
@@ -211,42 +267,58 @@
 	                            <ul class="pagination pagination-sm">
 	                            	<c:choose>
 				                		<c:when test="${ pi.currentPage eq 1 }">
-				                			<li class="page-item disabled">
-			                                    <a class="page-link" href="#">&laquo;</a>
-			                                </li>
+				                			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
 				                		</c:when>
 				                		<c:otherwise>
-				                			<li class="page-item">
-			                                    <a class="page-link" href="myPage.or?cpage=${ pi.currentPage - 1 }">&laquo;</a>
-			                                </li>
+			                                <c:choose>
+				                				<c:when test="${ empty s or empty e }">
+				                					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
+				                				</c:when>
+				                				<c:otherwise>
+				                					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ pi.currentPage - 1 }&s=${ s }&e=${ e }">&laquo;</a></li>
+				                				</c:otherwise>
+				                			</c:choose>
 				                		</c:otherwise>
 				                	</c:choose>
 				                	
 				                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 				                    	<c:choose>
 				               				<c:when test="${ pi.currentPage eq p }">
-				               					<li class="page-item active">
-				                                    <a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a>
-				                                </li>
+					               				<c:choose>
+						               				<c:when test="${ empty s or empty e }">
+						               					<li class="page-item active"><a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a></li>
+						               				</c:when>
+						               				<c:otherwise>
+						               					<li class="page-item active"><a class="page-link" href="myPage.or?cpage=${ p }&s=${ s }&e=${ e }">${ p }</a></li>
+						               				</c:otherwise>
+						               			</c:choose>
 											</c:when>
 				               				<c:otherwise>
-				               					<li class="page-item">
-				                                    <a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a>
-				                                </li>
+				               					<c:choose>
+						               				<c:when test="${ empty s or empty e }">
+						               					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a></li>
+						               				</c:when>
+						               				<c:otherwise>
+						               					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ p }&s=${ s }&e=${ e }">${ p }</a></li>
+						               				</c:otherwise>
+						               			</c:choose>
 				               				</c:otherwise>
 				               			</c:choose>
 				                    </c:forEach>
 	                                
 	                                <c:choose>
 				                		<c:when test="${ pi.currentPage eq pi.maxPage }">
-				                			<li class="page-item disabled">
-			                                    <a class="page-link" href="#">&raquo;</a>
-			                                </li>
+				                			<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
 				                		</c:when>
 				                		<c:otherwise>
-				                			<li class="page-item">
-			                                    <a class="page-link" href="myPage.or?cpage=${ pi.currentPage + 1 }">&raquo;</a>
-			                                </li>
+			                                <c:choose>
+				                				<c:when test="${ empty s or empty e }">
+				                					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
+				                				</c:when>
+				                				<c:otherwise>
+				                					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ pi.currentPage + 1 }&s=${ s }&e=${ e }">&raquo;</a></li>
+				                				</c:otherwise>
+				                			</c:choose>
 				                		</c:otherwise>
 				                	</c:choose>
 	                            </ul>
@@ -257,17 +329,6 @@
 
                 </div>
 
-                <script>
-                    $(function() {
-
-                        $("#search_date button").on("click", function() {
-                            $(this).attr("class", "btn btn-outline-primary");
-                            $(this).siblings("button").attr("class", "btn btn-outline-dark");
-                        });
-                    });
-
-                </script>
-				
             </div>
             <div id="content_3"></div>
         </div>

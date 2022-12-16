@@ -221,7 +221,7 @@
 				        /* 우편번호 검색 API */
 				        function getAddress() {
 				            new daum.Postcode({
-				                oncomplete: function(data) {
+				                oncomplete: data => {
 				                	
 				                	// 지번을 선택해도 도로명으로만 표시
 				                	var address = data.roadAddress;
@@ -294,7 +294,7 @@
                     </table>
                     
                     <script>
-	                    $(function() {
+	                    $(() => {
 				        	
 				        	var prices = $('.prices').text().split(' 원');
 				        	var total = 0;
@@ -318,7 +318,7 @@
                     <c:choose>
 	                    <c:when test="${ num eq 2 }">
 	                    	<script>
-	                    		$(function() {
+	                    		$(() => {
 	                    			
 	                    			var total = parseInt($('#total').text().substring(0, $('#total').text().indexOf(' 원')).replace(',',''));
 	                    			var deliverPay = 0;
@@ -334,7 +334,7 @@
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<script>
-			                    $(function() {
+			                    $(() => {
 						        	
 			                    	var total = parseInt($('#total').text().substring(0, $('#total').text().indexOf(' 원')).replace(',',''));
 						        	var discount = total * 0.1;

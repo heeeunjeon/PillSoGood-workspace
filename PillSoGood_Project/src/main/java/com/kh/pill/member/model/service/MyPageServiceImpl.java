@@ -1,6 +1,7 @@
 package com.kh.pill.member.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,18 @@ public class MyPageServiceImpl implements MyPageService {
 	@Override
 	public ArrayList<Product> selectMyOrderProducts(String orderNo) {
 		return myPageDao.selectMyOrderProducts(sqlSession, orderNo);
+	}
+	
+	/**
+	 * 주문내역 기간별 조회
+	 */
+	@Override
+	public int searchOrderListByDateCount(HashMap<String, String> map) {
+		return myPageDao.searchOrderListByDateCount(sqlSession, map);
+	}
+	@Override
+	public ArrayList<Order> searchOrderListByDate(PageInfo pi, HashMap<String, String> map) {
+		return myPageDao.searchOrderListByDate(sqlSession, pi, map);
 	}
 	
 	
