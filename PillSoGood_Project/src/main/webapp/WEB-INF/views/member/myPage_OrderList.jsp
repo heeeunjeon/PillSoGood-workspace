@@ -235,7 +235,7 @@
 			                                    	</c:choose>
 			                                        &nbsp;${ o.orderDate }
 			                                    </td>
-			                                    <th style="text-align: right;"><a href="detail.or?ono=${ o.orderNo }" style="text-decoration: none; color: rgb(243, 150, 154); font-size: 20px;">&gt;</a></th>
+			                                    <th style="text-align: right;"><a href="detail.or?ono=${ o.orderNo }" style="text-decoration: none; color: #78C2AD; font-size: 20px;">&gt;</a></th>
 			                                </tr>
 			                                <tr height="40px">
 			                                    <th width="80%">

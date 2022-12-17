@@ -14,7 +14,7 @@
     div {
         box-sizing : border-box;
     }
-
+    
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
@@ -159,10 +159,10 @@
                             <c:if test="${ o.orderStatus ne 'C' and o.delivery eq 1 }">
                             	<c:choose>
                             		<c:when test="${ o.subsStatus eq 'N' }">
-                            			<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="location.href='cancel.or&'">주문취소</button>
+                            			<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="location.href='cancel.or?ono=${ o.orderNo }&st=N'">주문취소</button>
                             		</c:when>
                             		<c:otherwise>
-                            			<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="location.href='unsubs.or'">구독취소</button>
+                            			<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="location.href='cancel.or?ono=${ o.orderNo }&st=Y'">구독취소</button>
                             		</c:otherwise>
                             	</c:choose>
                             </c:if>
@@ -255,21 +255,40 @@
                             </table>
                         </div>
                         <br><br>
-
+						
                         <div>
-                            <b>결제 금액</b>
-                            <hr>
-
-                            <table id="price">
-                                <tr>
-                                    <td><b>최종 결제금액</b></td>
-                                    <th>${ o.orderPrice } 원</th>
-                                </tr>
-                                <tr>
-                                    <td><b>결제일시</b></td>
-                                    <th>${ o.orderDate }</th>
-                                </tr>
-                            </table>
+                        	<c:choose>
+                        		<c:when test="${ o.orderStatus eq 'C' }">
+		                            <b>환불 금액</b>
+		                            <hr>
+		
+		                            <table id="price">
+		                                <tr>
+		                                    <td><b>최종 환불금액</b></td>
+		                                    <th>${ o.orderPrice } 원</th>
+		                                </tr>
+		                                <tr>
+		                                    <td><b>환불일시</b></td>
+		                                    <th>${ o.orderDate }</th>
+		                                </tr>
+		                            </table>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<b>결제 금액</b>
+		                            <hr>
+		
+		                            <table id="price">
+		                                <tr>
+		                                    <td><b>최종 결제금액</b></td>
+		                                    <th>${ o.orderPrice } 원</th>
+		                                </tr>
+		                                <tr>
+		                                    <td><b>결제일시</b></td>
+		                                    <th>${ o.orderDate }</th>
+		                                </tr>
+		                            </table>
+		                    	</c:otherwise>
+                            </c:choose>
                         </div>
                         <br><br>
                         

@@ -80,8 +80,8 @@
 
     /* ----- 주문취소 style ----- */
     /* 텍스트 테이블들 table 정렬 */
-    #price th, #refund th { text-align: right; font-weight: bold; }
-    #price tr, #refund tr { height: 35px; }
+    #refund th { text-align: right; font-weight: bold; }
+    #refund tr { height: 35px; }
 
     /* 취소 유의사항 div */
     #refund_note {
@@ -128,72 +128,96 @@
                         <hr>
                         <div>
                             <b>취소제품 정보</b>
-                            <p style="float: right;">일반구매</p>
+                            <p style="float: right;">
+                            	<c:choose>
+                            		<c:when test="${ st eq 'Y' }">
+                            			정기구독
+                            		</c:when>
+                            		<c:otherwise>
+                            			일반구매
+                            		</c:otherwise>
+                            	</c:choose>
+                            </p>
                             <hr>
-                            <table>
-                                <tr height="40px">
-                                    <th rowspan="2" width="80px">
-                                        <img src="../../pill2.png" alt="" width="100%">
-                                    </th>
-                                    <td rowspan="2" width="20px"></td>
-                                    <td style="vertical-align: bottom; font-size: small;">장 건강엔</td>
-                                    <th rowspan="2" style="text-align: right;">22,000 원</th>
-                                </tr>
-                                <tr height="40px">
-                                    <td style="vertical-align: top;"><b>프로바이오틱스</b> 30일분&nbsp;&nbsp;<b style="color: #78C2AD;">1개</b></td>
-                                </tr>
-                            </table>
-                            <br>
-
-
-                        <div>
-                            <b>결제 금액</b>
-                            <hr>
-
-                            <table id="price">
-                                <tr>
-                                    <td width="30%">총 제품 금액</td>
-                                    <th width="70%">88,000 원</th>
-                                </tr>
-                                <tr>
-                                    <td>배송비</td>
-                                    <th>3,000 원</th>
-                                </tr>
-                                <tr style="height: 10px;"></tr>
-                                <tr>
-                                    <td><b>최종 결제금액</b></td>
-                                    <th>91,000 원</th>
-                                </tr>
-                            </table>
+                            <c:forEach var="p" items="${ plist }">
+                            	<table>
+	                                <tr height="40px">
+	                                    <th rowspan="2" width="80px">
+	                                        <img src="${ p.productImgPath }" width="100%">
+	                                    </th>
+	                                    <td rowspan="2" width="20px"></td>
+	                                    <td style="vertical-align: bottom; font-size: small;">${ p.productExplain } 엔</td>
+	                                    <th rowspan="2" class="price" style="text-align: right;">
+	                                    	<c:forEach var="c" items="${ clist }">
+	                                    		<c:if test="${ p.productNo eq c.productNo }">
+	                                    			<fmt:formatNumber value="${ c.cartAmount * p.productPrice }"/>
+	                                    		</c:if>
+	                                    	</c:forEach>
+	                                    	 원
+	                                    </th>
+	                                </tr>
+	                                <tr height="40px">
+	                                    <td style="vertical-align: top;"><b>${ p.productName }</b> 30일분&nbsp;&nbsp;<b style="color: #78C2AD;">
+	                                    	<c:forEach var="c" items="${ clist }">
+	                                    		<c:if test="${ p.productNo eq c.productNo }">
+		                                    		${ c.cartAmount }
+		                                    	</c:if>
+	                                    	</c:forEach>
+	                                    </b> 개</td>
+	                                </tr>
+	                            </table>
+	                            <br>
+                            </c:forEach>
                         </div>
-                        <br><br>
+                        <br>
+						
+						<c:choose>
+                       		<c:when test="${ st eq 'N' }">
+		                        <div>
+		                            <b>환불 정보</b>
+		                            <hr>
+		
+		                            <table id="refund">
+		                                <tr>
+		                                    <td width="30%">환불 예정금액</td>
+		                                    <th width="70%">${ o.orderPrice } 원</th>
+		                                </tr>
+		                            </table>
+		                        </div>
+		                        <br><br>
+		
+		                        <div id="refund_note">
+		                            <div style="font-size: small; padding-left: 20px;">
+		                                <br>
+		                                - 부분 취소는 불가능합니다. <br>
+		                                - 상품이 출고된 이후 취소가 불가한 점 양해 부탁드립니다.
+		                                <br>
+		                            </div>
+		                        </div>
+		                        <br><br>
 
-                        <div>
-                            <b>환불 정보</b>
-                            <hr>
+		                        <div align="center">
+		                        	<button type="button" class="btn btn-primary" style="width: 20%; height: 45px;" onclick="refund();">주문 취소</button>
+		                        	<button type="button" class="btn btn-secondary" style="width: 20%; height: 45px;" onclick="history.back();">뒤로가기</button>
+		                        </div>
+							</c:when>
+		                    <c:otherwise>
+		                        <div id="refund_note">
+		                            <div style="font-size: small; padding-left: 20px;">
+		                                <br>
+		                                - PG사 규정상 결제 예정 당일에는 해지가 불가합니다.<br>
+		                                - 해지시 다음 결제 예정일부터 결제가 진행되지 않습니다.
+		                                <br>
+		                            </div>
+		                        </div>
+		                        <br><br>
 
-                            <table id="refund">
-                                <tr>
-                                    <td width="30%">환불 예정금액</td>
-                                    <th width="70%">91,000 원</th>
-                                </tr>
-                            </table>
-                        </div>
-                        <br><br>
-
-                        <div id="refund_note">
-                            <div style="font-size: small; padding-left: 20px;">
-                                <br>
-                                - 부분 취소는 불가능합니다. <br>
-                                <br>
-                            </div>
-                        </div>
-                        <br><br>
-
-                        <div align="center">
-                            <button type="button" class="btn btn-primary" style="width: 20%; height: 45px;">주문 취소</button>
-                        </div>
-
+		                        <div align="center">
+		                        	<button type="button" class="btn btn-primary" style="width: 20%; height: 45px;" onclick="unsubscribe();">구독 해지</button>
+		                        	<button type="button" class="btn btn-secondary" style="width: 20%; height: 45px;" onclick="history.back();">뒤로가기</button>
+		                        </div>
+		                    </c:otherwise>
+                       	</c:choose>
                     </div>
 
                 </div>

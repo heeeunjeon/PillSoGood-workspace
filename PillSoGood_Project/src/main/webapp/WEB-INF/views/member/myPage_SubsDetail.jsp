@@ -132,7 +132,7 @@
                             <small>${ o.address }</small>
                             <hr>
                             
-                            <div align="right"><a href="" style="text-align: right;">구독해지</a></div>
+                            <div align="right"><a href="cancel.or?ono=${ o.orderNo }&st=Y" style="text-align: right;">구독해지</a></div>
                         </div>
 
                     </div>

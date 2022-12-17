@@ -194,7 +194,22 @@ public class MyPageController {
 		return "member/myPage_SubsDetail";
 	}
 	
-	
+	@RequestMapping("cancel.or")
+	public String cancelOrderForm(String ono, String st, Model model) {
+		
+		Order o = myPageService.selectMyOrder(ono);
+		
+		ArrayList<Cart> clist = myPageService.selectMyOrderCarts(ono);
+		
+		ArrayList<Product> plist = myPageService.selectMyOrderProducts(ono);
+		
+		model.addAttribute("st", st);
+		model.addAttribute("o", o);
+		model.addAttribute("clist", clist);
+		model.addAttribute("plist", plist);
+		
+		return "member/myPage_OrderCancelForm";
+	}
 	
 	
 	
