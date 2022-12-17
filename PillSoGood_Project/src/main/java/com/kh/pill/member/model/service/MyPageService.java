@@ -30,11 +30,14 @@ public interface MyPageService {
 	// 주문한 상품의 수량 조회
 	ArrayList<Cart> selectMyOrderCarts(String orderNo);
 	
+	// 구독 리스트 조회
+	ArrayList<Order> selectMySubsList(int memberNo);
+	// 중복 제외 customerUid 수
+	int selectMyCustomerUidCount(int memberNo);
 	// 구독 상세조회
-	Order selectMySubs(int memberNo);
+	Order selectMySubs(String customerUid);
 	// 현재 구독의 첫 결제일
-	String selectMyFirstSubs(int memberNo);
-	
+	String selectMyFirstSubs(String customerUid);
 	
 	
 	// 설문 결과 조회용

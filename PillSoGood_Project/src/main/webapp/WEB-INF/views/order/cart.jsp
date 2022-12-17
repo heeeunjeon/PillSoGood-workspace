@@ -188,13 +188,31 @@
                         </div>
                     </div>
                     <div id="btnss">
-                        <div><button type="button" class="btn btn-primary btn-lg" onclick="postPaySubmit(1)">정기결제</button></div>
+                        <div><button type="button" class="btn btn-primary btn-lg" onclick="postPaySubmit(1)">정기구독</button></div>
                         <div><button type="button" class="btn btn-secondary btn-lg" onclick="postPaySubmit(2);">단품결제</button></div>
                     </div>
                     
                     <form id="postForm" action="pay.or" method="post">
                     	<input type='hidden' name='num' value=''>
                     </form>
+                    
+                    <c:choose>
+                    	<c:when test="${ empty list }">
+                    		<script>
+	                    		function postPaySubmit(num) {
+	                    			alert("장바구니에 담긴 상품이 없습니다.");
+	                            };
+                    		</script>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<script>
+                    			function postPaySubmit(num) {
+                    				$("#postForm>input").val(num);
+                    	        	$("#postForm").submit();
+                    			}
+                    		</script>
+                    	</c:otherwise>
+                    </c:choose>
                 </div>
                 <div style="height: 150px;"></div>
             </div>
@@ -260,14 +278,6 @@
             }
         }
         
-		function postPaySubmit(num) {
-        	
-        	$("#postForm>input").val(num);
-        	
-        	$("#postForm").submit();
-        };
-
-
         $(function() {
 
             var totalP = $(".totalP").text().split("원");

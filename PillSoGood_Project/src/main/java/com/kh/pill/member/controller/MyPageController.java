@@ -2,6 +2,8 @@ package com.kh.pill.member.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import com.kh.pill.common.template.Pagination;
 import com.kh.pill.event.model.vo.Event;
 import com.kh.pill.member.model.service.MyPageService;
 import com.kh.pill.member.model.vo.Member;
+import com.kh.pill.order.model.service.OrderService;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.poll.model.vo.Poll;
@@ -27,8 +30,6 @@ import com.kh.pill.review.model.vo.ReviewFile;
 
 @Controller
 public class MyPageController {
-	
-//	
 	
 	@Autowired
 	private MyPageService myPageService;
@@ -144,14 +145,59 @@ public class MyPageController {
 		return "member/myPage_OrderDetail";
 	}
 	
-	
-	
 	/**
 	 * 구독관리 페이지
 	 * @return
 	 */
 	@RequestMapping("myPage.subs")
-	public String myPageSubsList() {
+	public String myPageSubsList(HttpSession session, Model model) {
+		
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		ArrayList<Order> all = myPageService.selectMySubsList(memberNo);
+		
+		// 중복값을 제외한 cusmoterUid 의 갯수 세기
+		int count = myPageService.selectMyCustomerUidCount(memberNo);
+		
+		// customerUid 들을 담을 배열
+		String[] uidArr = new String[count];
+		int num = 0;
+		
+		for(int i = 0; i < all.size(); i++) {
+			if(!Arrays.asList(uidArr).contains(all.get(i).getCustomerUid())) {
+				uidArr[num] = all.get(i).getCustomerUid();
+				num++;
+			}
+		}
+		
+		// 동일한 customerUid 값 중 subsCount 가 max 인 order 정보 가져오기
+		ArrayList<Order> list = new ArrayList<>();
+		
+		for(int i = 0; i < uidArr.length; i++) {
+			
+			Order o = myPageService.selectMySubs(uidArr[i]);
+			
+			ArrayList<Product> plist = myPageService.selectMyOrderProducts(o.getOrderNo());
+			String str = plist.get(0).getProductName();
+			if(plist.size() > 1) {
+				str += " 외 " + (plist.size() - 1);
+			}
+			
+			o.setProductNames(str);
+			
+			list.add(o);
+			
+			if(o.getSubsStatus().equals("Y")) {
+				
+				// 다음 결제 예정일
+				LocalDate next = LocalDate.parse(o.getOrderDate());
+				next = next.plusMonths(1);
+				
+				model.addAttribute("next", next.toString());
+			}
+		}
+		
+		model.addAttribute("list", list);
 		
 		return "member/myPage_SubsList";
 	}
@@ -161,39 +207,45 @@ public class MyPageController {
 	 * @return
 	 */
 	@RequestMapping("detail.subs")
-	public String selectMySubs(HttpSession session, Model model) {
+	public String selectMySubs(String ono, Model model) {
 		
-		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		// orderNo 로 customerUid 조회 후 해당 customerUid 중
+		// subsCount 가 max 인 경우와 1 인 경우 조회
+		Order order = myPageService.selectMyOrder(ono);
 		
-		Order o = myPageService.selectMySubs(memberNo);
+		Order o = myPageService.selectMySubs(order.getCustomerUid());
 		
 		ArrayList<Product> plist = myPageService.selectMyOrderProducts(o.getOrderNo());
-		String str = "";
-		
-		for(int i = 0; i < plist.size(); i++) {
-			 str = plist.get(0).getProductName();
-			 break;
+		String str = plist.get(0).getProductName();
+		if(plist.size() > 1) {
+			str += " 외 " + (plist.size() - 1);
 		}
-		
-		str += " 외 " + (plist.size() - 1);
 		
 		o.setProductNames(str);
 		
 		// 현재 진행중인 구독의 첫 결제일
-		String date = myPageService.selectMyFirstSubs(memberNo);
+		String date = myPageService.selectMyFirstSubs(order.getCustomerUid());
 		
-		// 다음 결제 예정일
-		LocalDate next = LocalDate.parse(o.getOrderDate());
-		next = next.plusMonths(1);
+		if(o.getSubsStatus().equals("Y")) {
+			
+			// 다음 결제 예정일
+			LocalDate next = LocalDate.parse(o.getOrderDate());
+			next = next.plusMonths(1);
+			
+			model.addAttribute("next", next.toString());
+		}
 		
 		model.addAttribute("o", o);
 		model.addAttribute("plist", plist);
-		model.addAttribute("next", next.toString());
 		model.addAttribute("date", date);
 		
 		return "member/myPage_SubsDetail";
 	}
 	
+	/**
+	 * 주문 취소폼
+	 * @return
+	 */
 	@RequestMapping("cancel.or")
 	public String cancelOrderForm(String ono, String st, Model model) {
 		
@@ -207,6 +259,8 @@ public class MyPageController {
 		model.addAttribute("o", o);
 		model.addAttribute("clist", clist);
 		model.addAttribute("plist", plist);
+		
+		model.addAttribute("delivery", o.getDelivery());
 		
 		return "member/myPage_OrderCancelForm";
 	}

@@ -128,7 +128,7 @@
 	                                        <img src="${ p.productImgPath }" width="100%">
 	                                    </th>
 	                                    <td rowspan="2" width="20px"></td>
-	                                    <td style="vertical-align: bottom; font-size: small;">${ p.productExplain } 엔</td>
+	                                    <td style="vertical-align: bottom; font-size: small;">${ p.productExplain }엔</td>
 	                                    <th rowspan="2" class="price" style="text-align: right;">
 	                                    	<c:forEach var="c" items="${ clist }">
 	                                    		<c:if test="${ p.productNo eq c.productNo }">
@@ -161,9 +161,9 @@
                             		<c:when test="${ o.subsStatus eq 'N' }">
                             			<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="location.href='cancel.or?ono=${ o.orderNo }&st=N'">주문취소</button>
                             		</c:when>
-                            		<c:otherwise>
-                            			<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="location.href='cancel.or?ono=${ o.orderNo }&st=Y'">구독취소</button>
-                            		</c:otherwise>
+                            		<c:when test="${ o.subsStatus eq 'Y' }">
+                            			<p style="float: right; font-size: small; color: #78C2AD; margin-bottom: 0px;">* 구독해지는 구독정보에서 가능합니다.</p>
+                            		</c:when>
                             	</c:choose>
                             </c:if>
                             <hr>
@@ -286,6 +286,10 @@
 		                                    <td><b>결제일시</b></td>
 		                                    <th>${ o.orderDate }</th>
 		                                </tr>
+		                                <tr>
+		                                	<td><b>결제영수증</b></td>
+		                                	<th><a href="${ o.orderReceipt }">영수증 조회</a></th>
+		                                </tr>
 		                            </table>
 		                    	</c:otherwise>
                             </c:choose>
@@ -295,8 +299,8 @@
                         <div align="center">
 		                	<button type="button" class="btn btn-primary" onclick="location.href='myPage.or'">목록으로</button>
 		                	
-		                	<c:if test="${ o.subsStatus eq 'Y' }">
-		                		<button type="button" class="btn btn-secondary" onclick="location.href='detail.subs'">구독정보</button>
+		                	<c:if test="${ o.subsStatus ne 'N' }">
+		                		<button type="button" class="btn btn-secondary" onclick="location.href='detail.subs?ono=${ o.orderNo }'">구독정보</button>
 		                	</c:if>
 		                </div>
 

@@ -174,8 +174,8 @@
 		                		
 		                		$("#search_date>button").on("click", function() {
 		                            
-		                			$(this).attr("class", "btn btn-outline-primary");
-		                            $(this).siblings("button").attr("class", "btn btn-outline-dark");
+		                			// $(this).attr("class", "btn btn-outline-primary");
+		                            // $(this).siblings("button").attr("class", "btn btn-outline-dark");
 		                        	
 		                       		location.href = 'search.or?cpage=1&s=' + $(this).attr("id").substring(1) + '&e=0';
 		                		});

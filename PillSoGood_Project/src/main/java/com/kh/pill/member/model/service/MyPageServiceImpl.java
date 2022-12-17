@@ -81,19 +81,35 @@ public class MyPageServiceImpl implements MyPageService {
 	}
 	
 	/**
+	 * 구독 리스트 조회
+	 */
+	@Override
+	public ArrayList<Order> selectMySubsList(int memberNo) {
+		return myPageDao.selectMySubsList(sqlSession, memberNo);
+	}
+	
+	/**
+	 * 중복 제외 customerUid 수
+	 */
+	@Override
+	public int selectMyCustomerUidCount(int memberNo) {
+		return myPageDao.selectMyCustomerUidCount(sqlSession, memberNo);
+	}
+	
+	/**
 	 * 구독 상세조회
 	 */
 	@Override
-	public Order selectMySubs(int memberNo) {
-		return myPageDao.selectMySubs(sqlSession, memberNo);
+	public Order selectMySubs(String customerUid) {
+		return myPageDao.selectMySubs(sqlSession, customerUid);
 	}
 	
 	/**
 	 * 구독 첫결제일 조회
 	 */
 	@Override
-	public String selectMyFirstSubs(int memberNo) {
-		return myPageDao.selectMyFirstSubs(sqlSession, memberNo);
+	public String selectMyFirstSubs(String customerUid) {
+		return myPageDao.selectMyFirstSubs(sqlSession, customerUid);
 	}
 	
 	

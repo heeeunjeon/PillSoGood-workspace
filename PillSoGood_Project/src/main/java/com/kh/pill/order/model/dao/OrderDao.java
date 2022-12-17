@@ -16,6 +16,10 @@ public class OrderDao {
 		return sqlSession.selectOne("orderMapper.selectCountByCustomerUid", customerUid);
 	}
 	
+	public int checkSubscribing(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("orderMapper.checkSubscribing", memberNo);
+	}
+	
 	public int insertOrder(SqlSessionTemplate sqlSession, Order o) {
 		return sqlSession.insert("orderMapper.insertOrder", o);
 	}
@@ -36,8 +40,12 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.updateOrder", o);
 	}
 
-	public int deleteOrder(SqlSessionTemplate sqlSession, int orderNo) {
-		return sqlSession.update("orderMapper.deleteOrder", orderNo);
+	public int deleteOrder(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("orderMapper.deleteOrder", o);
+	}
+	
+	public int deleteSubs(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("orderMapper.deleteSubs", o);
 	}
 	
 	public ArrayList<OrderCart> selectCartNoForSubs(SqlSessionTemplate sqlSession, int memberNo) {

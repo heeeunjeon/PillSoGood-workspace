@@ -84,12 +84,26 @@ public class MyPageDao {
 	}
 	
 	/**
+	 * 구독 리스트 조회
+	 * @param sqlSession
+	 * @param memberNo
+	 * @return
+	 */
+	public ArrayList<Order> selectMySubsList(SqlSessionTemplate sqlSession, int memberNo) {
+		return (ArrayList)sqlSession.selectList("orderMapper.selectMySubsList", memberNo);
+	}
+	
+	public int selectMyCustomerUidCount(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("orderMapper.selectMyCustomerUidCount", memberNo);
+	}
+	
+	/**
 	 * 구독 상세조회
 	 * @param memberNo
 	 * @return
 	 */
-	public Order selectMySubs(SqlSessionTemplate sqlSession, int memberNo) {
-		return sqlSession.selectOne("orderMapper.selectMySubs", memberNo);
+	public Order selectMySubs(SqlSessionTemplate sqlSession, String customerUid) {
+		return sqlSession.selectOne("orderMapper.selectMySubs", customerUid);
 	}
 	
 	/**
@@ -97,8 +111,8 @@ public class MyPageDao {
 	 * @param memberNo
 	 * @return
 	 */
-	public String selectMyFirstSubs(SqlSessionTemplate sqlSession, int memberNo) {
-		return sqlSession.selectOne("orderMapper.selectMyFirstSubs", memberNo);
+	public String selectMyFirstSubs(SqlSessionTemplate sqlSession, String customerUid) {
+		return sqlSession.selectOne("orderMapper.selectMyFirstSubs", customerUid);
 	}
 	
 	

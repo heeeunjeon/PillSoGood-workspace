@@ -41,6 +41,13 @@
 		  AND ORDER_STATUS = 'Y'
 	</select>
 	
+	<select id="checkSubscribing" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM ORDERS
+		WHERE MEMBER_NO = #{memberNo}
+		  AND SUBS_STATUS = 'Y'
+	</select>
+	
 	<insert id="insertOrder" parameterType="order">
 		INSERT INTO ORDERS (ORDER_NO
 						  , ORDER_DATE
@@ -92,11 +99,23 @@
 	</update>
 	
 	<update id="updateOrder" parameterType="order">
-	
+		
 	</update>
 	
-	<update id="deleteOrder" parameterType="_int">
+	<update id="deleteOrder" parameterType="order">
+		UPDATE ORDERS
+		   SET ORDER_STATUS = 'C'
+			 , ORDER_DATE = TO_DATE(#{orderDate}, 'YYYYMMDDHH24MISS')
+		 WHERE ORDER_NO = #{orderNo}
+	</update>
 	
+	<update id="deleteSubs" parameterType="order">
+		UPDATE ORDERS
+		   SET SUBS_STATUS = 'C'
+		     , CUSTOMER_UID = SUBSTR(#{customerUid}, -4) || '_' || #{orderNo}
+		 WHERE CUSTOMER_UID = #{customerUid}
+		   AND SUBS_STATUS = 'Y'
+		   AND ORDER_STATUS = 'Y'
 	</update>
 	
 	<select id="selectCartNoForSubs" parameterType='_int' resultMap="orderCartResultSet">
@@ -139,10 +158,10 @@
 	</update>
 	
 	<delete id="removeCart" parameterType="cart">
-			DELETE CART
-			 WHERE PRODUCT_NO = #{productNo}
-			   AND MEMBER_NO = #{memberNo}
-			   AND CART_STATUS = 'Y'
+		DELETE CART
+		 WHERE PRODUCT_NO = #{productNo}
+		   AND MEMBER_NO = #{memberNo}
+		   AND CART_STATUS = 'Y'
 	</delete>
 	
 	<select id="selectMyOrderListCount" parameterType="_int" resultType="_int">
@@ -188,6 +207,7 @@
 			 , TO_CHAR(ORDER_DATE, 'YYYY-MM-DD HH24:MI:SS') "ORDER_DATE"
 			 , ORDER_PRICE
 			 , SUBS_COUNT
+			 , CUSTOMER_UID
 			 , ORDER_RECEIPT
 			 , ORDER_STATUS
 			 , SUBS_STATUS
@@ -205,27 +225,45 @@
 		WHERE ORDER_NO = ${orderNo}
 	</select>
 	
-	<select id="selectMySubs" parameterType="_int" resultMap="orderResultSet">
+	<select id="selectMySubsList" parameterType="_int" resultMap="orderResultSet">
 		SELECT ORDER_NO
 			 , TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') "ORDER_DATE"
 			 , ORDER_PRICE
-			 , ADDRESS
+			 , SUBS_COUNT
+			 , CUSTOMER_UID
+			 , ORDER_STATUS
+			 , SUBS_STATUS
 		FROM ORDERS
-		WHERE SUBS_STATUS = 'Y'
-		  AND ORDER_STATUS = 'Y'
-		  AND SUBS_COUNT = (SELECT MAX(SUBS_COUNT)
-		  					FROM ORDERS
-		  					WHERE MEMBER_NO = #{memberNo})
-		  AND MEMBER_NO = #{memberNo}
+		WHERE MEMBER_NO = #{memberNo}
+		  AND SUBS_STATUS IN ('Y', 'C')
+		ORDER BY ORDER_NO DESC
 	</select>
 	
-	<select id="selectMyFirstSubs" parameterType="_int" resultType="string">
+	<select id="selectMyCustomerUidCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(DISTINCT CUSTOMER_UID)
+		FROM ORDERS
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectMySubs" parameterType="string" resultMap="orderResultSet">
+		SELECT ORDER_NO
+			 , TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') "ORDER_DATE"
+			 , ORDER_PRICE
+			 , SUBS_COUNT
+			 , SUBS_STATUS
+			 , ADDRESS
+		FROM ORDERS
+		WHERE CUSTOMER_UID = #{customerUid}
+		  AND SUBS_COUNT = (SELECT MAX(SUBS_COUNT)
+		  					FROM ORDERS
+		  					WHERE CUSTOMER_UID = #{customerUid})
+	</select>
+	
+	<select id="selectMyFirstSubs" parameterType="string" resultType="string">
 		SELECT TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') "ORDER_DATE"
 		FROM ORDERS
-		WHERE SUBS_STATUS = 'Y'
-		  AND ORDER_STATUS = 'Y'
-		  AND SUBS_COUNT = 1
-		  AND MEMBER_NO = #{memberNo}
+		WHERE SUBS_COUNT = 1
+		  AND CUSTOMER_UID = #{customerUid}
 	</select>
 	
 </mapper>

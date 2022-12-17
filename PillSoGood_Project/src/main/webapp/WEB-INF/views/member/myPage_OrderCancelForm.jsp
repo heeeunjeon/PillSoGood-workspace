@@ -3,12 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% int delivery = (int)request.getAttribute("delivery"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>MY PAGE 주문 취소</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
 
     div {
@@ -146,7 +148,7 @@
 	                                        <img src="${ p.productImgPath }" width="100%">
 	                                    </th>
 	                                    <td rowspan="2" width="20px"></td>
-	                                    <td style="vertical-align: bottom; font-size: small;">${ p.productExplain } 엔</td>
+	                                    <td style="vertical-align: bottom; font-size: small;">${ p.productExplain }엔</td>
 	                                    <th rowspan="2" class="price" style="text-align: right;">
 	                                    	<c:forEach var="c" items="${ clist }">
 	                                    		<c:if test="${ p.productNo eq c.productNo }">
@@ -206,16 +208,42 @@
 		                            <div style="font-size: small; padding-left: 20px;">
 		                                <br>
 		                                - PG사 규정상 결제 예정 당일에는 해지가 불가합니다.<br>
-		                                - 해지시 다음 결제 예정일부터 결제가 진행되지 않습니다.
+		                                - 정기구독 해지시 다음 결제 예정일부터 결제가 진행되지 않습니다.
 		                                <br>
 		                            </div>
 		                        </div>
 		                        <br><br>
 
 		                        <div align="center">
-		                        	<button type="button" class="btn btn-primary" style="width: 20%; height: 45px;" onclick="unsubscribe();">구독 해지</button>
+		                        	<button type="button" class="btn btn-primary" style="width: 20%; height: 45px;" data-bs-toggle="modal" data-bs-target="#unsubscribeModal">구독 해지</button>
 		                        	<button type="button" class="btn btn-secondary" style="width: 20%; height: 45px;" onclick="history.back();">뒤로가기</button>
 		                        </div>
+		                        
+		                        <div class="modal" tabindex="-1" id="unsubscribeModal">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title"><b>구독 해지</b></h5>
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body" align="center">
+												<b>${ loginUser.memberName }</b> 고객님!<br>
+												정기구독 서비스 유지시 아래와 같은 혜택을 누리실 수 있습니다.<br><br>
+												
+												<div style="border: 3px double #78C2AD; width: 50%; padding: 5px; border-radius: 5px;">
+												- 10% 할인<br>
+												- 배송비 무료
+												</div>
+												<br>
+												정말 정기구독 서비스를 해지하시겠습니까?
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+												<button type="button" class="btn btn-primary" onclick="unsubscribe();">해지하기</button>
+											</div>
+										</div>
+									</div>
+								</div>
 		                    </c:otherwise>
                        	</c:choose>
                     </div>
@@ -229,6 +257,121 @@
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
+    
+    <script>
+    	function refund() {
+    		
+    		if(confirm("주문을 취소하시겠습니까?")) {
+    			
+    			$.ajax({
+    				url: "payments/cancel",
+    				type: "post",
+    				data: {
+    					merchant_uid: "${ o.orderNo }"
+    				}
+    			}).done(data => {
+    				// console.log(data);
+    				
+    				if(data.response.status == 'cancelled') {
+    					
+    					$.ajax({
+    						url: "delete.or",
+    						data: {
+    							orderNo: "${ o.orderNo }",
+    							orderDate: moment(data.response.cancelledAt).format('YYYYMMDDHHmmss'),
+    							subsStatus: 'N'
+    						},
+    						success: result => {
+    							
+    							if(result == "success") {
+    								alert("주문번호 : ${ o.orderNo }\n주문이 취소되었습니다.\n환불은 즉시 진행되며, PG사에 따라 시간이 소요될 수도 있습니다.");
+        	    					location.href = 'myPage.or';
+    							}
+    	    					
+    						},
+    						error: () => {
+    							console.log("delete.or ajax 실패");
+    						}
+    					});
+    				}
+    			});
+    		}
+    	}
+    	
+    	function unsubscribe() {
+    		
+    		if(confirm("구독을 해지하시면 더이상 정기구독 혜택을 받으실 수 없습니다.\n정말 정기구독 서비스를 해지하시겠어요?")) {
+    			
+    			$.ajax({
+    				url: "subscribe/payments/unschedule",
+    				type: "post",
+    				data: {
+    					customer_uid: "${ o.customerUid }"
+    				}
+    			}).done(data => {
+    				console.log(data);
+    				
+					if(data.code == 0) {
+						
+    					$.ajax({
+    						url: "delete.or",
+    						type: "post",
+    						data: {
+    							orderNo: "${ o.orderNo }",
+    							orderDate: moment(data.response.cancelledAt).format('YYYYMMDDHHmmss'),
+    							customerUid: data.response[0].customerUid,
+    							subsStatus: 'Y'
+    						},
+    						success: result => {
+    							
+    							if(result == "success") {
+    								
+    								alert("정기구독이 해지되었습니다.\n다음 결제일부턴 결제가 진행되지 않습니다.");
+    								
+    								if(<%= delivery %> == 1) {
+    									if(confirm("해지하시는 구독 서비스의 마지막 회차 상품이 발송 전입니다.\n취소하시겠습니까?")) {
+    										$.ajax({
+    						    				url: "payments/cancel",
+    						    				type: "post",
+    						    				data: {
+    						    					merchant_uid: "${ o.orderNo }"
+    						    				}
+    						    			}).done(data => {
+    						    				
+    						    				if(data.response.status == 'cancelled') {
+    						    					
+    						    					$.ajax({
+    						    						url: "delete.or",
+    						    						data: {
+    						    							orderNo: "${ o.orderNo }",
+    						    							orderDate: moment(data.response.cancelledAt).format('YYYYMMDDHHmmss'),
+    						    							subsStatus: 'N'
+    						    						},
+    						    						success: result => {
+    						    							
+    						    							if(result == "success") {
+    						    								alert("주문번호 : ${ o.orderNo }\n주문이 취소되었습니다.\n환불은 즉시 진행되며, PG사에 따라 시간이 소요될 수도 있습니다.");
+    						        	    					location.href = 'myPage.or';
+    						    							}
+    						    						}
+    						    						
+    						    					});
+    						    				}
+    						    			});
+    									}
+    								}
+    							}
+    	    					
+    						},
+    						error: () => {
+    							console.log("delete.or ajax 실패");
+    						}
+    					});
+    				}
+    			});
+    		}
+    	}
+    </script>
 
 </body>
 </html>

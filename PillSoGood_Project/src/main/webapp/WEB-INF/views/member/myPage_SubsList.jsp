@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>PillSoGood</title>
-
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+<title>MY PAGE 정기구독 관리</title>
 <style>
 
     div {
@@ -108,7 +109,7 @@
                     
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">홍길동</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
                             <br>
                             <p><a href="myPage.or">주문 조회</a></p>
                             <p><a href="myPage.subs">정기구독 관리</a></p>
@@ -125,47 +126,50 @@
                         <hr>
 
                         <div id="subs_list">
-
-                            <div>
-                                <b>정기구독 한 팩 서비스</b>&nbsp;&nbsp;<b style="color: #78C2AD;">1회차</b>
-                                <b style="float: right; margin-left: 20px;">&gt;</b>
-                                <b style="float: right;">스트레스로 인한 피로 개선엔 홍경천 <small>외 3종</small></b>
-                                <br clear="both">
-                            </div>
-                            <br>
-                            <div class="subs_info">
-                                <table style="height: 100%;">
-                                    <tr>
-                                        <td width="40%">다음 결제 예정일</td>
-                                        <th>2022.11.22</th>
-                                    </tr>
-                                    <tr>
-                                        <td>결제 예정 금액</td>
-                                        <th width="60%"><h7 style="color: #F3969A; margin-right: 10px;">10%</h7>76,500 원</th>
-                                    </tr>
-                                </table>
-                            </div>
-                            <br><hr>
-
-                            <div>
-                                <b>정기구독 한 팩 서비스</b>&nbsp;&nbsp;<b style="color: #78C2AD;">1회차</b>
-                                <b style="float: right; margin-left: 20px;">&gt;</b>
-                                <b style="float: right;">스트레스로 인한 피로 개선엔 홍경천 <small>외 3종</small></b>
-                                <br clear="both">
-                            </div>
-                            <br>
-                            <div class="subs_info">
-                                <table style="height: 100%;">
-                                    <tr>
-                                        <td width="40%">다음 결제 예정일</td>
-                                        <th>2022.11.22</th>
-                                    </tr>
-                                    <tr>
-                                        <td>결제 예정 금액</td>
-                                        <th width="60%"><h7 style="color: #F3969A; margin-right: 10px;">10%</h7>76,500 원</th>
-                                    </tr>
-                                </table>
-                            </div>
+							
+							<c:forEach var="o" items="${ list }">
+								
+								<div>
+	                                <b>정기구독 서비스</b>&nbsp;&nbsp;<b style="color: #78C2AD;">${ o.subsCount } 회차</b>&nbsp;&nbsp;
+	                                <c:if test="${ o.subsStatus eq 'C' }"><small style="color: #78C2AD;">(해지)</small></c:if>
+	                                <a href="detail.subs?ono=${ o.orderNo }" style="text-decoration: none; color: #78C2AD; font-size: 20px;"><b style="float: right; margin-left: 20px;">&gt;</b></a>
+	                                <small style="float: right; font-weight: bold; line-height: 30px;">${ o.productNames }</small>
+	                                <br clear="both">
+	                            </div>
+	                            <br>
+	                            <div class="subs_info">
+	                                <table style="height: 100%;">
+	                                    <tr>
+	                                        <td width="40%">다음 결제 예정일</td>
+	                                        <th>
+	                                        	<c:choose>
+	                                        		<c:when test="${ o.subsStatus eq 'Y' }">
+	                                        			${ next }
+	                                        		</c:when>
+	                                        		<c:otherwise>
+	                                        			- (해지)
+	                                        		</c:otherwise>
+	                                        	</c:choose>
+	                                        </th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td>결제 예정 금액</td>
+	                                        <th width="60%">
+	                                        	<c:choose>
+	                                        		<c:when test="${ o.subsStatus eq 'Y' }">
+	                                        			<h7 style="color: #F3969A; margin-right: 10px;">10%</h7><fmt:formatNumber value="${ o.orderPrice }"/> 원
+	                                        		</c:when>
+	                                        		<c:otherwise>
+	                                        			- (해지)
+	                                        		</c:otherwise>
+	                                        	</c:choose>
+	                                        </th>
+	                                    </tr>
+	                                </table>
+	                            </div>
+	                            <br><hr>
+								
+							</c:forEach>
                             
                         </div>
 

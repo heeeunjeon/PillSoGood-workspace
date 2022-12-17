@@ -85,7 +85,7 @@
                     <p style="text-align: center; font-size: large;">주문번호 [ ${ ono } ]</p>
                     <br>
                     <div align="center" style="margin-top: 20px">
-                        <button type="button" class="btn btn-outline-primary" onclick="location.href='myPage.or'">주문내역조회</button>
+                        <button type="button" class="btn btn-outline-primary" onclick="location.href='detail.or?ono=${ ono }'">주문내역조회</button>
                         <button type="button" class="btn btn-outline-secondary" onclick="location.href='/PillSoGood'">메인으로</button>
                     </div>
                 </div>

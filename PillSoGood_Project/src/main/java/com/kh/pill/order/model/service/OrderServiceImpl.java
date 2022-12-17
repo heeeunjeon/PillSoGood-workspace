@@ -10,7 +10,6 @@ import com.kh.pill.order.model.dao.OrderDao;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.order.model.vo.OrderCart;
-import com.kh.pill.product.model.vo.Product;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -24,6 +23,11 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int selectCountByCustomerUid(String customerUid) {
 		return orderDao.selectCountByCustomerUid(sqlSession, customerUid);
+	}
+	
+	@Override
+	public int checkSubscribing(int memberNo) {
+		return orderDao.checkSubscribing(sqlSession, memberNo);
 	}
 	
 	@Override
@@ -52,8 +56,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int deleteOrder(int orderNo) {
-		return orderDao.deleteOrder(sqlSession, orderNo);
+	public int deleteOrder(Order o) {
+		return orderDao.deleteOrder(sqlSession, o);
+	}
+	
+	@Override
+	public int deleteSubs(Order o) {
+		return orderDao.deleteSubs(sqlSession, o);
 	}
 	
 	@Override

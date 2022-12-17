@@ -11,6 +11,9 @@ public interface OrderService {
 	// 구독회차 조회
 	int selectCountByCustomerUid(String customerUid);
 	
+	// 구독 여부 확인
+	int checkSubscribing(int memberNo);
+	
 	// 주문 완료 (저장)
 	// Order insert -> Cart select -> OrderCart insert -> Cart update
 	int insertOrder(Order o);
@@ -22,7 +25,9 @@ public interface OrderService {
 	int updateOrder(Order o);
 	
 	// 주문 취소 (삭제)
-	int deleteOrder(int orderNo);
+	int deleteOrder(Order o);
+	// 구독 해지 (다른 회차는 결제완료로 두고 마지막 회차만 삭제)
+	int deleteSubs(Order o);
 	
 	// 기존 결제의 장바구니 번호 조회
 	ArrayList<OrderCart> selectCartNoForSubs(int memberNo);

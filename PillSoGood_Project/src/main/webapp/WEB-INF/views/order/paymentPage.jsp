@@ -444,7 +444,7 @@
 	    			custom_data: { memberNo: ${ loginUser.memberNo } }
 	    		}, rsp => { // callback
 	    			
-	    			console.log(rsp);
+	    			// console.log(rsp);
 	    		
 	    			if(rsp.error_code == 'STOP') {
 	    				alert(rsp.error_msg);
@@ -456,7 +456,7 @@
 		    				url: "verifyIamport/" + rsp.imp_uid
 		    			}).done(data => {
 		    				
-		    				console.log(data);
+		    				// console.log(data);
 		    				
 		    				if(rsp.paid_amount == data.response.amount) {
 		    					
@@ -506,7 +506,7 @@
 		    			buyer_email: "${ loginUser.email }",
 		    			buyer_postcode: $("#address_zip").val(),
 		    			buyer_addr: address,
-		    			custom_data: JSON.stringify({ "memberNo" : 2 }),
+		    			custom_data: JSON.stringify({ "memberNo" : ${ loginUser.memberNo } }),
 						card_number: $("#card_number").val(),
 						expiry: $("#expiry").val(),
 						birth: $("#birth").val(),
@@ -514,7 +514,7 @@
 					}
 				}).done(data => {
 					
-					console.log(data);
+					// console.log(data);
 					
 					if(data.response.status == 'paid') {
 						

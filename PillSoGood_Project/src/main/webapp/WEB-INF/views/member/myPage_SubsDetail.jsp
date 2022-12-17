@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>MY PAGE 정기구독 관리</title>
 <style>
 
@@ -123,16 +125,26 @@
                             <small>구독 시작일</small><b style="float: right;">${ date }</b>
                             <hr>
                             구독 제품 <br>
-                            <small>${ o.productNames }</small><b style="float: right;">88,000원</b>
+                            <small>${ o.productNames }</small><b style="float: right;"><fmt:formatNumber value="${ o.orderPrice }"/> 원</b>
                             <hr>
                             결제일 <br>
-                            <small>다음 결제 예정일</small><b style="float: right;">${ next }</b>
+                            <c:choose>
+                            	<c:when test="${ o.subsStatus eq 'Y' }">
+                            		<small>다음 결제 예정일</small><b style="float: right;">${ next }</b>
+                            	</c:when>
+                            	<c:when test="${ o.subsStatus eq 'C' }">
+                            		<small>구독 해지일</small><b style="float: right;">${ o.orderDate }</b>
+                            	</c:when>
+                            </c:choose>
                             <hr>
                             배송지 정보 <br>
-                            <small>${ o.address }</small>
+                            <small style="float: right;">${ o.address }</small>
+                            <br clear="both">
                             <hr>
                             
-                            <div align="right"><a href="cancel.or?ono=${ o.orderNo }&st=Y" style="text-align: right;">구독해지</a></div>
+                            <c:if test="${ o.subsStatus eq 'Y' }">
+                            	<div align="right"><a href="cancel.or?ono=${ o.orderNo }&st=Y" style="text-align: right;">구독해지</a></div>
+                            </c:if>
                         </div>
 
                     </div>

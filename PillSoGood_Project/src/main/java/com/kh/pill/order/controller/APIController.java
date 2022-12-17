@@ -1,11 +1,11 @@
 package com.kh.pill.order.controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,20 +20,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.order.model.service.OrderService;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.order.model.vo.OrderCart;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.request.CardInfo;
+import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.request.OnetimePaymentData;
 import com.siot.IamportRestClient.request.ScheduleData;
 import com.siot.IamportRestClient.request.ScheduleEntry;
+import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
+import com.siot.IamportRestClient.response.Schedule;
 
 @Controller
 public class APIController {
@@ -95,6 +96,23 @@ public class APIController {
 	@GetMapping(value="/payments/{imp_uid}")
 	public IamportResponse<Payment> getPayments(@PathVariable(value="imp_uid")String impUid) throws IamportResponseException, IOException {
 		return client.paymentByImpUid(impUid);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/payments/cancel")
+	public IamportResponse<Payment> cancel(String merchant_uid) throws IamportResponseException, IOException {
+		
+		CancelData cancelData = new CancelData(merchant_uid, false);
+		
+		return client.cancelPaymentByImpUid(cancelData);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/subscribe/payments/unschedule")
+	public IamportResponse<List<Schedule>> unsubscribeSchedule(String customer_uid) throws IamportResponseException, IOException {
+		
+		UnscheduleData unscheduleData = new UnscheduleData(customer_uid);
+		return client.unsubscribeSchedule(unscheduleData);
 	}
 	
 	@RequestMapping(value="/iamport/webhook")
