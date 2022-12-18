@@ -40,6 +40,7 @@
         color: black;
         margin-top: 20px;
         margin-left: 15px;
+        font-weight: bold;
     }
 
     /* content 영역 */

@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>ADMIN PAGE 문의 관리</title>
+<title>ADMIN PAGE 주문 관리</title>
 <style>
 
     div {
@@ -18,8 +17,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        /* 전체 길이 개별 커스텀 */
-        height: 1400px;
+        height: inherit;
         margin : auto;
     }
 
@@ -27,11 +25,10 @@
 
     #navigator2 { height: 100px; }
 
-    /* 내용 길이 개별 wrap - 350px */
-    #content { height: 1050px; }
+    #content { display: flex; height: auto; }
     #content_2>div { width: 100%; }
-    #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_1, #content_2_3 { height: 115px; }
+    #content_2_2 { height: auto; color: black; }
 
     #header { height: 130px; }
 
@@ -44,16 +41,16 @@
     }
 
     /* content 영역 */
-    #content>div { height : 100%; float : left; }
+    #content>div { height : 100vh; float : left; }
     #content_1 { width : 20%; }
-    #content_2 { width : 60%; }
+    #content_2 { width : 60%; height: auto!important;}
     #content_3 { width : 20%; }
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
     /* ----- 마이페이지 공통 style ----- */
     /* 영역 구분 */
-    #content2_2>div { height: 100%; }
+    #content2_2>div { height: 100vh; }
     #mypage_navi { width: 20%; padding: 10px; float: left; }
     #mypage_content { width: 80%; padding: 30px; float: left; }
 
@@ -96,26 +93,17 @@
         font-weight: bold;
     }
 
-    /* ----- 문의조회 style ----- */
+    /* ----- 주문조회 style ----- */
     /* 목록 테이블 */
-    #qna_list {
+    #order_list {
         margin-top: 30px;
         color: black;
         text-align: center;
-        /* 말줄임용 테이블 고정 */
-        table-layout: fixed;
     }
-    #qna_list>thead { background-color: #78c2ad36; }
-    #qna_list>tbody td { font-size: small; vertical-align: middle; }
+    #order_list>thead { background-color: #78c2ad36; }
+    #order_list>tbody td { font-size: small; vertical-align: middle; }
 
-    #qna_list>tbody>tr:hover { cursor: pointer; }
-
-    /* 제목이 길 때 말줄임과 1줄만 보이도록 */
-    .qna_title {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+    #order_list>tbody>tr:hover { cursor: pointer; }
 
 </style>
 </head>
@@ -153,47 +141,81 @@
                     </div>
 
                     <div id="mypage_content">
-                        <h4>문의 관리</h4>
+                        <h4>주문 관리</h4>
                         <hr>
 
                         <div id="admin_menu">
-                            <p>[ 문의 목록 ]</p>
+                            <p>[ 주문 목록 ]</p>
                         </div>
                         
-                        <table class="table table-hover" id="qna_list" border="1">
+                        <table class="table table-hover" id="order_list" border="1">
                             <thead>
                                 <tr>
-                                    <th width="10%">No</th>
-                                    <th width="40%">제목</th>
-                                    <th width="15%">작성자</th>
-                                    <th width="20%">등록일</th>
-                                    <th width="15%">상태</th>
+                                    <th width="35%">주문번호</th>
+                                    <th width="15%">주문자ID</th>
+                                    <th width="15%">결제금액</th>
+                                    <th width="15%">구독여부</th>
+                                    <th width="10%">회차</th>
+                                    <th width="10%">상태</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach var="q" items="${ list }">
-	                           		<tr>
-	                           			<td>${ q.questionNo }</td>
-	                           			<td>${ q.questionTitle }</td>
-                               			<td>${ q.memberNo }</td>
-                               			<td>${ q.questionDate }</td>
-	                           			<td>
-	                           				<c:choose>
-	                            				<c:when test="${ empty q.answer }">미답변</c:when>
-	                            				<c:otherwise>답변완료</c:otherwise>
-	                           				</c:choose>
-	                           			</td>
-	                           		</tr>
-	                           	</c:forEach>
+                            
+                            	<c:forEach var="o" items="${ list }">
+                            		<tr>
+	                                    <td>${ o.orderNo }</td>
+	                                    <td>${ o.memberNo }</td>
+	                                    <td><fmt:formatNumber value="${ o.orderPrice }"/></td>
+	                                    <td>
+	                                    	<c:choose>
+	                                    		<c:when test="${ o.subsStatus eq 'N' }">
+	                                    			일반결제
+	                                    		</c:when>
+	                                    		<c:when test="${ o.subsStatus eq 'C' }">
+	                                    			정기구독(해지)
+	                                    		</c:when>
+	                                    		<c:otherwise>
+	                                    			정기구독
+	                                    		</c:otherwise>
+	                                    	</c:choose>
+										</td>
+	                                    <td>
+											<c:choose>
+	                                    		<c:when test="${ o.subsStatus eq 'N' }">
+	                                    			-
+	                                    		</c:when>
+	                                    		<c:otherwise>
+	                                    			${ o.subsCount }
+	                                    		</c:otherwise>
+	                                    	</c:choose>
+										</td>
+	                                    <td>
+	                                    	<c:choose>
+	                                    		<c:when test="${ o.orderStatus eq 'Y' }">
+	                                    			결제완료
+	                                    		</c:when>
+	                                    		<c:when test="${ o.orderStatus eq 'C' }">
+	                                    			주문취소
+	                                    		</c:when>
+	                                    		<c:otherwise>
+	                                    			미결제
+	                                    		</c:otherwise>
+	                                    	</c:choose>
+	                                    </td>
+	                                    
+	                                </tr>
+                            	</c:forEach>
+                                
                             </tbody>
                         </table>
                         <br>
 
                         <script>
-                            $(function() {
-                                $("#qna_list>tbody>tr").click(function() {
-
-                                	location.href = "detail.qu?qno=" + $(this).children().eq(0).text();
+                            $(() => {
+                                $("#order_list>tbody>tr").click(function() {
+									
+                                    // 클릭시 주문 상세로 이동
+                                    location.href = "odetail.ad?ono=" + $(this).children().eq(0).text();
                                 });
                             });
                         </script>
@@ -206,12 +228,19 @@
 				                			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
 				                		</c:when>
 				                		<c:otherwise>
-				                			<li class="page-item"><a class="page-link" href="qlist.ad?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
+				                			<li class="page-item"><a class="page-link" href="olist.ad?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
 				                		</c:otherwise>
 				                	</c:choose>
 				                	
 				                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-			                    		<li class="page-item"><a class="page-link" href="qlist.ad?cpage=${ p }">${ p }</a></li>
+				                		<c:choose>
+                                    		<c:when test="${ pi.currentPage eq p }">
+                                    			<li class="page-item active"><a class="page-link" href="olist.ad?cpage=${ p }">${ p }</a></li>
+                                    		</c:when>
+                                    		<c:otherwise>
+                                    			<li class="page-item"><a class="page-link" href="olist.ad?cpage=${ p }">${ p }</a></li>
+                                    		</c:otherwise>
+                                    	</c:choose>
 				                    </c:forEach>
 		                        
 		                            <c:choose>
@@ -219,7 +248,7 @@
 				                			<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
 				                		</c:when>
 				                		<c:otherwise>
-				                			<li class="page-item"><a class="page-link" href="qlist.ad?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
+				                			<li class="page-item"><a class="page-link" href="olist.ad?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
 				                		</c:otherwise>
 				                	</c:choose>
 	                            </c:if>
@@ -228,7 +257,9 @@
                     </div>
 
                 </div>
-
+				<br clear="both">
+				
+				<div id="content_2_3"></div>
             </div>
             <div id="content_3"></div>
         </div>

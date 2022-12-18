@@ -47,9 +47,9 @@
     }
 
     /* content 영역 */
-    #content>div { height : 100%; float : left; }
+    #content>div { height : 100vh; float : left; }
     #content_1 { width : 20%; }
-    #content_2 { width : 60%; }
+    #content_2 { width : 60%; height: auto!important;}
     #content_3 { width : 20%; }
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }

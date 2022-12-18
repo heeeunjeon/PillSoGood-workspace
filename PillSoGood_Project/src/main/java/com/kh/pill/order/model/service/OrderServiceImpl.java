@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.order.model.dao.OrderDao;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
@@ -19,7 +20,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+	
+	// order
+	
 	@Override
 	public int selectCountByCustomerUid(String customerUid) {
 		return orderDao.selectCountByCustomerUid(sqlSession, customerUid);
@@ -51,11 +54,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updateOrder(Order o) {
-		return orderDao.updateOrder(sqlSession, o);
-	}
-
-	@Override
 	public int deleteOrder(Order o) {
 		return orderDao.deleteOrder(sqlSession, o);
 	}
@@ -70,7 +68,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectCartNoForSubs(sqlSession, memberNo);
 	}
 	
+	// ---------------------------------------------------------------
 	
+	// cart
 	
 	/**
 	 * 장바구니 담기
@@ -84,7 +84,6 @@ public class OrderServiceImpl implements OrderService {
 	public int selectIsCart(Cart c) {
 		return orderDao.selectIsCart(sqlSession, c);
 	}
-
 
 	@Override
 	public int updateCart(Cart c) {
@@ -101,6 +100,24 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.modifyCart(sqlSession, c);
 	}
 
+	// ---------------------------------------------------------------
 	
+	// 관리자
+	
+	@Override
+	public int selectAllListCount() {
+		return orderDao.selectAllListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Order> selectOrderAllList(PageInfo pi) {
+		return orderDao.selectOrderAllList(sqlSession, pi);
+	}
+
+	@Override
+	public int updateOrder(Order o) {
+		return orderDao.updateOrder(sqlSession, o);
+	}
+
 
 }

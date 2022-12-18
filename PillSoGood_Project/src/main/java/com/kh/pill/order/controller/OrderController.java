@@ -1,7 +1,6 @@
 package com.kh.pill.order.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,8 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.common.template.Pagination;
+import com.kh.pill.member.model.service.MemberService;
+import com.kh.pill.member.model.service.MyPageService;
 import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.order.model.service.OrderService;
 import com.kh.pill.order.model.vo.Cart;
@@ -26,6 +30,12 @@ public class OrderController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private MyPageService myPageService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping("pay.or")
 	public String payment(int num, HttpSession session, Model model) {
@@ -85,5 +95,58 @@ public class OrderController {
 		return (result > 0) ? "success" : "fail";
 	}
 	
+	
+	// -------------------------------------------------------
+	
+	// 관리자
+	
+	@RequestMapping("olist.ad")
+	public String selectOrderAllList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		
+		int listCount = orderService.selectAllListCount();
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Order> list = orderService.selectOrderAllList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "order/adminOrderListView";
+	}
+	
+	@RequestMapping("odetail.ad")
+	public String selectOrderOne(String ono, Model model) {
+		
+		Order o = myPageService.selectMyOrder(ono);
+		
+		ArrayList<Cart> clist = myPageService.selectMyOrderCarts(ono);
+		
+		ArrayList<Product> plist = myPageService.selectMyOrderProducts(ono);
+		
+		Member mem = new Member();
+		mem.setMemberId(o.getMemberNo());
+		
+		Member m = memberService.loginMember(mem);
+		
+		model.addAttribute("o", o);
+		model.addAttribute("clist", clist);
+		model.addAttribute("plist", plist);
+		model.addAttribute("m", m);
+		
+		return "order/adminOrderDetailView";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="update.or", produces="text/html; charset=UTF-8")
+	public String updateOrder(Order o) {
+		
+		int result = orderService.updateOrder(o);
+		
+		return (result > 0) ? "success" : "fail";
+	}
 
 }

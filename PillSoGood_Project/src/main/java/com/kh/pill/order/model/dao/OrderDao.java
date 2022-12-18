@@ -2,15 +2,19 @@ package com.kh.pill.order.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.order.model.vo.Cart;
 import com.kh.pill.order.model.vo.Order;
 import com.kh.pill.order.model.vo.OrderCart;
 
 @Repository
 public class OrderDao {
+	
+	// order
 	
 	public int selectCountByCustomerUid(SqlSessionTemplate sqlSession, String customerUid) {
 		return sqlSession.selectOne("orderMapper.selectCountByCustomerUid", customerUid);
@@ -36,10 +40,6 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.deleteCart", memberNo);
 	}
 
-	public int updateOrder(SqlSessionTemplate sqlSession, Order o) {
-		return sqlSession.update("orderMapper.updateOrder", o);
-	}
-
 	public int deleteOrder(SqlSessionTemplate sqlSession, Order o) {
 		return sqlSession.update("orderMapper.deleteOrder", o);
 	}
@@ -52,7 +52,9 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("orderMapper.selectCartNoForSubs", memberNo);
 	}
 	
+	// ---------------------------------------------------------------
 	
+	// cart
 	
 	public int insertCart(SqlSessionTemplate sqlSession, Cart c) {
 		return sqlSession.insert("orderMapper.insertCart", c);
@@ -74,5 +76,24 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.modifyCart", c);
 	}
 	
+	// ---------------------------------------------------------------
 	
+	// 관리자
+	
+	public int selectAllListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("orderMapper.selectAllListCount");
+	}
+
+	public ArrayList<Order> selectOrderAllList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.selectOrderAllList", null, rowBounds);
+	}
+	
+	public int updateOrder(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("orderMapper.updateOrder", o);
+	}
 }

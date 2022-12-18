@@ -8,13 +8,15 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>MY PAGE 주문 조회</title>
+<title>ADMIN PAGE 주문 관리</title>
+<!-- daum 우편번호검색 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 
     div {
         box-sizing : border-box;
     }
-    
+
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
@@ -42,9 +44,9 @@
     }
 
     /* content 영역 */
-    #content>div { height : 100%; float : left; }
+    #content>div { height : 100vh; float : left; }
     #content_1 { width : 20%; }
-    #content_2 { width : 60%; }
+    #content_2 { width : 60%; height: auto!important;}
     #content_3 { width : 20%; }
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
@@ -61,6 +63,7 @@
         border-radius: 5px;
         padding: 15px;
     }
+    
     /* 사이드바의 각 메뉴들 */
     #mypage_navi a {
         text-decoration: none;
@@ -77,46 +80,84 @@
     /* 부트스트랩 페이징 */
     .pagination { justify-content: center; }
 
+    /* ----- 관리자 공통 style ----- */
+    /* 드롭다운 관련 */
+    #mypage_navi .nav-link {
+        padding: 0px 30px 16px 0px;
+    }
+    .dropdown-item:hover, .dropdown-item:focus {
+        background-color: #78C2AD !important;
+        color: white !important;
+    }
+
+    /* content 안에 소메뉴 */
+    #admin_menu>p {
+        font-size: large;
+        font-weight: bold;
+    }
+
     /* ----- 주문상세 style ----- */
     /* 텍스트 테이블들 table 정렬 */
     #order th, #delivery th, #price th { text-align: right; font-weight: bold; }
     #order tr, #delivery tr, #price tr { height: 35px; }
+
+    /* modal 안의 테이블 */
+    #change_delivery table tr { height: 50px; }
+
+    /* 라디오 버튼의 라벨 */
+    .form-check-label { margin: 0px 20px 0px 5px; }
+    
+    /* 배송지 변경 모달 */
+    .modal-body>table { 
+    	width: 80%!important;
+    	margin: auto;
+    }
+    .modal-body>table td { width: 15%; }
+    .modal-body>table th { width: 85%; }
 	
 </style>
 </head>
 <body>
 
     <div class="wrap">
-        
-        <div id="navigator2">
-            <jsp:include page="../common/menubar.jsp" />
-        </div>
+        <div id="navigator2"><jsp:include page="../common/menubar.jsp" /></div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
             <div id="content_2">
                 <div id="content_2_1">
-                    <p>MY PAGE</p>
+                    <p>ADMIN PAGE</p>
                 </div>
                 <div id="content_2_2" style="padding-top:10px;">
                     
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">관리자</b> 님</p>
                             <br>
-                            <p><a href="myPage.or">주문 조회</a></p>
-                            <p><a href="myPage.subs">정기구독 관리</a></p>
-                            <p><a href="myPage.info">내 정보 관리</a></p>
-                            <p><a href="myPage.poll">건강설문 관리</a></p>
-                            <p><a href="myPage.prod">내 관심 제품</a></p>
-                            <p><a href="myPage.re">내 후기 조회</a></p>
-                            <p><a href="myPage.ev">찜한 이벤트</a></p>
+                            <ul class="nav nav-pills">
+                                <li class="nav-item"><a href="adminMypage.me" class="nav-link">회원 관리</a></li>
+                                <li class="nav-item"><a href="" class="nav-link">제품 관리</a></li>
+                                <li class="nav-item"><a href="olist.ad" class="nav-link">주문 관리</a></li>
+                                <li class="nav-item"><a href="qlist.ad" class="nav-link">문의 관리</a></li>
+                                <li class="nav-item"><a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">통계 관리</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">매출 통계</a>
+                                        <a class="dropdown-item" href="#">제품 통계</a>
+                                        <a class="dropdown-item" href="#">성별/연령 통계</a>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
                     <div id="mypage_content">
-                        <h4>주문 조회</h4>
+                        <h4>주문 관리</h4>
                         <hr>
+
+                        <div id="admin_menu">
+                            <p>[ 주문 정보 ]</p>
+                        </div>
+                        
                         <div>
                             <b>주문제품 정보</b>
                             <hr>
@@ -156,18 +197,11 @@
 
                         <div>
                             <b>주문 정보</b>
-                            <c:if test="${ o.orderStatus ne 'C' and o.delivery eq 1 }">
-                            	<c:choose>
-                            		<c:when test="${ o.subsStatus eq 'N' }">
-                            			<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="location.href='cancel.or?ono=${ o.orderNo }&st=N'">주문취소</button>
-                            		</c:when>
-                            		<c:when test="${ o.subsStatus eq 'Y' }">
-                            			<p style="float: right; font-size: small; color: #78C2AD; margin-bottom: 0px;">* 구독해지는 구독정보에서 가능합니다.</p>
-                            		</c:when>
-                            	</c:choose>
+                            <c:if test="${ o.orderStatus ne 'C' and o.subsStatus ne 'C' and o.delivery eq 1 }">
+                            	<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;">주문취소</button>
                             </c:if>
                             <hr>
-                            
+
                             <table id="order">
                                 <tr>
                                     <td width="30%">주문번호</td>
@@ -219,25 +253,29 @@
 
                         <div>
                             <b>배송지 정보</b>
+                            <!-- 배송완료 전일 때만 보이도록 -->
+                            <c:if test="${ o.orderStatus ne 'C' and o.subsStatus ne 'C' and o.delivery ne 3 }">
+                            	<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" data-bs-toggle="modal" data-bs-target="#change_delivery">배송지 변경</button>
+                            </c:if>
                             <hr>
 
                             <table id="delivery">
                                 <tr>
                                     <td width="30%">받는분</td>
-                                    <th width="70%">${ loginUser.memberName }</th>
+                                    <th width="70%">${ m.memberName }</th>
                                 </tr>
                                 <tr>
                                     <td>연락처</td>
-                                    <th>${ fn:substring(loginUser.phone, 0, 3) }-${ fn:substring(loginUser.phone, 3, 7) }-${ fn:substring(loginUser.phone, 7, 11) }</th>
+                                    <th>${ fn:substring(m.phone, 0, 3) }-${ fn:substring(m.phone, 3, 7) }-${ fn:substring(m.phone, 7, 11) }</th>
                                 </tr>	
                                 <tr>
                                     <td>주소</td>
-                                    <th>${ o.address }</th>
+                                    <th id="upAddress">${ o.address }</th>
                                 </tr>
                                 <c:if test="${ o.orderStatus ne 'C' }">
 	                                <tr>
 	                                    <td>배송상태</td>
-	                                    <th>
+	                                    <th id="upDelivery">
 	                                    	<c:choose>
 	                                    		<c:when test="${ o.delivery eq 1 }">
 	                                    			배송준비중
@@ -255,7 +293,121 @@
                             </table>
                         </div>
                         <br><br>
-						
+
+                        <div class="modal" id="change_delivery">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" style="color: black; font-weight: bold;">배송지 변경</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table>
+                                        	<tr>
+												<td>받는분</td>
+												<th><input type="text" class="form-control" value="${ m.memberName }" readonly style="width: 40%;"></th>
+											</tr>
+											<tr>
+											    <td>연락처</td>
+											    <th><input type="text" class="form-control" value="${ m.phone }" placeholder="-제외" readonly style="width: 40%;"></th>
+											</tr>
+											<tr>
+											    <td>주소</td>
+											    <th>
+													<c:choose>
+														<c:when test="${ o.delivery eq 1 }">
+															<input type="text" class="form-control" id="newAddress" value="${ o.address }" required  style="display: inline-block; width: 85%;">
+															<button type="button" class="btn btn-primary" onclick="getAddress();" style="font-size: small; box-sizing: border-box; height: 37px; vertical-align: top;">검색</button>
+														</c:when>
+														<c:otherwise>
+															<input type="text" class="form-control" value="${ o.address }" readonly>
+														</c:otherwise>
+													</c:choose>
+											    </th>
+											</tr>
+                                            <tr>
+                                                <td>배송상태</td>
+                                                <th>
+                                                    <input type="radio" class="form-check-input" id="delivery_status1" name="delivery_status" value="1" ${ o.delivery eq 1 ? "checked" : ""}> <label class="form-check-label" for="delivery_status1">배송전</label>
+                                                    <input type="radio" class="form-check-input" id="delivery_status2" name="delivery_status" value="2" ${ o.delivery eq 2 ? "checked" : ""}> <label class="form-check-label" for="delivery_status2">배송중</label>
+                                                    <input type="radio" class="form-check-input" id="delivery_status3" name="delivery_status" value="3" ${ o.delivery eq 3 ? "checked" : ""}> <label class="form-check-label" for="delivery_status3">배송완료</label>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" onclick="changeDelivery();">저장</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <script>
+	                        /* 우편번호 검색 API */
+					        function getAddress() {
+					            new daum.Postcode({
+					                oncomplete: data => {
+					                	
+					                	// 지번을 선택해도 도로명으로만 표시
+					                	var address = data.roadAddress;
+					                	
+					                	// 건물명이 있을 경우 추가
+					                	if(data.buildingName != '') {
+					                		address += ' (' + data.buildingName + ')';
+					                	}
+					                	
+					                	var addressZip = data.zonecode;
+					                	
+					                	address = '(' + data.zonecode + ') ' + address;
+					                	
+					                	$("#newAddress").val(address);
+					                }
+					            }).open();
+					        }
+                        
+                        	function changeDelivery() {
+                        		
+                        		var address = $("#newAddress").val();
+                        		var delivery = $("input:radio[name='delivery_status']:checked").val();
+                        		
+                        		$.ajax({
+                        			url: "update.or",
+                        			type: "post",
+                        			data: {
+                        				orderNo: "${ o.orderNo }",
+                        				delivery: delivery,
+                        				address: address
+                        			},
+                        			success: result => {
+                        				
+                        				if(result == "success") {
+                        					
+                        					alert("배송정보가 수정되었습니다.");
+                        					
+                        					$("#upAddress").text(address);
+                        					
+                        					if(delivery == 1) {
+                        						$("#upDelivery").text("배송준비중");
+                        					} else if(delivery == 2) {
+                        						$("#upDelivery").text("배송중");
+                        					} else {
+                        						$("#upDelivery").text("배송완료");
+                        						$(".btn-outline-primary").css("display", "none");
+                        					}
+                        					
+                        					$(".btn-close").click();
+                        				}
+                        			},
+                        			error: () => {
+                        				console.log("update.or ajax 실패");
+                        			}
+                        		});
+                        	}
+                        </script>
+                          
                         <div>
                         	<c:choose>
                         		<c:when test="${ o.orderStatus eq 'C' }">
@@ -270,10 +422,6 @@
 		                                <tr>
 		                                    <td><b>환불일시</b></td>
 		                                    <th>${ o.orderDate }</th>
-		                                </tr>
-		                                <tr>
-		                                	<td><b>취소영수증</b></td>
-		                                	<th><a href="${ o.orderReceipt }">영수증 조회</a></th>
 		                                </tr>
 		                            </table>
 		                    	</c:when>
@@ -290,10 +438,6 @@
 		                                    <td><b>결제일시</b></td>
 		                                    <th>${ o.orderDate }</th>
 		                                </tr>
-		                                <tr>
-		                                	<td><b>결제영수증</b></td>
-		                                	<th><a href="${ o.orderReceipt }">영수증 조회</a></th>
-		                                </tr>
 		                            </table>
 		                    	</c:otherwise>
                             </c:choose>
@@ -301,25 +445,20 @@
                         <br><br>
                         
                         <div align="center">
-		                	<button type="button" class="btn btn-primary" onclick="location.href='myPage.or'">목록으로</button>
-		                	
-		                	<c:if test="${ o.subsStatus ne 'N' }">
-		                		<button type="button" class="btn btn-secondary" onclick="location.href='detail.subs?ono=${ o.orderNo }'">구독정보</button>
-		                	</c:if>
+		                	<button type="button" class="btn btn-primary" onclick="location.href='olist.ad'">목록으로</button>
 		                </div>
-
+                        
                     </div>
 
                 </div>
                 <br clear="both">
                 
-                <div id="content_2_3"></div>
-
+				<div id="content_2_3"></div>
             </div>
             <div id="content_3"></div>
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
-
+    
 </body>
 </html>

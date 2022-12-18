@@ -42,6 +42,7 @@
         color: black;
         margin-top: 20px;
         margin-left: 15px;
+        font-weight: bold;
     }
 
     /* content 영역 */
@@ -139,7 +140,7 @@
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a href="adminMypage.me" class="nav-link">회원 관리</a></li>
                                 <li class="nav-item"><a href="" class="nav-link">제품 관리</a></li>
-                                <li class="nav-item"><a href="" class="nav-link">주문 관리</a></li>
+                                <li class="nav-item"><a href="olist.ad" class="nav-link">주문 관리</a></li>
                                 <li class="nav-item"><a href="qlist.ad" class="nav-link">문의 관리</a></li>
                                 <li class="nav-item"><a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">통계 관리</a>
                                     <div class="dropdown-menu">
@@ -249,21 +250,22 @@
                         <div class="modal" id="deleteMember" >
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">회원탈퇴 처리</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.href='adMyPageDetail.me?mno=${ m.memberNo }'">
-                                    <span aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>정말 회원탈퇴 처리 하시겠습니까?</p>
-                                </div>
-                                <form action="adMyPageDelete.me" method="post">
-	                                <div class="modal-footer">
-	                                    <button type="submit" class="btn btn-primary">탈퇴 진행</button>
-	                                    <input type="hidden" name="memberNo" value="${ m.memberNo }">
+	                                <div class="modal-header">
+	                                    <h5 class="modal-title">회원탈퇴 처리</h5>
+	                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.href='adMyPageDetail.me?mno=${ m.memberNo }'">
+	                                    <span aria-hidden="true"></span>
+	                                    </button>
 	                                </div>
-                                </form> 
+	                                <div class="modal-body">
+	                                    <p>정말 회원탈퇴 처리 하시겠습니까?</p>
+	                                </div>
+	                                <form action="adMyPageDelete.me" method="post">
+		                                <div class="modal-footer">
+		                                    <button type="submit" class="btn btn-primary">탈퇴 진행</button>
+		                                    <input type="hidden" name="memberNo" value="${ m.memberNo }">
+		                                </div>
+	                                </form>
+                                </div>
                             </div>
                         </div>
 
