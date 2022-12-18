@@ -17,11 +17,11 @@ public class adminMyPageDao {
 	 */
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		
-		return sqlSession.selectOne("adminMypageMapper.selectListCount");
+		return sqlSession.selectOne("memberMapper.adminSelectListCount");
 	}
 
 	/**
-	 * 회원 정보 조회 
+	 * 회원 정보 리스트 조회 
 	 */
 	public ArrayList<Member> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
@@ -30,7 +30,7 @@ public class adminMyPageDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("adminMypageMapper.selectList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.adminSelectList", null, rowBounds);
 	}
 
 	/**
@@ -38,7 +38,23 @@ public class adminMyPageDao {
 	 */
 	public Member selectMember(SqlSessionTemplate sqlSession, int mno) {
 		
-		return sqlSession.selectOne("adminMypageMapper.selectMember", mno);
+		return sqlSession.selectOne("memberMapper.adminSelectMember", mno);
+	}
+
+	/**
+	 * 회원 정보 수정
+	 */
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("memberMapper.adminUpdateMember", m);
+	}
+
+	/**
+	 * 회원 탈퇴 처리
+	 */
+	public int deleteMember(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.update("memberMapper.adminDeleteMember", memberNo);
 	}
 
 }

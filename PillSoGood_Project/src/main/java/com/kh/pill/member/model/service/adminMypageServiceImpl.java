@@ -32,7 +32,7 @@ public class adminMypageServiceImpl implements adminMypageService {
 	}
 
 	/**
-	 * 회원 정보 조회
+	 * 회원 정보 리스트 조회
 	 */
 	@Override
 	public ArrayList<Member> selectList(PageInfo pi) {
@@ -47,6 +47,24 @@ public class adminMypageServiceImpl implements adminMypageService {
 	public Member selectMember(int mno) {
 		
 		return adMyPageDao.selectMember(sqlSession, mno);
+	}
+
+	/**
+	 * 회원 정보 수정
+	 */
+	@Override
+	public int updateMember(Member m) {
+		
+		return adMyPageDao.updateMember(sqlSession, m);
+	}
+
+	/**
+	 * 회원 탈퇴 처리
+	 */
+	@Override
+	public int deleteMember(int memberNo) {
+		
+		return adMyPageDao.deleteMember(sqlSession, memberNo);
 	}
 
 }

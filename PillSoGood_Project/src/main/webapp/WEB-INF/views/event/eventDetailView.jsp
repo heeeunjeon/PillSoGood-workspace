@@ -207,6 +207,7 @@
                     <hr>
 
 					<!-- 댓글 -->
+					<c:set var="today" value="<%=new java.util.Date()%>" />
                     <div align="center">
                         <table>
                         	<c:choose>
@@ -219,6 +220,16 @@
 		                                <button style="display:inline-block; margin-left: 10px;" class="btn btn-primary align-middle" disabled>댓글등록</button>
 		                            </td>
                          		</c:when> 
+								<%-- 이벤트 종료면 댓글 작성 못함 --%>
+								<c:when test="${ today > e.evtDew }">
+									<td>
+		                                <textarea class="form-control" name="" id="replyContentArea1" cols="80" rows="5" style="resize:none; border-radius:5px;" readonly>종료된 이벤트입니다.</textarea>
+		                            </td>
+		                            <td>
+		                                <button style="display:inline-block; margin-left: 10px;" class="btn btn-primary align-middle" disabled>댓글등록</button>
+		                            </td>
+								</c:when>
+
                         		<%-- 로그인 후 --%>
                         		<c:otherwise>
 		                            <td>

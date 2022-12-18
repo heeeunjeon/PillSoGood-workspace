@@ -110,12 +110,7 @@
                 </div>
                 <div id="content_2_2">
 
-                    <!-- 
-                        한 테이블 내에 존재하면 나중에 실제 구현 때 링크걸기 힘들어서 테이블 별로 쪼갰음 
-                        eventStatus 클래스들에 임의로 primary light 클래스 부여 해놨는데 실제 구현 때는
-                        DEWDATE 컬럼하고 현재 날짜 비교해서 자스로 addClass, removeClass 해주면 될거임
-                    -->
-                    
+                    <c:set var="today" value="<%=new java.util.Date()%>" />
                     <c:forEach var="e" items="${ list }">
 	                    <table class="table eventTable" style="cursor:pointer; margin-top: 30px;" id="eventList" onclick="location.href='detail.ev?eno=${ e.evtNo }'">
 	                        <thead></thead>
@@ -123,10 +118,19 @@
 	                        		<tr style="border-top : 1px solid lightgray;" >
 		                                <td class="eventTitle" style="padding-top: 20px;" width="80%">
 		                                    ${ e.evtTitle }
-		                                    <span class="btn btn-primary btn-sm eventStatus">진행 중</span>
+                                            <c:choose>
+                                                <%-- 이벤트 종료 날짜가 오늘 날짜보다 작거나 같다면 이벤트 진행중 --%>
+                                                <c:when test="${today <= e.evtDew}">
+                                                    <span class="btn btn-primary btn-sm eventStatus">진행중</span>
+                                                </c:when>
+                                                <%-- 그게 아니라면 이벤트 종료 --%>
+                                                <c:otherwise>
+                                                    <span class="btn btn-dark disabled btn-sm eventStatus">종료</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            
 		                                </td>
 		                                <td rowspan="4" style="padding-top: 20px; padding-bottom:20px;" width="20%">
-		                
 		                                    <img src="${ e.evtImgName }" width="250px;" height="250px;" alt="">
 		                                </td>
 	                            	</tr>
@@ -135,6 +139,7 @@
 		                            </tr>
 		                            <tr>
 		                                <td class="eventDate">${ e.evtStart } ~ ${ e.evtDew }</td>
+                                        <input id="eventDew" type="hidden" value="${ e.evtDew}"> 
 		                            </tr>
 		                            <tr style="border-bottom : 1px solid lightgray;">
 		                                <td class="eventLike" style="padding-bottom: 20px;">
@@ -142,14 +147,12 @@
 		                                    <span id="countLike">${ e.evtLikeCount }</span>
 		                                </td>
 		                            </tr>
-	                        	
 	                        </tbody>
 	                    </table>
                     </c:forEach>
                 </div>
-                
-               
-                
+
+
                 
 				<div id="content_2_3">
              		<!-- 페이지네이션 -->

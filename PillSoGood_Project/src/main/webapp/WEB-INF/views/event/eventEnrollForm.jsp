@@ -91,7 +91,7 @@
                                         <tr>
                                             <th>제목</th>
                                             <td colspan="3">
-                                                <input class="form-control" type="text" name="evtTitle" value="제목 입력">
+                                                <input class="form-control" type="text" name="evtTitle" placeholder="제목 입력">
                                             </td>
                                         </tr>
                                         <tr>
@@ -113,7 +113,7 @@
                                         <tr>
                                             <th>내용</th>
                                             <td colspan="100%">
-                                                <textarea class="form-control" name="evtContent" id="evtContent" cols="40" rows="20" style="resize:none;">내용 입력</textarea>
+                                                <textarea class="form-control" name="evtContent" id="evtContent" cols="40" rows="20" style="resize:none;" placeholder="내용 입력"></textarea>
                                             </td>
                                         </tr>
                                     </table>

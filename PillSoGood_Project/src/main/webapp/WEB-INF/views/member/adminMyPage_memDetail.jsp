@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+
 <title>ADMIN PAGE 회원 상세조회</title>
 <style>
 
@@ -105,6 +108,14 @@
         margin: 0px 5px;
     }
 </style>
+
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 부트스트랩에서 제공하고 있는 스타일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
@@ -126,10 +137,10 @@
                             <p style="font-size: 20px;"><b style="font-size: 25px;">관리자</b> 님</p>
                             <br>
                             <ul class="nav nav-pills">
-                                <li class="nav-item"><a href="" class="nav-link">회원 관리</a></li>
+                                <li class="nav-item"><a href="adminMypage.me" class="nav-link">회원 관리</a></li>
                                 <li class="nav-item"><a href="" class="nav-link">제품 관리</a></li>
                                 <li class="nav-item"><a href="" class="nav-link">주문 관리</a></li>
-                                <li class="nav-item"><a href="" class="nav-link">문의 관리</a></li>
+                                <li class="nav-item"><a href="qlist.ad" class="nav-link">문의 관리</a></li>
                                 <li class="nav-item"><a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">통계 관리</a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="#">매출 통계</a>
@@ -189,7 +200,9 @@
                             </tr>
                             <tr>
                                 <th>출생연도</th>
-                                <td>${ m.memberBirthYear }</td>
+                                <td>
+                                	<fmt:formatDate value="${m.memberBirthYear}" pattern="yyyy" />
+                                </td>
                             </tr>
                             <tr>
                                 <th>키</th>
@@ -219,11 +232,43 @@
                         </table>
                         <br><br>
 
+
                         <div id="process_btn" align="center">
-                            <button type="button" class="btn btn-warning">정보수정</button>
-                            <button type="button" class="btn btn-danger">탈퇴처리</button>
+                            
+                            <button type="button" class="btn btn-warning" onclick="location.href='adMyPageUpdateForm.me?mno=${ m.memberNo }'">정보수정</button>
+                            <c:choose>
+	                            <c:when test="${ m.memberStatus.equals('Y') }">
+	                            	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteMember">탈퇴처리</button>
+	                            </c:when>
+	                            
+                            </c:choose>
+
                         </div>
 
+                        <!-- 모달창 -->
+                        <div class="modal" id="deleteMember" >
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">회원탈퇴 처리</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.href='adMyPageDetail.me?mno=${ m.memberNo }'">
+                                    <span aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>정말 회원탈퇴 처리 하시겠습니까?</p>
+                                </div>
+                                <form action="adMyPageDelete.me" method="post">
+	                                <div class="modal-footer">
+	                                    <button type="submit" class="btn btn-primary">탈퇴 진행</button>
+	                                    <input type="hidden" name="memberNo" value="${ m.memberNo }">
+	                                </div>
+                                </form> 
+                            </div>
+                        </div>
+
+
+                     
                     </div>
 
                 </div>

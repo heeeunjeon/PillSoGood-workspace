@@ -80,6 +80,61 @@
 		 AND EMAIL = #{email}
 		 AND MEMBER_STATUS = 'Y'
 	</select>
+	
+	
+	<!-- 관리자 회원 리스트 수 조회 -->
+	<select id="adminSelectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_STATUS = 'Y'
+	</select>
+	
+	<!-- 관리자 회원 리스트 조회 -->
+	<select id="adminSelectList" resultMap="memberResultSet">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME,
+		       EMAIL, MEMBER_ENROLL_DATE
+		       , MEMBER_STATUS
+		FROM MEMBER
+	</select>
+	
+	<!-- 관리자 회원 상세조회 -->
+	<select id="adminSelectMember" resultMap="memberResultSet" parameterType="_int">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, PHONE,
+		       EMAIL, GENDER, ADDRESS_ZIP, ADDRESS_1, ADDRESS_2,
+		       MEMBER_BIRTH_YEAR, HEIGHT, WEIGHT, 
+		       MEMBER_ENROLL_DATE,
+		       MEMBER_STATUS
+		FROM MEMBER
+		WHERE MEMBER_NO = #{memberNo}
+	
+	</select>
+	
+	<!-- 관리자 회원 정보 수정 -->
+	<update id="adminUpdateMember" parameterType="member">
+	 	UPDATE MEMBER
+		SET MEMBER_NAME = #{memberName}
+	       , EMAIL = #{email}
+	       , PHONE = #{phone}
+	       , ADDRESS_ZIP = #{addressZip}
+	       , ADDRESS_1 = #{address1}
+	       , ADDRESS_2 = #{address2}
+	       , GENDER = #{gender}
+		WHERE MEMBER_NO = #{memberNo}
+	
+	</update>
+	
+	<!-- 관리자 회원 탈퇴 처리 -->
+	<update id="adminDeleteMember" parameterType="_int">
+		UPDATE MEMBER
+		SET MEMBER_STATUS = 'N'
+		WHERE MEMBER_NO = #{memberNo}
+	
+	</update>
+	
+	
+	
+	
+	
 
 
 </mapper>
