@@ -135,5 +135,22 @@
 		  AND OC.ORDER_NO = O.ORDER_NO
 		  AND O.ORDER_NO = #{orderNo}
 	</select>
+	
+	
+	<!-- 관리자 페이지 리스트 카운트 조회 -->
+	<select id="adSelectListCount" resultType="_int">
+	    SELECT COUNT(*)
+		FROM PRODUCT
+		
+	</select>
+	
+	<!-- 관리자 페이지 제품 전체 리스트 조회 -->
+	<select id="adSelectProductList" resultMap="productResultSet"> 
+			SELECT PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE
+			       , PRODUCT_STOCK, PRODUCT_ENROLL_DATE, PRODUCT_STATUS
+			FROM PRODUCT
+			
+			
+	</select>
 
 </mapper>

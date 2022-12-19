@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.common.template.Pagination;
 import com.kh.pill.member.model.vo.Member;
 import com.kh.pill.product.model.service.ProductService;
 import com.kh.pill.product.model.vo.Product;
@@ -289,4 +291,36 @@ public class ProductController {
 			
 		return result;
 	}
+	
+	
+	//------------------------------------------------- 관리자 페이지 --------------------------------------------------------//
+	
+	
+	/**
+	 * 관리자 제품 관리 조회
+	 */
+	@RequestMapping("ProductList.ad")
+	public String adminSelectProductList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = productService.adSelectListCount();
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Product> list = productService.adSelectProductList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "product/adminProductListView";
+		
+		
+		
+	}
+	
+
+	
+	
 }

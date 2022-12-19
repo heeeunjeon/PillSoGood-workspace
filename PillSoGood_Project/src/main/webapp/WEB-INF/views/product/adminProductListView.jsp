@@ -5,10 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>ADMIN PAGE 문의 관리</title>
+
+<title>ADMIN PAGE 제품 관리</title>
 <style>
 
     div {
@@ -96,34 +95,26 @@
         font-weight: bold;
     }
 
-
-    /* ----- 문의조회 style ----- */
+    /* ----- 제품조회 style ----- */
     /* 목록 테이블 */
-    #qna_list {
+    #product_list {
         margin-top: 30px;
         color: black;
         text-align: center;
-        /* 말줄임용 테이블 고정 */
-        table-layout: fixed;
     }
-    #qna_list>thead { background-color: #78c2ad36; }
-    #qna_list>tbody td { vertical-align: middle; }
+    #product_list>thead { background-color: #78c2ad36; }
+    #product_list>tbody td { vertical-align: middle; }
 
-    #qna_list>tbody>tr:hover { cursor: pointer; }
-
-    /* 제목이 길 때 말줄임과 1줄만 보이도록 */
-    .qna_title {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+    #product_list>tbody>tr:hover { cursor: pointer; }
 
 </style>
 </head>
 <body>
 
     <div class="wrap">
-        <div id="navigator2"><jsp:include page="../common/menubar.jsp" /></div>
+        <div id="navigator2">
+        	<jsp:include page="../common/menubar.jsp" />
+        </div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
@@ -154,37 +145,34 @@
                     </div>
 
                     <div id="mypage_content">
-                        <h4>문의 관리</h4>
+                        <h4>제품 관리</h4>
                         <hr>
 
                         <div id="admin_menu">
-                            <p>[ 문의 목록 ]</p>
+                            <p>[ 제품 목록 ]</p>
                         </div>
                         
-                        <table class="table table-hover" id="qna_list">
+                        <table class="table table-hover" id="product_list">
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>
-                                    <th width="40%">제목</th>
-                                    <th width="15%">작성자</th>
+                                    <th width="35%">제품명</th>
+                                    <th width="15%">가격</th>
+                                    <th width="10%">재고</th>
                                     <th width="20%">등록일</th>
-                                    <th width="15%">상태</th>
+                                    <th width="10%">상태</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach var="q" items="${ list }">
+	                           	<c:forEach var="p" items="${ list }">
 	                           		<tr>
-	                           			<td>${ q.questionNo }</td>
-	                           			<td>${ q.questionTitle }</td>
-                               			<td>${ q.memberNo }</td>
-                               			<td>${ q.questionDate }</td>
-	                           			<td>
-	                           				<c:choose>
-	                            				<c:when test="${ empty q.answer }">미답변</c:when>
-	                            				<c:otherwise>답변완료</c:otherwise>
-	                           				</c:choose>
-	                           			</td>
-	                           		</tr>
+	                                    <td>${ p.productNo }</td>
+	                                    <td>${ p.productName }</td>
+	                                    <td>${ p.productPrice }</td>
+	                                    <td>${ p.productStock }</td>
+	                                    <td>${ p.productEnrollDate }</td>
+	                                    <td>${ p.productStatus }</td>
+                                	</tr>
 	                           	</c:forEach>
                             </tbody>
                         </table>
@@ -192,40 +180,41 @@
 
                         <script>
                             $(function() {
-                                $("#qna_list>tbody>tr").click(function() {
-
-                                	location.href = "detail.qu?qno=" + $(this).children().eq(0).text();
+                                $("#product_list>tbody>tr").click(function() {
+	
+                                    // 클릭시 제품 상세로 이동
+                                    location.href="detail.pr?pno=" + $(this).children().eq(0).text();
+                                    
                                 });
                             });
                         </script>
 
                         <div>
-	                        <ul class="pagination">
-	                        	<c:if test="${ not empty list }">
-		                        	<c:choose>
-				                		<c:when test="${ pi.currentPage eq 1 }">
-				                			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-				                		</c:when>
-				                		<c:otherwise>
-				                			<li class="page-item"><a class="page-link" href="qlist.ad?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
-				                		</c:otherwise>
-				                	</c:choose>
-				                	
-				                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-			                    		<li class="page-item"><a class="page-link" href="qlist.ad?cpage=${ p }">${ p }</a></li>
-				                    </c:forEach>
-		                        
-		                            <c:choose>
-				                		<c:when test="${ pi.currentPage eq pi.maxPage }">
-				                			<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
-				                		</c:when>
-				                		<c:otherwise>
-				                			<li class="page-item"><a class="page-link" href="qlist.ad?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
-				                		</c:otherwise>
-				                	</c:choose>
-	                            </c:if>
-	                        </ul>
-	                    </div>
+                            <ul class="pagination">
+			                	<c:choose>
+			                		<c:when test="${ pi.currentPage eq 1 }">
+			                			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+			                		</c:when>
+			                		<c:otherwise>
+			                			<li class="page-item"><a class="page-link" href="ProductList.ad?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+			                		</c:otherwise>
+			                	</c:choose>
+			                    
+			                    <c:forEach var="pr" begin="${ pi.startPage }" end="${ pi.endPage }">
+			                    	<li class="page-item"><a class="page-link" href="ProductList.ad?cpage=${ pr }">${ pr }</a></li>
+			                    </c:forEach>
+			                    
+			                    <c:choose>
+			                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    		<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+			                    	</c:when>
+			                    	<c:otherwise>
+			                    		<li class="page-item"><a class="page-link" href="ProductList.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+			                    	</c:otherwise>
+			                    </c:choose>
+			                </ul>
+                        </div>
+
                     </div>
 
                 </div>
@@ -233,6 +222,10 @@
             </div>
             <div id="content_3"></div>
         </div>
+       
+    </div>
+
+    <div>
         <jsp:include page="../common/footer.jsp" />
     </div>
     

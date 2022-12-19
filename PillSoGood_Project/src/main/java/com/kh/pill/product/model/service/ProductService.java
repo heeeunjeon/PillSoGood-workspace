@@ -2,6 +2,7 @@ package com.kh.pill.product.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.product.model.vo.Product;
 import com.kh.pill.product.model.vo.ProductLike;
 
@@ -33,4 +34,10 @@ public interface ProductService {
 	
 	// 좋아요 하기
 	int insertProductLike(ProductLike pl);
+
+	// 관리자 리스트 카운트 조회 
+	int adSelectListCount();
+	
+	// 관리자 제품 전체 리스트 조회
+	ArrayList<Product> adSelectProductList(PageInfo pi);
 }

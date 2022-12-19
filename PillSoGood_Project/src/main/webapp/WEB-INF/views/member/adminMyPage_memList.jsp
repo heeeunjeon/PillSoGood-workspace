@@ -118,7 +118,7 @@
         text-align: center;
     }
     #member_list>thead { background-color: #78c2ad36; }
-    #member_list>tbody td { vertical-align: middle; padding:15px; }
+    #member_list>tbody td { vertical-align: middle; }
 
     #member_list>tbody>tr:hover { cursor: pointer; }
 
@@ -147,7 +147,7 @@
                             <br>
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a href="adminMypage.me" class="nav-link">회원 관리</a></li>
-                                <li class="nav-item"><a href="" class="nav-link">제품 관리</a></li>
+                                <li class="nav-item"><a href="ProductList.ad" class="nav-link">제품 관리</a></li>
                                 <li class="nav-item"><a href="olist.ad" class="nav-link">주문 관리</a></li>
                                 <li class="nav-item"><a href="qlist.ad" class="nav-link">문의 관리</a></li>
                                 <li class="nav-item"><a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">통계 관리</a>
@@ -213,23 +213,23 @@
                             <ul class="pagination">
                                 <c:choose> 
 		                    		<c:when test="${ pi.currentPage eq 1 }">
-		                    			<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
+		                    			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
 		                    		</c:when>
 		                    		<c:otherwise>
-		                    			<li class="page-item"><a class="page-link" href="list.ev?cpage=${ pi.currentPage - 1 }">1</a></li>
+		                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ pi.currentPage - 1 }">1</a></li>
 		                    		</c:otherwise>
 	                    		</c:choose>
 	                    	
-		                    	<c:forEach var="e" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                    		<li class="page-item"><a class="page-link" href="list.ev?cpage=${ e }">${ e }</a></li>
+		                    	<c:forEach var="m" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                    		<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ m }">${ m }</a></li>
 		                    	</c:forEach>
 	                    	
 		                    	<c:choose>
 		                    		<c:when test="${pi.currentPage eq pi.maxPage }">
-		                    			<li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+		                    			<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
 		                    		</c:when>
 		                    		<c:otherwise>
-		                    			<li class="page-item"><a class="page-link" href="list.ev?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+		                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
 		                    		</c:otherwise>
 		                    	</c:choose>
                             </ul>

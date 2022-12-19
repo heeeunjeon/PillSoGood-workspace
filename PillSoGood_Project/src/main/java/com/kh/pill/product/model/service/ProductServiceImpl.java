@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.product.model.dao.ProductDao;
 import com.kh.pill.product.model.vo.Product;
 import com.kh.pill.product.model.vo.ProductLike;
@@ -91,6 +92,24 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int insertProductLike(ProductLike pl) {
 		return productDao.insertProductLike(sqlSession, pl);
+	}
+
+	/**
+	 * 관리자 리스트 카운트 조회
+	 */
+	@Override
+	public int adSelectListCount() {
+		
+		return productDao.adSelectListCount(sqlSession);
+	}
+
+	/**
+	 * 관리자 제품 전체 리스트 조회
+	 */
+	@Override
+	public ArrayList<Product> adSelectProductList(PageInfo pi) {
+		
+		return productDao.adSelectProductList(sqlSession, pi);
 	}
 
 }
