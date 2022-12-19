@@ -312,11 +312,27 @@ public class MyPageController {
 	
 	
 	/**
-	 * 상품 찜목록 페이지
+	 * 내 관심 제품 페이지
 	 * @return
 	 */
 	@RequestMapping("myPage.prod")
-	public String myPageProductList() {
+	public String myPageProductList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int memberNo = loginUser.getMemberNo();
+		
+		int listCount = myPageService.selecMyProducttListCount(memberNo);
+		System.out.println("listCount : " + listCount);
+		int pageLimit = 5;
+		int boardLimit = 5;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		model.addAttribute("pi", pi);
+		
+		ArrayList<Product> myList = myPageService.selectMyProductList(pi, memberNo);
+		System.out.println("myList : " + myList);
+		
+		model.addAttribute("myList", myList);
 		
 		return "member/myPage_ProductList";
 	}

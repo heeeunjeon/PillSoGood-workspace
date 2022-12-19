@@ -80,15 +80,39 @@
     .pagination { justify-content: center; }
 
     /* ----- 후기조회 style ----- */
-    /* 후기 내용 2줄까지만 보이도록 */
-    .review_content {
-        padding-left: 15px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+    .myPageReview {
+        width: 840px;
+        height: 70px;
+        cursor: pointer;
     }
+
+    .myPageReview>div {
+        float: left;
+        height: 100%;;
+    }
+
+    .myPageImg {
+        width: 11%;
+    }
+
+    .myPageContent {
+        width: 82%;
+    }
+
+    .myPageContent>div {
+        height: 50%;
+    }
+
+    .myPageContent1>div {
+        float: left;
+        height: 100%;
+    }
+
+    .myPageBtn {
+        width: 7%;
+    }
+
+
 
 </style>
 
@@ -124,39 +148,31 @@
                         <h4>내 후기 조회</h4>
                         <hr>
 						<c:forEach var="i" begin="0" end="${ myList.size()-1}">
-							<table id="reviewT" align="center">
-	                               <thead>
-		                                <tr>
-		                               		<td><input type="hidden" value="${ myList[i].reviewNo }"></td>
-		                               		<td width="600px" style="font-size: 20px; padding-top: 20px;"><b>${ myList[i].reviewTitle }</b></td>
-											<td><button type="submit" class="btn btn-secondary btn-delete" onclick="location.href='delete.re?rno=${ myList[i].reviewNo }'">삭제</button></td>
-							        	</tr>
-							        </thead>
-							        <tbody class="reviewT">
-		                                <tr>
-		                                   <td>
-		                                       <span style="color: #78C2AD;">
-		                                       		<c:forEach var="j" begin="1" end="${ myList[i].reviewGrade}">
-	                                					<i class="fa-solid fa-star"></i>
-	                                				</c:forEach>
-		                                       </span>
-		                                   </td>
-		                                   <td>${ myList[i].reviewDate }</td>
-		                                </tr>
-		                                <tr height="100px">
-		                                    <td><P>${fn:substring(myList[i].reviewContent, 0, 20)}...</P></td>
-		                                </tr>
-		                                <tr>
-		                                   <td>
-		                                   		<c:forEach var="f" items="${myList[i].flist}">
-		                                   			<img src="${ f.filePath }${ f.changeName }" width="70" height="70" >
-		                                   		</c:forEach>
-		                                   </td>
-		                                </tr>
-	                            </tbody>
-	                            </table>
+							<div class="myPageReview" style="border-bottom: 1px solid lightgray;">
+                                <div class="myPageImg" align="center">
+                                    <div>
+                                        <c:forEach var="f" begin="0" end="0" items="${myList[i].flist}">
+                                            <img src="${ f.filePath }${ f.changeName }" width="70" height="70" >
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                                <div class="myPageContent" style="padding: 5px;">
+                                    <div class="myPageContent1">
+                                        <div style="font-size: 20px; width: 85%;"><b>${ myList[i].reviewTitle }</b></div>
+                                        <div style="width: 15%;"><span style="color: gray;">${ myList[i].reviewDate }</span></div>
+                                    </div>
+                                    <div class="myPageContent2" style="font-size: 15px;"><p style="margin: 0px; padding: 1px;">${fn:substring(myList[i].reviewContent, 0, 10)}...</p></div>
+                                </div>
+                                <div class="myPageBtn" style="padding: 5px;">
+                                    <div>
+                                        <div><input type="hidden" value="${ myList[i].reviewNo }"></div>
+                                        <div align="right"><button type="submit" class="btn btn-secondary btn-delete btn-sm" onclick="location.href='delete.re?rno=${ myList[i].reviewNo }'">삭제</button></div>
+                                    </div>
+                                </div>
+	                        </div>
 						</c:forEach>
-
+                        
+                        <div style="height: 10px;"></div>
                         <!-- 페이지 -->
                         <div id="noticePagination">
 	                        <nav aria-label="Page navigation">
@@ -169,9 +185,17 @@
 				                			<li class="page-item"><a class="page-link" href="myPage.re?cpage=${ pi.currentPage - 1 }">&lt;</a></li>	
 				                		</c:otherwise>
 				                	</c:choose>
-
-									<div style="width: 70%;"></div>
-	            	                
+									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+										<c:choose>
+											<c:when test="${ p eq pi.currentPage }">
+												<li class="page-item disabled"><a class="page-link"  href="myPage.re?cpage=${ p }">${ p }</a></li>
+											</c:when>
+										
+											<c:otherwise>
+												<li class="page-item"><a class="page-link" href="myPage.re?cpage=${ p }">${ p }</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
 				                    <c:choose>
 				                		<c:when test="${ (pi.currentPage eq pi.maxPage) or (pi.maxPage eq 0) }">
 				                			<li class="page-item disabled" ><a class="page-link">&gt;</a></li>
@@ -195,10 +219,14 @@
 		
         // 내 리뷰 조회수 증가
         $(function() {
-            $(".reviewT").click(function() {
-                var rno = $(this).parent('table').children('thead').eq(0).children('tr').eq(0).children('td').eq(0).children('input').eq(0).val();
-                // console.log(rno);
-                // var rno = $(this).children("tbody").eq(0).children("tr").eq(0).children("input").eq(0).val();
+            $(".myPageImg").click(function() {
+                var rno = $(this).next('div').next('div').children('div').eq(0).children('div').eq(0).children('input').eq(0).val();
+                location.href = "detail.re?rno=" + rno;
+            });
+        });
+        $(function() {
+            $(".myPageContent").click(function() {
+                var rno = $(this).next('div').children('div').eq(0).children('div').eq(0).children('input').eq(0).val();
                 location.href = "detail.re?rno=" + rno;
             });
         });
@@ -207,8 +235,7 @@
         $(function() {
             $(".btn-delete").click(function() {
                 
-                var rno = $(this).parent('td').prev().prev('td').children('input').eq(0).val();
-                // console.log(rno);
+                // var rno = $(this).parent('td').prev().prev('td').children('input').eq(0).val();
                 location.href = "myDelete.re?rno=" + rno;
             });
         });

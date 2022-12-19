@@ -44,6 +44,11 @@ public interface MyPageService {
 	ArrayList<Poll> selectPollList(int memberNo);
 	ArrayList<PollResult> selectPollResult(int memberNo);
 
+	// 제품 조회 리스트 카운트
+	int selecMyProducttListCount(int memberNo);
+	// 제품 조회
+	ArrayList<Product> selectMyProductList(PageInfo pi, int memberNo);
+
 	// 후기 조회 리스트 카운트
 	int selectMyReviewListCount(int memberNo);
 	// 후기 조회

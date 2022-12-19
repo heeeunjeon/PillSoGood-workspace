@@ -144,6 +144,33 @@ public class MyPageDao {
 	}
 	
 	/**
+	 * 제품 리스트 카운트 메소드
+	 * @param sqlSession
+	 * @param memberNo
+	 * @return
+	 */
+	public int selectMyProductListCount(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("productMapper.selectMyProductListCount", memberNo);
+	}
+	
+	/**
+	 * 제품 조회용 메소드
+	 * @param sqlSession
+	 * @param memberNo
+	 * @param pi
+	 * @return
+	 */
+	public ArrayList<Product> selectMyProductList(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("productMapper.selectMyProductList", memberNo, rowBounds);
+	}
+	
+	/**
 	 * 후기 리스트 카운트 메소드
 	 * @param sqlSession
 	 * @param memberNo
@@ -215,6 +242,8 @@ public class MyPageDao {
 		
 		return (ArrayList)sqlSession.selectList("eventMapper.selectMyEventList", memberNo, rowBounds);
 	}
+
+
 
 	
 	

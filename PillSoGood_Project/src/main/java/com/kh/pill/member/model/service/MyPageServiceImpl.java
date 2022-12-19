@@ -136,6 +136,21 @@ public class MyPageServiceImpl implements MyPageService {
 		return myPageDao.selectPollList(sqlSession, memberNo);
 	}
 
+	
+	/**
+	 * 제품 조회용 서비스
+	 */
+	@Override
+	public int selecMyProducttListCount(int memberNo) {
+		return myPageDao.selectMyProductListCount(sqlSession, memberNo);
+	}
+	
+	@Override
+	public ArrayList<Product> selectMyProductList(PageInfo pi, int memberNo) {
+		return myPageDao.selectMyProductList(sqlSession, pi, memberNo);
+	}
+	
+	
 	/**
 	 * 후기 조회용 서비스
 	 */
@@ -171,6 +186,8 @@ public class MyPageServiceImpl implements MyPageService {
 	public int selectReplyCount(int rno) {
 		return myPageDao.selectReplyCount(sqlSession, rno);
 	}
+
+
 	
 
 
