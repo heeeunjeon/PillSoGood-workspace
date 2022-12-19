@@ -12,13 +12,14 @@
 <style>
 
     div {
+		/* border : 1px solid #78C2AD; */
         box-sizing : border-box;
     }
 
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 98%;
-        height: 1830px;
+        height: auto;
         margin : auto;
     }
 
@@ -26,16 +27,16 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1450px; }
-    #content_2>div { width: 100%; }
-    #content_2_1 { height: 1%; float: left; }
-    #content_2_2 { height: 80%; float: left; }
-    #content_2_3 { height: 10%; float: left; }
+    #content { height: auto; display: flex; }
+    #content_2>div { width: 100%; float: left; }
+    #content_2_1 { height: 115px; }
+    #content_2_2 { height: auto; }
 
     #header { height: 130px; }
 
     #content_2_1>p {
         font-size: 35px;
+        font-weight: bold;
         color: black;
         margin-top: 20px;
         margin-left: 30px;
@@ -49,43 +50,40 @@
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
-    .innerContent { 
-      display: flex;
-      position:relative;
-      top: 5%;
-      left: 5%;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      }
+	label {
+		font-weight: bold;
+        font-size: large;
+		color: black;
+		padding: 5px 0px;
+	}
 
-      .innerContent {
-        padding: 40px;
-        padding-top: 60px;
-        border-radius: 15px;
-        border-color: rgba(128, 126, 126, 0.541);
-      }
+	#btnDiv { text-align: center; }
 
-      #title {
+	#btnDiv button {
+		height: 45px;
+        width: 200px;
+        margin: auto;
+	}
+
+
+
+    #title {
         width: 900px;
         box-sizing: border-box;
         margin-top: 10px;
         margin-bottom: 10px;
-      }
+    }
 
-      #content{
+    #content{
         margin-top: 10px;
         margin-bottom: 10px;
-      }
+    }
 
-      #select {
-        width: 200px;
-      }
+    #select { width: 200px; }
       
-      i {
-      	cursor: pointer;
-	  }
+    i { cursor: pointer; }
 	  
-	  .filebox input[type="file"] {
+	.filebox input[type="file"] {
 		position: absolute;
 		width: 1px;
 		height: 1px;
@@ -95,11 +93,13 @@
 		clip: rect(0, 0, 0, 0);
 		border: 0;
 	}
+
 	.filebox.bs3-primary .col-sm-10>label {
 		color: #fff;
 		background-color: #337ab7;
 		border-color: #2e6da4;
 	}
+
 	.filebox .col-sm-10>label {
 		display: inline-block;
 		padding: .5em .75em;
@@ -114,6 +114,7 @@
 		border-bottom-color: #e2e2e2;
 		border-radius: .25em;
 	}
+
 	.filebox .upload-name {
 		display: inline-block;
 		width: 350px;
@@ -132,28 +133,22 @@
 		-moz-appearance: none;
 		appearance: none;
 	}
-</style>
 
+</style>
 </head>
 <body>
 
     <div class="wrap">
-      <jsp:include page="../common/menubar.jsp" />
-        <div id="navigator2"></div>
+        <div id="navigator2">
+			<jsp:include page="../common/menubar.jsp" />
+		</div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
             <div id="content_2">
-              	<div id="content_2_1">
-					<!-- 로고 영역 -->
-					<div class="logoArea">
-						<jsp:include page="../common/logo.jsp" />
-						<p style="display: inline; font-size: 20px;">고객 후기</p>
-					</div>
-              	</div>
-
+              	<div id="content_2_1"><p>후기 작성</p></div>
               	<div id="content_2_2">
-					<div class="innerContent" style="border: 2px solid;">
+					<div class="innerContent">
 						<form id="enrollForm" method="post" action="insert.re" enctype="multipart/form-data">
 							<div algin="center" class="reviewForm">
 								<div>
@@ -180,9 +175,10 @@
 								</div>
 
 								<div>
-									<div><label for="title">제목</label></div>
-									<div><input type="text" class="form-control" name="reviewTitle" required></div>
+									<div id="titlee"><label for="title">제목</label></div>
+									<div><input type="text" class="form-control" name="reviewTitle" placeholder="후기 제목을 입력해주세요 (30자 이내)" maxlength="30" required></div>
 								</div>
+								<br>
 								
 								<div>
 									<div><label>별점</label></div>
@@ -235,32 +231,35 @@
 										});
 									</script>
 								</div>
+								<br>
 								
 								<div>
 									<div><label for="content">내용</label></div>
-									<div><textarea class="form-control" style="resize:none;" name="reviewContent" required></textarea></div>
+									<div><textarea class="form-control" cols="20" rows="15" style="resize:none;" name="reviewContent" placeholder="후기 내용을 입력해주세요 (1000자 이내)" maxlength="1000" required></textarea></div>
 								</div>
+								<br>
 								
 								<div data-name="fileDiv" class="form-group filebox bs3-primary">
 									<label for="file_0" class="col-sm-2 control-label">사진</label>
 									<div class="col-sm-10">
 										<input type="text" class="upload-name" value="썸네일 사진을 등록해주세요." readonly />
-										<label for="file_0" class="control-label">찾아보기</label>
+										<label for="file_0" class="control-label" style="background-color: #6cc3d5; border: none;">찾아보기</label>
 										<input type="file" name="upfile" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />
 									
-										<button type="button" onclick="addFile()" class="btn btn-primary">
+										<button type="button" onclick="addFile()" class="btn btn-outline-primary">
 											<i class="fa fa-plus" aria-hidden="true"></i>
 										</button>
-										<button type="button" onclick="removeFile(this)" class="btn btn-secondary">
+										<button type="button" onclick="removeFile(this)" class="btn btn-outline-secondary">
 											<i class="fa fa-minus" aria-hidden="true"></i>
 										</button>
 									</div>
 								</div>
+								<br>
 								
 								<div id="btnDiv" align="center">
 									<input type="hidden" name="orderNo" class="form-control" value="1">
-									<button type="submit" class="btn btn-primary">등록</button>
-									<button type="reset" class="btn btn-light">취소</button>
+									<button type="submit" class="btn btn-primary">등록하기</button>
+									<button type="reset" class="btn btn-secondary">뒤로가기</button>
 								</div>
 								
 								<script>
@@ -283,9 +282,9 @@
 													+ "<label for='file_"+fileIdx+"' class='col-sm-2 control-label'></label>"
 													+ "<div class='col-sm-10'>"
 														+ "<input type='text' class='upload-name' value='세부 사진을 등록해주세요.' readonly />"
-														+ "<label for='file_"+fileIdx+"' class='control-label'>찾아보기</label>"
+														+ "<label for='file_"+fileIdx+"' class='control-label' style='background-color: #6cc3d5; border: none;'>찾아보기</label>"
 														+ "<input type='file' name='upfile' id='file_"+fileIdx+"' class='upload-hidden' onchange='changeFilename(this);' />"
-														+ "<button type='button' onclick='removeFile(this)' class='btn btn-secondary'>"
+														+ "<button type='button' onclick='removeFile(this)' class='btn btn-outline-secondary'>"
 														+ "<i class='fa fa-minus' aria-hidden='true'></i>"
 														+ "</button>"
 													+ "</div>"
@@ -322,8 +321,8 @@
 						</form>
 					</div>
 				</div>
+				<div style="height: 150px"></div>
 			</div>
-            <div id="content_2_3"></div>
             <div id="content_3"></div>
         </div>
         <jsp:include page="../common/footer.jsp" />

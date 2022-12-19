@@ -103,8 +103,8 @@
 
 	table { width: 100%; }
 
-	#allA>tr>td>a { text-decoration: none; color: black; }
-	a:hover { color: lightgray; }
+	#allA a { text-decoration: none; color: black; }
+	#allA a:hover { color: lightgray; }
     
 
     
@@ -128,6 +128,10 @@
         padding-top: 70px;
         padding-bottom: 100px;
     }
+
+	#noticePagination {
+		margin-top: 20px;
+	}
 
 
 </style>
@@ -172,12 +176,12 @@
 				            	</c:choose>
 							</div>
 						</form>
-					</div> <!-- 베스트 리뷰와 일반 리뷰 사이 간격 -->
+					</div> <!-- 베스트 리뷰와 일반 리뷰 사이 간격 --> 
 					<div>
 						<table id="allA">
 							<tr>
 								<td width="88%;" id="allR">총 <span style="color: #78C2AD;">${ pi.listCount }</span>건</td>
-								<td width="6%;"><a href="list.re?cpage=1&order=new">최신순</a> | </td>
+								<td width="6%;"><a href="list.re?cpage=1&order=new">최신순</a>&ensp;|&ensp;</td>
 								<td width="6%;"><a href="list.re?cpage=1&order=hot">인기순</a></td>
 							</tr>
 						</table>
