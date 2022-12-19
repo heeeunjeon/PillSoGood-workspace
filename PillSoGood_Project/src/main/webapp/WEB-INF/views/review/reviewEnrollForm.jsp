@@ -57,7 +57,7 @@
 		padding: 5px 0px;
 	}
 
-	#btnDiv { text-align: center; }
+	#btnDiv { text-align: center; margin-top: 60px;}
 
 	#btnDiv button {
 		height: 45px;
@@ -183,12 +183,12 @@
 								<div>
 									<div><label>별점</label></div>
 									<div id="starTd">
-										<i class="fa-solid fa-star" id="1"></i>
+										<i class="fa-solid fa-star" id="1" style="color: #78C2AD;"></i>
 										<i class="fa-solid fa-star" id="2"></i>
 										<i class="fa-solid fa-star" id="3"></i>
 										<i class="fa-solid fa-star" id="4"></i>
 										<i class="fa-solid fa-star" id="5"></i>
-										<input id="reviewGrade" type="hidden" name="reviewGrade">
+										<input id="reviewGrade" type="hidden" name="reviewGrade" value="1">
 									</div>
 									
 									<script>
@@ -242,7 +242,7 @@
 								<div data-name="fileDiv" class="form-group filebox bs3-primary">
 									<label for="file_0" class="col-sm-2 control-label">사진</label>
 									<div class="col-sm-10">
-										<input type="text" class="upload-name" value="썸네일 사진을 등록해주세요." readonly />
+										<input type="text" class="upload-name" value="썸네일 사진을 등록해주세요." style="color: gray;" readonly />
 										<label for="file_0" class="control-label" style="background-color: #6cc3d5; border: none;">찾아보기</label>
 										<input type="file" name="upfile" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />
 									
@@ -267,6 +267,7 @@
 									let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
 
 									function addFile() {
+										
 										/*
 										파일 개수 제한할 때 필요
 										const fileDivs = $('div[data-name="fileDiv"]');
@@ -281,7 +282,7 @@
 										fileHtml += "<div data-name='fileDiv' class='form-group filebox bs3-primary'>"
 													+ "<label for='file_"+fileIdx+"' class='col-sm-2 control-label'></label>"
 													+ "<div class='col-sm-10'>"
-														+ "<input type='text' class='upload-name' value='세부 사진을 등록해주세요.' readonly />"
+														+ "<input type='text' class='upload-name' value='세부 사진을 등록해주세요.' style='color: gray;' readonly />"
 														+ "<label for='file_"+fileIdx+"' class='control-label' style='background-color: #6cc3d5; border: none;'>찾아보기</label>"
 														+ "<input type='file' name='upfile' id='file_"+fileIdx+"' class='upload-hidden' onchange='changeFilename(this);' />"
 														+ "<button type='button' onclick='removeFile(this)' class='btn btn-outline-secondary'>"

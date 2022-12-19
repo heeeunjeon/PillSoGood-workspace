@@ -234,13 +234,28 @@
                 <div id="content_2_1"><p>고객후기</p></div>
                 <div id="content_2_2" >
                     <div class="btnArea" align="right">
-                        <div><button type="submit" class="btn btn-secondary btn-delete" onclick="location.href='delete.re?rno=${ r.reviewNo }'">삭제</button></div>
+                        <div>
+                        	<c:choose>
+								<c:when test="${ not empty loginUser }">
+									<c:choose>
+										<c:when test="${ loginUser.getMemberId() eq r.memberId}">
+											<button type="submit" class="btn btn-danger btn-delete" onclick="location.href='delete.re?rno=${ r.reviewNo }'">삭제</button>
+										</c:when>
+										<c:when test="${ loginUser.getMemberId() eq 'admin'}">
+											<button class="btn btn-danger btn-delete">삭제</button>
+										</c:when>
+									</c:choose>
+								</c:when>
+							</c:choose>
+                        </div>
                     </div>
 
-             
                     <!-- 리뷰 상세 본문 -->
                     <div class="reviewDetailArea">
                         <table class="reviewDetail" style="border-top: 1px solid lightgray;">
+                            <tr>
+                            	<td><p style="font-size: 25px; margin-top: 10px;"><b>${r.reviewTitle}</b></p></td>
+                            </tr>
                             <tr height="50px">
                                 <td>
                                     <c:forEach var="p" items="${pList}">
@@ -377,12 +392,6 @@
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
-
-
-
-
-
-
 
     <script>
                     

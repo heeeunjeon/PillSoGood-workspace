@@ -147,7 +147,7 @@
             <div id="content_2">
                 <div id="content_2_1"><p>고객후기</p></div>
                 <div id="content_2_2">
-					<p id="best3">BEST3 후기</p>
+					<p id="best3" style="margin-bottom: 20px;">BEST3 후기</p>
                     <div id="best3Review"><!-- 베스트 후기 영역 -->
 						<div>
 							<c:forEach var="b" items="${ bestList }">
@@ -287,7 +287,6 @@
 							</ul>
 						</nav>
 					</div>
-					
                 </div>
                 <div style="height: 150px"></div>
 			</div>
@@ -297,6 +296,7 @@
 	</div>
 
 	<script>
+	
 		// 베스트 리뷰 조회수 증가
 		$(function() {
 			$(".bestReview").click(function() {
@@ -305,28 +305,30 @@
 				location.href = "detail.re?rno=" + rno;
 			});
 		});
+		
 		// 일반 리뷰 조회수 증가
 		$(function() {
-           		$(".reviewT").click(function() {
-           			// var rno = $(this).parent('table').children('thead').eq(0).children('tr').eq(0).children('td').eq(0).children('input').eq(0).val();
-           			// var rno = $(this).children("tbody").eq(0).children("tr").eq(0).children("input").eq(0).val();
-					var rno = $(this).parent('table').children('thead').eq(0).children('tr').eq(0).children('input').eq(0).val();
-					location.href = "detail.re?rno=" + rno;
-           		});
-           	});
+          	$(".reviewT").click(function() {
+          		// var rno = $(this).parent('table').children('thead').eq(0).children('tr').eq(0).children('td').eq(0).children('input').eq(0).val();
+          		// var rno = $(this).children("tbody").eq(0).children("tr").eq(0).children("input").eq(0).val();
+				var rno = $(this).parent('table').children('thead').eq(0).children('tr').eq(0).children('input').eq(0).val();
+				location.href = "detail.re?rno=" + rno;
+          	});
+        });
 			
-			// 리뷰 삭제
-	    	$(function() {
-	    		$(".btn-delete").click(function() {
-	    			
-	    			// var rno = $(this).parent('td').prev().prev('td').children('input').eq(0).val();
-	    			// $(this).parent('td').prev('td').prev('input').val();
-					var rno = $(this).parent('td').parent('tr').children('input').eq(0).val();
+		// 리뷰 삭제
+    	$(function() {
+    		$(".btn-delete").click(function() {
+    			
+    			// var rno = $(this).parent('td').prev().prev('td').children('input').eq(0).val();
+    			// $(this).parent('td').prev('td').prev('input').val();
+				var rno = $(this).parent('td').parent('tr').children('input').eq(0).val();
 
-	    			console.log(rno);
-	    			location.href = "delete.re?rno=" + rno;
-	    		});
-	    	});
+    			console.log(rno);
+    			location.href = "delete.re?rno=" + rno;
+    		});
+    	});
+		
 	</script>
 
 </body>

@@ -89,7 +89,7 @@
 	}
 
 	.answer>p {
-		font-size: 13px;
+		font-size: 15px;
 		color: black;
 		margin: 25px;
 		display : none;
