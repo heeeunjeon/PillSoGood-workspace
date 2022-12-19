@@ -273,7 +273,7 @@
 		                                </tr>
 		                                <tr>
 		                                	<td><b>취소영수증</b></td>
-		                                	<th><a href="${ o.orderReceipt }">영수증 조회</a></th>
+		                                	<th><a href="${ o.orderReceipt }" target="_blank">영수증 조회</a></th>
 		                                </tr>
 		                            </table>
 		                    	</c:when>
@@ -292,7 +292,7 @@
 		                                </tr>
 		                                <tr>
 		                                	<td><b>결제영수증</b></td>
-		                                	<th><a href="${ o.orderReceipt }">영수증 조회</a></th>
+		                                	<th><a href="${ o.orderReceipt }" target="_blank">영수증 조회</a></th>
 		                                </tr>
 		                            </table>
 		                    	</c:otherwise>

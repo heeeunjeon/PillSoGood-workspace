@@ -290,7 +290,7 @@
 			                        <c:otherwise>
 			                        	<div id="not_answer">
 			                        		&nbsp;PillSoGood<br><br>
-			                        		<p style="text-align: center;">빠른 시일 내로 답변드리겠습니다.</p>
+			                        		<p style="text-align: center; margin-left: 0px;">빠른 시일 내로 답변드리겠습니다.</p>
 			                        	</div>
 			                        </c:otherwise>
 		                        </c:choose>

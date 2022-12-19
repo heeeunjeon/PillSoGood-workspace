@@ -421,7 +421,7 @@
    			 	var date = moment(new Date()).format('YYYYMMDDHHmmss');
    				var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
    				var amount = parseInt($("#finalprice").text().substring(0, $("#finalprice").text().lastIndexOf(' ')).replace(',', ''));
-	    		amount = 100;
+	    		// amount = 100;
 	    		
 	    		var address = $("#address1").val();
 	    		if($("#address2").val() != '') {
@@ -483,7 +483,7 @@
    			 	var date = moment(new Date()).format('YYYYMMDDHHmmss');
    				var orderNo = date + (parseInt(Math.random() * 90000) + 10000);
    				var amount = parseInt($("#finalprice").text().substring(0, $("#finalprice").text().lastIndexOf(' ')).replace(',', ''));
-	    		amount = 100;
+	    		// amount = 100;
 	    		
 	    		var customerUid = "${ loginUser.memberNo }" + '_' + $("#card_number").val().substring(15);
 	    		

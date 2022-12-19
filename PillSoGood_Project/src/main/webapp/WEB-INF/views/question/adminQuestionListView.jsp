@@ -107,7 +107,7 @@
         table-layout: fixed;
     }
     #qna_list>thead { background-color: #78c2ad36; }
-    #qna_list>tbody td { vertical-align: middle; }
+    #qna_list>tbody td { font-size: small; vertical-align: middle; }
 
     #qna_list>tbody>tr:hover { cursor: pointer; }
 

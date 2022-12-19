@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>ADMIN PAGE 주문 관리</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!-- daum 우편번호검색 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
@@ -19,8 +20,9 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
-        height: inherit;
+        width: 100%;
+        /* 전체 길이 개별 커스텀 */
+        height: auto;
         margin : auto;
     }
 
@@ -28,10 +30,11 @@
 
     #navigator2 { height: 100px; }
 
-    #content { display: flex; height: auto; }
+    /* 내용 길이 개별 wrap - 350px */
+    #content { height: auto; display:flex; }
     #content_2>div { width: 100%; }
-    #content_2_1, #content_2_3 { height: 115px; }
-    #content_2_2 { height: auto; color: black; }
+    #content_2_1 { height: 10%; }
+    #content_2_2 { height:90%; color: black; }
 
     #header { height: 130px; }
 
@@ -39,14 +42,14 @@
         font-size: 35px;
         color: black;
         margin-top: 20px;
-        margin-left: 30px;
+        margin-left: 15px;
         font-weight: bold;
     }
 
     /* content 영역 */
-    #content>div { height : 100vh; float : left; }
+    #content>div { height : 100%; float : left; }
     #content_1 { width : 20%; }
-    #content_2 { width : 60%; height: auto!important;}
+    #content_2 { width : 60%; padding-bottom: 200px;}
     #content_3 { width : 20%; }
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
@@ -198,9 +201,111 @@
                         <div>
                             <b>주문 정보</b>
                             <c:if test="${ o.orderStatus ne 'C' and o.subsStatus ne 'C' and o.delivery eq 1 }">
-                            	<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;">주문취소</button>
+                            	<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" onclick="cancelOrder('${ o.subsStatus }');">주문취소</button>
                             </c:if>
                             <hr>
+                            
+                            <script>
+                            	function cancelOrder(st) {
+                            		
+                            		if(st == 'N') { // 일반결제
+                            			
+                            			if(confirm("해당 주문건을 취소하시겠습니까?")) {
+                                			
+                                			$.ajax({
+                                				url: "payments/cancel",
+                                				type: "post",
+                                				data: {
+                                					merchant_uid: "${ o.orderNo }"
+                                				}
+                                			}).done(data => {
+                                				console.log(data);
+                                				
+                                				if(data.response.status == 'cancelled') {
+                                					
+                                					$.ajax({
+                                						url: "delete.or",
+                                						data: {
+                                							orderNo: "${ o.orderNo }",
+                                							orderDate: moment(data.response.cancelledAt).format('YYYYMMDDHHmmss'),
+                                							subsStatus: 'N'
+                                						},
+                                						success: result => {
+                                							
+                                							if(result == "success") {
+                                								alert("주문번호 : ${ o.orderNo }\n취소 처리되었습니다.");
+                                    	    					location.href = 'olist.ad';
+                                							}
+                                						}
+                                					});
+                                				}
+                                			});
+                                		}
+                            			
+                            		} else { // 정기구독
+                            			
+                            			if(confirm("정기구독 중인 주문건입니다.\n주문 취소와 동시에 구독이 해지처리됩니다.")) {
+                                			
+                                			$.ajax({
+                                				url: "subscribe/payments/unschedule",
+                                				type: "post",
+                                				data: {
+                                					customer_uid: "${ o.customerUid }"
+                                				}
+                                			}).done(data => {
+                                				console.log(data);
+                                				
+                            					if(data.code == 0) {
+                            						
+                                					$.ajax({
+                                						url: "delete.or",
+                                						type: "post",
+                                						data: {
+                                							orderNo: "${ o.orderNo }",
+                                							orderDate: moment(data.response.cancelledAt).format('YYYYMMDDHHmmss'),
+                                							customerUid: data.response[0].customerUid,
+                                							subsStatus: 'Y'
+                                						},
+                                						success: result => {
+                                							
+                                							if(result == "success") {
+                                								
+                           										$.ajax({
+                           						    				url: "payments/cancel",
+                           						    				type: "post",
+                           						    				data: {
+                           						    					merchant_uid: "${ o.orderNo }"
+                           						    				}
+                           						    			}).done(data => {
+                           						    				
+                           						    				if(data.response.status == 'cancelled') {
+                           						    					
+                           						    					$.ajax({
+                           						    						url: "delete.or",
+                           						    						data: {
+                           						    							orderNo: "${ o.orderNo }",
+                           						    							orderDate: moment(data.response.cancelledAt).format('YYYYMMDDHHmmss'),
+                           						    							subsStatus: 'N'
+                           						    						},
+                           						    						success: result => {
+                           						    							
+                           						    							if(result == "success") {
+                           						    								alert("주문번호 : ${ o.orderNo }\n취소 처리되었습니다.\n정기구독이 해지되었습니다.");
+                                                           	    					location.href = 'olist.ad';
+                           						    							}
+                           						    						}
+                           						    					});
+                           						    				}
+                           						    			});
+                                							}
+                                						}
+                                					});
+                                				}
+                                			});
+                                		}
+                            		}
+                            	}
+                            </script>
 
                             <table id="order">
                                 <tr>
@@ -322,7 +427,7 @@
 															<button type="button" class="btn btn-primary" onclick="getAddress();" style="font-size: small; box-sizing: border-box; height: 37px; vertical-align: top;">검색</button>
 														</c:when>
 														<c:otherwise>
-															<input type="text" class="form-control" value="${ o.address }" readonly>
+															<input type="text" class="form-control" id="newAddress" value="${ o.address }" readonly>
 														</c:otherwise>
 													</c:choose>
 											    </th>
@@ -417,7 +522,7 @@
 		                            <table id="price">
 		                                <tr>
 		                                    <td><b>최종 환불금액</b></td>
-		                                    <th>${ o.orderPrice } 원</th>
+		                                    <th><fmt:formatNumber value="${ o.orderPrice }"/> 원</th>
 		                                </tr>
 		                                <tr>
 		                                    <td><b>환불일시</b></td>
@@ -432,7 +537,7 @@
 		                            <table id="price">
 		                                <tr>
 		                                    <td><b>최종 결제금액</b></td>
-		                                    <th>${ o.orderPrice } 원</th>
+		                                    <th><fmt:formatNumber value="${ o.orderPrice }"/> 원</th>
 		                                </tr>
 		                                <tr>
 		                                    <td><b>결제일시</b></td>

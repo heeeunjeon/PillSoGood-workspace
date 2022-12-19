@@ -178,12 +178,16 @@ public class MyPageController {
 			Order o = myPageService.selectMySubs(uidArr[i]);
 			
 			ArrayList<Product> plist = myPageService.selectMyOrderProducts(o.getOrderNo());
-			String str = plist.get(0).getProductName();
-			if(plist.size() > 1) {
-				str += " 외 " + (plist.size() - 1);
-			}
 			
-			o.setProductNames(str);
+			if(plist.size() != 0) {
+				String str = plist.get(0).getProductName();
+				
+				if(plist.size() > 1) {
+					str += " 외 " + (plist.size() - 1);
+				}
+				
+				o.setProductNames(str);
+			}
 			
 			list.add(o);
 			
@@ -216,12 +220,16 @@ public class MyPageController {
 		Order o = myPageService.selectMySubs(order.getCustomerUid());
 		
 		ArrayList<Product> plist = myPageService.selectMyOrderProducts(o.getOrderNo());
-		String str = plist.get(0).getProductName();
-		if(plist.size() > 1) {
-			str += " 외 " + (plist.size() - 1);
-		}
 		
-		o.setProductNames(str);
+		if(plist.size() != 0) {
+			String str = plist.get(0).getProductName();
+			
+			if(plist.size() > 1) {
+				str += " 외 " + (plist.size() - 1);
+			}
+			
+			o.setProductNames(str);
+		}
 		
 		// 현재 진행중인 구독의 첫 결제일
 		String date = myPageService.selectMyFirstSubs(order.getCustomerUid());

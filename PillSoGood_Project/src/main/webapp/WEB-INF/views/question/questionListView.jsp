@@ -142,7 +142,7 @@
 		                    <c:if test="${ not empty list }">
 			                    <script>
 					            	$(() => {
-					            		$("#question_list>tbody>tr").click(() => {
+					            		$("#question_list>tbody>tr").click(function() {
 					            			location.href = "detail.qu?qno=" + $(this).children().eq(0).val();
 					            		});
 					            	});
