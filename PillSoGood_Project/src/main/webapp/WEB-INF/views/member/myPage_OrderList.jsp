@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -248,7 +249,7 @@
 			                                    		</c:otherwise>
 			                                    	</c:choose>
 			                                    </th>
-			                                    <th rowspan="2" style="text-align: right;">${ o.orderPrice }</th>
+			                                    <th rowspan="2" style="text-align: right;"><fmt:formatNumber value="${ o.orderPrice }"/> 원</th>
 			                                </tr>
 			                                <tr>
 			                                    <td style="font-size: small;">${ o.productNames }</td>

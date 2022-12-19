@@ -359,7 +359,7 @@
                         <div>
                             <b>배송지 정보</b>
                             <!-- 배송완료 전일 때만 보이도록 -->
-                            <c:if test="${ o.orderStatus ne 'C' and o.subsStatus ne 'C' and o.delivery ne 3 }">
+                            <c:if test="${ o.orderStatus ne 'C' and o.delivery ne 3 }">
                             	<button type="button" class="btn btn-outline-primary btn-sm" style="float: right;" data-bs-toggle="modal" data-bs-target="#change_delivery">배송지 변경</button>
                             </c:if>
                             <hr>

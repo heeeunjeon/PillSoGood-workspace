@@ -265,7 +265,7 @@
 		                            <table id="price">
 		                                <tr>
 		                                    <td><b>최종 환불금액</b></td>
-		                                    <th>${ o.orderPrice } 원</th>
+		                                    <th><fmt:formatNumber value="${ o.orderPrice }"/> 원</th>
 		                                </tr>
 		                                <tr>
 		                                    <td><b>환불일시</b></td>
@@ -284,7 +284,7 @@
 		                            <table id="price">
 		                                <tr>
 		                                    <td><b>최종 결제금액</b></td>
-		                                    <th>${ o.orderPrice } 원</th>
+		                                    <th><fmt:formatNumber value="${ o.orderPrice }"/> 원</th>
 		                                </tr>
 		                                <tr>
 		                                    <td><b>결제일시</b></td>

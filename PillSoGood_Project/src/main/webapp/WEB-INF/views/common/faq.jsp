@@ -16,32 +16,41 @@
 	}
 
 	/* 전체를 감싸는 wrap */
-	.wrap {
-		/* height: 1580px; */
-		height: auto;
-		width: 98%;
-		margin : auto; /* 가운데로 좌, 우 자동 정렬*/
-	}
+    .wrap {
+        width: 98%;
+        height: inherit;
+        margin : auto;
+    }
 
-	.wrap>div { width: 100%; }
+    .wrap>div { width : 100%; }
 
-	#navigator2 { height: 150px; }
-	#header { height: 130px; }
+    #navigator2 { height: 100px; }
 
-	#content { height: auto; display: flex;}
-	#content_2>div { width: 100%; float: left; }
-	#content_2_1 { height: 115px; }
-	#content_2_2 { height: auto;  }
+    #content { display: flex; height: auto; }
+    #content_2>div { width: 100%; }
+    #content_2_1, #content_2_3 { height: 115px; }
+    #content_2_2 { height: auto; color: black; }
 
+    #header { height: 130px; }
+
+    #content_2_1>p {
+        font-size: 35px;
+        color: black;
+        margin-top: 20px;
+        margin-left: 30px;
+        font-weight: bold;
+    }
 
 	/* 제목 본문 영역 */
 	#contentTable { height: auto; width: 100%; }
 
 	/* content 영역 */
-	#content>div { height : 100%; float : left; }
-	#content_1 { width : 25%; }
-	#content_2 { width : 50%; }
-	#content_3 { width : 25%; }
+    #content>div { height : 100%; float : left; }
+    #content_1 { width : 20%; }
+    #content_2 { width : 60%; }
+    #content_3 { width : 20%; }
+
+    body { font-family: 'Noto Sans KR', sans-serif !important; }
 
 	/* 영섭 작업 영역 시작 */
 
@@ -87,14 +96,6 @@
 		box-sizing : border-box;
 		line-height: 35px;
 		padding-left: 70px;
-	}
-
-	#content_2_1>p {
-		margin-top: 40px;
-		margin-left: 30px;
-		font-size: 35px;
-		color: black;
-		font-weight: bold;
 	}
 
 	table>tr { height: 50px; }
