@@ -108,53 +108,58 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("enrollForm.re")
-	public String enrollForm(int memberNo, Model model) {
+	public String enrollForm(int memberNo, Model model, HttpSession session) {
 		
 		// memberNo 회원의 GROUP 화 된 ORDER_NO(int OrderNo) 들을 배열로 받아옴 
 		ArrayList<Review> rOrderList = reviewService.selectROrderList(memberNo);
 		// System.out.println("rOrderLIst : " + rOrderList);
 		
-		for( int i = 0; i < rOrderList.size(); i++ ) {
-			
-			// rOrderList 의 <Review> 타입 reviewOrder 들 추출
-			Review reviewOrder = rOrderList.get(i);
-			// 그 안에 있는 OrderNo 추출해서 rOrderNo 로 지정
-			int orderNo = reviewOrder.getOrderNo();
-			
-			// System.out.println("orderNo : " + orderNo);
-			
-			// rOrderNo에 해당하는 productName 들 추출해서 배열로 담음
-			ArrayList<Review> rOrderProductNameList = reviewService.selectROrderProductNameList(orderNo);
-			
-			// 배열 -> 문자열 가공
-			String rOrderProductNames = "";
-			
-			if ( rOrderProductNameList.size() == 1 ) { // 상품 한 개
+		if(rOrderList.size() != 0) {
+			for( int i = 0; i < rOrderList.size(); i++ ) {
 				
-				rOrderProductNames += rOrderProductNameList.get(0).getProductName();
-			}
-			else if ( rOrderProductNameList.size() > 1 ){ // 상품 두 개 이상
+				// rOrderList 의 <Review> 타입 reviewOrder 들 추출
+				Review reviewOrder = rOrderList.get(i);
+				// 그 안에 있는 OrderNo 추출해서 rOrderNo 로 지정
+				int orderNo = reviewOrder.getOrderNo();
 				
-				rOrderProductNames += rOrderProductNameList.get(0).getProductName();
-				for( int j = 1; j < rOrderProductNameList.size(); j++) {
+				// System.out.println("orderNo : " + orderNo);
+				
+				// rOrderNo에 해당하는 productName 들 추출해서 배열로 담음
+				ArrayList<Review> rOrderProductNameList = reviewService.selectROrderProductNameList(orderNo);
+				
+				// 배열 -> 문자열 가공
+				String rOrderProductNames = "";
+				
+				if ( rOrderProductNameList.size() == 1 ) { // 상품 한 개
 					
-					rOrderProductNames += ", ";
-					rOrderProductNames += rOrderProductNameList.get(j).getProductName();
-				
+					rOrderProductNames += rOrderProductNameList.get(0).getProductName();
 				}
+				else if ( rOrderProductNameList.size() > 1 ){ // 상품 두 개 이상
+					
+					rOrderProductNames += rOrderProductNameList.get(0).getProductName();
+					for( int j = 1; j < rOrderProductNameList.size(); j++) {
+						
+						rOrderProductNames += ", ";
+						rOrderProductNames += rOrderProductNameList.get(j).getProductName();
+					
+					}
+				}
+				
+				// System.out.println("rOrderProductNames : " + rOrderProductNames);
+				
+				// reviewOrder 안에 문자열 담음
+				reviewOrder.setProductName(rOrderProductNames);
+				reviewOrder.setMemberNo(memberNo);
+				// System.out.println("reviewOrder : " + reviewOrder);
+				
 			}
-			
-			// System.out.println("rOrderProductNames : " + rOrderProductNames);
-			
-			// reviewOrder 안에 문자열 담음
-			reviewOrder.setProductName(rOrderProductNames);
-			reviewOrder.setMemberNo(memberNo);
-			// System.out.println("reviewOrder : " + reviewOrder);
-			
+			// System.out.println("rOrderList : " + rOrderList);
+			model.addAttribute("rOrderList", rOrderList);
+			return "review/reviewEnrollForm";
+		} else {
+			session.setAttribute("alertMsg", "후기를 작성할 구매 목록이 없습니다.");
+			return "redirect:/list.re";
 		}
-		// System.out.println("rOrderList : " + rOrderList);
-		model.addAttribute("rOrderList", rOrderList);
-		return "review/reviewEnrollForm";
 	}
 	
 	@RequestMapping("insert.re")
