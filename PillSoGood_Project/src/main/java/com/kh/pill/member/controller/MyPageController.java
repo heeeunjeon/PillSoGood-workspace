@@ -392,9 +392,9 @@ public class MyPageController {
 		
 		// 내 리뷰 전체 조회용 페이징
 		int listCount = myPageService.selectMyEventListCount(memberNo);
-		// System.out.println("listCount : " + listCount);
+		System.out.println("listCount : " + listCount);
 		int pageLimit = 5;
-		int boardLimit = 5;
+		int boardLimit = 4;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		model.addAttribute("pi", pi);
@@ -403,6 +403,7 @@ public class MyPageController {
 		// 내가 찜한 이벤트 전체 조회
 
 		ArrayList<Event> myList = myPageService.selectMyEventList(pi, memberNo);
+		System.out.println("myList : " + myList);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("myList", myList);
