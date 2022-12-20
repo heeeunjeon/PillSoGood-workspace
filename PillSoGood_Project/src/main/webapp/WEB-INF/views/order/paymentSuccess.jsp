@@ -96,5 +96,50 @@
         <jsp:include page="../common/footer.jsp" />
     </div>
     
+    <script>
+    
+    $(function() {
+    	
+    	toAdminSocketMsg();
+    })
+    
+    function toAdminSocketMsg() {
+    	
+    	
+    	if(socket) {
+    		
+    		let socketMsg = "order"+","+"${ loginUser.memberId },"+"admin," + "bno," + "";
+			selectAlarmList();
+			socket.send(socketMsg);
+    		
+    	}
+    	
+    	$.ajax({
+    		
+    		url : "insertOrder.alarm",
+    		data : {
+    			
+    			alarmContent : "${loginUser.memberId} 님이 상품을 구매하셨습니다.",
+    			fromId : "${loginUser.memberId}",
+    			toId : "admin"
+    			
+    		},
+    		success : function(result) {
+    			
+    			selectAlarmList();
+    			console.log(result);
+    			
+    		},
+    		error: function() {
+    			
+    			console.log("toAdminOrder ajax failure");
+    		}
+    		
+    	});
+    	
+    }
+    
+    </script>
+    
 </body>
 </html>

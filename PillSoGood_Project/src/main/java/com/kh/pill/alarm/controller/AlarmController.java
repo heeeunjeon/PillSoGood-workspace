@@ -39,6 +39,18 @@ public class AlarmController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("insertOrder.alarm")
+	public void insertOrderAlarm(Alarm a, String toId) {
+		
+		int memberNo = alarmService.selectMemberNo(toId);
+		
+		a.setMemberNo(memberNo);
+		
+		alarmService.insertQuestionAlarm(a);
+		
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="selectList.alarm", produces="application/json; charset=UTF-8" )
 	public String selectAlarmList(int memberNo) {
 		

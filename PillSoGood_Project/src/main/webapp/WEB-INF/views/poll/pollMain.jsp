@@ -598,11 +598,6 @@
 
 			
 
-            
-            
-
-            console.log(surveyAnswer);
-
             $("#survey"+(num -1)).css("display","none");
             $("#survey"+num).css("display","block");
             $("#surveyProgressBar").css("width",progress);
