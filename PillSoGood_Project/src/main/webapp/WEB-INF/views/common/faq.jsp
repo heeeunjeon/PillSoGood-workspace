@@ -52,8 +52,6 @@
 
     body { font-family: 'Noto Sans KR', sans-serif !important; }
 
-	/* 영섭 작업 영역 시작 */
-
 	table { width: 100%; }
 
 	.upperHr { border-bottom: 1px solid lightgrey; }
@@ -102,11 +100,9 @@
 
 	.button>i { color: #78C2AD;}
 
-	/* 영섭 작업 영역 끝 */
 </style>
 </head>
 <body>
-
 	<div class="wrap">
         <div id="navigator2">
             <jsp:include page="../common/menubar.jsp" />
@@ -117,8 +113,6 @@
             <div id="content_2">
                 <div id="content_2_1"><p>FAQ</p></div>
                 <div id="content_2_2">
-
-					<!-- 영섭 작업 영역 시작-->
 					<div id="contentTable">
 						<table align="center" class="list-area">
 							<tbody style="border-top: 2px solid black">
@@ -290,7 +284,6 @@
 							</tbody>
 						</table>
 					</div>
-	
 				</div>
 				<div style="height: 150px"></div>
 			</div>

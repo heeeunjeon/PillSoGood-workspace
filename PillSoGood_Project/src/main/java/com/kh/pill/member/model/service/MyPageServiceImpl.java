@@ -163,6 +163,16 @@ public class MyPageServiceImpl implements MyPageService {
 	public ArrayList<Review> selectMyReviewList(PageInfo pi, int memberNo) {
 		return myPageDao.selectMyReviewList(sqlSession, pi, memberNo);
 	}
+	
+	@Override
+	public ArrayList<ReviewFile> selectReviewFile(int rno) {
+		return myPageDao.selectReviewFile(sqlSession, rno);
+	}
+
+	@Override
+	public int selectReplyCount(int rno) {
+		return myPageDao.selectReplyCount(sqlSession, rno);
+	}
 
 	/**
 	 * 이벤트 조회용 서비스
@@ -177,15 +187,6 @@ public class MyPageServiceImpl implements MyPageService {
 		return myPageDao.selectMyEventList(sqlSession, pi, memberNo);
 	}
 
-	@Override
-	public ArrayList<ReviewFile> selectReviewFile(int rno) {
-		return myPageDao.selectReviewFile(sqlSession, rno);
-	}
-
-	@Override
-	public int selectReplyCount(int rno) {
-		return myPageDao.selectReplyCount(sqlSession, rno);
-	}
 
 
 	

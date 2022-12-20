@@ -322,7 +322,7 @@ public class MyPageController {
 		int memberNo = loginUser.getMemberNo();
 		
 		int listCount = myPageService.selecMyProducttListCount(memberNo);
-		System.out.println("listCount : " + listCount);
+		// System.out.println("listCount : " + listCount);
 		int pageLimit = 5;
 		int boardLimit = 5;
 		
@@ -330,7 +330,7 @@ public class MyPageController {
 		model.addAttribute("pi", pi);
 		
 		ArrayList<Product> myList = myPageService.selectMyProductList(pi, memberNo);
-		System.out.println("myList : " + myList);
+		// System.out.println("myList : " + myList);
 		
 		model.addAttribute("myList", myList);
 		
@@ -340,7 +340,7 @@ public class MyPageController {
 	
 	
 	/**
-	 * 내 후기조회 페이지
+	 * 내 후기 페이지
 	 * @return
 	 */
 	@RequestMapping("myPage.re")
@@ -348,7 +348,7 @@ public class MyPageController {
 		
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 				
-				// 내 리뷰 전체 조회용 페이징
+				// 조회용 페이징
 				int listCount = myPageService.selectMyReviewListCount(memberNo);
 				// System.out.println("listCount : " + listCount);
 				int pageLimit = 5;
@@ -356,13 +356,13 @@ public class MyPageController {
 				
 				PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 				model.addAttribute("pi", pi);
-				System.out.println("pi : " + pi);
+				// System.out.println("pi : " + pi);
 				
-				// 내 리뷰 전체 조회
+				// 내 리뷰 조회
 				ArrayList<Review> myList = myPageService.selectMyReviewList(pi, memberNo);
 				// System.out.println("myList : " + myList);
 				
-				for(int i = 0; i < myList.size()-1; i++) {
+				for(int i = 0; i < myList.size(); i++) {
 					
 					Review review = myList.get(i);
 					
@@ -371,17 +371,16 @@ public class MyPageController {
 						
 					ArrayList<ReviewFile> flist = myPageService.selectReviewFile(rno);
 					int replyCount = myPageService.selectReplyCount(rno);
-					
+					// System.out.println("flist : " + flist);
 					review.setFlist(flist);
 					review.setReplyCount(replyCount);
 				}
 				model.addAttribute("myList", myList);
-		
+				// System.out.println("myList : " + myList);
 		return "member/myPage_ReviewList";
 	}
 	
 	/**
-	 * 
 	 * 찜한 이벤트 페이지 
 	 * @return
 	 */
@@ -390,9 +389,9 @@ public class MyPageController {
 		
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
-		// 내 리뷰 전체 조회용 페이징
+		// 조회용 페이징
 		int listCount = myPageService.selectMyEventListCount(memberNo);
-		System.out.println("listCount : " + listCount);
+		// System.out.println("listCount : " + listCount);
 		int pageLimit = 5;
 		int boardLimit = 4;
 		
@@ -400,10 +399,10 @@ public class MyPageController {
 		model.addAttribute("pi", pi);
 		// System.out.println("pi : " + pi);
 		
-		// 내가 찜한 이벤트 전체 조회
+		// 찜한 이벤트 전체 조회
 
 		ArrayList<Event> myList = myPageService.selectMyEventList(pi, memberNo);
-		System.out.println("myList : " + myList);
+		// System.out.println("myList : " + myList);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("myList", myList);

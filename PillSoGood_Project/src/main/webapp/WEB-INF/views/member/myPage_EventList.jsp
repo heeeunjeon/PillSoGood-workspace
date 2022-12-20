@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>찜한 이벤트 조회</title>
-
 <style>
 
     div {
@@ -85,16 +84,15 @@
         font-weight: bold;
     }
 
+    /* 페이지 */
     .pagination {
         margin-left: 600px;
     }
 
 
 </style>
-
 </head>
 <body>
-
     <div class="wrap">
         <div id="navigator2">
             <jsp:include page="../common/menubar.jsp" />
@@ -120,27 +118,36 @@
                             <p><a href="myPage.ev">찜한 이벤트</a></p>
                         </div>
                     </div>
-
                     <div id="mypage_content">
                         <h4>찜한 이벤트</h4>
                         <hr>
+                        
+                        <c:choose>
+	                        <c:when test="${myList.size()>=1}">
+								<c:forEach var="e" begin="0" end="${ myList.size()-1}">
+									<div id="eventT" class="eventT" align="center" style="cursor: pointer;">
+		                                <div>
+		                                    <div><input type="hidden" value="${ myList[e].evtNo }"></div>
+		                                    <div style="margin-top: 20px;"><img src="${ myList[e].evtImgName }" width="120" height="120" ></div>
+		                                </div>
+		                                <div>
+		                                    <div class="evtTitle" width="600px" style="font-size: 20px; padding-top: 20px; color: black;">${ myList[e].evtTitle }</div>
+		                                    <div style="height: 10px;"></div>
+		                                </div>
+			                        </div>
+								</c:forEach>
+							</c:when>
+							<c:when test="${myList.size()==0}">
+								<div align="center">
+									<br>
+									<p style="color: gray;">찜한 이벤트가 없습니다.</p>
+									<br>
+								</div>
+							</c:when>
+						</c:choose>
 						
-						<c:forEach var="e" begin="0" end="${ myList.size()-1}">
-							<div id="eventT" class="eventT" align="center" style="cursor: pointer;">
-                                <div>
-                                    <div><input type="hidden" value="${ myList[e].evtNo }"></div>
-                                    <div style="margin-top: 20px;"><img src="${ myList[e].evtImgName }" width="120" height="120" ></div>
-                                </div>
-                                <div>
-                                    <div class="evtTitle" width="600px" style="font-size: 20px; padding-top: 20px; color: black;">${ myList[e].evtTitle }</div>
-                                    <div style="height: 10px;"></div>
-                                </div>
-	                        </div>
-						</c:forEach>
                     </div>
-
                 </div>
-
                 <div id="content_2_3">
                     <div id="paginationBlank"></div>
                     <div id="paginationBody">
@@ -160,7 +167,6 @@
                                             <c:when test="${ p eq pi.currentPage }">
                                                 <li class="page-item disabled"><a class="page-link"  href="myPage.ev?cpage=${ p }">${ p }</a></li>
                                             </c:when>
-                                        
                                             <c:otherwise>
                                                 <li class="page-item"><a class="page-link" href="myPage.ev?cpage=${ p }">${ p }</a></li>
                                             </c:otherwise>

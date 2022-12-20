@@ -85,40 +85,37 @@
         height: 70px;
         cursor: pointer;
     }
-
     .myPageReview>div {
         float: left;
         height: 100%;;
     }
-
     .myPageImg {
         width: 11%;
     }
-
     .myPageContent {
         width: 82%;
     }
-
     .myPageContent>div {
         height: 50%;
     }
-
     .myPageContent1>div {
         float: left;
         height: 100%;
     }
-
     .myPageBtn {
         width: 7%;
     }
-
-
+    
+    img {
+    	height: 100%;
+        width: 100%;
+        object-fit: contain;
+        margin: auto;
+    }
 
 </style>
-
 </head>
 <body>
-
     <div class="wrap">
         <div id="navigator2">
             <jsp:include page="../common/menubar.jsp" />
@@ -147,30 +144,42 @@
                     <div id="mypage_content">
                         <h4>내 후기 조회</h4>
                         <hr>
-						<c:forEach var="i" begin="0" end="${ myList.size()-1}">
-							<div class="myPageReview" style="border-bottom: 1px solid lightgray;">
-                                <div class="myPageImg" align="center">
-                                    <div>
-                                        <c:forEach var="f" begin="0" end="0" items="${myList[i].flist}">
-                                            <img src="${ f.filePath }${ f.changeName }" width="70" height="70" >
-                                        </c:forEach>
-                                    </div>
-                                </div>
-                                <div class="myPageContent" style="padding: 5px;">
-                                    <div class="myPageContent1">
-                                        <div style="font-size: 20px; width: 85%;"><b>${ myList[i].reviewTitle }</b></div>
-                                        <div style="width: 15%;"><span style="color: gray;">${ myList[i].reviewDate }</span></div>
-                                    </div>
-                                    <div class="myPageContent2" style="font-size: 15px;"><p style="margin: 0px; padding: 1px;">${fn:substring(myList[i].reviewContent, 0, 10)}...</p></div>
-                                </div>
-                                <div class="myPageBtn" style="padding: 5px;">
-                                    <div>
-                                        <div><input type="hidden" value="${ myList[i].reviewNo }"></div>
-                                        <div align="right"><button type="submit" class="btn btn-secondary btn-delete btn-sm" onclick="location.href='delete.re?rno=${ myList[i].reviewNo }'">삭제</button></div>
-                                    </div>
-                                </div>
-	                        </div>
-						</c:forEach>
+                        
+                        <c:choose>
+                        	<c:when test="${myList.size()>=1}">
+								<c:forEach var="i" begin="0" end="${ myList.size()-1}">
+									<div class="myPageReview" style="border-bottom: 1px solid lightgray;">
+		                                <div class="myPageImg" align="center">
+		                                    <div>
+		                                        <c:forEach var="f" begin="0" end="0" items="${myList[i].flist}">
+		                                            <img src="${ f.filePath }${ f.changeName }" width="70" height="70" >
+		                                        </c:forEach>
+		                                    </div>
+		                                </div>
+		                                <div class="myPageContent" style="padding: 5px;">
+		                                    <div class="myPageContent1">
+		                                        <div style="font-size: 20px; width: 85%;"><b>${ myList[i].reviewTitle }</b></div>
+		                                        <div style="width: 15%;"><span style="color: gray;">${ myList[i].reviewDate }</span></div>
+		                                    </div>
+		                                    <div class="myPageContent2" style="font-size: 15px;"><p style="margin: 0px; padding: 1px;">${fn:substring(myList[i].reviewContent, 0, 10)}...</p></div>
+		                                </div>
+		                                <div class="myPageBtn" style="padding: 5px;">
+		                                    <div>
+		                                        <div><input type="hidden" value="${ myList[i].reviewNo }"></div>
+		                                        <div align="right"><button type="submit" class="btn btn-secondary btn-delete btn-sm" onclick="location.href='delete.re?rno=${ myList[i].reviewNo }'">삭제</button></div>
+		                                    </div>
+		                                </div>
+			                        </div>
+								</c:forEach>
+							</c:when>
+							<c:when test="${myList.size()==0}">
+								<div align="center">
+									<br>
+									<p style="color: gray;">내 후기가 없습니다.</p>
+									<br>
+								</div>
+							</c:when>
+						</c:choose>
                         
                         <div style="height: 10px;"></div>
                         <!-- 페이지 -->
@@ -217,25 +226,22 @@
     
     <script>
 		
-        // 내 리뷰 조회수 증가
         $(function() {
-            $(".myPageImg").click(function() {
+            $(".myPageImg").click(function() { // 리뷰 상세 조회
                 var rno = $(this).next('div').next('div').children('div').eq(0).children('div').eq(0).children('input').eq(0).val();
                 location.href = "detail.re?rno=" + rno;
             });
         });
         $(function() {
-            $(".myPageContent").click(function() {
+            $(".myPageContent").click(function() { // 리뷰 상세 조회
                 var rno = $(this).next('div').children('div').eq(0).children('div').eq(0).children('input').eq(0).val();
                 location.href = "detail.re?rno=" + rno;
             });
         });
         
-        // 내 리뷰 삭제
         $(function() {
-            $(".btn-delete").click(function() {
-                
-                // var rno = $(this).parent('td').prev().prev('td').children('input').eq(0).val();
+            $(".btn-delete").click(function() { // 내 리뷰 삭제
+                var rno = $(this).parent('div').parent('div').chilren('div').eq(0).children('input').eq(0).val();
                 location.href = "myDelete.re?rno=" + rno;
             });
         });

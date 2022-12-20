@@ -133,7 +133,6 @@
 		margin-top: 20px;
 	}
 
-
 </style>
 </head>
 <body>
@@ -150,19 +149,37 @@
 					<p id="best3" style="margin-bottom: 20px;">BEST3 후기</p>
                     <div id="best3Review"><!-- 베스트 후기 영역 -->
 						<div>
-							<c:forEach var="b" items="${ bestList }">
-								<div class="bestReview">
-									<div><img src="${ b.flist[0].filePath }${ b.flist[0].changeName }"></div>
-									
-									<c:forEach begin="1" end="${ b.reviewGrade }">
-										<i class="fa-solid fa-star" style="color: #78C2AD;"></i>
+							<c:choose>
+	                        	<c:when test="${bestList.size()>=1}">
+									<c:forEach var="b" items="${ bestList }">
+										<div class="bestReview">
+											<c:choose>
+												<c:when test="${b.flist.size()>0}">
+													<div><img src="${ b.flist[0].filePath }${ b.flist[0].changeName }" width="100" height="100" ></div>
+												</c:when>
+												<c:when test="${b.flist.size()==0}">
+													<div><img src="resources/images/Like.png"></div>
+												</c:when>
+											</c:choose>	
+											
+											<c:forEach begin="1" end="${ b.reviewGrade }">
+												<i class="fa-solid fa-star" style="color: #78C2AD;" width="100" height="100" ></i>
+											</c:forEach>
+											<input type="hidden" value="${ b.reviewNo }">
+											<p class="bestReviewService">${ b.reviewTitle }</p>
+											<p class="bestReviewContent">${ fn:substring(b.reviewContent, 0, 30) }...</p>
+											<p class="bestReviewName">${ fn:substring(b.memberName, 0, 1)}*${ fn:substring(b.memberName, 2, 1)}&emsp;${ b.reviewDate }</p>
+										</div>
 									</c:forEach>
-									<input type="hidden" value="${ b.reviewNo }">
-									<p class="bestReviewService">${ b.reviewTitle }</p>
-									<p class="bestReviewContent">${ fn:substring(b.reviewContent, 0, 30) }...</p>
-									<p class="bestReviewName">${ fn:substring(b.memberName, 0, 1)}*${ fn:substring(b.memberName, 2, 1)}&emsp;${ b.reviewDate }</p>
-								</div>
-							</c:forEach>
+								</c:when>
+								<c:when test="${bestList.size()==0}">
+									<div align="center">
+										<br>
+											<p>베스트 리뷰가 없습니다.</p>
+										<br>
+									</div>
+								</c:when>
+							</c:choose>
 						</div>
 					</div>
 					<div style="height: 80px;">
@@ -176,7 +193,7 @@
 				            	</c:choose>
 							</div>
 						</form>
-					</div> <!-- 베스트 리뷰와 일반 리뷰 사이 간격 --> 
+					</div><!-- 베스트 리뷰와 일반 리뷰 사이 간격 --> 
 					<div>
 						<table id="allA">
 							<tr>
@@ -187,69 +204,81 @@
 						</table>
 					</div>	
 	            	<div>
-						<c:forEach var="i" begin="0" end="${ list.size()-1 }"> <!-- 일반 리뷰 -->
-							<table id="reviewT" align="center">
-								<thead height="80px" >
-									<tr>
-										<input type="hidden" value="${ list[i].reviewNo }">
-										<td width="88%" style="font-size: 20px; padding: 10px 10px;"><b>${ list[i].reviewTitle }</b></td>
-										<td align="center">
-											<c:choose>
-												<c:when test="${ not empty loginUser }">
+	            	
+	            		<c:choose>
+	                        <c:when test="${list.size()>=1}">
+								<c:forEach var="i" begin="0" end="${ list.size()-1 }"><!-- 일반 리뷰 -->
+									<table id="reviewT" align="center">
+										<thead height="80px" >
+											<tr>
+												<input type="hidden" value="${ list[i].reviewNo }">
+												<td width="88%" style="font-size: 20px; padding: 10px 10px;"><b>${ list[i].reviewTitle }</b></td>
+												<td align="center">
 													<c:choose>
-														<c:when test="${ loginUser.getMemberId() eq list[i].memberId}">
-															<button class="btn btn-danger btn-delete">삭제</button>
-														</c:when>
-														<c:when test="${ loginUser.getMemberId() eq 'admin'}">
-															<button class="btn btn-danger btn-delete">삭제</button>
+														<c:when test="${ not empty loginUser }">
+															<c:choose>
+																<c:when test="${ loginUser.getMemberId() eq list[i].memberId}">
+																	<button class="btn btn-danger btn-delete">삭제</button>
+																</c:when>
+																<c:when test="${ loginUser.getMemberId() eq 'admin'}">
+																	<button class="btn btn-danger btn-delete">삭제</button>
+																</c:when>
+															</c:choose>
 														</c:when>
 													</c:choose>
-												</c:when>
-											</c:choose>
-										</td>
-									</tr>
-								</thead>
-								<tbody id="reviewTT" class="reviewT">
-									<tr>
-										<td>
-											<span style="color: #78C2AD;">
-												<c:forEach var="j" begin="0" end="${ list[i].reviewGrade -1 }">
-													<i class="fa-solid fa-star"></i>
-												</c:forEach>
-											</span>
-										</td>
-										<td align="center">${ list[i].reviewDate }</td>
-									</tr>
-									<tr>
-										<c:choose>
-											<c:when test="${ list[i].subsStatus eq 'N'}">
-												<td>${ list[i].memberName }&emsp;<span style="color: #78C2AD; font-weight: bold;">일시결제</span></td>
-											</c:when>
-											<c:when test="${ list[i].subsStatus eq 'Y'}">
-												<td>${ list[i].memberName }&emsp;<span style="color: #78C2AD; font-weight: bold;">정기결제</span></td>
-											</c:when>
-										</c:choose>
-										<td></td>
-									</tr>
-									<tr height="100px">
-										<td>${ list[i].reviewContent }</td>
-										<td></td>
-									</tr>
-									<tr>
-										<td>
-											<c:forEach var="f" items="${list[i].flist}">
-												<img src="${ f.filePath }${ f.changeName }" width="100" height="100" >
-											</c:forEach>
-										</td>
-										<td></td>
-									</tr>
-									<tr>
-										<td><i class="fa-regular fa-comment"></i>&ensp;<span style="color: #78C2AD;">${ list[i].replyCount }</span></td>
-										<td></td>
-									</tr>
-								</tbody>
-							</table>
-						</c:forEach>
+												</td>
+											</tr>
+										</thead>
+										<tbody id="reviewTT" class="reviewT">
+											<tr>
+												<td>
+													<span style="color: #78C2AD;">
+														<c:forEach var="j" begin="0" end="${ list[i].reviewGrade -1 }">
+															<i class="fa-solid fa-star"></i>
+														</c:forEach>
+													</span>
+												</td>
+												<td align="center">${ list[i].reviewDate }</td>
+											</tr>
+											<tr>
+												<c:choose>
+													<c:when test="${ list[i].subsStatus eq 'N'}">
+														<td>${ list[i].memberName }&emsp;<span style="color: #78C2AD; font-weight: bold;">일시결제</span></td>
+													</c:when>
+													<c:when test="${ list[i].subsStatus eq 'Y'}">
+														<td>${ list[i].memberName }&emsp;<span style="color: #78C2AD; font-weight: bold;">정기결제</span></td>
+													</c:when>
+												</c:choose>
+												<td></td>
+											</tr>
+											<tr height="100px">
+												<td>${ list[i].reviewContent }</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td>
+													<c:forEach var="f" items="${list[i].flist}">
+														<img src="${ f.filePath }${ f.changeName }" width="100" height="100" >
+													</c:forEach>
+												</td>
+												<td></td>
+											</tr>
+											<tr>
+												<td><i class="fa-regular fa-comment"></i>&ensp;<span style="color: #78C2AD;">${ list[i].replyCount }</span></td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</c:forEach>
+							</c:when>
+							<c:when test="${list.size()==0}">
+								<div align="center">
+									<br>
+										<p>후기가 없습니다.</p>
+									<br>
+								</div>
+							</c:when>
+						</c:choose>
 					</div>
 						
 					<!-- 페이지 -->
@@ -264,7 +293,6 @@
 										<li class="page-item"><a class="page-link" href="list.re?cpage=${ pi.currentPage - 1 }&order=${ order }">&lt;</a></li>	
 									</c:otherwise>
 								</c:choose>
-								
 								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 									<c:choose>
 										<c:when test="${ p eq pi.currentPage }">
@@ -297,20 +325,17 @@
 
 	<script>
 	
-		// 베스트 리뷰 조회수 증가
+		// 베스트 리뷰 상세 조회
 		$(function() {
 			$(".bestReview").click(function() {
-				
 				var rno = $(this).children("input").eq(0).val();
 				location.href = "detail.re?rno=" + rno;
 			});
 		});
 		
-		// 일반 리뷰 조회수 증가
+		// 일반 리뷰 상세 조회
 		$(function() {
           	$(".reviewT").click(function() {
-          		// var rno = $(this).parent('table').children('thead').eq(0).children('tr').eq(0).children('td').eq(0).children('input').eq(0).val();
-          		// var rno = $(this).children("tbody").eq(0).children("tr").eq(0).children("input").eq(0).val();
 				var rno = $(this).parent('table').children('thead').eq(0).children('tr').eq(0).children('input').eq(0).val();
 				location.href = "detail.re?rno=" + rno;
           	});
@@ -319,17 +344,11 @@
 		// 리뷰 삭제
     	$(function() {
     		$(".btn-delete").click(function() {
-    			
-    			// var rno = $(this).parent('td').prev().prev('td').children('input').eq(0).val();
-    			// $(this).parent('td').prev('td').prev('input').val();
 				var rno = $(this).parent('td').parent('tr').children('input').eq(0).val();
-
-    			console.log(rno);
     			location.href = "delete.re?rno=" + rno;
     		});
     	});
 		
 	</script>
-
 </body>
 </html>

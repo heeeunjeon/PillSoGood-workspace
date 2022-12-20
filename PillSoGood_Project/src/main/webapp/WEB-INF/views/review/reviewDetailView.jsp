@@ -13,8 +13,8 @@
 <style>
 
     div { 
-        box-sizing : border-box; 
-        border: 1px solid #78C2AD; 
+        box-sizing : border-box;
+        /* border: 1px solid #78C2AD; */ 
     }
 
     /* 전체를 감싸는 wrap */
@@ -53,7 +53,6 @@
 
     .btnArea { padding: 15px 0px; }
 
-   
     .pillCart {
         width: 290px;
         height: 200px;
@@ -136,7 +135,6 @@
         left: 1050px;
     }
 
-
     .listBtnArea { width: 140px; margin: auto; margin-top: 20px; }
     
     .replyContent {
@@ -153,7 +151,6 @@
     table { width: 100%; color: black; }
 
     #memRev, #morePro { width: 50%; float: left; }
-
 
     #memRev>p {
         margin: 0px;
@@ -208,7 +205,6 @@
     #productTT_3>p { font-size: 15px; line-height: 45px; }
     #productTT_2>p { font-size: 20px; line-height: 50px; font-weight: bold; }
 
-
     #productP>p {
         font-size: 20px;
         font-weight: bold;
@@ -227,10 +223,14 @@
     .prodback7 { background-color: #e9f7f5; }
     .prodback8 { background-color: #f9f9f9; }
     
+	.reviewImg {
+        object-fit: contain;
+        margin: auto;
+	}
+    
 </style>
 </head>
 <body>
-
     <div class="wrap">
         <div id="navigator2">
             <jsp:include page="../common/menubar.jsp" />
@@ -304,7 +304,7 @@
                             <tr>
                                 <td>
                                     <c:forEach var="f" items="${r.flist}">
-                                        <img src="${ f.filePath }${ f.changeName }" width="200" height="200" >
+                                        <img class="reviewImg" src="${ f.filePath }${ f.changeName }" width="200" height="200" >
                                     </c:forEach>
                                 </td>
                                 <td></td>
@@ -320,7 +320,6 @@
                         <div id="memRev"><p><span style="color: #F3969A;">${ r.memberName }</span>님의 후기 상품이에요!</p></div>
                         <div id="morePro" align="right"><button type="button" class="btn btn-outline-primary" onclick="location.href='list.pr';">더 많은 제품 보러가기</button></div>
                     </div>
-
 
                     <div class="product">
                    		<c:choose>
@@ -387,41 +386,31 @@
                     </div>
 
                     <script>
+
                         $(function() {
                             $(".prod").click(function() {
-                                
                                 location.href = "detail.pr?pno=" + $(this).children().eq(0).children().eq(0).children().eq(0).val();
                             });
 
                             var $prods = $(".prod");
 
                             $.each($prods, function(index, prod) {
-
                                 let indexNum = index % 9;
-
                                 $(prod).addClass("prodback" + indexNum);
                             });
                         });
                         
                         $(function() {
                         	$("#moreProductBtn").click(function() {
-                        		                        		
                         		if($(".hiddenProduct").attr("style") == "display:none;") {
-                        			
                             		$(".hiddenProduct").attr("style", "display:flex;");
-                        			
                         		} else if($(".hiddenProduct").attr("style") == "display:flex;") {
-                        			
-                        			console.log("눌리기는 함?");
                             		$(".hiddenProduct").attr("style", "display:none;");
-                        			
                         		}
                         	});
-
                         });
-                    </script>
 
-                    
+                    </script>
 
                     <!-- 댓글 -->
                     <table id="replyArea" align="center">
@@ -466,7 +455,6 @@
     <script>
                     
         $(function() {
-        
             selectReviewReplyList();
         });
         
@@ -488,7 +476,7 @@
                                 if("${loginUser.memberId}" == result[i].memberId || "${loginUser.memberId}" == "admin") {
                                     
                                     resultStr += "<td width='10%' align='center'>" 
-                                                + "<button class='btn btn-secondary button btn-sm' type='submit' onclick='deleteReply(" + result[i].replyNo + ");'>"
+                                                + "<button class='btn btn-danger button btn-sm' type='submit' onclick='deleteReply(" + result[i].replyNo + ");'>"
                                                 + "삭제" + "</button>" 
                                               + "</td>";
                                 }
@@ -563,7 +551,6 @@
                 data : {replyNo:replyNo},
                 success : function(result) {
                     
-                    // console.log(result)
                     // "success" 또는 "fail" 문자열이 들어있음
                     if(result == "success") {
                         
@@ -576,6 +563,7 @@
                 }
             });
         }
+        
     </script>
 </body>
 </html>

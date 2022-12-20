@@ -81,9 +81,6 @@
     /* mypage_content h4, input. select 태그들 글자색 */
     #mypage_content h4, #mypage_content input, #mypage_content select { color: black; }
 
-    /* 부트스트랩 페이징 */
-    /* .pagination { justify-content: center; } */
-
     /* ----- 관심제품 style ----- */
     #product>div { 
         width: 33.3%; 
@@ -122,7 +119,6 @@
     #productTT_3>p { font-size: 15px; line-height: 45px; }
     #productTT_2>p { font-size: 20px; line-height: 50px; font-weight: bold; }
 
-
     #productP>p {
         font-size: 20px;
         font-weight: bold;
@@ -145,14 +141,11 @@
     .prodback8 { background-color: #f9f9f9; }
 
     /* 페이지네이션 */
-    .pagination {
-        margin-left: 580px;
-    }
+    .pagination { margin-left: 580px; }
     
 </style>
 </head>
 <body>
-
     <div class="wrap">
         <div id="navigator2">
             <jsp:include page="../common/menubar.jsp" />
@@ -162,7 +155,7 @@
             <div id="content_1"></div>
             <div id="content_2">
                 <div id="content_2_1">
-                    <p>내 관심 제품</p>
+                    <p>MY PAGE</p>
                 </div>
                 <div id="content_2_2" style="padding-top:10px;">
                     
@@ -183,26 +176,38 @@
                     <div id="mypage_content">
                         <h4>내 관심 제품</h4>
                         <hr>
-                        <div id="product">
-	                        <c:forEach var="i" begin="0" end="${ myList.size()-1}">
-								<div id="product_1">
-	                                <div id="product_1_1" class="prod" style="cursor:pointer;">
-	                                    <div id="productT">
-	                                        <div id="productTT">
-	                                        	<input type="hidden" value="${ myList[i].productNo }">
-	                                            <div id="productTT_1"><p>${ myList[i].productExplain }엔</p></div>
-	                                            <div id="productTT_2"><p>${ myList[i].productName }</p></div>
-	                                            <div id="productTT_3"><p>30일분</p></div>
-	                                        </div>
-	                                        <div id="productPP"><img src="${ myList[i].productImgPath }"></div>
-	                                    </div>
-	                                    <div id="productP">
-	                                        <p><fmt:formatNumber value="${ myList[i].productPrice }" pattern="#,###.##"/>원</p>
-	                                    </div>
-	                                </div>
-	                            </div>
-							</c:forEach>
-						</div>
+                        
+                        <c:choose>
+                        	<c:when test="${myList.size()>=1}">
+		                        <div id="product">
+			                        <c:forEach var="i" begin="0" end="${ myList.size()-1}">
+										<div id="product_1">
+			                                <div id="product_1_1" class="prod" style="cursor:pointer;">
+			                                    <div id="productT">
+			                                        <div id="productTT">
+			                                        	<input type="hidden" value="${ myList[i].productNo }">
+			                                            <div id="productTT_1"><p>${ myList[i].productExplain }엔</p></div>
+			                                            <div id="productTT_2"><p>${ myList[i].productName }</p></div>
+			                                            <div id="productTT_3"><p>30일분</p></div>
+			                                        </div>
+			                                        <div id="productPP"><img src="${ myList[i].productImgPath }"></div>
+			                                    </div>
+			                                    <div id="productP">
+			                                        <p><fmt:formatNumber value="${ myList[i].productPrice }" pattern="#,###.##"/>원</p>
+			                                    </div>
+			                                </div>
+			                            </div>
+									</c:forEach>
+								</div>
+							</c:when>
+							<c:when test="${myList.size()==0}">
+								<div align="center">
+									<br>
+										<p>내 관심 제품이 없습니다.</p>
+									<br>
+								</div>
+							</c:when>
+						</c:choose>
                     </div>
                 </div>
                 <div id="content_2_3">
@@ -224,7 +229,6 @@
                                             <c:when test="${ p eq pi.currentPage }">
                                                 <li class="page-item disabled"><a class="page-link"  href="myPage.prod?cpage=${ p }">${ p }</a></li>
                                             </c:when>
-                                        
                                             <c:otherwise>
                                                 <li class="page-item"><a class="page-link" href="myPage.prod?cpage=${ p }">${ p }</a></li>
                                             </c:otherwise>
@@ -251,14 +255,14 @@
 
     <script>
         $(function() {
-            $(".prod").click(function() {
+            $(".prod").click(function() { // 제품 상세 조회
                 
                 location.href = "detail.pr?pno=" + $(this).children().eq(0).children().eq(0).children().eq(0).val();
             });
 
             var $prods = $(".prod");
 
-            $.each($prods, function(index, prod) {
+            $.each($prods, function(index, prod) { // 제품 배경색
 
                 let indexNum = index % 9;
 

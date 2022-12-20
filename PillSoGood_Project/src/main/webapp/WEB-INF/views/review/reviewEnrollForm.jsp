@@ -65,8 +65,6 @@
         margin: auto;
 	}
 
-
-
     #title {
         width: 900px;
         box-sizing: border-box;
@@ -137,7 +135,6 @@
 </style>
 </head>
 <body>
-
     <div class="wrap">
         <div id="navigator2">
 			<jsp:include page="../common/menubar.jsp" />
@@ -153,10 +150,6 @@
 							<div algin="center" class="reviewForm">
 								<div>
 									<div>
-										<%-- 
-											결제 건 선택하는 select
-											select 되면 orderNo 전달
-										--%>
 										<select id="orderNoChange" class="form-select" name="orderNo">
 											<option value="null">후기를 작성할 상품 목록을 선택해주세요.</option>
 											<c:forEach var="Review" items="${rOrderList}">
@@ -166,20 +159,17 @@
 										<script>
 											$(document).ready(function() {
 												$("#orderNoChange").change(function() {
-													console.log($(this).val());
 													$("#orderNoValue").val($(this).val());
 												});
 											});
 										</script>
 									</div>
 								</div>
-
 								<div>
 									<div id="titlee"><label for="title">제목</label></div>
 									<div><input type="text" class="form-control" name="reviewTitle" placeholder="후기 제목을 입력해주세요 (30자 이내)" maxlength="30" required></div>
 								</div>
 								<br>
-								
 								<div>
 									<div><label>별점</label></div>
 									<div id="starTd">
@@ -229,6 +219,7 @@
 												}
 											});
 										});
+
 									</script>
 								</div>
 								<br>
@@ -238,7 +229,7 @@
 									<div><textarea class="form-control" cols="20" rows="15" style="resize:none;" name="reviewContent" placeholder="후기 내용을 입력해주세요 (1000자 이내)" maxlength="1000" required></textarea></div>
 								</div>
 								<br>
-								
+
 								<div data-name="fileDiv" class="form-group filebox bs3-primary">
 									<label for="file_0" class="col-sm-2 control-label">사진</label>
 									<div class="col-sm-10">
@@ -264,18 +255,19 @@
 								
 								<script>
 														
-									let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+									let fileIdx = 0;
 
 									function addFile() {
 										
 										/*
-										파일 개수 제한할 때 필요
-										const fileDivs = $('div[data-name="fileDiv"]');
-										if (fileDivs.length > 2) {
-											alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
-											return false;
-										}
+											파일 개수 제한할 때 필요
+											const fileDivs = $('div[data-name="fileDiv"]');
+											if (fileDivs.length > 2) {
+												alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
+												return false;
+											}
 										*/
+
 										fileIdx++;
 										
 										var fileHtml = "";
@@ -314,7 +306,6 @@
 										const filename = file[0].files[0].name; // pill14.png
 										
 										const target = file.prevAll('input');
-										// console.log(target); // [type="text" 인 input]
 										target.val(filename);
 									}
 								</script>
