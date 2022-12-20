@@ -82,6 +82,13 @@
         height: 200px;
     }
 
+    #thum>img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+        margin: auto;
+    }
+
 
 </style>
 </head>
@@ -130,7 +137,7 @@
                                             </c:choose>
                                             
 		                                </td>
-		                                <td rowspan="4" style="padding-top: 20px; padding-bottom:20px;" width="20%">
+		                                <td id="thum" rowspan="4" style="padding-top: 20px; padding-bottom:20px;" width="20%">
 		                                    <img src="${ e.evtImgName }" width="250px;" height="250px;" alt="">
 		                                </td>
 	                            	</tr>
