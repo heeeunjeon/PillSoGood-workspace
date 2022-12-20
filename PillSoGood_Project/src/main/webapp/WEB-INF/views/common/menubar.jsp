@@ -207,16 +207,15 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav me-auto" id="menubarUl">
+
           <li class="nav-item" id="menubarLi">
-            <a class="nav-link" href="aboutUs.pill">소개</a>
+            <a class="nav-link" href="list.pr">제품</a>
           </li>
-          <li class="nav-item dropdown" id="menubarLi"> 
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">제품</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="list.pr">제품소개</a>
-              <a class="dropdown-item" href="survey.po">건강설문</a>
-            </div>
+
+          <li class="nav-item" id="menubarLi">
+            <a class="nav-link" href="survey.po">건강설문</a>
           </li>
+          
           <li class="nav-item" id="menubarLi">
             <a class="nav-link" href="list.re">후기</a>
           </li>

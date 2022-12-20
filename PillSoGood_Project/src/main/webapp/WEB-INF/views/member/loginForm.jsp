@@ -37,14 +37,14 @@
 <body>
 
     <div class="wrap">
-        <jsp:include page="../common/menubar.jsp" />
-        <div id="navigator2"></div>
+        <div id="navigator2">
+            <jsp:include page="../common/menubar.jsp" />
+        </div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
             <div id="content_2">
-                <div id="content_2_1" style="height: 100px;">
-                </div>
+                <div style="height: 100px;"></div>
                 <div id="content_2_2">
                     <div align="center" id="loginText">로그인</div>
                     <form action="login.me" method="post">
@@ -70,17 +70,14 @@
                     </form>
 
                     <div align="center" style="padding: 20px;">
-                        <a href="idFindForm.me" style="text-decoration:none; color:black;">
-                        ID 찾기 </a>
+                        <a href="idFindForm.me" style="text-decoration:none; color:black;">ID 찾기</a>
                         &ensp; | &ensp;
-                        <a href="enrollForm.me" style="text-decoration:none; color:black;">
-                                                     회원가입 </a>
+                        <a href="enrollForm.me" style="text-decoration:none; color:black;">회원가입</a>
                     </div>
-                    <div align="center" style="padding: 20px;">소설 로그인 아이콘</div>
                     
 
                 </div>
-                <div id="content_2_3" style="height: 100px;"></div>
+                <div style="height: 100px;"></div>
             </div>
             <div id="content_3"></div>
         </div>
