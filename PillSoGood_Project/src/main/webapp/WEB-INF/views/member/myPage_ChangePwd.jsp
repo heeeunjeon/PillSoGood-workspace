@@ -11,7 +11,7 @@
 <style>
     
     div {
-        border : 1px solid #78C2AD;
+
         box-sizing : border-box;
     }
 
@@ -125,7 +125,7 @@
 <body>
 
     <div class="wrap">
-        <%@ include file="menubar.jsp" %>
+            <jsp:include page="../common/menubar.jsp" />
         <div id="navigator2"></div>
         <div id="header"></div>
         <div id="content">
@@ -138,15 +138,15 @@
                     
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">홍길동</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">${loginUser.memberName}</b> 님</p>
                             <br>
-                            <p><a href="">주문 조회</a></p>
-                            <p><a href="">정기구독 관리</a></p>
-                            <p><a href="">내 정보 관리</a></p>
-                            <p><a href="">건강설문 관리</a></p>
-                            <p><a href="">내 관심 제품</a></p>
-                            <p><a href="">내 후기 조회</a></p>
-                            <p><a href="">찜한 이벤트</a></p>
+                            <p><a href="myPage.or">주문 조회</a></p>
+                            <p><a href="myPage.subs">정기구독 관리</a></p>
+                            <p><a href="myPage.info">내 정보 관리</a></p>
+                            <p><a href="myPage.poll">건강설문 관리</a></p>
+                            <p><a href="myPage.prod">내 관심 제품</a></p>
+                            <p><a href="myPage.re">내 후기 조회</a></p>
+                            <p><a href="myPage.ev">찜한 이벤트</a></p>
                         </div>
                     </div>
 
@@ -154,11 +154,11 @@
                         <h4>비밀번호 변경</h4>
                         <hr>
 
-                        <form id="change_pwd" action="" method="">
+                        <form id="change_pwd" action="changePwd.me" method="post">
 
                             <div class="pwds">
                                 <b>현재 비밀번호</b>
-                                <input type="password" class="form-control" name="" placeholder="현재 비밀번호 입력" required>
+                                <input type="password" class="form-control" name="memberPwd" placeholder="현재 비밀번호 입력" required>
                                 <div class="eyes">
                                     <i class="fas fa-eye fa-lg"></i>
                                 </div>
@@ -166,7 +166,7 @@
                             
                             <div class="pwds">
                                 <b>새 비밀번호</b>
-                                <input type="password" class="form-control" name="" placeholder="영문(대소문자), 숫자, 특수문자(!@#$%^) 포함 8 ~ 20자" required>
+                                <input type="password" class="form-control" name="changePwd" placeholder="영문, 숫자, 특수문자 포함 8 ~ 20자" required id="memberPwd">
                                 <div class="eyes">
                                     <i class="fas fa-eye fa-lg"></i>
                                 </div>
@@ -174,7 +174,7 @@
 
                             <div class="pwds">
                                 <b>비밀번호 확인</b>
-                                <input type="password" class="form-control" name="" placeholder="동일한 비밀번호 입력" required>
+                                <input type="password" class="form-control" name="checkPwd" placeholder="동일한 비밀번호 입력" required id="checkPwd">
                                 <div class="eyes">
                                     <i class="fas fa-eye fa-lg"></i>
                                 </div>
@@ -182,7 +182,7 @@
                             <br>
 
                             <div align="center">
-                                <button type="submit" class="btn btn-primary" style="width: 40%; height: 45px;">변경</button>
+                                <button type="submit" class="btn btn-primary" style="width: 40%; height: 45px;" onclick="return validate();">변경</button>
                             </div>
 
                             <script>
@@ -203,6 +203,31 @@
                                 });
                             </script>
 
+							<script>
+						     function validate() {
+
+						          var changePwd = document.getElementById("changePwd");
+						          var checkPwd = document.getElementById("checkPwd");
+
+						         var regExp = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,20}$/;
+						         if(!regExp.test(changePwd.value)) {
+						             
+						        	  alert("특문(!@#$%^), 영문(대소문자), 숫자 포함하여 8자 이상 20자 이하로 총 12~20자로 입력해주세요.");
+						             
+						        	  changePwd.value = "";
+						        	  changePwd.focus(); // 재입력 유도
+						              return false;
+						          }
+						          
+						          if($("input[name=changePwd]").val() != $("input[name=checkPwd]").val()) {
+						            
+						        	  alert("비밀번호가 일치하지 않습니다.");
+						              checkPwd.select(); // 재입력 유도
+						             
+						              return false;
+						          }
+						     }
+							</script>
                         </form>
                         
                         <hr>
@@ -214,7 +239,7 @@
             </div>
             <div id="content_3"></div>
         </div>
-        <%@ include file="footerbar.jsp" %>
+            <jsp:include page="../common/footer.jsp" />
     </div>
     
 </body>

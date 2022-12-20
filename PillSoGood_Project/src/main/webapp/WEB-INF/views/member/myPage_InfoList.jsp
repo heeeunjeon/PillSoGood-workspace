@@ -184,13 +184,16 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                        	<!-- loginUser 의 출생연도를 selected 하도록 -->
                                             <th>출생연도</th>
                                             <td>
-                                                <select class="form-select" name="${loginUser.memberBirthYear}">
-                                                    <!-- c:forEach 로 1900 ~ 2022 까지 출력 -->
-                                              		
+                                                <select class="form-select" name="memberBirthYear" value="${loginUser.memberBirthYear}">
+                                                    <c:forEach var="i" begin="0" end="${2022-1900}">
+														<c:set var="yearOption" value="${2022-i}" />
+														<option value="${yearOption}">${yearOption}</option>
+													</c:forEach>	
                                                </select>
-                                                <!-- loginUser 의 출생연도를 selected 하도록 -->
+                                                
                                             </td>
                                         </tr>
                                         <tr>
@@ -229,9 +232,9 @@
                         <br>
     					<button type="button" class="btn btn-outline-secondary btn-sm" style="float: right;" onclick="deleteForm()">회원탈퇴</button>
 				    <script>			    
-					    function changePwd() {
+					    function changePwdForm() {
 					    	
-					    	location.href = "changePwd.me";
+					    	location.href = "changePwdForm.me";
 					    
 					    }
 					    

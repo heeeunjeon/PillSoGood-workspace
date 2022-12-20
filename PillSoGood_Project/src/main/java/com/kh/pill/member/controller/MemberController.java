@@ -31,11 +31,18 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	
+	@RequestMapping("changePwdForm.me")
+	public String changePwd() {
+		
+		return "member/myPage_ChangePwd";
+	}
+	
 	@RequestMapping("deleteForm.me")
 	public String deleteForm() {
 		
 		return "member/myPage_DeleteForm";
 	}
+	
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session, HttpServletResponse response) {
@@ -61,6 +68,8 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+
 	
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
@@ -154,8 +163,8 @@ public class MemberController {
 				session.setAttribute("alertMsg", "성공적으로 탈퇴되었습니다. 그동안 이용해주셔서 감사합니다.");
 				
 				return "redirect:/";
-			}
-			else { 
+				
+			} else { 
 				
 				model.addAttribute("errorMsg", "회원 탈퇴에 실패했습니다.");
 				
@@ -170,6 +179,53 @@ public class MemberController {
 		}
 		
 	}
+	
+	@RequestMapping("changePwd.me")
+	public String changePwdMember(String memberPwd, String changePwd, HttpSession session, Model model) {
+		
+		String encPwd = ((Member)session.getAttribute("loginUser")).getMemberPwd();
+		
+		// 비밀번호 대조작업
+		if(bcryptPasswordEncoder.matches(memberPwd, encPwd)) {
+			// 비밀번호가 맞을 경우
+			
+			// changePwd 암호화
+			String changeEnc = bcryptPasswordEncoder.encode(changePwd);
+			
+			// 수정할 멤버의 회원아이디랑 암호화된 비밀번호를 담은 member 객체 생성
+			Member m = new Member();
+			
+			// 회원 아이디랑 새 비밀번호
+			m.setMemberPwd(changeEnc);
+			m.setMemberId(((Member)session.getAttribute("loginUser")).getMemberId());
+			
+			int result = memberService.changePwdMember(m);
+			
+			if(result > 0) { // 비밀번호 변경 성공
+				// memberId 를 넘겨주면서 회원정보 다 가져오기
+				Member loginUser = memberService.loginMember(m);
+				
+				// session 에 loginUser 덮어쓰기
+				session.setAttribute("loginUser", loginUser);
+				session.setAttribute("alertMsg", "성공적으로 비밀번호가 변경되었습니다.");
+				
+				return "redirect:/myPage.info";
+				
+			} else { 
+				
+				model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다.");
+				
+				return "common/errorPage";
+			}
+		}
+		else {
+			
+			session.setAttribute("alertMsg", "비밀번호를 잘못 입력하였습니다. 확인해주세요.");
+			
+			return "redirect:/changePwdForm.me";
+		}
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="idCheck.me", produces="text/html; charset=UTF-8")

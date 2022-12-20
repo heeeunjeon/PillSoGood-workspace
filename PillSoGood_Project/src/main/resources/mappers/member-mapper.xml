@@ -28,6 +28,13 @@
 		  AND MEMBER_STATUS = 'Y'
 	</select>
 	
+	<!-- 비밀번호 변경 쿼리문 -->
+	<update id="changePwdMember" parameterType="member">
+	UPDATE MEMBER
+   	   SET MEMBER_PWD = #{memberPwd}
+ 	 WHERE MEMBER_ID = #{memberId}
+	</update>
+	
 	<!-- 회원가입용 쿼리문 -->
 	<insert id="insertMember" parameterType="member">
 		INSERT INTO MEMBER (MEMBER_NO
@@ -52,7 +59,7 @@
 	
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER
-		   SET MEMBER_NAME = #{userName}
+		   SET MEMBER_NAME = #{memberName}
 		     , PHONE = #{phone}
 		     , GENDER = #{gender}
 		     , MEMBER_BIRTH_YEAR = #{memberBirthYear}

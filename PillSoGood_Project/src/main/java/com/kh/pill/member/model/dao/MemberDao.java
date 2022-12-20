@@ -1,7 +1,6 @@
 package com.kh.pill.member.model.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -42,12 +41,13 @@ public class MemberDao {
 
 		return sqlSession.selectOne("memberMapper.idFind", map);
 	}
-	/*
-	public boolean emailCheck(SqlSessionTemplate sqlSession, String email) {
+	
+	// 비밀번호 변경
+	public int changePwdMember(SqlSessionTemplate sqlSession, Member m) {
 		
-		return sqlSession.selectOne("memberMapper.emailCheck", email);
+		return sqlSession.update("memberMapper.changePwdMember", m);
 	}
-	*/
+
 }
 
 

@@ -57,4 +57,13 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.findId(sqlSession, map);
 	}
 
+	// 비밀번호 변경
+	@Override
+	public int changePwdMember(Member m) {
+		
+		return memberDao.changePwdMember(sqlSession, m);
+	}
+
+
+
 }

@@ -98,13 +98,13 @@
                         <div>
                             <p style="font-size: 20px;"><b style="font-size: 25px;">${loginUser.memberName}</b> 님</p>
                             <br>
-                            <p><a href="">주문 조회</a></p>
-                            <p><a href="">정기구독 관리</a></p>
-                            <p><a href="">내 정보 관리</a></p>
-                            <p><a href="">건강설문 관리</a></p>
-                            <p><a href="">내 관심 제품</a></p>
-                            <p><a href="">내 후기 조회</a></p>
-                            <p><a href="">찜한 이벤트</a></p>
+                            <p><a href="myPage.or">주문 조회</a></p>
+                            <p><a href="myPage.subs">정기구독 관리</a></p>
+                            <p><a href="myPage.info">내 정보 관리</a></p>
+                            <p><a href="myPage.poll">건강설문 관리</a></p>
+                            <p><a href="myPage.prod">내 관심 제품</a></p>
+                            <p><a href="myPage.re">내 후기 조회</a></p>
+                            <p><a href="myPage.ev">찜한 이벤트</a></p>
                         </div>
                     </div>
  					

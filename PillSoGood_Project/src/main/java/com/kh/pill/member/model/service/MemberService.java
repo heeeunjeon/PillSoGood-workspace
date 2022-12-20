@@ -27,4 +27,6 @@ public interface MemberService {
 	// 아이디 찾기
 	String findId(Map<String, String> map);
 	
+	// 비밀번호 변경 (update)
+	int changePwdMember(Member m);
 }
