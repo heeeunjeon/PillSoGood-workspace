@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.Date"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: 1750px;
         margin : auto;
     }
@@ -153,7 +153,7 @@
                             <button type="button" class="btn btn-outline-dark" id="m12">12개월</button>
                             <input type="button" class="btn btn-outline-primary" id="all" value="전체" onclick="location.href='myPage.or'">
 							
-                            <input type="date" id="startDate"> - 
+                            <input type="date" id="startDate" value="s"> - 
                             <input type="date" id="endDate">
                             
                             <input type="button" class="btn btn-primary" id="searchBtn" style="width: 90px; margin-left: 10px; color: white;" value="검색">
@@ -276,7 +276,7 @@
 				                					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
 				                				</c:when>
 				                				<c:otherwise>
-				                					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ pi.currentPage - 1 }&s=${ s }&e=${ e }">&laquo;</a></li>
+				                					<li class="page-item"><a class="page-link" href="search.or?cpage=${ pi.currentPage - 1 }&s=${ s }&e=${ e }">&laquo;</a></li>
 				                				</c:otherwise>
 				                			</c:choose>
 				                		</c:otherwise>
@@ -290,7 +290,7 @@
 						               					<li class="page-item active"><a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a></li>
 						               				</c:when>
 						               				<c:otherwise>
-						               					<li class="page-item active"><a class="page-link" href="myPage.or?cpage=${ p }&s=${ s }&e=${ e }">${ p }</a></li>
+						               					<li class="page-item active"><a class="page-link" href="search.or?cpage=${ p }&s=${ s }&e=${ e }">${ p }</a></li>
 						               				</c:otherwise>
 						               			</c:choose>
 											</c:when>
@@ -300,7 +300,7 @@
 						               					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a></li>
 						               				</c:when>
 						               				<c:otherwise>
-						               					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ p }&s=${ s }&e=${ e }">${ p }</a></li>
+						               					<li class="page-item"><a class="page-link" href="search.or?cpage=${ p }&s=${ s }&e=${ e }">${ p }</a></li>
 						               				</c:otherwise>
 						               			</c:choose>
 				               				</c:otherwise>
@@ -317,7 +317,7 @@
 				                					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
 				                				</c:when>
 				                				<c:otherwise>
-				                					<li class="page-item"><a class="page-link" href="myPage.or?cpage=${ pi.currentPage + 1 }&s=${ s }&e=${ e }">&raquo;</a></li>
+				                					<li class="page-item"><a class="page-link" href="search.or?cpage=${ pi.currentPage + 1 }&s=${ s }&e=${ e }">&raquo;</a></li>
 				                				</c:otherwise>
 				                			</c:choose>
 				                		</c:otherwise>

@@ -1,7 +1,6 @@
 package com.siot.IamportRestClient.request;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -16,7 +16,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: 1150px;
         margin : auto;
     }

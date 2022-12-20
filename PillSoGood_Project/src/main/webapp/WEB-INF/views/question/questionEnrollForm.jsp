@@ -15,7 +15,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: 1400px;
         margin : auto; /* 가운데로 좌, 우 자동 정렬*/
     }

@@ -2,17 +2,46 @@ package com.siot.IamportRestClient;
 
 import java.util.List;
 
-import com.siot.IamportRestClient.request.*;
+import com.siot.IamportRestClient.request.AgainPaymentData;
+import com.siot.IamportRestClient.request.AuthData;
+import com.siot.IamportRestClient.request.BillingCustomerData;
+import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.request.OnetimePaymentData;
+import com.siot.IamportRestClient.request.PrepareData;
+import com.siot.IamportRestClient.request.ScheduleData;
+import com.siot.IamportRestClient.request.UnscheduleData;
 import com.siot.IamportRestClient.request.escrow.EscrowLogisData;
-import com.siot.IamportRestClient.request.naver.*;
-import com.siot.IamportRestClient.response.*;
+import com.siot.IamportRestClient.request.naver.NaverApproveReturnData;
+import com.siot.IamportRestClient.request.naver.NaverCancelData;
+import com.siot.IamportRestClient.request.naver.NaverPlaceData;
+import com.siot.IamportRestClient.request.naver.NaverRejectReturnData;
+import com.siot.IamportRestClient.request.naver.NaverRequestReturnData;
+import com.siot.IamportRestClient.request.naver.NaverResolveReturnData;
+import com.siot.IamportRestClient.request.naver.NaverShipData;
+import com.siot.IamportRestClient.request.naver.NaverWithholdReturnData;
+import com.siot.IamportRestClient.response.AccessToken;
+import com.siot.IamportRestClient.response.BillingCustomer;
+import com.siot.IamportRestClient.response.Certification;
+import com.siot.IamportRestClient.response.EmptyResponse;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.PagedDataList;
+import com.siot.IamportRestClient.response.Payment;
+import com.siot.IamportRestClient.response.PaymentBalance;
+import com.siot.IamportRestClient.response.Prepare;
+import com.siot.IamportRestClient.response.Schedule;
+import com.siot.IamportRestClient.response.ScheduleList;
 import com.siot.IamportRestClient.response.escrow.EscrowLogisInvoice;
 import com.siot.IamportRestClient.response.naver.NaverProductOrder;
 import com.siot.IamportRestClient.response.naver.NaverReview;
 
-import org.junit.runners.Parameterized;
 import retrofit2.Call;
-import retrofit2.http.*;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Iamport {
 

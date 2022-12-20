@@ -106,7 +106,7 @@
                                 <td width="10%" style="padding-left: 10px">개</td>
                             </tr>
                             <tr height="175px">
-                                <th>가격</td>
+                                <th>가격</th>
                                 <td><input class="form-control" name="productPrice" value="${ p.productPrice }"></td>
                                 <td style="padding-left: 10px">원</td>
                             </tr>

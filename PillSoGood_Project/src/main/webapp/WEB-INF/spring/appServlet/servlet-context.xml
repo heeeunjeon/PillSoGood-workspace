@@ -27,7 +27,26 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="qlist.ad"/>
+			<mapping path="olist.ad"/>
+			<mapping path="odetail.ad"/>
 			<beans:bean class="com.kh.pill.common.interceptor.AdminInterceptor" id="adminInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="myPage.or"/>
+			<mapping path="search.or"/>
+			<mapping path="detail.or"/>
+			<mapping path="cancel.or"/>
+			<mapping path="myPage.subs"/>
+			<mapping path="detail.subs"/>
+			<mapping path="myPage.info"/>
+			<mapping path="myPage.poll"/>
+			<mapping path="myPage.prod"/>
+			<mapping path="myPage.re"/>
+			<mapping path="myPage.ev"/>
+			<beans:bean class="com.kh.pill.common.interceptor.LoginInterceptor" id="loginInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

@@ -511,7 +511,7 @@
                 </div>
 
                 <!-- 뉴스레터 -->
-                <div id="content6" style="width: 100%; height:1000px; float: left;"">
+                <div id="content6" style="width: 100%; height:1000px; float: left;">
                     <div id="content6_1" style="width: 10%; float: left;">&ensp;</div>
                     <div id="content6_2" style="width: 80%; float: left;">
                         <table style="width: 1000px;" align="center">
