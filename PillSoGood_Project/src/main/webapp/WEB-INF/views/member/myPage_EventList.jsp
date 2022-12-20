@@ -31,7 +31,8 @@
     #content { height: 1050px; }
     #content_2>div { width: 100%; }
     #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_2 { height: 550px; }
+    #content_2_3 { height: 35px; width: 100%;}
 
     #header { height: 130px; }
 
@@ -74,33 +75,20 @@
     
     /* mypage_content h4, input. select 태그들 글자색 */
     #mypage_content h4, #mypage_content input, #mypage_content select { color: black; }
-
-    /* 부트스트랩 페이징 */
-    .pagination { justify-content: center; }
-
-    /* ----- 찜이벤트조회 style ----- */
-    /* 각 이벤트 썸네일 */
-    .likes {
-        display: inline-block;
-        width: 350px;
-        height: 200px;
-        margin: 15px;
-    }
-    /* 썸네일 하단 제품명 */
-    .likes>b {
-        display: block;
-        margin: 15px 0px;
-        font-size: large;
+    
+    .eventT {
+        float: left;
+        width: 50%;
     }
 
-    /* 개별 페이징 */
-    .page-link {
-        vertical-align: middle;
-        text-align: center;
-        height: 35px;
-        width: 70px;
-        margin: 20px 50px;
+    .evtTitle {
+        font-weight: bold;
     }
+
+    .pagination {
+        margin-left: 600px;
+    }
+
 
 </style>
 
@@ -121,7 +109,7 @@
                 <div id="content_2_2" style="padding-top:10px;">
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
+                            <p style="font-size: 20px; color: black;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
                             <br>
                             <p><a href="myPage.or">주문 조회</a></p>
                             <p><a href="myPage.subs">정기구독 관리</a></p>
@@ -138,54 +126,57 @@
                         <hr>
 						
 						<c:forEach var="e" begin="0" end="${ myList.size()-1}">
-							<table id="eventT" class="eventT" align="center">
-                                <tr>
-                                    <td><input type="hidden" value="${ myList[e].eventwNo }"></td>
-                                    <td width="600px" style="font-size: 20px; padding-top: 20px;"><b>${ myList[e].eventTitle }</b></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="${ myList[e].evtImgName }" width="70" height="70" ></td>
-                                </tr>
-	                        </table>
+							<div id="eventT" class="eventT" align="center" style="cursor: pointer;">
+                                <div>
+                                    <div><input type="hidden" value="${ myList[e].evtNo }"></div>
+                                    <div style="margin-top: 20px;"><img src="${ myList[e].evtImgName }" width="120" height="120" ></div>
+                                </div>
+                                <div>
+                                    <div class="evtTitle" width="600px" style="font-size: 20px; padding-top: 20px; color: black;">${ myList[e].evtTitle }</div>
+                                    <div style="height: 10px;"></div>
+                                </div>
+	                        </div>
 						</c:forEach>
-						
-						<%-- 레퍼런스 
-                        <div align="center">
-                            <!-- a href 속성 : 이벤트 상세 -->
-                            <div class="likes" align="center">
-                                <a href=""><img src="../../pill2.png" width="90%" height="80%"></a>
-                                <b>정기구독 이벤트!</b>
-                            </div>
-                        </div>
-                        <br>
-						--%>
-						
-                        <!-- 페이지 -->
-                        <div id="noticePagination">
-	                        <nav aria-label="Page navigation">
-	                            <ul class="pagination  justify-content-center">
-	                            	<c:choose>
-				                		<c:when test="${ pi.currentPage eq 1 }">
-				                			<li class="page-item disabled" ><a class="page-link">&lt;</a></li>
-				                		</c:when>
-				                		<c:otherwise>
-				                			<li class="page-item"><a class="page-link" href="myPage.ev?cpage=${ pi.currentPage - 1 }">&lt;</a></li>	
-				                		</c:otherwise>
-				                	</c:choose>
+                    </div>
 
-									<div style="width: 70%;"></div>
-	            	                
-				                    <c:choose>
-				                		<c:when test="${ (pi.currentPage eq pi.maxPage) or (pi.maxPage eq 0) }">
-				                			<li class="page-item disabled" ><a class="page-link">&gt;</a></li>
-				                		</c:when>
-				                		<c:otherwise>
-				                			<li class="page-item"><a class="page-link" href="myPage.ev?cpage=${ pi.currentPage + 1 }">&gt;</a></li>	
-				                		</c:otherwise>
-				                	</c:choose>
-	                            </ul>
-	                        </nav>
-                    	</div>
+                </div>
+
+                <div id="content_2_3">
+                    <div id="paginationBlank"></div>
+                    <div id="paginationBody">
+                        <div id="noticePagination">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <c:choose>
+                                        <c:when test="${ pi.currentPage eq 1 }">
+                                            <li class="page-item disabled" ><a class="page-link">&lt;</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="page-item"><a class="page-link" href="myPage.ev?cpage=${ pi.currentPage - 1 }">&lt;</a></li>	
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                                        <c:choose>
+                                            <c:when test="${ p eq pi.currentPage }">
+                                                <li class="page-item disabled"><a class="page-link"  href="myPage.ev?cpage=${ p }">${ p }</a></li>
+                                            </c:when>
+                                        
+                                            <c:otherwise>
+                                                <li class="page-item"><a class="page-link" href="myPage.ev?cpage=${ p }">${ p }</a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <c:choose>
+                                        <c:when test="${ (pi.currentPage eq pi.maxPage) or (pi.maxPage eq 0) }">
+                                            <li class="page-item disabled" ><a class="page-link">&gt;</a></li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="page-item"><a class="page-link" href="myPage.ev?cpage=${ pi.currentPage + 1 }">&gt;</a></li>	
+                                        </c:otherwise>
+                                    </c:choose>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -198,8 +189,8 @@
 		
         // 이벤트 상세 조회
         $(function() {
-            $(".reviewT").click(function() {
-                var eno = $(this).children('tr').eq(0).children('td').eq(0).children('input').eq(0).val();
+            $(".eventT").click(function() {
+                var eno = $(this).children('div').eq(0).children('div').eq(0).children('input').eq(0).val();
                 location.href = "detail.ev?eno=" + eno;
             });
         });
