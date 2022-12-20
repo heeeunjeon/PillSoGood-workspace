@@ -57,12 +57,4 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.findId(sqlSession, map);
 	}
 
-	/*
-	@Override
-	public boolean emailCheck(String email) {
-		
-		return memberDao.emailCheck(sqlSession, email);
-	}
-	*/
-
 }

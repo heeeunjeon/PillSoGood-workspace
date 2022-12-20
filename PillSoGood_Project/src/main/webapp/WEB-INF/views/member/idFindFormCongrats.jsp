@@ -10,7 +10,6 @@
 <style>
 
     div {
-        border : 1px solid black;
         box-sizing : border-box;
     }
 
@@ -121,17 +120,23 @@
                     </div>
                     
                     <div id="successId">
-                        <p>${ findId }</p>
+                        <p style="padding-top:10%;">${ findId }</p>
                     </div>
 
                     <div align="center">
-                        <button class="btn btn-secondary" style="width: 400px; height: 50px;" href="loginForm.me">로그인</button>
+                        <button class="btn btn-secondary" style="width: 400px; height: 50px;" onclick="loginForm()">로그인</button>
                     </div>
                 </div>
                 <div id="content_2_3"></div>
             </div>
             <div id="content_3"></div>
         </div>
+        <script>
+         function loginForm () {
+        	 
+        	 location.href = "loginForm.me";
+         }
+        </script>
         <jsp:include page="../common/footer.jsp" />
     </div>
     

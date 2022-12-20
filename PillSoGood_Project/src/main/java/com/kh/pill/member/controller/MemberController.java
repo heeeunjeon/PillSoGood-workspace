@@ -31,6 +31,12 @@ public class MemberController {
 		return "member/loginForm";
 	}
 	
+	@RequestMapping("deleteForm.me")
+	public String deleteForm() {
+		
+		return "member/myPage_DeleteForm";
+	}
+	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session, HttpServletResponse response) {
 		
@@ -124,12 +130,13 @@ public class MemberController {
 		}
 		else { // 실패 
 			
-			model.addAttribute("errorMsg", "회원정보 변경 실패");
+			model.addAttribute("errorMsg", "회원정보 변경에 실패했습니다.");
 			
 			return "common/errorPage";
 		}
 	}
 	
+
 	@RequestMapping("delete.me")
 	public String deleteMember(String memberPwd, String memberId, HttpSession session, Model model) {
 		
@@ -150,7 +157,7 @@ public class MemberController {
 			}
 			else { 
 				
-				model.addAttribute("errorMsg", "회원 탈퇴 실패");
+				model.addAttribute("errorMsg", "회원 탈퇴에 실패했습니다.");
 				
 				return "common/errorPage";
 			}
