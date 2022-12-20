@@ -119,7 +119,7 @@
                     
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">${loginUser.memberName }</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
                             <br>
                             <p><a href="myPage.or">주문 조회</a></p>
                             <p><a href="myPage.subs">정기구독 관리</a></p>
@@ -133,6 +133,7 @@
 
                     <div id="mypage_content">
                         <form action="update.me" method="post">
+                        <input type="hidden" name="memberId" value="${loginUser.memberId}">
                             <h4 style="display: inline;">내 정보 관리</h4>
                             <button type="submit" class="btn btn-outline-primary btn-sm" style="float: right;">저장</button>
                             <hr>
@@ -185,14 +186,15 @@
                                         </tr>
                                         <tr>
                                         	<!-- loginUser 의 출생연도를 selected 하도록 -->
-                                            <th>출생연도</th>
+                                            <th>출생일</th>
                                             <td>
-                                                <select class="form-select" name="memberBirthYear" value="${loginUser.memberBirthYear}">
+                                            <input type="date" class="form-control" name="memberBirthYear" value="${loginUser.memberBirthYear}">
+                                                <%-- <select class="form-select" name="year">
                                                     <c:forEach var="i" begin="0" end="${2022-1900}">
 														<c:set var="yearOption" value="${2022-i}" />
 														<option value="${yearOption}">${yearOption}</option>
 													</c:forEach>	
-                                               </select>
+                                               </select> --%>
                                                 
                                             </td>
                                         </tr>

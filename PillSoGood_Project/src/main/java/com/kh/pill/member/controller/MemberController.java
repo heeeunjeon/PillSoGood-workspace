@@ -1,5 +1,8 @@
 package com.kh.pill.member.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
@@ -118,12 +121,12 @@ public class MemberController {
 	@RequestMapping("myPage.me")
 	public String myPage() {
 		
-		return "member/myPage";
+		return "member/myPage.me";
 	}
 	
 	@RequestMapping("update.me")
-	public String updateMember(Member m, Model model, HttpSession session) {
-				
+	public String updateMember(Member m, Model model, HttpSession session) throws ParseException {
+		
 		int result = memberService.updateMember(m);
 		
 		if(result > 0) { // 성공
@@ -135,7 +138,7 @@ public class MemberController {
 			session.setAttribute("alertMsg", "성공적으로 회원정보가 변경되었습니다.");
 			
 			// 마이페이지 url 재요청
-			return "redirect:/myPage.me";
+			return "redirect:/myPage.info";
 		}
 		else { // 실패 
 			
@@ -175,7 +178,7 @@ public class MemberController {
 			
 			session.setAttribute("alertMsg", "비밀번호를 잘못 입력하였습니다. 확인해주세요.");
 			
-			return "redirect:/myPage.me";
+			return "redirect:/myPage.info";
 		}
 		
 	}
