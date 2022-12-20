@@ -433,7 +433,7 @@
                                         <th colspan="2" style="text-align: center;">
                                             <textarea class="form-control" name="replyContent" id="textAreaCount" style="resize:none; width:100%;"></textarea>
                                         </th>
-                                        <th style="vertical-align:middle; text-align: center;"><button class="btn btn-primary" onclick="addReply();">작성하기</button></th>
+                                        <th style="vertical-align:middle; text-align: center;"><button class="btn btn-primary" onclick="addReply(); toUserSocketMsg();">작성하기</button></th>
                                     </c:otherwise>
                                 </c:choose>
                             </tr>
@@ -563,6 +563,14 @@
                 }
             });
         }
+        
+        
+      
+        	
+        	
+        }
+        
+        
         
     </script>
 </body>

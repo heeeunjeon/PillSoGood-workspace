@@ -17,7 +17,7 @@
 		  FROM QUESTION
 	</select>
 	
-	<select Id="selectMaxReviewNo" resultType="_int">
+	<select id="selectMaxReviewNo" resultType="_int">
 		SELECT MAX(REVIEW_NO) REVIEW_NO
 		  FROM REVIEW
 	</select>
