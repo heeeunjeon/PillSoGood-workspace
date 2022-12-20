@@ -32,9 +32,9 @@
     #content { height: 1050px; display: flex; }
     #content_2>div { width: 100%; float: left; }
     #content_2_1 { height: 115px; }
-    #content_2_2 { height: 550px; }
-    #content_2_3 { height: 35px; width: 100%;}
-
+    #content_2_2 { 
+        height: auto;
+       }
 
     #header { height: 130px; }
 
@@ -147,6 +147,7 @@
     /* 페이지네이션 */
     .pagination {
         margin-left: 580px;
+        margin-top: 25px;
     }
     
 </style>
@@ -204,42 +205,44 @@
 							</c:forEach>
 						</div>
                     </div>
-                </div>
-                <div id="content_2_3">
-                    <div id="paginationBlank"></div>
-                    <div id="paginationBody">
-                        <div id="noticePagination">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <c:choose>
-                                        <c:when test="${ pi.currentPage eq 1 }">
-                                            <li class="page-item disabled" ><a class="page-link">&lt;</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li class="page-item"><a class="page-link" href="myPage.prod?cpage=${ pi.currentPage - 1 }">&lt;</a></li>	
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                    
+                    <!-- 페이지 -->
+                    <div id="paginationForm">
+                        <div id="paginationBlank"></div>
+                        <div id="paginationBody" align="center">
+                            <div id="noticePagination">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
                                         <c:choose>
-                                            <c:when test="${ p eq pi.currentPage }">
-                                                <li class="page-item disabled"><a class="page-link"  href="myPage.prod?cpage=${ p }">${ p }</a></li>
+                                            <c:when test="${ pi.currentPage eq 1 }">
+                                                <li class="page-item disabled" ><a class="page-link">&lt;</a></li>
                                             </c:when>
-                                        
                                             <c:otherwise>
-                                                <li class="page-item"><a class="page-link" href="myPage.prod?cpage=${ p }">${ p }</a></li>
+                                                <li class="page-item"><a class="page-link" href="myPage.prod?cpage=${ pi.currentPage - 1 }">&lt;</a></li>	
                                             </c:otherwise>
                                         </c:choose>
-                                    </c:forEach>
-                                    <c:choose>
-                                        <c:when test="${ (pi.currentPage eq pi.maxPage) or (pi.maxPage eq 0) }">
-                                            <li class="page-item disabled" ><a class="page-link">&gt;</a></li>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <li class="page-item"><a class="page-link" href="myPage.prod?cpage=${ pi.currentPage + 1 }">&gt;</a></li>	
-                                        </c:otherwise>
-                                    </c:choose>
-                                </ul>
-                            </nav>
+                                        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                                            <c:choose>
+                                                <c:when test="${ p eq pi.currentPage }">
+                                                    <li class="page-item disabled"><a class="page-link"  href="myPage.prod?cpage=${ p }">${ p }</a></li>
+                                                </c:when>
+                                            
+                                                <c:otherwise>
+                                                    <li class="page-item"><a class="page-link" href="myPage.prod?cpage=${ p }">${ p }</a></li>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                        <c:choose>
+                                            <c:when test="${ (pi.currentPage eq pi.maxPage) or (pi.maxPage eq 0) }">
+                                                <li class="page-item disabled" ><a class="page-link">&gt;</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="page-item"><a class="page-link" href="myPage.prod?cpage=${ pi.currentPage + 1 }">&gt;</a></li>	
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </div>

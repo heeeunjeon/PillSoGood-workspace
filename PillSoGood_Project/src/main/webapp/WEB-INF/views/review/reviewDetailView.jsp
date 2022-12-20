@@ -14,7 +14,7 @@
 
     div { 
         box-sizing : border-box; 
-        border: 1px solid #78C2AD; 
+        /* border: 1px solid #78C2AD;  */
     }
 
     /* 전체를 감싸는 wrap */
@@ -152,16 +152,14 @@
 
     table { width: 100%; color: black; }
 
-    #memRev, #morePro { width: 50%; float: left; }
-
-
     #memRev>p {
         margin: 0px;
-        padding: 16px 30px;
+        padding: 15px 30px;
+        border-top: 1px solid lightgray;
         color: black;
     }
 
-    #morePro { padding: 10px 30px; }
+    #morePro { width: 100%; margin: 5px 0px; float: left; }
     
     /* 샛별 상품 목록 스타일 */
     .product>div {
@@ -219,13 +217,7 @@
 
     .prodback0 { background-color: #fef7f8; }
     .prodback1 { background-color: #f9faf0; }
-    .prodback2 { background-color: #faf4f1; }
-    .prodback3 { background-color: #fef6ec; }
-    .prodback4 { background-color: #edf7fd; }
-    .prodback5 { background-color: #fef5f4; }
-    .prodback6 { background-color: #fbf7fd; }
-    .prodback7 { background-color: #e9f7f5; }
-    .prodback8 { background-color: #f9f9f9; }
+    .prodback2 { background-color: #e9f7f5; }
     
 </style>
 </head>
@@ -278,7 +270,7 @@
                                             <c:forEach var="j" begin="0" end="${ r.reviewGrade -1 }">
                                                 <i class="fa-solid fa-star"></i>
                                             </c:forEach>
-                                    </span>                                     
+                                        </span>                                     
                                 </td>
                                 <td width="10%">${r.reviewDate}</td>
                             </tr>
@@ -316,74 +308,27 @@
                         </table>
                     </div>
 
-                    <div style="border-top: 1px solid lightgray;">
-                        <div id="memRev"><p><span style="color: #F3969A;">${ r.memberName }</span>님의 후기 상품이에요!</p></div>
-                        <div id="morePro" align="right"><button type="button" class="btn btn-outline-primary" onclick="location.href='list.pr';">더 많은 제품 보러가기</button></div>
-                    </div>
-
-
+                
+                    <div id="memRev"><p><span style="color: #F3969A;">${ r.memberName }</span>님의 후기 상품이에요!</p></div>
                     <div class="product">
-                   		<c:choose>
-	                   		<c:when test="${pList.size() <= 3}">
-		                        <c:forEach var="p" begin="0" end="2" items="${pList}">
-		                            <div id="product_1">
-		                                <div id="product_1_1" class="prod" style="cursor:pointer;">
-		                                    <div id="productT">
-		                                        <div id="productTT">
-		                                            <input type="hidden" value="${ p.productNo }">
-		                                            <div id="productTT_1"><p>${ p.productExplain }엔</p></div>
-		                                            <div id="productTT_2"><p>${ p.productName }</p></div>
-		                                            <div id="productTT_3"><p>30일분</p></div>
-		                                        </div>
-		                                        <div id="productPP"><img style="height: 100px; width: 100px;" src="${ p.productImgPath }"></div>
-		                                    </div>
-		                                    <div id="productP">
-		                                        <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </c:forEach>
-	                        </c:when>
-	                        <c:when test="${pList.size() > 3}">
-		                        <c:forEach var="p" begin="0" end="2" items="${pList}">
-		                            <div id="product_1">
-		                                <div id="product_1_1" class="prod" style="cursor:pointer;">
-		                                    <div id="productT">
-		                                        <div id="productTT">
-		                                            <input type="hidden" value="${ p.productNo }">
-		                                            <div id="productTT_1"><p>${ p.productExplain }엔</p></div>
-		                                            <div id="productTT_2"><p>${ p.productName }</p></div>
-		                                            <div id="productTT_3"><p>30일분</p></div>
-		                                        </div>
-		                                        <div id="productPP"><img style="height: 100px; width: 100px;" src="${ p.productImgPath }"></div>
-		                                    </div>
-		                                    <div id="productP">
-		                                        <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </c:forEach>
-		                        <div style="width: 100%; height: 10px;" align="center" ><button id="moreProductBtn" class="btn btn-outline-info">더 보기</button></div>
-		                        <c:forEach var="p" begin="3" items="${pList}">
-		                            <div id="product_2" class="hiddenProduct" style="display:none;">
-		                                <div id="product_1_1" class="prod" style="cursor:pointer;">
-		                                    <div id="productT">
-		                                        <div id="productTT">
-		                                            <input type="hidden" value="${ p.productNo }">
-		                                            <div id="productTT_1"><p>${ p.productExplain }엔</p></div>
-		                                            <div id="productTT_2"><p>${ p.productName }</p></div>
-		                                            <div id="productTT_3"><p>30일분</p></div>
-		                                        </div>
-		                                        <div id="productPP"><img style="height: 100px; width: 100px;" src="${ p.productImgPath }"></div>
-		                                    </div>
-		                                    <div id="productP">
-		                                        <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                        </c:forEach>
-	                        </c:when>
-                        </c:choose>
+                        <c:forEach var="p" items="${pList}">
+                            <div id="product_1">
+                                <div id="product_1_1" class="prod" style="cursor:pointer;">
+                                    <div id="productT">
+                                        <div id="productTT">
+                                            <input type="hidden" value="${ p.productNo }">
+                                            <div id="productTT_1"><p>${ p.productExplain }엔</p></div>
+                                            <div id="productTT_2"><p>${ p.productName }</p></div>
+                                            <div id="productTT_3"><p>30일분</p></div>
+                                        </div>
+                                        <div id="productPP"><img style="height: 100px; width: 100px;" src="${ p.productImgPath }"></div>
+                                    </div>
+                                    <div id="productP">
+                                        <p><fmt:formatNumber value="${ p.productPrice }" pattern="#,###.##"/>원</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
                     </div>
 
                     <script>
@@ -401,27 +346,12 @@
 
                                 $(prod).addClass("prodback" + indexNum);
                             });
-                        });
-                        
-                        $(function() {
-                        	$("#moreProductBtn").click(function() {
-                        		                        		
-                        		if($(".hiddenProduct").attr("style") == "display:none;") {
-                        			
-                            		$(".hiddenProduct").attr("style", "display:flex;");
-                        			
-                        		} else if($(".hiddenProduct").attr("style") == "display:flex;") {
-                        			
-                        			console.log("눌리기는 함?");
-                            		$(".hiddenProduct").attr("style", "display:none;");
-                        			
-                        		}
-                        	});
-
-                        });
+                        });	
                     </script>
 
-                    
+                    <div id="morePro" align="center">
+                        <div><button type="button" class="btn btn-outline-primary" onclick="location.href='list.pr';">더 많은 제품 보러가기</button></div>
+                    </div>
 
                     <!-- 댓글 -->
                     <table id="replyArea" align="center">

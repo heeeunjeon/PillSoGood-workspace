@@ -221,20 +221,6 @@
 	
 	</delete>
 	
-	<select id="selectMyEventListCount" parameterType="_int" resultType="_int">
-		SELECT COUNT(*)
-		FROM EVENT
-		WHERE EVENT_NO IN (SELECT EVENT_NO
-						   FROM EVENT_LIKE
-						   WHERE MEMBER_NO = #{memberNo})
-	</select>
-	
-	<select id="selectMyEventList" parameterType="_int" resultMap="eventResultMap">
-		SELECT *
-		FROM EVENT
-		WHERE EVENT_NO IN (SELECT EVENT_NO
-						   FROM EVENT_LIKE
-						   WHERE MEMBER_NO = #{memberNo})
-	</select>
-	
+
+
 </mapper>
