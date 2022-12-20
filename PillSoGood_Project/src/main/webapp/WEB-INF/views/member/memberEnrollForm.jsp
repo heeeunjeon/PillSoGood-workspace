@@ -97,13 +97,12 @@
                                 </td>
                                     
 							</tr>
-                            </tr>
                             <tr>
                                 <th colspan="3">비밀번호</th>
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <input type="password" class="form-control" placeholder="비밀번호를 입력" maxlength="20" style="width:400px" required name="memberPwd" id="memberPwd">
+                                    <input type="password" class="form-control" placeholder="특문,영문,숫자를 포함하여 8~20자 이하로 입력해주세요." minlength="8" maxlength="20" style="width:400px" required name="memberPwd" id="memberPwd">
                                 </td>
                             </tr>
                             <tr>
@@ -199,7 +198,7 @@
 					    </script>
 
                         <div align="center" style="padding: 20px;">
-                            <button class="btn btn-secondary" id="enrollbtn" type="submit" disabled>가입완료</button>
+                            <button class="btn btn-secondary" id="enrollbtn" type="submit" disabled onclick="return validate();">가입완료</button>
                         </div>
                     </form>
 
@@ -271,7 +270,7 @@
    </script>
    
    <script>
-      function enrollForm_check() {
+      function validate() {
           
           var memberId = document.getElementById("memberId");
           var memberPwd = document.getElementById("memberPwd");
@@ -281,7 +280,6 @@
           var email = document.getElementById("email1");
           
           var regExp = /^[a-z\d]{5,20}$/i;
-          
           if(!regExp.test(memberId.value)) {
               
         	  alert("영문(소문자), 숫자를  포함하여 5자 이상 20자 이하로만 입력해주세요.");
@@ -289,15 +287,14 @@
               
               return false;
           }
-
-         var regExp = /^[a-z\d!@#$%^&*()]{8,20}$/i;
+          
+         regExp = /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,20}$/;
          if(!regExp.test(memberPwd.value)) {
              
         	  alert("특문(!@#$%^), 영문(대소문자), 숫자 포함하여 8자 이상 20자 이하로 총 12~20자로 입력해주세요.");
              
         	  memberPwd.value = "";
               memberPwd.focus(); // 재입력 유도
-             
               return false;
           }
           
@@ -309,7 +306,7 @@
               return false;
           }
           
-          var regExp = /^[가-힣]{2,6}$/;
+          regExp = /^[가-힣]{2,6}$/;
           
           if(!regExp.test(memberName.value)) {
               
@@ -328,7 +325,7 @@
               
               return false;
           }
-          var regExp = /^([0-9a-zA-Z_\.-]+)$/i;
+          regExp = /^([0-9a-zA-Z_\.-]+)$/i;
           if(!regExp.test(email.value)) {
               alert("숫자 또는 영어만 입력해주세요.");
               email.select(); // 재입력 유도
@@ -347,13 +344,7 @@
 
              
   </script>
-  
-  
 
-<script>
-
-
-</script>
 
 </body>
 </html>

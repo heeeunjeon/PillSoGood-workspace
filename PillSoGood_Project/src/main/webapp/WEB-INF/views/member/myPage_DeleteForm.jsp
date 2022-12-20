@@ -96,7 +96,7 @@
                     
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">홍길동</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">${loginUser.memberName}</b> 님</p>
                             <br>
                             <p><a href="">주문 조회</a></p>
                             <p><a href="">정기구독 관리</a></p>
@@ -147,7 +147,7 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
-                        <form action="deleteForm.me" method="post">
+                        
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div align="center">
@@ -163,7 +163,7 @@
 			                    	<button type="button" class="btn btn-primary" onclick="javascript:history.go(-1);">취소</button>
 			                        <button type="submit" class="btn btn-secondary">탈퇴하기</button>
 			                    </div>
-			                </form>
+			               
 			            </div>
 			        </div>
 			    </div>

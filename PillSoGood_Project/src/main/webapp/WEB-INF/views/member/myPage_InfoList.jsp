@@ -119,7 +119,7 @@
                     
                     <div id="mypage_navi">
                         <div>
-                            <p style="font-size: 20px;"><b style="font-size: 25px;">홍길동</b> 님</p>
+                            <p style="font-size: 20px;"><b style="font-size: 25px;">${loginUser.memberName }</b> 님</p>
                             <br>
                             <p><a href="myPage.or">주문 조회</a></p>
                             <p><a href="myPage.subs">정기구독 관리</a></p>
@@ -132,7 +132,7 @@
                     </div>
 
                     <div id="mypage_content">
-                        <form action="" method="">
+                        <form action="update.me" method="post">
                             <h4 style="display: inline;">내 정보 관리</h4>
                             <button type="submit" class="btn btn-outline-primary btn-sm" style="float: right;">저장</button>
                             <hr>
@@ -147,19 +147,19 @@
                                     <tbody>
                                         <tr>
                                             <th>아이디</th>
-                                            <td>user01</td>
+                                            <td>${loginUser.memberId}</td>
                                         </tr>
                                         <tr>
                                             <th>이름</th>
-                                            <td><input type="text" class="form-control" name="" value="홍길동" required></td>
+                                            <td><input type="text" class="form-control" name="memberName" value="${loginUser.memberName}" required></td>
                                         </tr>
                                         <tr>
                                             <th>휴대폰번호</th>
-                                            <td><input type="text" class="form-control" name="" value="01012345678" placeholder="-제외" required></td>
+                                            <td><input type="text" class="form-control" name="phone" value="${loginUser.phone}" placeholder="-제외" required></td>
                                         </tr>
                                         <tr>
                                             <th>이메일</th>
-                                            <td>user01@naver.com</td>
+                                            <td>${loginUser.email}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -176,7 +176,7 @@
                                         <tr>
                                             <th>성별</th>
                                             <td>
-                                                <select class="form-select" name="">
+                                                <select class="form-select" name="gender" value="${loginUser.gender}">
                                                     <option value="M">남성</option>
                                                     <option value="F">여성</option>
                                                 </select>
@@ -186,36 +186,62 @@
                                         <tr>
                                             <th>출생연도</th>
                                             <td>
-                                                <select class="form-select" name="">
+                                                <select class="form-select" name="${loginUser.memberBirthYear}">
                                                     <!-- c:forEach 로 1900 ~ 2022 까지 출력 -->
-                                                    <option>2021</option>
-                                                    <option>2022</option>
-                                                </select>
-                                                년
+                                              		
+                                               </select>
                                                 <!-- loginUser 의 출생연도를 selected 하도록 -->
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>키</th>
-                                            <td><input type="number" class="form-control" name="" value="180" min="0"> cm</td>
+                                            <td><input type="number" class="form-control" name="height" value="${loginUser.height}" min="0"> cm</td>
                                         </tr>
                                         <tr>
                                             <th>몸무게</th>
-                                            <td><input type="number" class="form-control" name="" value="75" min="0"> kg</td>
+                                            <td><input type="number" class="form-control" name="weight" value="${loginUser.weight}" min="0"> kg</td>
                                         </tr>
+                                      
                                     </tbody>
+
                                 </table>
                             </div>
                         </form>
                         
-                        <hr>
 
+                        <script>
+                        $(function() {
+                            
+                            if("${loginUser.gender}" != "") {
+
+                                $("input[value=${loginUser.gender}]").attr("checked", true);
+                            }
+                        });
+
+                        </script>
+
+
+                        <hr>
                         <div id="change_pwd">
-                            <button type="button" class="btn btn-primary">비밀번호 변경 <p style="float: right;">&gt;</p></button>
+                         <!--비밀번호 변경  -->
+                            <button type="button" class="btn btn-primary" onclick="changePwdForm();">비밀번호 변경 <p style="float: right;">&gt;</p></button>
                         </div>
                         <br>
-
-                        <div align="right"><a href="" style="text-align: right;">회원 탈퇴</a></div>
+    					<button type="button" class="btn btn-outline-secondary btn-sm" style="float: right;" onclick="deleteForm()">회원탈퇴</button>
+				    <script>			    
+					    function changePwd() {
+					    	
+					    	location.href = "changePwd.me";
+					    
+					    }
+					    
+					    function deleteForm() {
+					    	
+					    	location.href = "deleteForm.me"
+					    }
+				    </script>
+                        
+         
                     </div>
 
                 </div>
@@ -223,9 +249,9 @@
             </div>
             <div id="content_3"></div>
         </div>
-        <jsp:include page="../common/footer.jsp" />
+  
     </div>
-    
+
 
 
 </body>
