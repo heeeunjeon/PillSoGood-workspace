@@ -66,4 +66,12 @@ public class AlarmServiceImpl implements AlarmService {
 		return alarmDao.deleteReadAlarm(sqlSession, memberNo);
 	}
 
+	@Override
+	public int selectMaxReviewNo() {
+		
+		return alarmDao.selectMaxReviewNo(sqlSession);
+	}
+	
+	
+
 }

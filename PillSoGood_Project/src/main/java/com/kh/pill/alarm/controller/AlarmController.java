@@ -39,6 +39,21 @@ public class AlarmController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("insertReview.alarm")
+	public void insertReviewAlarm(Alarm a, String toId) {
+		
+		int alarmNo = alarmService.selectMaxReviewNo() + 1;
+		
+		int memberNo = alarmService.selectMemberNo(toId);
+		
+		a.setMemberNo(memberNo);
+		a.setAlarmUrl("detail.re?rno="+alarmNo);
+		
+		alarmService.insertQuestionAlarm(a);
+		
+	}
+	
+	@ResponseBody
 	@RequestMapping("insertOrder.alarm")
 	public void insertOrderAlarm(Alarm a, String toId) {
 		

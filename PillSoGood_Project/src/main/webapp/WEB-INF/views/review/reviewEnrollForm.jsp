@@ -167,7 +167,7 @@
 								</div>
 								<div>
 									<div id="titlee"><label for="title">제목</label></div>
-									<div><input type="text" class="form-control" name="reviewTitle" placeholder="후기 제목을 입력해주세요 (30자 이내)" maxlength="30" required></div>
+									<div><input type="text" class="form-control" name="reviewTitle" id="reviewTitle" placeholder="후기 제목을 입력해주세요 (30자 이내)" maxlength="30" required></div>
 								</div>
 								<br>
 								<div>
@@ -249,7 +249,7 @@
 								
 								<div id="btnDiv" align="center">
 									<input type="hidden" name="orderNo" class="form-control" value="1">
-									<button type="submit" class="btn btn-primary">등록하기</button>
+									<button type="submit" class="btn btn-primary" onclick="toAdminSocketMsg();">등록하기</button>
 									<button type="reset" class="btn btn-secondary">뒤로가기</button>
 								</div>
 								
@@ -308,6 +308,45 @@
 										const target = file.prevAll('input');
 										target.val(filename);
 									}
+									
+									var reviewTitle = "";
+									function toAdminSocketMsg() {
+										
+										reviewTitle = $("#reviewTitle").val();
+										
+										if(socket) {
+											
+											let socketMsg = "review"+","+"${ loginUser.memberId },"+"admin," + "bno," + reviewTitle;
+											selectAlarmList();
+											socket.send(socketMsg);
+										}
+										
+										
+										
+										$.ajax({
+											url : "insertReview.alarm",
+											data : {
+												
+												alarmContent : "${loginUser.memberId} 님이 리뷰를 작성하셨습니다.",
+												fromId : "${loginUser.memberId}",
+												toId : "admin"
+												
+											},
+											success : function(result) {
+												
+												selectAlarmList();
+												
+											},
+											error : function() {
+												console.log("reviewEnroll.jsp ajax failure");
+											}
+											
+											
+											
+										});
+										
+									}
+									
 								</script>
 							</div>  
 						</form>

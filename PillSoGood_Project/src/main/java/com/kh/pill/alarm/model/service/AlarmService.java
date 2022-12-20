@@ -8,6 +8,8 @@ public interface AlarmService {
 	
 	int selectMaxQuestionNo();
 	
+	int selectMaxReviewNo();
+	
 	int selectMemberNo(String toId);
 	
 	int insertQuestionAlarm(Alarm a);

@@ -16,6 +16,11 @@ public class AlarmDao {
 		return sqlSession.selectOne("alarmMapper.selectMaxQuestionNo");
 	}
 	
+	public int selectMaxReviewNo(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("alarmMapper.selectMaxReviewNo");
+	}
+	
 	public int selectMemberNo(SqlSessionTemplate sqlSession, String toId) {
 		
 		return sqlSession.selectOne("alarmMapper.selectMemberNo", toId);
