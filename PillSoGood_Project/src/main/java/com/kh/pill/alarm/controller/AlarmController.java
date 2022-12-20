@@ -47,11 +47,14 @@ public class AlarmController {
 		int memberNo = alarmService.selectMemberNo(toId);
 		
 		a.setMemberNo(memberNo);
+		
 		a.setAlarmUrl("detail.re?rno="+alarmNo);
 		
 		alarmService.insertQuestionAlarm(a);
 		
 	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping("insertOrder.alarm")
@@ -83,6 +86,18 @@ public class AlarmController {
 		
 		
 		alarmService.insertQuestionAlarm(a);
+	}
+	
+	@ResponseBody
+	@RequestMapping("insertReply.alarm")
+	public void insertReplyAlarm(Alarm a, String toId) {
+		
+		int memberNo = alarmService.selectMemberNo(toId);
+		
+		a.setMemberNo(memberNo);
+		
+		alarmService.insertQuestionAlarm(a);
+		
 	}
 	
 	

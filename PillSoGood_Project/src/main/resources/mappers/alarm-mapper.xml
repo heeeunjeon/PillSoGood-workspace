@@ -13,12 +13,12 @@
 	</resultMap>
 	
 	<select id="selectMaxQuestionNo" resultType="_int">
-		SELECT MAX(QUESTION_NO) QUESTION_NO
+		SELECT NVL(MAX(QUESTION_NO),0) QUESTION_NO
 		  FROM QUESTION
 	</select>
 	
 	<select id="selectMaxReviewNo" resultType="_int">
-		SELECT MAX(REVIEW_NO) REVIEW_NO
+		SELECT NVL(MAX(REVIEW_NO),0) REVIEW_NO
 		  FROM REVIEW
 	</select>
 	

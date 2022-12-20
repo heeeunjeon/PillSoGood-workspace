@@ -565,8 +565,39 @@
         }
         
         
-      
+        function toUserSocketMsg() {
         	
+        	if(socket) {
+        		
+        		let socketMsg = "reply"+","+"${ loginUser.memberId },"+"${r.memberId}," + "bno," + "${r.reviewTitle}";
+    			selectAlarmList();
+    			socket.send(socketMsg);
+        		
+        	}
+        	
+        	
+        	$.ajax({
+        		
+        		url : "insertReply.alarm",
+        		data : {
+        			alarmContent : "${loginUser.memberId} 님이 리뷰에 댓글을 작성 하셨습니다.",
+        			fromId : "${loginUser.memberId}",
+        			toId : "${r.memberId}",
+        			alarmUrl : "detail.re?rno=${r.reviewNo}"
+        			
+        		},
+        		success : function(result) {
+        			
+        			selectAlarmList();
+        			
+        		},
+        		error : function() {
+        			
+        			console.log("toUserAlarm reviewDetailView.jsp ajax failure");
+        		}
+        		
+        		
+        	});
         	
         }
         

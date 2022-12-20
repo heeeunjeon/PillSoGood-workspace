@@ -150,7 +150,7 @@
                     <div id="best3Review"><!-- 베스트 후기 영역 -->
 						<div>
 							<c:choose>
-	                        	<c:when test="${bestList.size()>=1}">
+	                        	<c:when test="${bestList.size() ne 0}">
 									<c:forEach var="b" items="${ bestList }">
 										<div class="bestReview">
 											<c:choose>
@@ -172,13 +172,13 @@
 										</div>
 									</c:forEach>
 								</c:when>
-								<c:when test="${bestList.size()==0}">
+								<c:otherwise>
 									<div align="center">
 										<br>
 											<p>베스트 리뷰가 없습니다.</p>
 										<br>
 									</div>
-								</c:when>
+								</c:otherwise>
 							</c:choose>
 						</div>
 					</div>
@@ -206,7 +206,7 @@
 	            	<div>
 	            	
 	            		<c:choose>
-	                        <c:when test="${list.size()>=1}">
+	                        <c:when test="${list.size() ne 0}">
 								<c:forEach var="i" begin="0" end="${ list.size()-1 }"><!-- 일반 리뷰 -->
 									<table id="reviewT" align="center">
 										<thead height="80px" >
@@ -271,13 +271,13 @@
 									</table>
 								</c:forEach>
 							</c:when>
-							<c:when test="${list.size()==0}">
+							<c:otherwise>
 								<div align="center">
 									<br>
 										<p>후기가 없습니다.</p>
 									<br>
 								</div>
-							</c:when>
+							</c:otherwise>
 						</c:choose>
 					</div>
 						
