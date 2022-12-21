@@ -149,10 +149,10 @@
                         	<c:when test="${myList.size()>=1}">
 								<c:forEach var="i" begin="0" end="${ myList.size()-1}">
 									<div class="myPageReview" style="border-bottom: 1px solid lightgray;">
-		                                <div class="myPageImg" align="center">
+		                                <div class="myPageImg" align="center" style="width:70px; height: 70px;">
 		                                    <div>
 		                                        <c:forEach var="f" begin="0" end="0" items="${myList[i].flist}">
-		                                            <img src="${ f.filePath }${ f.changeName }" width="70" height="70" >
+		                                            <img src="${ f.filePath }${ f.changeName }" width="70px;" height="70px;" >
 		                                        </c:forEach>
 		                                    </div>
 		                                </div>
