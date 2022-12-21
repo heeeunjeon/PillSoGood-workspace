@@ -63,7 +63,7 @@ public class AlarmController {
 		int memberNo = alarmService.selectMemberNo(toId);
 		
 		a.setMemberNo(memberNo);
-		
+		a.setAlarmUrl("olist.ad");
 		alarmService.insertQuestionAlarm(a);
 		
 	}
