@@ -18,7 +18,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         /* 전체 길이 개별 커스텀 */
         height: 1400px;
         margin : auto;
@@ -203,7 +203,7 @@
 							<c:when test="${myList.size()==0}">
 								<div align="center">
 									<br>
-										<p>내 관심 제품이 없습니다.</p>
+										<p style="color: gray;">내 관심 제품이 없습니다.</p>
 									<br>
 								</div>
 							</c:when>

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>찜한 이벤트 조회</title>
+<title>내가 찜한 이벤트</title>
 <style>
 
     div {
@@ -16,7 +16,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         /* 전체 길이 개별 커스텀 */
         height: 1400px;
         margin : auto;

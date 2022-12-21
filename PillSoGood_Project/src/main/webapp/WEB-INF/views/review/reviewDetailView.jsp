@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-    <title>후기 상세 조회</title>
+    <title>후기 상세</title>
 <style>
 
     div { 
@@ -19,7 +19,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: auto;
         margin : auto;
     }
@@ -298,7 +298,7 @@
                                 <td></td>
                             </tr>
                             <tr height="100px">
-                                <td>${ r.reviewContent }</td>
+                                <td><pre>${ r.reviewContent }</pre></td>
                                 <td></td>
                             </tr>
                             <tr>

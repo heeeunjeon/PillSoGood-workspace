@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-    <title>Document</title>
+    <title>후기</title>
 <style>
 
     div {
@@ -19,7 +19,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: auto;
         margin : auto;
     }
@@ -155,10 +155,10 @@
 										<div class="bestReview">
 											<c:choose>
 												<c:when test="${b.flist.size()>0}">
-													<div><img src="${ b.flist[0].filePath }${ b.flist[0].changeName }" width="100" height="100" ></div>
+													<div style="width:220x; height:220px;"><img src="${ b.flist[0].filePath }${ b.flist[0].changeName }"></div>
 												</c:when>
 												<c:when test="${b.flist.size()==0}">
-													<div><img src="resources/images/Like.png"></div>
+													<div style="width:220px; height:220px;"><img src="resources/images/noPictureReview.png"></div>
 												</c:when>
 											</c:choose>	
 											
