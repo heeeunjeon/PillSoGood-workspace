@@ -78,7 +78,7 @@
                     </td>
                     <td width="45%" style="padding-bottom:20px;">
                         <h6 >
-                            <a href="aboutUs.pill" style="text-decoration: none; color:#5a5a5a; vertical-align:top;">회사소개 &ensp;|&ensp; </a>
+                            <a href="list.no" style="text-decoration: none; color:#5a5a5a; vertical-align:top;">공지사항 &ensp;|&ensp; </a>
                             <a href="list.qu" style="text-decoration: none; color:#5a5a5a; vertical-align:top;">1:1 문의 &ensp;|&ensp;</a>
                             <a href="faq.pill" style="text-decoration: none; color:#5a5a5a; vertical-align:top;">FAQ </a>
                         </h6>

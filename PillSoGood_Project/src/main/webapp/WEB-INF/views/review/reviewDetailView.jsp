@@ -49,7 +49,7 @@
     #content_2 { width : 60%; }
     #content_3 { width : 20%; }
 
-    body { font-family: 'Noto Sans KR', sans-serif !important; }
+    body, pre { font-family: 'Noto Sans KR', sans-serif !important; }
 
     .btnArea { padding: 15px 0px; }
 
