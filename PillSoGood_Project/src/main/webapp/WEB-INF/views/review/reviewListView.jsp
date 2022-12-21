@@ -168,7 +168,7 @@
 											<input type="hidden" value="${ b.reviewNo }">
 											<p class="bestReviewService">${ b.reviewTitle }</p>
 											<p class="bestReviewContent">${ fn:substring(b.reviewContent, 0, 30) }...</p>
-											<p class="bestReviewName">${ fn:substring(b.memberName, 0, 1)}*${ fn:substring(b.memberName, 2, 1)}&emsp;${ b.reviewDate }</p>
+											<p class="bestReviewName">${ b.memberName }&emsp;${ b.reviewDate }</p>
 										</div>
 									</c:forEach>
 								</c:when>
@@ -248,6 +248,9 @@
 													<c:when test="${ list[i].subsStatus eq 'Y'}">
 														<td>${ list[i].memberName }&emsp;<span style="color: #78C2AD; font-weight: bold;">정기결제</span></td>
 													</c:when>
+													<c:otherwise>
+														<td>${ list[i].memberName }&emsp;<span style="color: #78C2AD; font-weight: bold;">정기결제</span></td>
+													</c:otherwise>
 												</c:choose>
 												<td></td>
 											</tr>
