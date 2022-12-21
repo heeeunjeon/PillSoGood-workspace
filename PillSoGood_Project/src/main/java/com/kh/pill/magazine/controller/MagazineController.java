@@ -5,22 +5,17 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,8 +23,9 @@ import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
 import com.kh.pill.magazine.model.service.MagazineService;
 import com.kh.pill.magazine.model.vo.Magazine;
-import com.kh.pill.magazine.model.vo.MagazinePage;
-import com.kh.pill.notice.model.vo.NoticeDetail;
+import com.kh.pill.magazine.model.vo.MagazineLike;
+import com.kh.pill.member.model.vo.Member;
+
 
 @Controller
 public class MagazineController {
@@ -38,23 +34,62 @@ public class MagazineController {
 	private MagazineService magazineService;
 	
 	@RequestMapping("list.mag")
-	public String SelectMagazineList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) { 
+	public String SelectMagazineList(@RequestParam(value="cpage", defaultValue="1") int currentPage, @RequestParam(value="popular", defaultValue="") 
+												  String popular, Model model,
+												  @RequestParam(value="life", defaultValue="") String life,
+												  @RequestParam(value="season", defaultValue="") String season, 
+												  @RequestParam(value="issue", defaultValue="") String issue) { 
 		
+		// 기본적으로 최신순 조회
 		int listCount = magazineService.selectListCount();
-		
+
 		int pageLimit = 5; 
 		int boardLimit = 6; 
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-		ArrayList<Magazine> list = magazineService.selectMagazineList(pi);
+		ArrayList<Magazine> list = new ArrayList<>();
+		if(!popular.equals("y")) { // 최신순 조회
+			
+			list = magazineService.selectMagazineList(pi);
+		} else { // 인기순 조회
+			
+			list = magazineService.selectPopularList(pi);
+		}
+		
+
+		// 카테고리
+		ArrayList<Magazine> catelist = new ArrayList<>();
+		
+		System.out.println("life : " + life);
+		System.out.println("season : " + season);
+		System.out.println("issue : " + issue);
+		
+		if(life.equals("1")) { 
+			
+			catelist = magazineService.selectLifeList(pi);
+		
+		} else if(season.equals("2")) { 
+			
+			catelist = magazineService.selectSeasonList(pi);
+		
+		} else if(issue.equals("3")) {
+			
+			catelist = magazineService.selectIssueList(pi);
+			
+		} else {
+			
+			catelist = magazineService.selectMagazineList(pi);
+		}
+		
+		System.out.println(catelist);
+		System.out.println(life);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		
-		
+		model.addAttribute("list", catelist);
+
 		return "magazine/magazineListView";
-		
 	}
 
 	@RequestMapping("enrollForm.mag")
@@ -67,7 +102,7 @@ public class MagazineController {
 	@RequestMapping("enroll.mag")
 	public ModelAndView insertMagazine(Magazine mag, MultipartFile upfile, HttpSession session, ModelAndView mv) throws IllegalStateException, IOException {
 		
-		if(!upfile.getOriginalFilename().contentEquals("")) {
+		if(!upfile.getOriginalFilename().equals("")) {
 			
 			String ChangeName = saveFile(upfile, session);
 			
@@ -112,34 +147,118 @@ public class MagazineController {
 		return ChangeName;
 	}
 
-	
 	@RequestMapping("detail.mag")
-	public String selectMagazine(int magazineNo, Model model) {
-
+	public String selectMagazine(int magazineNo, HttpSession session ,Model model) {
 		
-		int result = magazineService.updateViewCount(magazineNo);
+		Member loginUser= (Member)session.getAttribute("loginUser");
 		
-		if(result > 0) {
-			
-			Magazine m = magazineService.selectMagazine(magazineNo);
+		if(loginUser != null) { //로그인 o
+		
+			int memberNo = loginUser.getMemberNo();
 			
 			Magazine prev = magazineService.selectMagazine(magazineNo - 1);
 			Magazine next = magazineService.selectMagazine(magazineNo + 1);
+
+			MagazineLike magLselect = new MagazineLike(magazineNo, memberNo);
+			MagazineLike magL = magazineService.selectMagazineLike(magLselect);
+
+			Magazine mag = magazineService.selectMagazine(magazineNo);
 			
-			// 이전글, 다음글 로직 수정
-			model.addAttribute("prev", prev);
-			model.addAttribute("next", next);
+			int result = magazineService.updateViewCount(magazineNo);
 			
-			model.addAttribute("mag" , m);
+			if(result > 0) { // 조회수 0 이상
+				
+				model.addAttribute("prev", prev);
+				model.addAttribute("next", next);
+				model.addAttribute("mag" , mag);
+				
+				model.addAttribute("magL", magL);
+				
+				return "magazine/magazineDetailView";
+			
+			} else {
+				
+				model.addAttribute("errorMsg", "게시글 상세 조회에 실패했습니다.");
+				
+				return "common/errorPage";
+				
+			}
+				
+		} else { // 로그인 x
+
+			int result = magazineService.updateViewCount(magazineNo);
+			
+			Magazine prev = magazineService.selectMagazine(magazineNo - 1);
+			Magazine next = magazineService.selectMagazine(magazineNo + 1);
+			Magazine mag = magazineService.selectMagazine(magazineNo);
+			
+			if(result > 0) {
+				model.addAttribute("prev", prev);
+				model.addAttribute("next", next);
+				model.addAttribute("mag" , mag);
+				
+				return "magazine/magazineDetailView";
+				
+			} else {
+				
+				model.addAttribute("errorMsg", "게시글 상세 조회에 실패했습니다.");
+				
+				return "common/errorPage";
+				
+			}
 	
-			
-			return "magazine/magazineDetailView";
-			
-		} else {
-			
-			return null;
 		}
+	
 	}
+
+	
+	// 좋아요 insert
+	@ResponseBody
+	@RequestMapping(value="insert.magL", produces="text/html; charset=UTF-8")
+	public String insertMagazineLike(MagazineLike magL) {
+
+		int result = magazineService.insertMagazineLike(magL);
+		
+		int magazineLikeCount = 0;
+		
+		if (result > 0) { 
+			
+			int magazineNo = magL.getMagazineNo();
+			
+			result *= magazineService.updateMagazineLikeCount(magazineNo);
+			
+			magazineLikeCount = magazineService.selectMagazineLikeCount(magazineNo);
+			
+		}
+			
+			return String.valueOf(magazineLikeCount);
+
+	}
+
+	
+	// 좋아요 delete
+	@ResponseBody
+	@RequestMapping(value="delete.magL", produces="text/html; charset=UTF-8")
+	public String deleteMagazineLike(MagazineLike magL) {
+	
+		int result = magazineService.deleteMagazineLike(magL);
+		int count = 0;
+		int magazineLikeCount = 0;
+	
+		if (result > 0) {
+					
+			int magazineNo = magL.getMagazineNo();
+			
+			count = magazineService.updateMagazineLikeCount(magazineNo);
+		
+			magazineLikeCount = magazineService.selectMagazineLikeCount(magazineNo);
+			
+		}
+	
+			return String.valueOf(magazineLikeCount);
+	
+	}
+
 	
 	@RequestMapping("delete.mag")
 	public String deleteMagazine(int magazineNo, String filePath, HttpSession session, Model model) {
@@ -161,7 +280,7 @@ public class MagazineController {
 			
 		} else { 
 			
-			model.addAttribute("errorMsg", "게시글 삭제이 실패했습니다.");
+			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
 			
 			return "common/errorPage";
 		}
@@ -174,6 +293,8 @@ public class MagazineController {
 		
 		Magazine mag = magazineService.selectMagazine(magazineNo);
 		
+		System.out.println(mag);
+		
 		model.addAttribute("mag", mag);
 
 		return "magazine/magazineUpdateForm";
@@ -184,24 +305,25 @@ public class MagazineController {
 	@RequestMapping("update.mag")
 	public String updateMagazine(Magazine mag, MultipartFile reupfile, HttpSession session, Model model) throws IllegalStateException, IOException {
 
-		if(!reupfile.getOriginalFilename().equals("")) {
+		if(!reupfile.getOriginalFilename().equals("")) { // 새로운 첨부파일이 있을경우
  
-			if(mag.getMagazineImgName() != null) {
+			if(mag.getMagazineImgName() != null) { // 기존 첨부파일이 있을경우 => 덮어씌우기
 				
 				String realPath = session.getServletContext().getRealPath(mag.getMagazineImgName());
 				
-				new File(realPath).delete();
+				new File(realPath).delete(); // 삭제
+				
+
+				String ChangeName = saveFile(reupfile, session);
+
+				mag.setMagazineImgName("resources/magazineUploadFiles/" + ChangeName); // 덮어씌운부분
 				
 			} 
-
-			String ChangeName = saveFile(reupfile, session);
-
-			mag.setMagazineImgName(reupfile.getOriginalFilename());
-			mag.setMagazineImgName("resources/magazineUploadFiles/" + ChangeName);
-			
-			System.out.println(mag.getMagazineImgName());
-			
 		}
+		
+		// 이 시점 기준으로
+		// 새로운 첨부파일이 있었다면 => magazineImgName 필드값은 새로운 첨부파일의 수정명으로 덮어씌워졌을거임
+		// 새로운 첨부파일이 없었다면 => magazineImgName 필드값은 기존 첨부파일의 수정명이 그대로 들어가 있었을거임
 		
 		int result = magazineService.updateMagazine(mag);
 		
@@ -227,7 +349,7 @@ public class MagazineController {
 	
 		
 	}
-	
 
 
 }
+

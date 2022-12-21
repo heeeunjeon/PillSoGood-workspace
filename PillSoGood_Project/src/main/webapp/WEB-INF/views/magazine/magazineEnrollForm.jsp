@@ -15,6 +15,9 @@
 <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />    
 
+<link rel='stylesheet' href='https://unpkg.com/@yaireo/tagify/dist/tagify.css'>
+<link rel='stylesheet' href='https://unpkg.com/@yaireo/dragsort/dist/dragsort.css'>
+
 <!-- 순수 js -->
 <style>
 
@@ -24,7 +27,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: 1530px;
         margin : auto;
     }
@@ -108,6 +111,20 @@
      	  top: 5%;
       }
 
+		.logoArea {
+		    padding-left: 29%;
+    		padding-top: 80px;
+		}
+
+    .tagify {
+               --tag--max-width: 250px;
+               width: 100%;
+               max-width: 600px;
+             }
+
+             .tagify .tagify__tag-text {
+               white-space: nowrap;
+             }
 
 </style>
 
@@ -124,7 +141,7 @@
               <div id="content_2_1">
                 <!-- 로고 영역 -->
                 <div class="logoArea">
-                    <p style="display: inline; font-size: 20px;">Magazine</p>
+                    <p style="display: inline; font-size: 20px;">PillSoGood Magazine</p>
                 </div>
               </div>
 
@@ -143,9 +160,9 @@
                           <th>카테고리</th>
                           	<td>
                               <select class="form-select" id="magazineSelectOpt" name="categoryNo">
-	                                   <option value="2" data-sub="라이프">라이프</option>
-	                                   <option value="3" data-sub="시즌">시즌</option>
-	                                   <option value="4" data-sub="이슈">이슈</option>
+	                                   <option value="1" data-sub="라이프">라이프</option>
+	                                   <option value="2" data-sub="시즌">시즌</option>
+	                                   <option value="3" data-sub="이슈">이슈</option>
                               </select>
                           </td>
                         </tr>
@@ -157,13 +174,51 @@
 
                         <tr>
                           <th><label for="upfile">사진</label></th>
-                          <td><input type="file" id="upfile" class="form-control-file border" name="upfile" multiple></td>
+                          <td><input multiple="multiple" type="file" id="upfile" class="form-control-file border" name="upfile"></td>
                         </tr>  
 
                         <tr>
                           <th><label for="hashtag">해시태그</label></th>
-	                          <td><input type="text" placeholder="type tags" id="magazineHashtag" class="form-control" name="magazineHashtag">
-	                          </td>
+	                          
+	                          <td>
+
+                        <input type="text" placeholder="type tags" id="magazineHashtag" class="form-control" name="magazineHashtag" value="${mag.magazineHashtag}">
+                        
+                        <script src='https://unpkg.com/@yaireo/tagify'></script>
+             				<script src='https://unpkg.com/@yaireo/dragsort'></script>
+             				<script>
+                    // This demo is using "dragsort" lib (by myself)
+                    // https://github.com/yairEO/dragsort
+			        
+
+                    // The DOM element you wish to replace with Tagify
+                    var input = document.querySelector('input[name=magazineHashtag]');
+
+                    // initialize Tagify on the above input node reference
+                    
+                    var tagify = new Tagify(input, {
+                      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join('#')
+                    })
+
+                    // bind "DragSort" to Tagify's main element and tell
+                    // it that all the items with the below "selector" are "draggable"
+                    var dragsort = new DragSort(tagify.DOM.scope, {
+                        selector: '.'+tagify.settings.classNames.tag,
+                        callbacks: {
+                            dragEnd: onDragEnd
+                        }
+                    })
+
+                    // must update Tagify's value according to the re-ordered nodes in the DOM
+                    function onDragEnd(elm){
+                        tagify.updateValueByDOMTags()
+                    }
+
+                    // listen to tagify "change" event and print updated value
+                    tagify.on('change', e => console.log(e.detail.value))
+                	</script>
+	                          
+	                       </td>
                         </tr>
                     </table>  
                     <div align="center" class="btnArea">

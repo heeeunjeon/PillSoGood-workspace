@@ -1,7 +1,6 @@
 package com.kh.pill.magazine.model.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,7 +10,6 @@ import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.magazine.model.vo.Magazine;
 import com.kh.pill.magazine.model.vo.MagazineLike;
 import com.kh.pill.magazine.model.vo.MagazinePage;
-import com.kh.pill.product.model.vo.ProductLike;
 
 @Repository
 public class MagazineDao {
@@ -26,10 +24,12 @@ public class MagazineDao {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
-		
+
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("magazineMapper.selectMagazineList", null, rowBounds);
+		ArrayList<Magazine> list = (ArrayList)sqlSession.selectList("magazineMapper.selectMagazineList", null, rowBounds);
+
+		return list;
 	}
 
 	
@@ -55,6 +55,40 @@ public class MagazineDao {
 		
 		return sqlSession.update("magazineMapper.updateMagazine", mag);
 	}
+	
+
+	// 좋아요 insert
+	public int insertMagazineLike(SqlSessionTemplate sqlSession, MagazineLike magL) {
+		
+		return sqlSession.insert("magazineMapper.insertMagazineLike", magL);
+	}
+
+
+	// 좋아요 조회
+	public MagazineLike selectMagazineLike(SqlSessionTemplate sqlSession, MagazineLike magLselect) {
+		
+		return sqlSession.selectOne("magazineMapper.selectMagazineLike", magLselect);
+	}
+
+
+	// 좋아요 카운트 업데이트 
+	public int updateMagazineLikeCount(SqlSessionTemplate sqlSession, int magazineNo) {
+		
+		return sqlSession.update("magazineMapper.updateMagazineLikeCount", magazineNo);
+	}
+
+	// 좋아요 삭제 
+	public int deleteMagazineLike(SqlSessionTemplate sqlSession, MagazineLike magL) {
+		
+		return sqlSession.delete("magazineMapper.deleteMagazineLike", magL);
+	}
+
+	
+	 // 좋아요 카운트
+	 public int selectMagazineLikeCount(SqlSessionTemplate sqlSession, int magazineNo) {
+		
+		return sqlSession.selectOne("magazineMapper.selectMagazineLikeCount", magazineNo);
+	}
 
 	// 조회수
 	public int updateViewCount(SqlSessionTemplate sqlSession, int magazineNo) {
@@ -67,11 +101,48 @@ public class MagazineDao {
 		
 		return sqlSession.selectOne("magazineMapper.magazinePage", magazineNo);
 	}
+
+	// 인기순
+	public ArrayList<Magazine> selectPopularList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("magazineMapper.selectPopularList", null, rowBounds);
+	}
 	
 	// 카테고리
-	public List<Magazine> magazineCategoryResult(SqlSessionTemplate sqlSession, int categoryNo) {
+	public ArrayList<Magazine> selectLifeList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
-		return sqlSession.selectList("magazineMapper.categoryView", categoryNo);
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("magazineMapper.selectLifeList", null, rowBounds);
 	}
+	
+	public ArrayList<Magazine> selectSeasonList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("magazineMapper.selectSeasonList", null, rowBounds);
+	}
+	
+	public ArrayList<Magazine> selectIssueList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("magazineMapper.selectIssueList", null, rowBounds);
+	}
+
 	
 }

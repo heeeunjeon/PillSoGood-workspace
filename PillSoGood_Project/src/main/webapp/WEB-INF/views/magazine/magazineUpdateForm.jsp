@@ -13,6 +13,9 @@
 <!-- hashtag 폴리필 (구버젼 브라우저 지원) -->
 <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />    
+
+<link rel='stylesheet' href='https://unpkg.com/@yaireo/tagify/dist/tagify.css'>
+<link rel='stylesheet' href='https://unpkg.com/@yaireo/dragsort/dist/dragsort.css'>
 <style>
 
     div {
@@ -21,7 +24,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: 1530px;
         margin : auto;
     }
@@ -109,7 +112,21 @@
 
       }
 
+    .tagify {
+               --tag--max-width: 250px;
+               width: 100%;
+               max-width: 600px;
+             }
 
+             .tagify .tagify__tag-text {
+               white-space: nowrap;
+             }
+             
+        	.logoArea {
+		    padding-left: 29%;
+    		padding-top: 80px;
+			}
+             
 </style>
 
 </head>
@@ -125,7 +142,7 @@
               <div id="content_2_1">
                 <!-- 로고 영역 -->
                 <div class="logoArea">
-                    <p style="display: inline; font-size: 20px;">Magazine</p>
+                    <p style="display: inline; font-size: 20px;">PillSoGood Magazine</p>
                 </div>
               </div>
 
@@ -142,13 +159,11 @@
                         
                         <tr>
                           <th>카테고리</th>
-                          <td>
-                          <select class="form-select" id="magazineSelectOpt" name="categoryNo" >
-                                 <option value="2" data-sub="라이프">라이프</option>
-                                 <option value="3" data-sub="시즌">시즌</option>
-                                 <option value="4" data-sub="이슈">이슈</option>
-                          </select>
-                          </td>
+                          <td><select class="form-select" id="magazineSelectOpt" name="categoryNo" >
+                                 <option value="1" data-sub="라이프">라이프</option>
+                                 <option value="2" data-sub="시즌">시즌</option>
+                                 <option value="3" data-sub="이슈">이슈</option>
+                          </select></td>
                         </tr>
                         
                         <script>
@@ -172,18 +187,54 @@
 
                         <tr>
                           <th><label for="reupfile">사진</label></th>
-	                          <td><input type="file" id="reupfile" class="form-control-file border" name="reupfile"></td> <!-- 썸네일 -->
-	                          <td><input type="file" id="reupfile2" class="form-control-file border" name="reupfile2"></td>	  
-	                          	  
-	                          	  <c:if test="${ not empty mag.magazineImgName }">
-	                              	<input type="hidden" name="${ mag.magazineImgName }">
-	                              </c:if>
+                          <td><input multiple="multiple" type="file" id="reupfile" class="form-control-file border" name="reupfile">
+                          	  
+                          	  <c:if test="${ not empty mag.magazineImgName }">
+                          	  
+                          	  	<img src="${ mag.magazineImgName }" width="600px" height="400px">
+                          	  	<input type="hidden" name="magazineImgName" value="${ mag.magazineImgName }">
+                              </c:if>
+                              
+                          </td>
                         </tr>  
 
                         <tr>
-                          <th><label for="hashtag">해시태그</label></th>
-                          <td><input type="tag" id="hashtag" class="form-control" name="magazineHashtag" value="${ mag.magazineHashtag }">
-                          
+                     <th><label for="hashtag">해시태그</label></th>
+                     <td><input type="text" id="hashtag" class="form-control" name="magazineHashtag" value="${ mag.magazineHashtag }">
+                                             <script src='https://unpkg.com/@yaireo/tagify'></script>
+      				<script src='https://unpkg.com/@yaireo/dragsort'></script>
+      				<script>
+                    // This demo is using "dragsort" lib (by myself)
+                    // https://github.com/yairEO/dragsort
+			        
+
+                    // The DOM element you wish to replace with Tagify
+                    var input = document.querySelector('input[name=magazineHashtag]');
+
+                    // initialize Tagify on the above input node reference
+                    
+                    var tagify = new Tagify(input, {
+                      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join('#')
+                    })
+
+                    // bind "DragSort" to Tagify's main element and tell
+                    // it that all the items with the below "selector" are "draggable"
+                    var dragsort = new DragSort(tagify.DOM.scope, {
+                        selector: '.'+tagify.settings.classNames.tag,
+                        callbacks: {
+                            dragEnd: onDragEnd
+                        }
+                    })
+
+                    // must update Tagify's value according to the re-ordered nodes in the DOM
+                    function onDragEnd(elm){
+                        tagify.updateValueByDOMTags()
+                    }
+
+                    // listen to tagify "change" event and print updated value
+                    tagify.on('change', e => console.log(e.detail.value))
+                	</script>
+	                          
                           </td>
                         </tr>
                     </table>  
@@ -208,6 +259,14 @@
     	var input = document.querySelector('input[name=magazineHashtag]')
     
     	new Tagify(input)
+    	
+    	$(function() {
+    		
+    	})
+    	
+    	
+    	
+    	
     </script>
     
 

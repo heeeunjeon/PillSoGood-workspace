@@ -22,7 +22,7 @@
     
         /* 전체를 감싸는 wrap */
         .wrap {
-        width: 98%;
+        width: 100%;
         height: inherit;
         margin : auto;
         }
@@ -58,6 +58,7 @@
     
         .btnArea {
             margin-left: 88%;
+            padding-bottom:20px;
         }
 
         .thumbnailPic {
@@ -66,6 +67,7 @@
             /* position: relative; */
             padding-top: 30px;
             margin-left:6%;
+            border:0.5px solid lightgrey;
         }
 
         .thumbnailArea {
@@ -74,7 +76,7 @@
         .thumbnailArea>p {
             font-size: 40px;
 			text-align: center;
-			margin-top: -5.5em;
+			margin-top: -6em;
             padding-bottom: 180px;
             width: 970px;
   			margin-left: 7.4%;
@@ -123,7 +125,7 @@
             margin-bottom: 20px;
         }
 
-        .heartArea>i {
+        .heartArea {
             margin-top: 250px;
             margin-left: 96%;
         }
@@ -208,6 +210,12 @@
             left: -32%;
            
 		}
+		
+		.likeControl{
+			width:30px;
+			height:30px;
+		}
+		
     </style>
 
     </head>
@@ -222,7 +230,7 @@
                 <div id="content_2">
                     <div id="content_2_1">
                         <div class="logoArea">
-                          <p style="display: inline; font-size: 20px;">Magazine</p>
+                          <p style="display: inline; font-size: 20px;">PillSoGood Magazine</p>
                       </div>
                     </div>
                     <div id="content_2_2">
@@ -234,7 +242,7 @@
                         </div>
                         </c:if>
                         
-                        <form id="magazineForm" action="" method="post">
+                        <form id="magazineForm" method="post">
                         	<input type="hidden" name="magazineNo" value="${ mag.magazineNo }">
                         	<input type="hidden" name="filePath" value="${ mag.magazineImgName }" >
                         </form>
@@ -255,7 +263,7 @@
 
                         <!-- 썸네일/기사 내용 영역 -->
                         <div class="thumbnailArea" style="padding-bottom:100px;">
-                            <img src="" class="thumbnailPic">
+                            <div class="thumbnailPic"></div>
                             <span class="badge bg-primary">${ mag.categoryNo }</span>
                             <p>${ mag.magazineTitle }</p>
                         </div>
@@ -274,16 +282,28 @@
 
                             <div class="magazineContentSub">
  
-                                 <div class="heartArea">
-                                    <i class="fa-regular fa-heart">&ensp;1</i>
-                                </div>
 
-                                <div class="hashtagArea">
-                                    <span class="badge bg-light">${mag.magazineHashtag}</span>
-                                    </div>
-                            </div>
-                      
+                    <c:if test="${ not empty loginUser  }">
+                    	<div align="right" class="likeArea">
+                    		<c:choose>
+		                    	<c:when test="${ loginUser.memberNo eq magL.memberNo  }"> 
+		                    		<img src="resources/images/Like.png" width="30" class="likeControl" id="magazineLike" style="cursor: pointer;" >
+			                        <img src="resources/images/Unlike.png" width="30" style="display:none" class="likeControl" id="magazineUnLike" style="cursor: pointer;">
+			                        <span id="magazineLikeCount">${mag.magazineLikeCount}</span>
+			                    </c:when>
+			                    <c:otherwise>
+			                    	<img src="resources/images/Unlike.png" width="30" alt="" class="likeControl" id="magazineUnLike" style="cursor: pointer;">
+			                        <img src="resources/images/Like.png" width="30" class="likeControl" style="display:none" id="magazineLike" style="cursor: pointer;">
+			                        <span id="magazineLikeCount">${mag.magazineLikeCount}</span>
+			                    </c:otherwise>
+		                    </c:choose>
+                    	</div>
+                    </c:if>
 
+                    <div class="hashtagArea">
+                        <span class="badge bg-light">${mag.magazineHashtag}</span>
+                    </div>
+                </div>
                         <div class="pageContent">
                             <table class="pageContentTable">
                                 <tr>
@@ -316,22 +336,79 @@
                                     </c:otherwise>
                                 </c:choose>
                                 </tr>
+                                
+                                
                             </table>
                         </div>
 
                         <div class="listBtnArea">
                             <button class="listBtn" onclick="list()">목록</button>
                         </div>
+
                         
-                        <script>
-                        	function list() {
-                        		
-                        		location.href = "list.mag";
-                        	}
-                        </script>
-                    </div>
-                    <div id="content_2_3"></div>
-                </div>
+                <script>
+                    function list() {
+                        
+                        location.href = "list.mag";
+                    }
+                </script>
+
+				<!-- 좋아요 -->
+			    <script>
+		        	$(function() {
+		            	$(".likeArea").on("click", ".likeControl", function() {
+		                	
+		            		if($("#magazineLike").css("display") == "none") {
+
+		                    $.ajax({
+		                        url: "insert.magL",
+		                        data: {magazineNo : ${mag.magazineNo},
+		                                memberNo : ${loginUser.memberNo}},
+		                        success : function (result) {
+
+		                        		console.log(result);
+		                        		
+		                            $("#magazineLike").show();
+		                            $("#magazineUnLike").hide();
+
+		                            $("#magazineLikeCount").html(result);
+		                        },
+		                        error : function() {
+
+		                            console.log("ajax 통신 실패!");
+		                        }
+		                        
+		                    });
+		               
+		            		} else {
+		                    	$.ajax({
+		                        
+		                    	url: "delete.magL",
+		                        data: {magazineNo : ${mag.magazineNo},
+		                                memberNo : ${loginUser.memberNo}},
+		                        success: function(result) {
+		                        	
+		                        		console.log(result);
+		                        		
+		                            $("#magazineLike").hide();
+		                            $("magazineUnLike").show();
+
+		                            $("#magazineLikeCount").html(result);
+		                        },
+		                        
+		                        error : function() {
+
+		                            console.log("ajax 통신 실패!");
+		                        }
+		                    });
+		                }
+		            });
+		        });
+		    </script>
+                
+                    	</div>
+                    	<div id="content_2_3"></div>
+                	</div>
                 <div id="content_3"></div>
             </div>
            <jsp:include page="../common/footer.jsp" />

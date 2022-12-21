@@ -16,10 +16,13 @@ public class Magazine {
 	private String magazineContent; //MAGAZINE_CONTENT	VARCHAR2(3000 BYTE)
 	private int magazineCount; //MAGAZINE_COUNT	NUMBER
 	private String magazineImgName; //MAGAZINE_IMG_NAME	VARCHAR2(1000 BYTE)
+	private String magazineImgName2; //MAGAZINE_IMG_NAME2	VARCHAR2(1000 BYTE)
 	private String categoryNo; //CATEGORY_NO	NUMBER
 	private String magazineStatus; //MAGAZINE_STATUS	CHAR(1 BYTE)
 	private String magazineHashtag; //MAGAZINE_HASHTAG	VARCHAR2(100 BYTE)
 
+	private int magazineLikeCount; // 좋아요 수 카운트 -> 리스트/디테일뷰에서 보여지는 숫자
+	
 	private int preNo; //이전글의 글번호를 담을 필드
 	private String preTitle; // 이전글 제목
 	private String preImgName; // 이전글 썸네일

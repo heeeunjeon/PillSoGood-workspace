@@ -2,6 +2,7 @@ package com.kh.pill.magazine.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.magazine.model.dao.MagazineDao;
 import com.kh.pill.magazine.model.vo.Magazine;
+import com.kh.pill.magazine.model.vo.MagazineLike;
 import com.kh.pill.magazine.model.vo.MagazinePage;
 
 @Service
@@ -69,6 +71,66 @@ public class MagazineServiceImpl implements MagazineService {
 		return magazineDao.magazinePage(sqlSession, magazineNo);
 	}
 
+	// 인기순
+	@Override
+	public ArrayList<Magazine> selectPopularList(PageInfo pi) {
+		
+		return magazineDao.selectPopularList(sqlSession, pi);
+	}
+
+	// 카테고리
+	@Override
+	public ArrayList<Magazine> selectLifeList(PageInfo pi) {
+
+		return magazineDao.selectLifeList(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<Magazine> selectSeasonList(PageInfo pi) {
+
+		return magazineDao.selectSeasonList(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<Magazine> selectIssueList(PageInfo pi) {
+
+		return magazineDao.selectIssueList(sqlSession, pi);
+	}
+
+	// 좋아요 insert
+	@Override
+	public int insertMagazineLike(MagazineLike magL) {
+
+		return magazineDao.insertMagazineLike(sqlSession, magL);
+	}
+	
+	// 좋아요 조회
+	@Override
+	public MagazineLike selectMagazineLike(MagazineLike magLselect) {
+
+		return magazineDao.selectMagazineLike(sqlSession, magLselect);
+	}
+
+	// 좋아요 카운트 업데이트 
+	@Override
+	public int updateMagazineLikeCount(int magazineNo) {
+
+		return magazineDao.updateMagazineLikeCount(sqlSession, magazineNo);
+	}
+
+	// 좋아요 삭제 
+	@Override
+	public int deleteMagazineLike(MagazineLike magL) {
+
+		return magazineDao.deleteMagazineLike(sqlSession, magL);
+	}
+	
+	// 좋아요 카운트
+	@Override
+	public int selectMagazineLikeCount(int magazineNo) {
+
+		return magazineDao.selectMagazineLikeCount(sqlSession, magazineNo);
+	}
 
 	
 
