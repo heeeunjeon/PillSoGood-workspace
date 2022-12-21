@@ -130,9 +130,8 @@
 											전문가가 설계한 건강설문을 통해 개인 맞춤 영양성분을 추천받고, 매달 배송 받아보세요.<br>
 											<br>
 											1. PillSoGood 웹사이트에서 회원가입을 해주세요.<br>
-											2. 설문을 통해 건강 상태를 확인하고, 내 몸에 필요한 영양성분을 추천받으세요. <br>
-											3. 30일마다 건강기능식품을 배송받으세요.<br>
-											4. PillSoGood 섭취 관리를 통해 매일 건강한 습관을 만들어보세요.<br>  
+											2. 설문조사를 통해 건강 상태를 확인하고, 내 몸에 필요한 영양성분을 추천받으세요. <br>
+											3. PillSoGood 과 함께 매일 건강한 습관을 만들어보세요.<br>  
 										</p>
 									</td> 
 								</tr>
@@ -153,7 +152,7 @@
 								</tr>
 								<tr class="upperHr">
 									<td class="category"><button type="button" class="btn btn-primary disabled">회원관리</button></td>
-									<td class="question"><p>아이디/비밀번호를 잊어버렸어요.</p></td>
+									<td class="question"><p>비밀번호를 잊어버렸어요.</p></td>
 									<td class="button">
 										<i class="fa-solid fa-chevron-down"></i>
 									</td>
@@ -161,8 +160,7 @@
 								<tr>                                        
 									<td class="answer" colspan="3">
 										<p> 
-											일반회원가입으로 진행한 경우, 'PillSoGood 웹사이트 > 로그인 > 아이디 찾기/비밀번호 찾기'를 통해 찾으실 수 있습니다.<br>
-											SNS 간편가입을 진행한 경우, 가입하신 SNS를 통해 찾으셔야 합니다.<br> 
+											'PillSoGood 웹사이트 > 로그인 > 비밀번호 변경'을 하실 수 있습니다.
 										</p>
 									</td>
 								</tr>
@@ -205,7 +203,7 @@
 								<tr>                                        
 									<td class="answer" colspan="3">
 										<p> 
-											'결제 완료' 시에만 주문 취소가 가능합니다.<br>
+											'결제 완료' 시에 취소가 가능합니다.<br>
 											'PillSoGood 웹사이트 > 마이페이지 > 주문조회'에서 주문을 취소해주세요.<br>
 											주문이 정상적으로 취소되면 결제 수단에 따라 3~5일 정도의 환불 기간이 소요됩니다. <br>
 										</p>
@@ -276,7 +274,7 @@
 								<tr>                                        
 									<td class="answer" colspan="3">
 										<p> 
-											PillSoGood은 의사, 약사, 영양학 박사 등으로 구성된 자문단과 건강설문을 설계했습니다.<br>
+											PillSoGood은 자문단과 건강설문을 설계했습니다.<br>
 											건강설문을 진행하면 더욱 정확한 건강 체크와 영양성분 추천이 가능하며, 구체적인 영양 상담이 가능합니다.<br>
 										</p>
 									</td>
