@@ -20,7 +20,7 @@
     .wrap {
         width: 100%;
         /* 전체 길이 개별 커스텀 */
-        height: 1600px;
+        height: auto;
         margin : auto;
     }
 
@@ -29,10 +29,10 @@
     #navigator2 { height: 100px; }
 
     /* 내용 길이 개별 wrap - 350px */
-    #content { height: 1250px; }
-    #content_2>div { width: 100%; }
+    #content { height: auto; display: flex; }
+    #content_2>div { width: 100%; float: left; }
     #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_2 { height: 550px; color: black; }
 
     #header { height: 130px; }
 
@@ -53,9 +53,9 @@
 
     /* ----- 마이페이지 공통 style ----- */
     /* 영역 구분 */
-    #content2_2>div { height: 100%; }
-    #mypage_navi { width: 20%; padding: 10px; float: left; }
-    #mypage_content { width: 80%; padding: 30px; float: left; }
+    #content_2_2>div { height: 100%; float: left;}
+    #mypage_navi { width: 20%; padding: 10px; }
+    #mypage_content { width: 80%; padding: 30px; }
 
     /* MYPAGE 사이드메뉴바 */
     #mypage_navi>div {
@@ -74,7 +74,7 @@
     #mypage_content table { width: 100% }
     
     /* mypage_content h4, input. select 태그들 글자색 */
-    #mypage_content h4, #mypage_content input, #mypage_content select { color: black; }
+    #mypage_content h4, #mypage_content input, #mypage_content select, .myPageReview p { color: black; }
 
     /* 부트스트랩 페이징 */
     .pagination { justify-content: center; }
@@ -158,8 +158,8 @@
 		                                </div>
 		                                <div class="myPageContent" style="padding: 5px;">
 		                                    <div class="myPageContent1">
-		                                        <div style="font-size: 20px; width: 85%;"><b>${ myList[i].reviewTitle }</b></div>
-		                                        <div style="width: 15%;"><span style="color: gray;">${ myList[i].reviewDate }</span></div>
+		                                        <div style="font-size: 20px; width: 85%;"><p>${ myList[i].reviewTitle }</p></div>
+		                                        <div style="width: 15%;"><p>${ myList[i].reviewDate }</p></div>
 		                                    </div>
 		                                    <div class="myPageContent2" style="font-size: 15px;"><p style="margin: 0px; padding: 1px;">${fn:substring(myList[i].reviewContent, 0, 10)}...</p></div>
 		                                </div>
@@ -175,7 +175,7 @@
 							<c:when test="${myList.size()==0}">
 								<div align="center">
 									<br>
-									<p style="color: gray;">내 후기가 없습니다.</p>
+									    <p>내 후기가 없습니다.</p>
 									<br>
 								</div>
 							</c:when>
@@ -218,6 +218,7 @@
                     	</div>
                     </div>
                 </div>
+                <div style="height: 150px;"></div>
             </div>
             <div id="content_3"></div>
         </div>

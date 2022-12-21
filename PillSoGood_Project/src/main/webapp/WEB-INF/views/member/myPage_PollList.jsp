@@ -11,15 +11,15 @@
 <style>
 
     div {
-        /* border : 1px solid #78C2AD;*/
+        /* border : 1px solid #78C2AD; */
         box-sizing : border-box;
     }
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         /* 전체 길이 개별 커스텀 */
-        height: 1400px;
+        height: auto;
         margin : auto;
     }
 
@@ -28,10 +28,10 @@
     #navigator2 { height: 100px; }
 
     /* 내용 길이 개별 wrap - 350px */
-    #content { height: 1050px; }
-    #content_2>div { width: 100%; }
+    #content { height: auto; display: flex; }
+    #content_2>div { width: 100%; float: left; }
     #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_2 { height: 100%;  color: black; }
 
     #header { height: 130px; }
 
@@ -52,9 +52,9 @@
 
     /* ----- 마이페이지 공통 style ----- */
     /* 영역 구분 */
-    #content2_2>div { height: 100%; }
-    #mypage_navi { width: 20%; padding: 10px; float: left; }
-    #mypage_content { width: 80%; padding: 30px; float: left; }
+    #content_2_2>div { height: 100%; float: left; }
+    #mypage_navi { width: 20%; padding: 10px; }
+    #mypage_content { width: 80%; padding: 30px; }
 
     /* MYPAGE 사이드메뉴바 */
     #mypage_navi>div {
@@ -103,13 +103,11 @@
     /* 설문상세조회 버튼 */
     .survey>button { width: 120px; }
 
+    .survey b, .survey sub, .fa-solid { color: black; }
+
 </style>
-
-
 </head>
 <body>
-
-
 
     <div class="wrap">
         <div id="navigator2">
@@ -123,7 +121,6 @@
                     <p>MY PAGE</p>
                 </div>
                 <div id="content_2_2" style="padding-top:10px;">
-                    
                     <div id="mypage_navi">
                         <div>
                             <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
@@ -146,85 +143,58 @@
                             건강설문으로 맞춤 영양성분을 확인하세요. <b>건강설문 시작하기 &gt;</b>
                         </div>
                         <hr>
+                    
+                        <c:if test="${ pollList.size() ne 0 }">
+                            <c:forEach var="i" begin="0" end="${ pollList.size() - 1}">
+                                <div class="survey">
+                                    <b>${ pollList[i].pollDate }</b> <div><i class="fa-solid fa-xmark fa-lg" onclick="deleteSurvey(${ pollList[i].pollNo })"></i></div>
+                                    <br><br>
+                                    <c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
+                                        <c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
+                                            <b>
+                                                # ${ pollResult[j].productExplain }
+                                            </b>
+                                        </c:if>
+                                    </c:forEach>
 
-                      
-						<c:if test="${ pollList.size() ne 0 }">
-						
-							<c:forEach var="i" begin="0" end="${ pollList.size() - 1}">
-								
-								
-								<div class="survey">
-		                            ${ pollList[i].pollDate } <div><i class="fa-solid fa-xmark fa-lg" onclick="deleteSurvey(${ pollList[i].pollNo })"></i></div>
-		                            <br><br>
-		                            <c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
-		                            	
-		                            	<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
-		                            	
-			                            	<b>
-				                            	# ${ pollResult[j].productExplain }
-				                            </b>
-			                            
-			                            </c:if>
-		                            
-		                            
-		                            </c:forEach>
-		                            
-		                            
-		                            <br>
-		                            <sub>
-		                            	
-		                            	<c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
-		                            		<c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
-		                            		
-				                            	${ pollResult[j].productName },
-				                        
-			                            	</c:if>
-		                            	
-		                            	
-		                            	</c:forEach>
-		                            	
-		                            </sub>
-		                            <br><br>
-		                            <button type="button" class="btn btn-outline-primary btn-sm" onclick="selectPollResult(${ pollList[i].pollNo })"><small>설문결과 보기</small></button>
-		                        </div>
-		                        <hr>
-							
-							</c:forEach>
-						</c:if>
+                                    <br>
+                                    <sub>
+                                        <c:forEach var="j" begin="0" end="${ pollResult.size() -1 }">
+                                            <c:if test="${ pollList[i].pollNo eq pollResult[j].pollNo }">
+                                                ${ pollResult[j].productName },
+                                            </c:if>
+                                        </c:forEach>
+                                    </sub>
+                                    <br><br>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="selectPollResult(${ pollList[i].pollNo })"><small>설문결과 보기</small></button>
+                                </div>
+                                <hr>
+                            
+                            </c:forEach>
+                        </c:if>
 
                         <script>
-							
                         	function selectPollResult(pollNo) {
                         		
                         		location.href='pollResult.po?pollNo='+pollNo;
                         	}
                             
-                            
                         	function deleteSurvey(pollNo) {
-                        		
-                        		
                         		if(window.confirm("정말 삭제하시겠습니까?")) {
                         			
                         			location.href='delete.po?pollNo='+pollNo;
                         		}
-                        		
                         	}
-                            
                         </script>
 
                     </div>
-
                 </div>
-
+                <div style="height: 150px;"></div>
             </div>
             <div id="content_3"></div>
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
-    
-    
-    
-
 
 </body>
 </html>

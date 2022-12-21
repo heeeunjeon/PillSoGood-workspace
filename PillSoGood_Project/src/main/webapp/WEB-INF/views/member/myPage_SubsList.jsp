@@ -11,7 +11,7 @@
 <style>
 
     div {
-        /*border : 1px solid #78C2AD;*/
+        /* border : 1px solid #78C2AD; */
         box-sizing : border-box;
     }
 
@@ -19,7 +19,7 @@
     .wrap {
         width: 100%;
         /* 전체 길이 개별 커스텀 */
-        height: 1400px;
+        height: auto;
         margin : auto;
     }
 
@@ -28,10 +28,10 @@
     #navigator2 { height: 100px; }
 
     /* 내용 길이 개별 wrap - 350px */
-    #content { height: 1050px; }
-    #content_2>div { width: 100%; }
+    #content { height: auto; display: flex; }
+    #content_2>div { width: 100%; float: left; }
     #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_2 { height: auto; color: black; }
 
     #header { height: 130px; }
 
@@ -127,9 +127,7 @@
                         <hr>
 
                         <div id="subs_list">
-							
 							<c:forEach var="o" items="${ list }">
-								
 								<div>
 	                                <b>정기구독 서비스</b>&nbsp;&nbsp;<b style="color: #78C2AD;">${ o.subsCount } 회차</b>&nbsp;&nbsp;
 	                                <c:if test="${ o.subsStatus eq 'C' }"><small style="color: #78C2AD;">(해지)</small></c:if>
@@ -169,15 +167,12 @@
 	                                </table>
 	                            </div>
 	                            <br><hr>
-								
 							</c:forEach>
                             
                         </div>
-
                     </div>
-
                 </div>
-
+                <div style="height: 150px;"></div>
             </div>
             <div id="content_3"></div>
         </div>

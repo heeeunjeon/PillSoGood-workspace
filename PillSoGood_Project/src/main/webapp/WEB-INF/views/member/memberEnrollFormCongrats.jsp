@@ -14,13 +14,14 @@
 <style>
 
     div {
+        border : 1px solid #78C2AD;
         box-sizing : border-box;
     }
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
-        height: 1530px;
+        width: 100%;
+        height: auto;
         margin : auto;
     }
 
@@ -28,22 +29,11 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 900px; color: black;}
-    #content_2>div { width: 100%; }
-    #content_2_1 { height: 10%; float: left; }
-    #content_2_2 { height: 90%; float: left; }
-    /* #content_2_3 { height: 10%; float: left; } */
+    #content { height: auto; display: flex; color: black;}
+    #content_2>div { width: 100%; float: left; }
+    #content_2_2 { height: auto; }
 
     #header { height: 130px; }
-
-    #content_2_1>p {
-        font-size: 35px;
-        color: black;
-        margin-top: 20px;
-        margin-left: 30px;
-        text-align : center;
-        font-weight: bold;
-    }
 
     /* content 영역 */
     #content>div { height : 100%; float : left; }
@@ -75,25 +65,20 @@
     #btn {
         padding: 30px;
     }
-
-
    
 
 </style>
-
 </head>
 <body>
 
     <div class="wrap">
-      <jsp:include page="../common/menubar.jsp" />
-        <div id="navigator2"></div>
+        <div id="navigator2">
+            <jsp:include page="../common/menubar.jsp" />
+        </div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
             <div id="content_2">
-                <div id="content_2_1">
-                    <p></p>
-                </div>
                 <div id="content_2_2">
                     <div id="checkicon">
                         <i class="fa-sharp fa-solid fa-circle-check" ></i>
@@ -102,7 +87,7 @@
                     	
                    	<label> 
                    	회원가입을 축하합니다. <br>
-                   	<%= request.getParameter("memberName") %>님 환영합니다.
+                   	<span style="color:#78C2AD;"><%= request.getParameter("memberName") %></span>님 환영합니다.
                    	 
                    	</label>
     			        
@@ -112,11 +97,11 @@
 				                        맞춤 영양 성분을 확인해보세요.
                     </div>
                     <div align="center" id="btn">
-                        <button class="btn btn-light" onclick="location.href='index.jsp'">메인으로</button> &ensp;
+                        <button class="btn btn-outline-info" onclick="location.href='index.jsp'">메인으로</button> &ensp;
                         <button class="btn btn-secondary" onclick="location.href='survey.po'">건강설문 시작하기</button>
                     </div>
                 </div>
-                <div id="content_2_3"></div>
+                <div style="height: 150px;"></div>
             </div>
             <div id="content_3"></div>
         </div>

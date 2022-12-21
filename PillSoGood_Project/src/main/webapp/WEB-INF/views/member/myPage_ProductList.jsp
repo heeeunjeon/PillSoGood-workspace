@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>내 관심 제품</title>
-
 <style>
 
     div {
@@ -20,7 +19,7 @@
     .wrap {
         width: 100%;
         /* 전체 길이 개별 커스텀 */
-        height: 1400px;
+        height: auto;
         margin : auto;
     }
 
@@ -29,12 +28,10 @@
     #navigator2 { height: 100px; }
 
     /* 내용 길이 개별 wrap - 350px */
-    #content { height: 1050px; display: flex; }
+    #content { height: auto; display: flex; }
     #content_2>div { width: 100%; float: left; }
     #content_2_1 { height: 115px; }
     #content_2_2 { height: 550px; }
-    #content_2_3 { height: 35px; width: 100%;}
-
 
     #header { height: 130px; }
 
@@ -55,12 +52,10 @@
 
     /* ----- 마이페이지 공통 style ----- */
     /* 영역 구분 */
-    #content_2_2>div { height: 100%; float: left;}
-    #mypage_navi { width: 20%; padding: 10px; float: left; }
-    #mypage_content { width: 80%; padding: 30px; float: left; }
-    #mypage_content>div {
-        height: 100%;
-    }
+    #content_2_2>div { height: 100%; float: left; }
+    #mypage_navi { width: 20%; padding: 10px; }
+    #mypage_content { width: 80%; padding: 30px; }
+
 
     /* MYPAGE 사이드메뉴바 */
     #mypage_navi>div {
@@ -80,6 +75,9 @@
     
     /* mypage_content h4, input. select 태그들 글자색 */
     #mypage_content h4, #mypage_content input, #mypage_content select { color: black; }
+
+    /* 부트스트랩 페이징 */
+    .pagination { justify-content: center; }
 
     /* ----- 관심제품 style ----- */
     #product>div { 
@@ -115,7 +113,7 @@
     #productTT>div { width: 100%; height: 33.3%; float: left; }
     
     #productTT p { margin: 0px; margin-left: 20px; color: black; }
-    #productTT_1>p { font-size: 15px; line-height: 55px; }
+    #productTT_1>p { font-size: 13.5px; line-height: 55px; }
     #productTT_3>p { font-size: 15px; line-height: 45px; }
     #productTT_2>p { font-size: 20px; line-height: 50px; font-weight: bold; }
 
@@ -140,8 +138,7 @@
     .prodback7 { background-color: #e9f7f5; }
     .prodback8 { background-color: #f9f9f9; }
 
-    /* 페이지네이션 */
-    .pagination { margin-left: 580px; }
+    
     
 </style>
 </head>
@@ -158,7 +155,6 @@
                     <p>MY PAGE</p>
                 </div>
                 <div id="content_2_2" style="padding-top:10px;">
-                    
                     <div id="mypage_navi">
                         <div>
                             <p style="font-size: 20px; color: black;"><b style="font-size: 25px;">${loginUser.memberName}</b> 님</p>
@@ -179,7 +175,7 @@
                         
                         <c:choose>
                         	<c:when test="${myList.size()>=1}">
-		                        <div id="product">
+		                        <div id="product" style="height: 400px;">
 			                        <c:forEach var="i" begin="0" end="${ myList.size()-1}">
 										<div id="product_1">
 			                                <div id="product_1_1" class="prod" style="cursor:pointer;">
@@ -203,16 +199,14 @@
 							<c:when test="${myList.size()==0}">
 								<div align="center">
 									<br>
-										<p style="color: gray;">내 관심 제품이 없습니다.</p>
+										<p style="color: black;">내 관심 제품이 없습니다.</p>
 									<br>
 								</div>
 							</c:when>
 						</c:choose>
-                    </div>
-                </div>
-                <div id="content_2_3">
-                    <div id="paginationBlank"></div>
-                    <div id="paginationBody">
+
+                        <div style="height: 10px;"></div>
+                        <!-- 페이지 -->
                         <div id="noticePagination">
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
@@ -247,6 +241,7 @@
                         </div>
                     </div>
                 </div>
+                <div style="height: 150px;"></div>
             </div>
             <div id="content_3"></div>
         </div>

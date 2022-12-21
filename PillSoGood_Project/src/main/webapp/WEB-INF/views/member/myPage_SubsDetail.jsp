@@ -11,6 +11,7 @@
 <style>
 
     div {
+        /* border : 1px solid #78C2AD; */
         box-sizing : border-box;
     }
 
@@ -18,7 +19,7 @@
     .wrap {
         width: 100%;
         /* 전체 길이 개별 커스텀 */
-        height: 1400px;
+        height: auto;
         margin : auto;
     }
 
@@ -27,10 +28,10 @@
     #navigator2 { height: 100px; }
 
     /* 내용 길이 개별 wrap - 350px */
-    #content { height: 1050px; }
-    #content_2>div { width: 100%; }
+    #content { height: auto; display: flex; }
+    #content_2>div { width: 100%; float: left; }
     #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_2 { height: auto; color: black; }
 
     #header { height: 130px; }
 
@@ -52,9 +53,9 @@
 
     /* ----- 마이페이지 공통 style ----- */
     /* 영역 구분 */
-    #content2_2>div { height: 100%; }
-    #mypage_navi { width: 20%; padding: 10px; float: left; }
-    #mypage_content { width: 80%; padding: 30px; float: left; }
+    #content_2_2>div { height: 100%; float: left; }
+    #mypage_navi { width: 20%; padding: 10px; }
+    #mypage_content { width: 80%; padding: 30px; }
 
     /* MYPAGE 사이드메뉴바 */
     #mypage_navi>div {
@@ -89,7 +90,6 @@
 <body>
 
     <div class="wrap">
-        
         <div id="navigator2">
             <jsp:include page="../common/menubar.jsp" />
         </div>
@@ -150,7 +150,7 @@
                     </div>
 
                 </div>
-                
+                <div style="height: 150px"></div>
             </div>
             <div id="content_3"></div>
         </div>

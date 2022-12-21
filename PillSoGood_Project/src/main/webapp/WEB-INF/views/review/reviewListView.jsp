@@ -199,7 +199,7 @@
 							<tr>
 								<td width="88%;" id="allR">총 <span style="color: #78C2AD;">${ pi.listCount }</span>건</td>
 								<td width="6%;"><a href="list.re?cpage=1&order=new">최신순</a>&ensp;|&ensp;</td>
-								<td width="6%;"><a href="list.re?cpage=1&order=hot">인기순</a></td>
+								<td width="6%;"><a href="list.re?cpage=1&order=hot">조회순</a></td>
 							</tr>
 						</table>
 					</div>	

@@ -19,7 +19,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 100%;
-        height: 1750px;
+        height: auto;
         margin : auto;
     }
 
@@ -27,10 +27,10 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1400px; }
+    #content { height: auto; display: flex; }
     #content_2>div { width: 100%; }
     #content_2_1 { height: 115px; }
-    #content_2_2 { color: black; }
+    #content_2_2 { height: 1100px; color: black; }
 
     #header { height: 130px; }
 
@@ -52,9 +52,9 @@
 
     /* ----- 마이페이지 공통 style ----- */
     /* 영역 구분 */
-    #content2_2>div { height: 100%; }
-    #mypage_navi { width: 20%; padding: 10px; float: left; }
-    #mypage_content { width: 80%; padding: 30px; float: left; }
+    #content_2_2>div { height: 100%; float: left; }
+    #mypage_navi { width: 20%; padding: 10px; }
+    #mypage_content { width: 80%; padding: 30px; }
 
     /* MYPAGE 사이드메뉴바 */
     #mypage_navi>div {
@@ -108,6 +108,7 @@
 		box-sizing: border-box;
 		color: #78C2AD!important;
 	}
+
 	#all:hover {
 		color: white;
 	}
@@ -117,7 +118,6 @@
 <body>
 
     <div class="wrap">
-        
         <div id="navigator2">
             <jsp:include page="../common/menubar.jsp" />
         </div>
@@ -129,7 +129,6 @@
                     <p>MY PAGE</p>
                 </div>
                 <div id="content_2_2" style="padding-top:10px;">
-                    
                     <div id="mypage_navi">
                         <div>
                             <p style="font-size: 20px;"><b style="font-size: 25px;">${ loginUser.memberName }</b> 님</p>
@@ -328,7 +327,7 @@
 
                     </div>
                 </div>
-
+				<div style="height: 150px;"></div>
             </div>
             <div id="content_3"></div>
         </div>

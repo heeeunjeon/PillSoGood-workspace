@@ -11,14 +11,14 @@
 <style>
 
     div {
-        /* border : 1px solid #78C2AD; */
+        border : 1px solid #78C2AD;
         box-sizing : border-box;
     }
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
-        height: 1530px;
+        width: 100%;
+        height: auto;
         margin : auto;
     }
 
@@ -26,11 +26,10 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1150px; }
-    #content_2>div { width: 100%; }
-    #content_2_1 { height: 10%; float: left; }
-    #content_2_2 { height: 90%; float: left; }
-    /* #content_2_3 { height: 10%; float: left; } */
+    #content { height: auto; display: flex; }
+    #content_2>div { width: 100%; float: left; }
+    #content_2_1 { height: 115px; }
+    #content_2_2 { height: auto; }
 
     #header { height: 130px; }
 
@@ -68,8 +67,9 @@
 <body>
 
     <div class="wrap">
-        <jsp:include page="../common/menubar.jsp" />
-        <div id="navigator2"></div>
+        <div id="navigator2">
+            <jsp:include page="../common/menubar.jsp" />
+        </div>
         <div id="header"></div>
         <div id="content">
             <div id="content_1"></div>
@@ -197,14 +197,13 @@
 					        }
 					    </script>
 
-                        <div align="center" style="padding: 20px;">
+                        <div align="center" style="padding: 15px 0px;">
                             <button class="btn btn-secondary" id="enrollbtn" type="submit" disabled onclick="return validate();">가입완료</button>
                         </div>
                     </form>
 
-                    
                 </div>
-                <div id="content_2_3"></div>
+                <div style="height: 150px;"></div>
             </div>
             <div id="content_3"></div>
         </div>
@@ -213,11 +212,8 @@
     
    <script>
    	$(function() {
-   		
    		// 아이디를 입력받는 input 요소 객체를 변수에 담아두기 => keyup 이벤트 걸기
    		var $idInput = $("#enrollForm input[name=memberId]");
-   		
-   		
    		
    		$idInput.keyup(function() {
    			
@@ -341,10 +337,7 @@
               $("#email").val(email);
           });
       });
-
-             
   </script>
-
 
 </body>
 </html>

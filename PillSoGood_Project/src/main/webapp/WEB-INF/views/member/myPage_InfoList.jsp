@@ -16,7 +16,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         /* 전체 길이 개별 커스텀 */
         height: 1400px;
         margin : auto;
@@ -95,6 +95,7 @@
         text-align: left;
         color: black;
         line-height: 36px;
+        border: none;
     }
 
 </style>
@@ -254,7 +255,7 @@
             </div>
             <div id="content_3"></div>
         </div>
-  
+        <jsp:include page="../common/footer.jsp" />
     </div>
 
 
