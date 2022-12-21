@@ -138,10 +138,24 @@
 	
 	</update>
 	
+	<!-- 관리자 회원 검색 리스트 수 조회 -->
+	<select id="adminSelectSearchListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_ID = #{keyword}
+		   OR MEMBER_NAME = #{keyword}
+		   OR EMAIL = #{keyword}
+	</select>
 	
+	<!-- 관리자 회원 검색 조회 -->
+	<select id="adminSelectSearchList" parameterType="string" resultMap="memberResultSet">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME,
+		       EMAIL, MEMBER_ENROLL_DATE
+		       , MEMBER_STATUS
+		FROM MEMBER
+		WHERE MEMBER_ID = #{keyword}
+		   OR MEMBER_NAME = #{keyword}
+		   OR EMAIL = #{keyword}
+	</select>
 	
-	
-	
-
-
 </mapper>

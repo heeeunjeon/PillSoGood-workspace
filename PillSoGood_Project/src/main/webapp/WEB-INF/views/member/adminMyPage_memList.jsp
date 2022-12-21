@@ -167,9 +167,9 @@
 
                         <div id="admin_menu">
                             <p>[ 회원 목록 ]</p>
-                            <form class="input-group" id="search_mem">
-                                <input type="text" class="form-control" name="" placeholder="아이디 / 이름 / 이메일 검색">
-                                <button class="btn btn-primary" type="submit">검색</button>
+                            <form class="input-group" id="search_mem" action="adMyPageSearch.me" method="post">
+                                <input type="text" class="form-control" name="keyword" placeholder="아이디 / 이름 / 이메일 검색">
+                                <button id="searchBtn" class="btn btn-primary" type="submit">검색</button>
                             </form>
                         </div>
                         
@@ -185,16 +185,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach var="m" items="${ list }">
-	                                <tr>
-	                                    <td>${ m.memberNo }</td>
-	                                    <td>${ m.memberId }</td>
-	                                    <td>${ m.memberName }</td>
-	                                    <td>${ m.email }</td>
-	                                    <td>${ m.memberEnrollDate }</td>
-	                                    <td>${ m.memberStatus }</td>
-	                                </tr>
-                                </c:forEach>
+                            	<c:choose>
+                            		<c:when test="${not empty searchList}">
+		                            	<c:forEach var="s" items="${ searchList }">
+			                                <tr>
+			                                    <td>${ s.memberNo }</td>
+			                                    <td>${ s.memberId }</td>
+			                                    <td>${ s.memberName }</td>
+			                                    <td>${ s.email }</td>
+			                                    <td>${ s.memberEnrollDate }</td>
+			                                    <td>${ s.memberStatus }</td>
+			                                </tr>
+		                                </c:forEach>
+		                    		</c:when>
+		                    		<c:when test="${empty searchList and not empty list }">
+		                    			<c:forEach var="m" items="${ list }">
+			                                <tr>
+			                                    <td>${ m.memberNo }</td>
+			                                    <td>${ m.memberId }</td>
+			                                    <td>${ m.memberName }</td>
+			                                    <td>${ m.email }</td>
+			                                    <td>${ m.memberEnrollDate }</td>
+			                                    <td>${ m.memberStatus }</td>
+			                                </tr>
+		                                </c:forEach>
+		                    		</c:when>
+		                    	</c:choose>
                             </tbody>
                         </table>
                         <br>
@@ -208,33 +224,62 @@
                                 });
                             });
                         </script>
-
-                        <div>
-                            <ul class="pagination">
-                                <c:choose> 
-		                    		<c:when test="${ pi.currentPage eq 1 }">
-		                    			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
-		                    		</c:when>
-		                    		<c:otherwise>
-		                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ pi.currentPage - 1 }">1</a></li>
-		                    		</c:otherwise>
-	                    		</c:choose>
-	                    	
-		                    	<c:forEach var="m" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                    		<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ m }">${ m }</a></li>
-		                    	</c:forEach>
-	                    	
-		                    	<c:choose>
-		                    		<c:when test="${pi.currentPage eq pi.maxPage }">
-		                    			<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
-		                    		</c:when>
-		                    		<c:otherwise>
-		                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-		                    		</c:otherwise>
-		                    	</c:choose>
-                            </ul>
-                        </div>
-
+						<c:choose>
+							<c:when test="${not empty searchList}">
+								<div>
+		                            <ul class="pagination">
+		                                <c:choose> 
+				                    		<c:when test="${ pi.currentPage eq 1 }">
+				                    			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+				                    		</c:when>
+				                    		<c:otherwise>
+				                    			<li class="page-item"><a class="page-link" href="adMyPageSearch.me?cpage=${ pi.currentPage - 1 }">1</a></li>
+				                    		</c:otherwise>
+			                    		</c:choose>
+			                    	
+				                    	<c:forEach var="m" begin="${ pi.startPage }" end="${ pi.endPage }">
+				                    		<li class="page-item"><a class="page-link" href="adMyPageSearch.me?cpage=${ m }">${ m }</a></li>
+				                    	</c:forEach>
+			                    	
+				                    	<c:choose>
+				                    		<c:when test="${pi.currentPage eq pi.maxPage }">
+				                    			<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+				                    		</c:when>
+				                    		<c:otherwise>
+				                    			<li class="page-item"><a class="page-link" href="adMyPageSearch.me?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+				                    		</c:otherwise>
+				                    	</c:choose>
+		                            </ul>
+		                        </div>
+		                    </c:when>
+							<c:when test="${empty searchList and not empty list }">	
+		                        <div>
+		                            <ul class="pagination">
+		                                <c:choose> 
+				                    		<c:when test="${ pi.currentPage eq 1 }">
+				                    			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
+				                    		</c:when>
+				                    		<c:otherwise>
+				                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ pi.currentPage - 1 }">1</a></li>
+				                    		</c:otherwise>
+			                    		</c:choose>
+			                    	
+				                    	<c:forEach var="m" begin="${ pi.startPage }" end="${ pi.endPage }">
+				                    		<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ m }">${ m }</a></li>
+				                    	</c:forEach>
+			                    	
+				                    	<c:choose>
+				                    		<c:when test="${pi.currentPage eq pi.maxPage }">
+				                    			<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
+				                    		</c:when>
+				                    		<c:otherwise>
+				                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+				                    		</c:otherwise>
+				                    	</c:choose>
+		                            </ul>
+		                        </div>
+							</c:when>
+						</c:choose>
                     </div>
 
                 </div>

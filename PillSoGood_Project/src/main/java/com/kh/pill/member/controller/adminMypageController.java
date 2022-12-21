@@ -139,11 +139,32 @@ public class adminMypageController {
 			return "common/errorPage";
 		}
 		
-		
-		
 	}
 	
-	
+	/**
+	 * 관리자 회원 검색
+	 */
+	@RequestMapping("adMyPageSearch.me")
+	public String searchMemberAdMyPage(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, String keyword) {
+		
+		// 검색되는 회원 수 구하기
+		int listCount = adMypageService.selectSearchListCount(keyword);
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		// 회원 정보 조회
+		ArrayList<Member> searchList = adMypageService.selectSearchList(pi, keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("searchList", searchList);
+		
+		// System.out.println(searchList);
+		
+		return "member/adminMyPage_memList";
+	}
 	
 
 }

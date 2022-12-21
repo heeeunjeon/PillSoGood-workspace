@@ -66,5 +66,21 @@ public class adminMypageServiceImpl implements adminMypageService {
 		
 		return adMyPageDao.deleteMember(sqlSession, memberNo);
 	}
+	
+	/**
+	 * 회원 검색 리스트 카운트 처리
+	 */
+	@Override
+	public int selectSearchListCount(String keyword) {
+		return adMyPageDao.selectSearchListCount(sqlSession, keyword);
+	}
+
+	/**
+	 * 회원 검색 처리
+	 */
+	@Override
+	public ArrayList<Member> selectSearchList(PageInfo pi, String keyword) {
+		return adMyPageDao.selectSearchList(sqlSession, pi, keyword);
+	}
 
 }

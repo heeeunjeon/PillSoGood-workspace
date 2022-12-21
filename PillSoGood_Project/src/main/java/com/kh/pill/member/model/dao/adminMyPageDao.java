@@ -57,4 +57,24 @@ public class adminMyPageDao {
 		return sqlSession.update("memberMapper.adminDeleteMember", memberNo);
 	}
 
+	/**
+	 * 회원 검색 리스트 처리
+	 */
+	public int selectSearchListCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("memberMapper.adminSelectSearchListCount");
+	}
+
+	/**
+	 * 회원 검색 처리
+	 */
+	public ArrayList<Member> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.adminSelectSearchList", keyword, rowBounds);
+	}
+
 }

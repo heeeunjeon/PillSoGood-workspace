@@ -22,4 +22,10 @@ public interface adminMypageService {
 	// 회원 탈퇴 처리
 	int deleteMember(int memberNo);
 
+	// 회원 검색 리스트 카운트
+	int selectSearchListCount(String keyword);
+
+	// 회원 검색 조회
+	ArrayList<Member> selectSearchList(PageInfo pi, String keyword);
+
 }
