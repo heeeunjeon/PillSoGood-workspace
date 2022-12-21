@@ -287,10 +287,10 @@
 				               				<c:when test="${ pi.currentPage eq p }">
 					               				<c:choose>
 						               				<c:when test="${ empty s or empty e }">
-						               					<li class="page-item active"><a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a></li>
+						               					<li class="page-item disabled"><a class="page-link" href="myPage.or?cpage=${ p }">${ p }</a></li>
 						               				</c:when>
 						               				<c:otherwise>
-						               					<li class="page-item active"><a class="page-link" href="search.or?cpage=${ p }&s=${ s }&e=${ e }">${ p }</a></li>
+						               					<li class="page-item disabled"><a class="page-link" href="search.or?cpage=${ p }&s=${ s }&e=${ e }">${ p }</a></li>
 						               				</c:otherwise>
 						               			</c:choose>
 											</c:when>
