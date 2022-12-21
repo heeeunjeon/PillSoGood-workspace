@@ -214,7 +214,7 @@
                     // initialize Tagify on the above input node reference
                     
                     var tagify = new Tagify(input, {
-                      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join('#')
+                      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(' ')
                     })
 
                     // bind "DragSort" to Tagify's main element and tell

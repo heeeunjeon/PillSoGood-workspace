@@ -290,15 +290,12 @@
                         <tr>
                             <td>
                                 <div class="magazineSelect">
-									<article class="cont-select">
-								        <button class="btn-select">전체</button>
-								        <ul class="list-member">
-								        	<li><button type="button" onclick="location.href='list.mag';">전체</button></li>
-								            <li><button type="button" onclick="location.href='list.mag?life=1';">라이프</button></li>
-								            <li><button type="button" onclick="location.href='list.mag?season=2';">시즌</button></li>
-								            <li><button type="button" onclick="location.href='list.mag?issue=3';">이슈</button></li>
-								        </ul>
-								    </article>
+									<select class="form-select" id="magazineSelectOpt" name="categoryNo">
+									   <option value="0" data-sub="전체">전체</option>
+	                                   <option value="1" data-sub="라이프">라이프</option>
+	                                   <option value="2" data-sub="시즌">시즌</option>
+	                                   <option value="3" data-sub="이슈">이슈</option>
+                             		</select>
                                 </div>
                             </td>                        
 							<td>
@@ -338,9 +335,7 @@
                                                 <span class="badge bg-light" id="hashtag_${ i.count }"></span>
                                             </div>
                                             <div class="likeArea">
-  		                                    	<span id="countLike">
-		                                    	
-		                                    	</span>
+  		                                    	<span id="magazineLikeCount" name="magazineLikeCount"></span>
                                             </div>
                                     </div>
                                  </c:when>
@@ -360,23 +355,25 @@
                 	
 	                	<c:choose>
 	                		<c:when test="${ pi.currentPage eq 1 }">
-	                			<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+
+	                				<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+	                			
 	                		</c:when>
 	                		<c:otherwise>
-	                			<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
+	                				<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
 	                		</c:otherwise>
 	                	</c:choose>
 	                    
 	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 	                    	<li class="page-item"><a class="page-link" href="list.mag?cpage=${ p }">${ p }</a></li>
 	                    </c:forEach>
-	                    
+                 
 	                    <c:choose>
 	                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
 	                    		<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
 	                    	</c:when>
 	                    	<c:otherwise>
-	                    		<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
+	                				<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
 	                    	</c:otherwise>
 	                    </c:choose>
                 </ul>
@@ -396,8 +393,6 @@
     
 	
 </body>
-
-	<!-- this = 글번호 -->    
 	<script>
 	    $(function() {
 	        $(".thumbnail").click(function() {      
@@ -407,6 +402,12 @@
 	            location.href = "detail.mag?magazineNo=" + magazinNo;
 	        });
 	    });
+	</script>
+
+
+	<!-- this = 글번호 -->    
+	<script>
+
 	</script>
 
 	<script>

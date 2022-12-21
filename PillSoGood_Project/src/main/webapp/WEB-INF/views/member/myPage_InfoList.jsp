@@ -178,9 +178,9 @@
                                         <tr>
                                             <th>성별</th>
                                             <td>
-                                                <select class="form-select" name="gender" value="${loginUser.gender}">
-                                                    <option value="M">남성</option>
-                                                    <option value="F">여성</option>
+                                                <select class="form-select" name="gender">
+                                                    <option value="M" name="gender">남성</option>
+                                                    <option value="F" name="gender">여성</option>
                                                 </select>
                                                 <!-- loginUser 의 성별을 selected 하도록 -->
                                             </td>
@@ -220,7 +220,7 @@
                             
                             if("${loginUser.gender}" != "") {
 
-                                $("input[value=${loginUser.gender}]").attr("checked", true);
+                                $("option[value=${loginUser.gender}]").attr("selected", true);
                             }
                         });
 

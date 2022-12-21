@@ -289,12 +289,12 @@
 		                    	<c:when test="${ loginUser.memberNo eq magL.memberNo  }"> 
 		                    		<img src="resources/images/Like.png" width="30" class="likeControl" id="magazineLike" style="cursor: pointer;" >
 			                        <img src="resources/images/Unlike.png" width="30" style="display:none" class="likeControl" id="magazineUnLike" style="cursor: pointer;">
-			                        <span id="magazineLikeCount">${mag.magazineLikeCount}</span>
+			                        <span id="magazineLikeCount" name="magazineLikeCount"></span>
 			                    </c:when>
 			                    <c:otherwise>
 			                    	<img src="resources/images/Unlike.png" width="30" alt="" class="likeControl" id="magazineUnLike" style="cursor: pointer;">
 			                        <img src="resources/images/Like.png" width="30" class="likeControl" style="display:none" id="magazineLike" style="cursor: pointer;">
-			                        <span id="magazineLikeCount">${mag.magazineLikeCount}</span>
+			                        <span id="magazineLikeCount" name="magazineLikeCount"></span>
 			                    </c:otherwise>
 		                    </c:choose>
                     	</div>
@@ -351,6 +351,25 @@
                         
                         location.href = "list.mag";
                     }
+                    
+                    function selectLikeCount() {
+                    	
+                    	$.ajax({
+                    		url : "likeCount.mag",
+                    		data : {magazineNo : ${mag.magazineNo}},
+                    		success : function(result) { // 좋아요개수
+                    			
+                    			$("#magazineLikeCount").text(result);
+                    		},
+                    		error : function() {
+                    			console.log("실패");
+                    		}
+                    	});
+                    }
+                    
+                    $(function() {
+                    	selectLikeCount();
+                    })
                 </script>
 
 				<!-- 좋아요 -->

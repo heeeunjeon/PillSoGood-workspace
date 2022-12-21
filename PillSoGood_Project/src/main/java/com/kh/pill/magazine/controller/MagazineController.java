@@ -48,18 +48,8 @@ public class MagazineController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-		ArrayList<Magazine> list = new ArrayList<>();
-		if(!popular.equals("y")) { // 최신순 조회
-			
-			list = magazineService.selectMagazineList(pi);
-		} else { // 인기순 조회
-			
-			list = magazineService.selectPopularList(pi);
-		}
-		
-
 		// 카테고리
-		ArrayList<Magazine> catelist = new ArrayList<>();
+		ArrayList<Magazine> list = new ArrayList<>();
 		
 		System.out.println("life : " + life);
 		System.out.println("season : " + season);
@@ -67,30 +57,31 @@ public class MagazineController {
 		
 		if(life.equals("1")) { 
 			
-			catelist = magazineService.selectLifeList(pi);
+			list = magazineService.selectLifeList(pi);
 		
 		} else if(season.equals("2")) { 
 			
-			catelist = magazineService.selectSeasonList(pi);
+			list = magazineService.selectSeasonList(pi);
 		
 		} else if(issue.equals("3")) {
 			
-			catelist = magazineService.selectIssueList(pi);
+			list = magazineService.selectIssueList(pi);
 			
 		} else {
 			
-			catelist = magazineService.selectMagazineList(pi);
+			list = magazineService.selectMagazineList(pi);
 		}
 		
-		System.out.println(catelist);
+		System.out.println(list);
 		System.out.println(life);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		model.addAttribute("list", catelist);
+
 
 		return "magazine/magazineListView";
 	}
+	
 
 	@RequestMapping("enrollForm.mag")
 	public String enrollForm() {
@@ -152,7 +143,7 @@ public class MagazineController {
 		
 		Member loginUser= (Member)session.getAttribute("loginUser");
 		
-		if(loginUser != null) { //로그인 o
+		if(loginUser != null) { //로그인 o => 좋아요 보이기
 		
 			int memberNo = loginUser.getMemberNo();
 			
@@ -166,7 +157,7 @@ public class MagazineController {
 			
 			int result = magazineService.updateViewCount(magazineNo);
 			
-			if(result > 0) { // 조회수 0 이상
+			if(result > 0) { // 조회수 0 이상 => 다 넘기기
 				
 				model.addAttribute("prev", prev);
 				model.addAttribute("next", next);
@@ -184,22 +175,22 @@ public class MagazineController {
 				
 			}
 				
-		} else { // 로그인 x
+		} else { // 로그인 x => 이전글/다음글, 글번호만 넘기기
 
 			int result = magazineService.updateViewCount(magazineNo);
 			
+			Magazine mag = magazineService.selectMagazine(magazineNo);
 			Magazine prev = magazineService.selectMagazine(magazineNo - 1);
 			Magazine next = magazineService.selectMagazine(magazineNo + 1);
-			Magazine mag = magazineService.selectMagazine(magazineNo);
-			
+
 			if(result > 0) {
+				model.addAttribute("mag" , mag);
 				model.addAttribute("prev", prev);
 				model.addAttribute("next", next);
-				model.addAttribute("mag" , mag);
 				
 				return "magazine/magazineDetailView";
 				
-			} else {
+			} else { // 다 조회 안 될 경우
 				
 				model.addAttribute("errorMsg", "게시글 상세 조회에 실패했습니다.");
 				
@@ -209,6 +200,20 @@ public class MagazineController {
 	
 		}
 	
+	}
+	
+	// 좋아요 갯수 조회
+	@ResponseBody
+	@RequestMapping("likeCount.mag")
+	public int selectLikeCount(int magazineNo) {
+		
+		// System.out.println(magazineNo);
+		
+		int magazineLikeCount = magazineService.selectMagazineLikeCount(magazineNo);
+		
+		System.out.println(magazineLikeCount);
+		
+		return magazineLikeCount;
 	}
 
 	
@@ -225,7 +230,7 @@ public class MagazineController {
 			
 			int magazineNo = magL.getMagazineNo();
 			
-			result *= magazineService.updateMagazineLikeCount(magazineNo);
+			result *= magazineService.updateMagazineLikeCount(magazineNo); // 1*0 혹은 1*1
 			
 			magazineLikeCount = magazineService.selectMagazineLikeCount(magazineNo);
 			

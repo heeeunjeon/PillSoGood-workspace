@@ -108,23 +108,27 @@
      	 position:relative;
      	 margin-left:-270px;
      	 padding-top:-100px;
-     	  top: 5%;
+     	 top: 5%;
       }
 
-		.logoArea {
+	  .logoArea {
 		    padding-left: 29%;
     		padding-top: 80px;
 		}
 
-    .tagify {
+      .tagify {
                --tag--max-width: 250px;
                width: 100%;
                max-width: 600px;
-             }
+      }
 
-             .tagify .tagify__tag-text {
-               white-space: nowrap;
-             }
+      .tagify .tagify__tag-text {
+        white-space: nowrap;
+      }
+      
+      tags {
+      	width: 1000px;
+      }
 
 </style>
 
@@ -179,14 +183,12 @@
 
                         <tr>
                           <th><label for="hashtag">해시태그</label></th>
-	                          
 	                          <td>
-
                         <input type="text" placeholder="type tags" id="magazineHashtag" class="form-control" name="magazineHashtag" value="${mag.magazineHashtag}">
                         
                         <script src='https://unpkg.com/@yaireo/tagify'></script>
-             				<script src='https://unpkg.com/@yaireo/dragsort'></script>
-             				<script>
+           				<script src='https://unpkg.com/@yaireo/dragsort'></script>
+           				<script>
                     // This demo is using "dragsort" lib (by myself)
                     // https://github.com/yairEO/dragsort
 			        
@@ -197,7 +199,7 @@
                     // initialize Tagify on the above input node reference
                     
                     var tagify = new Tagify(input, {
-                      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join('#')
+                      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(' ')
                     })
 
                     // bind "DragSort" to Tagify's main element and tell

@@ -146,7 +146,7 @@
 	
 	
 	<!-- 좋아요 카운트 -->
-	<select id="selectMagazineLikeCount" resultType="_int">
+	<select id="selectMagazineLikeCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)
 		  FROM MAGAZINE_LIKE
 		 WHERE MAGAZINE_NO = #{magazineNo}
