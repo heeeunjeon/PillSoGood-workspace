@@ -1,8 +1,6 @@
 package com.kh.pill.member.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
@@ -64,9 +62,9 @@ public class MemberController {
 		else {
 			
 			// 로그인 실패
-			mv.addObject("errorMsg", "로그인 실패");
+			session.setAttribute("alertMsg", "아이디 또는 비밀번호가 일치하지 않습니다.");
 			
-			mv.setViewName("common/errorPage");
+			mv.setViewName("redirect:loginForm.me");
 		}
 		
 		return mv;

@@ -514,12 +514,14 @@
 					}
 				}).done(data => {
 					
-					// console.log(data);
+					console.log(data);
 					
 					if(data.response.status == 'paid') {
 						
 						// 주문 성공 화면으로 이동
 						location.href = 'paid?ono=' + data.response.merchantUid; 
+					} else {
+						alert(data.message);
 					}
 				});
 						

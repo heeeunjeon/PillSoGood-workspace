@@ -182,7 +182,7 @@
 		                            <table id="refund">
 		                                <tr>
 		                                    <td width="30%">환불 예정금액</td>
-		                                    <th width="70%">${ o.orderPrice } 원</th>
+		                                    <th width="70%"><fmt:formatNumber value="${ o.orderPrice }"/> 원</th>
 		                                </tr>
 		                            </table>
 		                        </div>
