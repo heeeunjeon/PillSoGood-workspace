@@ -51,7 +51,7 @@
 
 
     .wrap {
-        width: 98%;
+        width: 100%;
         height: 1480px;
         margin : auto;
     }

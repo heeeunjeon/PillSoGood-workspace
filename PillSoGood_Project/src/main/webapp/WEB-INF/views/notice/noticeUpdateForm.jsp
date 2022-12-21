@@ -17,7 +17,7 @@
 
     /* 전체를 감싸는 wrap */
     .wrap {
-        width: 98%;
+        width: 100%;
         height: 1530px;
         margin : auto;
     }
@@ -123,8 +123,8 @@
                             <br><br>
 
                             <div align="center" style="margin-bottom : 50px;">
-                                <button class="btn btn-primary" type="submit">등록</button>
-                                <button class="btn btn-light" type="reset">취소</button>
+                                <button class="btn btn-primary" type="submit">수정</button>
+                                <button class="btn btn-light" onclick="location.href='list.no'">취소</button>
                             </div>
 
                         </div>
