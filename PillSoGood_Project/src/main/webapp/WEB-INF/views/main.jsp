@@ -467,44 +467,11 @@
                     <div id="content5_4" style="width: 100%; float: left; background-color: #f3969b65; height: 384px;">
                         <div >
                             <table id="cotent5_4Table" align="center">
-                                <tr>
-                                    <td>
-                                        <div id="el1" align="center">
-                                            <div>
-                                                <img src="" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
-                                            </div>
-                                            <h6 style="padding-top: 25px;">정기구독 10회차</h6>
-                                            <p style="color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;">뭘 먹어야할지 헤메던 제게, <br> 딱 맞는 영양제를 찾아줬어요!</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div id="el1" align="center">
-                                            <div>
-                                                <img src="" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
-                                            </div>
-                                            <h6 style="padding-top: 25px;">정기구독 7회차</h6>
-                                            <p style="color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;"> 여러군데에서 찾기 귀찮았는데 <br> 한번에 사니 편리해요 </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div id="el1" align="center">
-                                            <div>
-                                                <img src="" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
-                                            </div>
-                                            <h6 style="padding-top: 25px;">정기구독 13회차</h6>
-                                            <p style="color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;"> 과다섭취를 걱정했는데 <br> 알맞게 구성해주니 좋아요 </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div id="el1" align="center">
-                                            <div>
-                                                <img src="" style="width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;">
-                                            </div>
-                                            <h6 style="padding-top: 25px;">정기구독 10회차</h6>
-                                            <p style="color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;"> 이젠 챙겨먹는게 <br> 습관이 됐어요 </p>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <tbody>
+                                	<tr>
+                                    
+                                	</tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -580,6 +547,74 @@
             </div>
 
             <script>
+            
+            	$(function() {
+            		mainPageBestReview();
+            		
+            	});
+            	
+            	
+            	function mainPageBestReview() {
+            		
+            		$.ajax({
+						
+            			
+            			url : "bestReview.main",
+            			success : function(result) {
+            				
+            				
+            				var resultStr ="";
+            				
+            				for(var i=0; i < result.length; i++) {
+            					
+            					
+            					resultStr += "<td>"
+                                				+ "<div id='el1' align='center'>"
+                                    				+ "<div>"
+                                        				+ "<img src=";
+                                    						
+                                    						if(result[i].flist.length == 0) {
+                                    							resultStr += "resources/images/noPictureReview.png";
+                                    						} else {
+                                    							
+                                    							resultStr += result[i].flist[0].filePath + result[i].flist[0].changeName; 
+                                    							
+                                    						}
+                                        					
+                                        				resultStr += " style='width: 100px; height: 100px; border-radius: 60px; margin: auto; margin-top: 20px;'>"
+                                    				+ "</div>"
+                                    				+ "<h6 style='padding-top: 25px;'>";
+                                    					if(result[i].subsStatus == 'N') {
+                                    						
+                                    						resultStr += "일괄결제";	
+                                    						
+                                    					}else {
+                                    						
+                                    						resultStr += "정기구독";
+                                    					}
+                                    				resultStr += "</h6>"
+                                    				+ "<p style='color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;'>"+ result[i].reviewTitle+"</p>"
+                               					+ "</div>"
+                            				+ "</td>";
+            					
+            				}
+            				
+            				
+            				$("#cotent5_4Table>tbody>tr").html(resultStr);
+            				
+            				
+            			},
+            			error : function() {
+            				console.log("mainPageBestReview ajax failure");
+            			}
+            			
+            		});
+            		
+            		
+            	}
+            	
+            	
+            	
                 var swiper = new Swiper('.swiper-container', {
 
                     slidesPerView: 3, // 동시에 보여줄 슬라이드 갯수
