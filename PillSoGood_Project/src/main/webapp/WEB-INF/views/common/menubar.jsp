@@ -151,6 +151,9 @@
 	
 	<c:if test="${ loginUser ne null }">
 		<script>
+		
+		
+			var socket  = null;
 			$(document).ready(function(){
 			    // 웹소켓 연결
 			    sock = new SockJS("<c:url value="/echo-ws"/>");
@@ -169,7 +172,7 @@
   <script>
 		var toastCount = 0;
 		// 전역변수 설정
-		var socket  = null;
+		
 		
 
 		

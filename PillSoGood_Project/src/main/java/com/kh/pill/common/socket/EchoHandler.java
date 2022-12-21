@@ -86,7 +86,7 @@ public class EchoHandler extends TextWebSocketHandler {
 				} else if("order".equals(cmd)) {
 					
 					TextMessage tmpMsg = new TextMessage("<br>" + fromId + "님이 "
-							+ "상품을 구매하셨습니다.");
+							+ "상품을 구매하셨습니다.<br>주문번호 : " + title);
 					toIdSession.sendMessage(tmpMsg);
 				}
 				

@@ -100,18 +100,20 @@
     
     $(function() {
     	
-    	toAdminSocketMsg();
-    })
+    	setTimeout(function() {
+    		toAdminOrderMsg();
+    	}, 500);
+    });
+
     
-    function toAdminSocketMsg() {
+    function toAdminOrderMsg() {
     	
     	
     	if(socket) {
     		
-    		let socketMsg = "order"+","+"${ loginUser.memberId },"+"admin," + "bno," + "";
+    		let socketMsg = "order"+","+"${ loginUser.memberId },"+"admin," + "bno," + " ${ ono }";
 			selectAlarmList();
 			socket.send(socketMsg);
-    		
     	}
     	
     	$.ajax({
