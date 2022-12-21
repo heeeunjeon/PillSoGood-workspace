@@ -72,7 +72,7 @@
                 </div>
                 <div id="content_2_3">
                     <div class="col text-center" style="height:100%;">
-                        <button class="btn btn-primary btn-lg" onclick="location.href='/'"> 메인으로 돌아가기 </button>
+                        <button class="btn btn-primary btn-lg" onclick="location.href='/PillSoGood'"> 메인으로 돌아가기 </button>
                     </div>
                 </div>
             </div>
