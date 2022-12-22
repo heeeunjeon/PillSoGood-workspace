@@ -294,6 +294,9 @@
                                             ${ r.memberName }&ensp;<span style="color: #78C2AD; font-weight: bold;">정기결제</span>&ensp;
                                         </td>
                                     </c:when>
+                                    <c:otherwise>
+										<td>${ r.memberName }&emsp;<span style="color: #78C2AD; font-weight: bold;">정기결제</span></td>
+									</c:otherwise>
                                 </c:choose>
                                 <td></td>
                             </tr>
