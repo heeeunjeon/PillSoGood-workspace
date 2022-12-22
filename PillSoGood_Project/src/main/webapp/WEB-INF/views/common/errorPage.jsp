@@ -72,13 +72,11 @@
                     </div>
                 </div>
             </div>
-
             <div id="content_3"></div>
         </div>
 
-
         <jsp:include page="footer.jsp" />
         
-	
+	</div>
 </body>
 </html>

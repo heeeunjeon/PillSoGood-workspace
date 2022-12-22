@@ -1,7 +1,6 @@
 package com.kh.pill.event.model.vo;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
