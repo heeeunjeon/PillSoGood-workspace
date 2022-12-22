@@ -48,7 +48,7 @@
     #content_2 { width : 60%; }
     #content_3 { width : 20%; }
 
-    body { font-family: 'Noto Sans KR', sans-serif !important;  }
+    body, pre { font-family: 'Noto Sans KR', sans-serif !important;  }
 
     table { color: black; width: 100%; }
 
@@ -249,9 +249,9 @@
     			                                        		      + "</td>"
     		                                        		  	 + "</tr>"
     		                                        		  	 + "<tr style='border-bottom : 1px solid lightgray;'>"
-    		                                        		          + "<td class='replyContents' style='padding: 30px; padding-left: 60px;'>"
+    		                                        		          + "<td class='replyContents' style='padding: 30px; padding-left: 60px;'><pre style='white-space: pre-line;'>"
     		    	                                    			  + result[i].replyContent
-    		    	                                    	          + "</td>";
+    		    	                                    	          + "</pre></td>";
     		    	                                    	        
     		    	                                    	          if(("${ loginUser.memberId }" == result[i].memberId) || ("${loginUser.memberId}" == 'admin') ) {
     			    	                                    	          
@@ -284,9 +284,9 @@
 																	+ "</td>"
 																+ "</tr>"
 																+ "<tr style='border-bottom : 1px solid lightgray;'>"
-																	+ "<td colspan='3' class='replyContents'style='padding: 30px; padding-left: 100px;'>"
+																	+ "<td colspan='3' class='replyContents'style='padding: 30px; padding-left: 100px;'><pre style='white-space: pre-line;'>"
 																	+ result[i].replyContent
-																	+ "</td>";
+																	+ "</pre></td>";
 																	
 																	
 																	if(("${ loginUser.memberId }" == result[i].memberId) || ("${loginUser.memberId}" == 'admin')) {

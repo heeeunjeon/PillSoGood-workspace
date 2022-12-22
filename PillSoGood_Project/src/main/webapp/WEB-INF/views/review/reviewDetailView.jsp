@@ -486,12 +486,11 @@
                                             
                         resultStr += "</tr>"
                                   + "<tr style='border-bottom: 1px solid lightgray;'>"
-                                  + "<td colspan='3'>" + "<pre class='replyContent'>" + result[i].replyContent + "</pre>" + "</td>"
+                                  + "<td colspan='3'><pre style='white-space: pre-line;'>" + result[i].replyContent + "</pre></td>"
                                   + "</tr>";
                     }
                     
                     $("#replyArea>tbody").html(resultStr);
-                    
                     // 댓글 개수 출력
                     $("#rcount").text(result.length);
                 },
