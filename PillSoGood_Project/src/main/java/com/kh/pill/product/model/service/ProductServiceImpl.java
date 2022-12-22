@@ -112,13 +112,6 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.adSelectProductList(sqlSession, pi);
 	}
 
-	/**
-	 * 관리자 페이지 제품 성별 선호도 구하기 
-	 */
-//	@Override
-//	public ArrayList<ProductLike> adProductLikeGender() {
-//		
-//		return productDao.adProductLikeGender(sqlSession);
-//	}
+
 
 }

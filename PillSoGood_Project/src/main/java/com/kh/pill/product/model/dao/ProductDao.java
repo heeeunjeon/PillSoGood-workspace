@@ -80,11 +80,5 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("productMapper.adSelectProductList", null, rowBounds);
 	}
 
-	/**
-	 * 관리자 페이지 제품 성별 선호도 구하기 
-	 */
-//	public ArrayList<ProductLike> adProductLikeGender(SqlSessionTemplate sqlSession) {
-//		
-//		return (ArrayList)sqlSession.selectList("productMapper.adProductLikeGender");
-//	}
+
 }

@@ -148,7 +148,6 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="salesStatistics.ad">매출 통계</a>
                                         <a class="dropdown-item" href="productSalesStatistics.ad">제품 통계</a>
-                                        <a class="dropdown-item" href="productLikestatistics.ad">성별/연령 통계</a>
                                     </div>
                                 </li>
                             </ul>
@@ -182,7 +181,7 @@
                                 </tr>
                                 <tr>
                                     <th>휴대폰번호</th>
-                                    <td colspan="3"><input type="text" class="form-control" name="phone" value="01012345678" placeholder="-제외" required></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="phone" value="01012345678" placeholder="-제외" maxlength="11" required></td>
                                 </tr>
                                 <tr >
                                     <th>이메일</th>

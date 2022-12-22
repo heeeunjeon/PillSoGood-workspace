@@ -137,7 +137,7 @@
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="salesStatistics.ad">매출 통계</a>
                                         <a class="dropdown-item" href="productSalesStatistics.ad">제품 통계</a>
-                                        <a class="dropdown-item" href="productLikestatistics.ad">성별/연령 통계</a>
+                                        
                                     </div>
                                 </li>
                             </ul>
