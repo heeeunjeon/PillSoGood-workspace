@@ -290,21 +290,37 @@
                         <tr>
                             <td>
                                 <div class="magazineSelect">
-									<select class="form-select" id="magazineSelectOpt" name="categoryNo">
-									   <option value="0" data-sub="전체">전체</option>
-	                                   <option value="1" data-sub="라이프">라이프</option>
-	                                   <option value="2" data-sub="시즌">시즌</option>
-	                                   <option value="3" data-sub="이슈">이슈</option>
-                             		</select>
+									<article class="cont-select">
+								        <button class="btn-select">전체</button>
+									        <ul class="list-member">
+									        	<li><button type="button" onclick="location.href='list.mag';">전체</button></li>
+									            <li><button type="button" onclick="location.href='list.mag?life=1';">라이프</button></li>
+									            <li><button type="button" onclick="location.href='list.mag?season=2';">시즌</button></li>
+									            <li><button type="button" onclick="location.href='list.mag?issue=3';">이슈</button></li>
+									        </ul>
+								    </article>
                                 </div>
-                            </td>                        
+                            </td>            
+                            
+                            <script>
+                            	$(function() {
+                            		
+                            		if(${ not empty life }) {
+                            			$(".magazineSelect .btn-select").text("라이프");
+                            		}
+
+                            		if(${ not empty season }) {
+                            			$(".magazineSelect .btn-select").text("시즌");
+                            		}
+                            		
+                            		if(${ not empty issue }) {
+                            			$(".magazineSelect .btn-select").text("이슈");
+                            		}
+                            		
+                            	});
+                            </script>
+                                        
 							<td>
-								<div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="magazineListArea">
-							  		<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked="" onclick="location.href='list.mag';">
-							  			<label class="btn btn-outline-primary" for="btnradio1">최신순</label>
-							  		<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked="" onclick="location.href='list.mag?popular=y';">
-							 			<label class="btn btn-outline-primary" for="btnradio2">인기순</label>
-								</div>
 							</td>
                         </tr>
                     </table>
@@ -355,25 +371,97 @@
                 	
 	                	<c:choose>
 	                		<c:when test="${ pi.currentPage eq 1 }">
-
 	                				<li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-	                			
 	                		</c:when>
 	                		<c:otherwise>
-	                				<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
+	                		
+								<c:choose>
+									<c:when test="${ not empty life }">
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }&life=1">&laquo;</a></li>
+									</c:when>
+									<c:when test="${ not empty season }">
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }&season=2">&laquo;</a></li>
+									</c:when>
+									<c:when test="${ not empty issue }">
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }&issue=3">&laquo;</a></li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage - 1 }">&laquo;</a></li>
+									</c:otherwise>
+								</c:choose>
 	                		</c:otherwise>
 	                	</c:choose>
 	                    
-	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                    	<li class="page-item"><a class="page-link" href="list.mag?cpage=${ p }">${ p }</a></li>
-	                    </c:forEach>
-                 
+	                    <c:choose>
+	                    	<c:when test="${ not empty life }">
+			                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			                    	<c:choose>
+			                    		<c:when test="${ pi.currentPage eq p }">
+			                    			<li class="page-item disabled"><a class="page-link" href="list.mag?cpage=${ p }&life=1">${ p }</a></li>
+			                    		</c:when>
+			                    		<c:otherwise>
+					                    	<li class="page-item"><a class="page-link" href="list.mag?cpage=${ p }&life=1">${ p }</a></li>
+			                    		</c:otherwise>
+			                    	</c:choose>
+			                    </c:forEach>
+	                    	</c:when>
+	                    	<c:when test="${ not empty season }">
+			                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			                    	<c:choose>
+			                    		<c:when test="${ pi.currentPage eq p }">
+			                    			<li class="page-item disabled"><a class="page-link" href="list.mag?cpage=${ p }&season=2">${ p }</a></li>
+			                    		</c:when>
+			                    		<c:otherwise>
+					                    	<li class="page-item"><a class="page-link" href="list.mag?cpage=${ p }&season=2">${ p }</a></li>
+			                    		</c:otherwise>
+			                    	</c:choose>
+			                    </c:forEach>
+	                    	</c:when>
+	                    	<c:when test="${ not empty issue }">
+			                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">			                    	
+			                    	<c:choose>
+			                    		<c:when test="${ pi.currentPage eq p }">
+			                    			<li class="page-item disabled"><a class="page-link" href="list.mag?cpage=${ p }&issue=3">${ p }</a></li>
+			                    		</c:when>
+			                    		<c:otherwise>
+					                    	<li class="page-item"><a class="page-link" href="list.mag?cpage=${ p }&issue=3">${ p }</a></li>
+			                    		</c:otherwise>
+			                    	</c:choose>
+			                    </c:forEach>
+	                    	</c:when>
+	                    	<c:otherwise>
+			                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			                    	<c:choose>
+			                    		<c:when test="${ pi.currentPage eq p }">
+			                    			<li class="page-item disabled"><a class="page-link" href="list.mag?cpage=${ p }">${ p }</a></li>
+			                    		</c:when>
+			                    		<c:otherwise>
+					                    	<li class="page-item"><a class="page-link" href="list.mag?cpage=${ p }">${ p }</a></li>
+			                    		</c:otherwise>
+			                    	</c:choose>
+			                    </c:forEach>
+	                    	</c:otherwise>
+	                    </c:choose>
+
 	                    <c:choose>
 	                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
 	                    		<li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
 	                    	</c:when>
 	                    	<c:otherwise>
-	                				<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
+	                    		<c:choose>
+									<c:when test="${ not empty life }">
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&life=1">&laquo;</a></li>
+									</c:when>
+									<c:when test="${ not empty season }">
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&season=2">&laquo;</a></li>
+									</c:when>
+									<c:when test="${ not empty issue }">
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&issue=3">&laquo;</a></li>
+									</c:when>
+									<c:otherwise>
+	                    				<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>
+	                    			</c:otherwise>
+	                    		</c:choose>
 	                    	</c:otherwise>
 	                    </c:choose>
                 </ul>

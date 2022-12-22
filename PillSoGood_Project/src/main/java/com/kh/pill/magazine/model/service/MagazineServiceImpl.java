@@ -28,6 +28,24 @@ public class MagazineServiceImpl implements MagazineService {
 		
 		return magazineDao.selectListCount(sqlSession);
 	}
+	
+	@Override
+	public int selectListCount1() {
+		
+		return magazineDao.selectListCount1(sqlSession);
+	}
+	
+	@Override
+	public int selectListCount2() {
+		
+		return magazineDao.selectListCount2(sqlSession);
+	}
+	
+	@Override
+	public int selectListCount3() {
+		
+		return magazineDao.selectListCount3(sqlSession);
+	}
 
 	@Override
 	public ArrayList<Magazine> selectMagazineList(PageInfo pi) {

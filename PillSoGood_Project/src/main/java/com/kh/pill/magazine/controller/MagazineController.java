@@ -39,14 +39,14 @@ public class MagazineController {
 												  @RequestParam(value="life", defaultValue="") String life,
 												  @RequestParam(value="season", defaultValue="") String season, 
 												  @RequestParam(value="issue", defaultValue="") String issue) { 
-		
-		// 기본적으로 최신순 조회
-		int listCount = magazineService.selectListCount();
 
+		int listCount = 0; // 카테고리별로 게시글의 갯수가 다 다르니까 => 라이프 갯수 + 시즌 갯수 + 이슈 갯수 = 전체 게시글 갯수
 		int pageLimit = 5; 
 		int boardLimit = 6; 
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		PageInfo pi = null;
+		
+		// PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		// 카테고리
 		ArrayList<Magazine> list = new ArrayList<>();
@@ -57,17 +57,37 @@ public class MagazineController {
 		
 		if(life.equals("1")) { 
 			
+			// 기본적으로 최신순 조회
+			listCount = magazineService.selectListCount1();
+
+			pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+			
 			list = magazineService.selectLifeList(pi);
 		
 		} else if(season.equals("2")) { 
+
+			// 기본적으로 최신순 조회
+			listCount = magazineService.selectListCount2();
+
+			pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 			
 			list = magazineService.selectSeasonList(pi);
 		
 		} else if(issue.equals("3")) {
+
+			// 기본적으로 최신순 조회
+			listCount = magazineService.selectListCount3();
+
+			pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 			
 			list = magazineService.selectIssueList(pi);
 			
-		} else {
+		} else { // 전체조
+
+			// 기본적으로 최신순 조회
+			listCount = magazineService.selectListCount();
+
+			pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 			
 			list = magazineService.selectMagazineList(pi);
 		}
@@ -77,7 +97,9 @@ public class MagazineController {
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-
+		model.addAttribute("life", life);
+		model.addAttribute("season", season);
+		model.addAttribute("issue", issue);
 
 		return "magazine/magazineListView";
 	}

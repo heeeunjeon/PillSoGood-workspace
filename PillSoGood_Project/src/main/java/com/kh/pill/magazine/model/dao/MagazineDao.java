@@ -19,6 +19,21 @@ public class MagazineDao {
 		
 		return sqlSession.selectOne("magazineMapper.selectListCount");
 	}
+
+	public int selectListCount1(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("magazineMapper.selectListCount1");
+	}
+
+	public int selectListCount2(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("magazineMapper.selectListCount2");
+	}
+	
+	public int selectListCount3(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("magazineMapper.selectListCount3");
+	}
 	
 	public ArrayList<Magazine> selectMagazineList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		

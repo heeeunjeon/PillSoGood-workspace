@@ -14,6 +14,10 @@ public interface MagazineService {
 
 	int selectListCount();
 	
+	int selectListCount1();
+	int selectListCount2();
+	int selectListCount3();
+	
 	ArrayList<Magazine> selectMagazineList(PageInfo pi);
 	
 	Magazine selectMagazine(int magazineNo);
