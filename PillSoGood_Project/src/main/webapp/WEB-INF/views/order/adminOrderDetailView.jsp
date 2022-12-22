@@ -138,15 +138,15 @@
                             <p style="font-size: 20px;"><b style="font-size: 25px;">관리자</b> 님</p>
                             <br>
                             <ul class="nav nav-pills">
-                               <li class="nav-item"><a href="adminMypage.me" class="nav-link">회원 관리</a></li>
+								<li class="nav-item"><a href="adminMypage.me" class="nav-link">회원 관리</a></li>
                                 <li class="nav-item"><a href="ProductList.ad" class="nav-link">제품 관리</a></li>
                                 <li class="nav-item"><a href="olist.ad" class="nav-link">주문 관리</a></li>
                                 <li class="nav-item"><a href="qlist.ad" class="nav-link">문의 관리</a></li>
                                 <li class="nav-item"><a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">통계 관리</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">매출 통계</a>
-                                        <a class="dropdown-item" href="#">제품 통계</a>
-                                        <a class="dropdown-item" href="#">성별/연령 통계</a>
+                                        <a class="dropdown-item" href="salesStatistics.ad">매출 통계</a>
+                                        <a class="dropdown-item" href="productSalesStatistics.ad">제품 통계</a>
+										<a class="dropdown-item" href="productLikestatistics.ad">성별/연령 통계</a>
                                     </div>
                                 </li>
                             </ul>

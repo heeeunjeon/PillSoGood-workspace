@@ -9,10 +9,12 @@
 		<result column="CART_AMOUNT" property="cartAmount"/>
 		<result column="CART_STATUS" property="cartStatus"/>
 		
+		<result column="PRODUCT_NO" property="productNo" />
 		<result column="PRODUCT_NAME" property="productName" />
 		<result column="PRODUCT_EXPLAIN" property="productExplain" />
 		<result column="PRODUCT_PRICE" property="productPrice" />
 		<result column="PRODUCT_IMG_PATH" property="productImgPath" />
+		
 	</resultMap>
 	
 	<resultMap id="orderResultSet" type="order">
@@ -288,6 +290,44 @@
 		   	 , ADDRESS = #{address}
 		 WHERE ORDER_NO = #{orderNo}
 	</update>
+	
+	
+	<!-- 관리자페이지 당해 당월 매출 구하기 -->
+	<select id="selectSalesPerMonth" resultMap="orderResultSet">
+		SELECT TO_CHAR(ORDER_DATE,'YYYY.MM') AS "ORDER_DATE",
+		       SUM(ORDER_PRICE) AS "ORDER_PRICE"
+		FROM ORDERS
+		WHERE ORDER_STATUS = 'Y'
+		  AND EXTRACT(YEAR FROM ORDER_DATE) = EXTRACT(YEAR FROM SYSDATE)
+		GROUP BY TO_CHAR(ORDER_DATE,'YYYY.MM')
+		ORDER BY ORDER_DATE
+	</select>
+	
+	
+	<!-- 관리자페이지 연간 매출 구하기 -->
+	<select id="selectSalesPerYear" resultMap="orderResultSet">
+		SELECT TO_CHAR(ORDER_DATE,'YYYY') AS "ORDER_DATE",
+		       SUM(ORDER_PRICE) AS "ORDER_PRICE"
+		FROM ORDERS
+		WHERE ORDER_STATUS = 'Y'
+		  AND ORDER_DATE BETWEEN '2018-01-01' AND '2022-12-31'
+		GROUP BY TO_CHAR(ORDER_DATE,'YYYY')
+		ORDER BY ORDER_DATE
+	
+	</select>
+	
+	<!-- 관리자 페이지 제품 누척 매출 구하기 -->
+	<select id="productSalesStatistics" resultMap="cartResultSet">
+		SELECT PRODUCT_NAME 
+		       , SUM(PRODUCT_PRICE*CART_AMOUNT) PRODUCT_PRICE
+				FROM CART
+		JOIN PRODUCT USING (PRODUCT_NO)
+		WHERE CART_STATUS = 'N'
+		GROUP BY PRODUCT_NAME 
+		ORDER BY PRODUCT_PRICE DESC
+		
+	</select>
+	
 	
 	
 </mapper>

@@ -170,7 +170,7 @@
 	                    			<li class="page-item"><a class="page-link" href="#">&lt;</a></li>
 	                    		</c:when>
 	                    		<c:otherwise>
-	                    			<li class="page-item"><a class="page-link" href="list.ev?cpage=${ pi.currentPage - 1 }">1</a></li>
+	                    			<li class="page-item"><a class="page-link" href="list.ev?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
 	                    		</c:otherwise>
 	                    	</c:choose>
 	                    	

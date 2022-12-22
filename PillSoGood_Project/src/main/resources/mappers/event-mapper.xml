@@ -193,7 +193,6 @@
 		DELETE
 		FROM EVENT_REPLY
 		WHERE REPLY_NO = #{replyNo}
-		  AND PARENT_REPLY = #{replyNo}
 	
 	</delete>
 	
@@ -213,11 +212,12 @@
 	
 	</insert>
 	
-	
+	<!-- 이벤트 대댓글 삭제 -->
 	<delete id="deleteNrReply" parameterType="_int">
 		DELETE
 		FROM EVENT_REPLY
 		WHERE REPLY_NO = #{replyNo}
+		 
 	
 	</delete>
 	

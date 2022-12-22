@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.kh.pill.order.model.vo.Cart" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	ArrayList<Cart> list = (ArrayList)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-
-<title>ADMIN PAGE 제품 관리</title>
+<title>ADMIN PAGE 제품 통계</title>
+</head>
 <style>
 
     div {
@@ -67,6 +70,7 @@
     #mypage_navi a {
         text-decoration: none;
         color: black;
+        
     }
     #mypage_navi a:hover { color: #78C2AD; }
 
@@ -95,23 +99,15 @@
         font-weight: bold;
     }
 
-    /* ----- 제품조회 style ----- */
-    /* 목록 테이블 */
-    #product_list {
-        margin-top: 30px;
-        color: black;
-        text-align: center;
-    }
-    #product_list>thead { background-color: #78c2ad36; }
-    #product_list>tbody td { vertical-align: middle; }
-
-    #product_list>tbody>tr:hover { cursor: pointer; }
-
 </style>
-</head>
+
+<!-- chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
 <body>
 
     <div class="wrap">
+        
         <div id="navigator2">
         	<jsp:include page="../common/menubar.jsp" />
         </div>
@@ -145,82 +141,73 @@
                     </div>
 
                     <div id="mypage_content">
-                        <h4>제품 관리</h4>
+                        <h4>통계 관리</h4>
                         <hr>
 
                         <div id="admin_menu">
-                            <p>[ 제품 목록 ]</p>
+                            <p>[ 제품별 매출 현황 ]</p>
                         </div>
                         
-                        <table class="table table-hover" id="product_list">
-                            <thead>
-                                <tr>
-                                    <th width="10%">No</th>
-                                    <th width="35%">제품명</th>
-                                    <th width="15%">가격</th>
-                                    <th width="10%">재고</th>
-                                    <th width="20%">등록일</th>
-                                    <th width="10%">상태</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-	                           	<c:forEach var="p" items="${ list }">
-	                           		<tr>
-	                                    <td>${ p.productNo }</td>
-	                                    <td>${ p.productName }</td>
-	                                    <td>${ p.productPrice }원</td>
-	                                    <td>${ p.productStock }</td>
-	                                    <td>${ p.productEnrollDate }</td>
-	                                    <td>${ p.productStatus }</td>
-                                	</tr>
-	                           	</c:forEach>
-                            </tbody>
-                        </table>
-                        <br>
+                        <div>
+                            <canvas id="product_chart"></canvas>
+                        </div>
 
+                        
                         <script>
-                            $(function() {
-                                $("#product_list>tbody>tr").click(function() {
-	
-                                    // 클릭시 제품 상세로 이동
-                                    location.href="detail.pr?pno=" + $(this).children().eq(0).text();
-                                    
-                                });
+                            const ctx = document.getElementById('product_chart');
+                            
+                            let Total = []; // 누적금액 리스트 
+                            
+                            <% for(int i = 0; i < list.size(); i++) { %>
+                            	
+                            	
+                            	Total.push("<%= list.get(i).getProductPrice() %>");
+                            
+                            <% } %>
+                            
+                            let productName = []; // 제품 이름 리스트 
+                            
+                            <% for(int i = 0; i < list.size(); i++) { %>
+                            	
+                            	
+                            	productName.push("<%= list.get(i).getProductName() %>");
+                            	
+                            <% } %>
+                            
+                            console.log(Total);
+                            console.log(productName);
+                            
+                          
+                            new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: productName,
+                                    datasets: [{
+                                        label: '제품별 누적 매출',
+                                        data: Total,
+                                        borderWidth: 1,
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.5)',
+                                            'rgba(54, 162, 235, 0.5)',
+                                            'rgba(255, 206, 86, 0.5)',
+                                            'rgba(75, 192, 192, 0.5)',
+                                            'rgba(153, 102, 255, 0.5)'],
+                                       borderColor: ['rgb(255, 99, 132,1.5)',
+                                                'rgba(54, 162, 235, 1.5)',
+                                                'rgba(255, 206, 86, 1.5)',
+                                                'rgba(75, 192, 192, 1.5)',
+                                                'rgba(153, 102, 255, 1.5)']
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
                             });
                         </script>
-
-                        <div>
-                            <ul class="pagination">
-			                	<c:choose>
-			                		<c:when test="${ pi.currentPage eq 1 }">
-			                			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
-			                		</c:when>
-			                		<c:otherwise>
-			                			<li class="page-item"><a class="page-link" href="ProductList.ad?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
-			                		</c:otherwise>
-			                	</c:choose>
-			                    
-			                    <c:forEach var="pr" begin="${ pi.startPage }" end="${ pi.endPage }">
-				                		<c:choose>
-                                    		<c:when test="${ pi.currentPage eq pr }">
-                                    			<li class="page-item disabled"><a class="page-link" href="ProductList.ad?cpage=${ pr }">${ pr }</a></li>
-                                    		</c:when>
-                                    		<c:otherwise>
-                                    			<li class="page-item"><a class="page-link" href="ProductList.ad?cpage=${ pr }">${ pr }</a></li>
-                                    		</c:otherwise>
-                                    	</c:choose>
-				                    </c:forEach>
-			                    
-			                    <c:choose>
-			                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-			                    		<li class="page-item disabled"><a class="page-link" href="#">&gt;</a></li>
-			                    	</c:when>
-			                    	<c:otherwise>
-			                    		<li class="page-item"><a class="page-link" href="ProductList.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-			                    	</c:otherwise>
-			                    </c:choose>
-			                </ul>
-                        </div>
 
                     </div>
 
@@ -229,7 +216,7 @@
             </div>
             <div id="content_3"></div>
         </div>
-       
+        
     </div>
 
     <div>

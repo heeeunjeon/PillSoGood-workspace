@@ -2,6 +2,7 @@ package com.kh.pill.order.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +100,34 @@ public class CartController {
 		int result = orderService.updateCart(c);
 		
 		return (result > 0) ? "success" : "fail";
+	}
+	
+	
+	//----------------------------------------- 관리자 -----------------------------------------//
+	
+	
+	/**
+	 * 관리자 페이지 제품별 매출 통계 
+	 */
+	@RequestMapping("productSalesStatistics.ad")
+	public String productSalesStatistics(HttpServletRequest request) {
+		
+		ArrayList<Cart> productList = orderService.productSalesStatistics();
+		
+		ArrayList<Cart> list = new ArrayList<>();
+		
+		for(int i = 0; i < 5; i++) {
+			Cart c = new Cart();
+			c = productList.get(i);
+			list.add(c);
+			
+		}
+		
+		// System.out.println(list);
+		
+		request.setAttribute("list", list);
+		
+		return "order/adminProductSalesStatistics";
 	}
 	
 	

@@ -2,6 +2,7 @@ package com.kh.pill.order.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,9 +97,7 @@ public class OrderController {
 	}
 	
 	
-	// -------------------------------------------------------
-	
-	// 관리자
+	// ------------------------------------------------------- 관리자 -------------------------------------------------------------------------//
 	
 	@RequestMapping("olist.ad")
 	public String selectOrderAllList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpSession session, Model model) {
@@ -148,5 +147,27 @@ public class OrderController {
 		
 		return (result > 0) ? "success" : "fail";
 	}
+	
+	
+	/**
+	 * 관리자 페이지 매출 통계
+	 */
+	@RequestMapping("salesStatistics.ad")
+	public String adminSales(HttpServletRequest request) {
+		
+		// 당해 당월 매출
+		ArrayList<Order> list = orderService.selectSalesPerMonth(); 
+		
+		// 연간 매출 
+		ArrayList<Order> list2 = orderService.selectSalesPerYear();
+		
+		
+		request.setAttribute("list", list);
+		request.setAttribute("list2", list2);
+		
+		return "order/adminSalesStatistics";
+		
+	}
+	
 
 }

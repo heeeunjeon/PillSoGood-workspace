@@ -40,4 +40,9 @@ public interface ProductService {
 	
 	// 관리자 제품 전체 리스트 조회
 	ArrayList<Product> adSelectProductList(PageInfo pi);
+
+	// 관리자 제품 성별 선호도 통계 구하기 
+	// ArrayList<ProductLike> adProductLikeGender();
+
+	
 }

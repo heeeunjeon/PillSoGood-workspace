@@ -441,9 +441,11 @@ public class EventController {
 	@RequestMapping(value="rdelete.ev", produces="text/html; charset=UTF-8")
 	public String ajaxDeleteReply(int replyNo) {
 		
-		// System.out.println(replyNo);
+		System.out.println(replyNo);
 		
 		int result = eventService.deleteReply(replyNo);
+		
+		System.out.println(result);
 		
 		return (result > 0) ? "success" : "fail";
 		

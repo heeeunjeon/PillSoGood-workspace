@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -319,6 +320,36 @@ public class ProductController {
 		
 		
 	}
+	
+	
+	/**
+	 * 관리자 페이지 제품 성별 선호 통계 
+	 */
+//	@RequestMapping("productLikestatistics.ad")
+//	public String adminProductLikeStatistics(HttpServletRequest request) {
+//		
+//		// 성별 선호도 구하기 
+////		ArrayList<ProductLike> plList = productService.adProductLikeGender();
+////		
+////		// 성별 선호도 구한값 넣을 빈 리스트 생성 
+////		ArrayList<ProductLike> list = new ArrayList<>();
+////		
+////		// 상위 다섯개 뽑기 
+////		for (int i=0; i < 5; i++) {
+////			
+////			ProductLike p = plList.get(i);
+////			list.add(p); // 빈 리스트에 넣어줌 
+////			
+////		}
+////		
+////		
+////		request.setAttribute("list", list); // 성별 선호도 리스트 보냄 
+////		
+//
+//		return "product/adminProductLikeStatistics";
+//	}
+//	
+	
 	
 
 	

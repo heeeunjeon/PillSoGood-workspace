@@ -152,9 +152,9 @@
                                 <li class="nav-item"><a href="qlist.ad" class="nav-link">문의 관리</a></li>
                                 <li class="nav-item"><a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">통계 관리</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">매출 통계</a>
-                                        <a class="dropdown-item" href="#">제품 통계</a>
-                                        <a class="dropdown-item" href="#">성별/연령 통계</a>
+                                        <a class="dropdown-item" href="salesStatistics.ad">매출 통계</a>
+                                        <a class="dropdown-item" href="productSalesStatistics.ad">제품 통계</a>
+                                        <a class="dropdown-item" href="productLikestatistics.ad">성별/연령 통계</a>
                                     </div>
                                 </li>
                             </ul>
@@ -233,7 +233,7 @@
 				                    			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
 				                    		</c:when>
 				                    		<c:otherwise>
-				                    			<li class="page-item"><a class="page-link" href="adMyPageSearch.me?cpage=${ pi.currentPage - 1 }">1</a></li>
+				                    			<li class="page-item"><a class="page-link" href="adMyPageSearch.me?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
 				                    		</c:otherwise>
 			                    		</c:choose>
 			                    	
@@ -260,13 +260,20 @@
 				                    			<li class="page-item disabled"><a class="page-link" href="#">&lt;</a></li>
 				                    		</c:when>
 				                    		<c:otherwise>
-				                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ pi.currentPage - 1 }">1</a></li>
+				                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
 				                    		</c:otherwise>
 			                    		</c:choose>
 			                    	
 				                    	<c:forEach var="m" begin="${ pi.startPage }" end="${ pi.endPage }">
-				                    		<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ m }">${ m }</a></li>
-				                    	</c:forEach>
+					                		<c:choose>
+	                                    		<c:when test="${ pi.currentPage eq m }">
+	                                    			<li class="page-item disabled"><a class="page-link" href="adminMypage.me?cpage=${ m }">${ m }</a></li>
+	                                    		</c:when>
+	                                    		<c:otherwise>
+	                                    			<li class="page-item"><a class="page-link" href="adminMypage.me?cpage=${ m }">${ m }</a></li>
+	                                    		</c:otherwise>
+	                                    	</c:choose>
+					                    </c:forEach>
 			                    	
 				                    	<c:choose>
 				                    		<c:when test="${pi.currentPage eq pi.maxPage }">

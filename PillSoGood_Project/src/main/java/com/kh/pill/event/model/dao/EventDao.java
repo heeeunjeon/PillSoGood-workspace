@@ -147,7 +147,9 @@ public class EventDao {
 		return sqlSession.insert("eventMapper.insertNestedReply", er);
 	}
 
-
+	/**
+	 * 이벤트 대댓글 삭제
+	 */
 	public int deleteNrReply(SqlSessionTemplate sqlSession, int replyNo) {
 		
 		return sqlSession.delete("eventMapper.deleteNrReply", replyNo);

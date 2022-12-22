@@ -60,5 +60,14 @@ public interface OrderService {
 
 	// 주문 수정 (관리자만)
 	int updateOrder(Order o);
+
+	// 당해 당월 매출 구하기 
+	ArrayList<Order> selectSalesPerMonth();
+
+	// 연간 매출 구하기 
+	ArrayList<Order> selectSalesPerYear();
+
+	// 제품 누적매출 통계 구하기
+	ArrayList<Cart> productSalesStatistics();
 	
 }

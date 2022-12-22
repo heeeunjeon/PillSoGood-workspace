@@ -96,4 +96,28 @@ public class OrderDao {
 	public int updateOrder(SqlSessionTemplate sqlSession, Order o) {
 		return sqlSession.update("orderMapper.updateOrder", o);
 	}
+
+	/**
+	 * 관리자 페이지 당해 당월 매출 구하기
+	 */
+	public ArrayList<Order> selectSalesPerMonth(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.selectSalesPerMonth");
+	}
+
+	/**
+	 * 관리자 페이지 연간 매출 구하기 
+	 */
+	public ArrayList<Order> selectSalesPerYear(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.selectSalesPerYear");
+	}
+
+	/**
+	 * 관리자 페이지 제품 누척 매출 구하기 
+	 */
+	public ArrayList<Cart> productSalesStatistics(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("orderMapper.productSalesStatistics");
+	}
 }

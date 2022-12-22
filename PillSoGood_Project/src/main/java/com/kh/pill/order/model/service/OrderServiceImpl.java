@@ -119,5 +119,32 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.updateOrder(sqlSession, o);
 	}
 
+	/**
+	 * 관리자 페이지 당해 당월 매출 구하기
+	 */
+	@Override
+	public ArrayList<Order> selectSalesPerMonth() {
+		
+		return orderDao.selectSalesPerMonth(sqlSession);
+	}
+
+	/**
+	 * 관리자 페이지 연간 매출 구하기 
+	 */
+	@Override
+	public ArrayList<Order> selectSalesPerYear() {
+		
+		return orderDao.selectSalesPerYear(sqlSession);
+	}
+
+	/**
+	 * 관리자 페이지 제품 누적 매출 구하기 
+	 */
+	@Override
+	public ArrayList<Cart> productSalesStatistics() {
+		
+		return orderDao.productSalesStatistics(sqlSession);
+	}
+
 
 }

@@ -16,7 +16,7 @@
     /* 전체를 감싸는 wrap */
     .wrap {
         width: 100%;
-        height: 1530px;
+        height: auto;
         margin : auto;
     }
 
@@ -24,11 +24,11 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1150px; }
+    #content { height: auto; display:flex; }
     #content_2>div { width: 100%; }
     #content_2_1 { height: 10%; float: left; }
     #content_2_2 { height: 80%; float: left; }
-    #content_2_3 { height: 10%; float: left; }
+    #content_2_3 { height: 10%; float: left; padding-bottom : 200px; padding-top:50px; }
 
     #header { height: 130px; }
 
@@ -67,11 +67,10 @@
                     <div align="center">
                         <img src="resources/images/error404.png" width="100%" alt="">
                     </div>
-
                     
                 </div>
                 <div id="content_2_3">
-                    <div class="col text-center" style="height:100%;">
+                    <div class="col text-center">
                         <button class="btn btn-primary btn-lg" onclick="location.href='/PillSoGood'"> 메인으로 돌아가기 </button>
                     </div>
                 </div>
