@@ -235,13 +235,13 @@
 	    }
 	
 	    .list-member li button {
-	        width: 100%;
+	        width: auto;
 	        padding: 7px 10px;
 	        border: none;
 	        background-color: #fff;
 	        border-radius: 8px;
 	        cursor: pointer;
-	        text-align: left;
+	        text-align: center;
 	        /* 말줄임 */
 	        white-space: nowrap;
 	        text-overflow: ellipsis;
@@ -251,7 +251,8 @@
 	    .list-member li button:hover,
 	    .list-member li button:focus {
 	        background-color: #78C2AD;
-	        opacity:0.7;
+	        opacity:1;
+	        margin-right:100px;
 	    }
 		
 		.list-member ul {
@@ -450,13 +451,13 @@
 	                    	<c:otherwise>
 	                    		<c:choose>
 									<c:when test="${ not empty life }">
-										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&life=1">&laquo;</a></li>
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&life=1">&raquo;</a></li>
 									</c:when>
 									<c:when test="${ not empty season }">
-										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&season=2">&laquo;</a></li>
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&season=2">&raquo;</a></li>
 									</c:when>
 									<c:when test="${ not empty issue }">
-										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&issue=3">&laquo;</a></li>
+										<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }&issue=3">&raquo;</a></li>
 									</c:when>
 									<c:otherwise>
 	                    				<li class="page-item"><a class="page-link" href="list.mag?cpage=${ pi.currentPage + 1 }">&raquo;</a></li>

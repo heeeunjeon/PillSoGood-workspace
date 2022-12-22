@@ -153,11 +153,11 @@
                                         </tr>
                                         <tr>
                                             <th>이름</th>
-                                            <td><input type="text" class="form-control" name="memberName" value="${loginUser.memberName}" required></td>
+                                            <td><input type="text" class="form-control" name="memberName" value="${loginUser.memberName}" required maxlength="6"></td>
                                         </tr>
                                         <tr>
                                             <th>휴대폰번호</th>
-                                            <td><input type="text" class="form-control" name="phone" value="${loginUser.phone}" placeholder="-제외" required></td>
+                                            <td><input type="text" class="form-control" name="phone" value="${loginUser.phone}" placeholder="-제외" required maxlength="11"></td>
                                         </tr>
                                         <tr>
                                             <th>이메일</th>
@@ -201,11 +201,11 @@
                                         </tr>
                                         <tr>
                                             <th>키</th>
-                                            <td><input type="number" class="form-control" name="height" value="${loginUser.height}" min="0"> cm</td>
+                                            <td><input type="number" class="form-control" name="height" value="${loginUser.height}" min="0" max="250"> cm</td>
                                         </tr>
                                         <tr>
                                             <th>몸무게</th>
-                                            <td><input type="number" class="form-control" name="weight" value="${loginUser.weight}" min="0"> kg</td>
+                                            <td><input type="number" class="form-control" name="weight" value="${loginUser.weight}" min="0" max="200"> kg</td>
                                         </tr>
                                       
                                     </tbody>
