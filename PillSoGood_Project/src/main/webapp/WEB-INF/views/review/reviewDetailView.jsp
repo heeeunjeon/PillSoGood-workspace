@@ -365,7 +365,6 @@
 		                                </div>
 		                            </div>
 		                        </c:forEach>
-		                        <div style="width: 100%; height: 10px;" align="center" ><button id="moreProductBtn" class="btn btn-outline-info">더 보기</button></div>
 		                        <c:forEach var="p" begin="3" items="${pList}">
 		                            <div id="product_2" class="hiddenProduct" style="display:none;">
 		                                <div id="product_1_1" class="prod" style="cursor:pointer;">
@@ -384,6 +383,7 @@
 		                                </div>
 		                            </div>
 		                        </c:forEach>
+		                        <div style="width: 100%; height: 10px;" align="center" ><button id="moreProductBtn" class="btn btn-outline-info">더 보기</button></div>
 	                        </c:when>
                         </c:choose>
                     </div>
