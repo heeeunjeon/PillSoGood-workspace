@@ -588,7 +588,7 @@
                                     						resultStr += "정기구독";
                                     					}
                                     				resultStr += "</h6>"
-                                    				+ "<p style='color: rgb(40, 40, 40); font-size: 20px; margin-top: 20px;'>"+ result[i].reviewTitle+"</p>"
+                                    				+ "<p style='color: rgb(40, 40, 40); font-size: 20px; padding-left:30px; padding-right:30px; padding-top:10px;'>"+ result[i].reviewTitle+"</p>"
                                					+ "</div>"
                             				+ "</td>";
             					
