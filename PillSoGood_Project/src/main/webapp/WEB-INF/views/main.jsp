@@ -118,26 +118,14 @@
             color: rgb(105, 104, 104);
         }
 
-        #content2Table {
-            display: inline-block;
 
-        }
 
         #content2Table td {
             padding-left: 15px;
             height: 150px;
+            
         }
 
-        #scrollDiv {
-            overflow-x: scroll;
-            width: 1000px;
-            scrollbar-width: none;
-
-        }
-
-        #scrollDiv::-webkit-scrollbar {
-            display: none;
-        }
 
         #content1>img {
             display: inline-block;
@@ -202,20 +190,14 @@
 
     </style>
 
-    <!-- dragscroll -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragscroll/0.0.8/dragscroll.min.js" integrity="sha512-/ncZdOhQm5pgj5KHy720Ck7XF5RzYK6rtUsLNnGcitXrKT3wUYzTrPlOSG7SdL2kDzkuLEOFvrQRyllcZkeAlg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <script src="dragScroll.js"></script> -->
 
     <!-- 알약 슬라이드에 필요함 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
     
-    <!-- 스크롤 애니매이션 -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- AOS 라이브러리 불러오기-->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
 
 </head>
 
@@ -249,97 +231,106 @@
                 <div id="content2" style="height: 400px;">
                     <div id="content2_1">&ensp;</div>
                     <div id="content2_2">
-                        <table style="width: 1000px;">
-                            <tr>
-                                <td style="vertical-align: top; padding-bottom: 30px; padding-top: 90px;">
-                                    <h4 style="color: rgb(40, 40, 40); font-weight:bold;">고민별 상품보기</h4>
-                                </td>
-                                <td style="vertical-align: top; padding-top: 90px;">
-                                    <a href="list.pr"
-                                        style="float: right; text-decoration: none; color: rgb(40, 40, 40); font-weight: bold;">
-                                        더보기
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
-                        <div id="scrollDiv" style="margin:auto;">
-                            <table style="margin:auto;" id="content2Table">
-                                <div style="width: 1100px;">
-                                    <tr id="content2Tr">
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=1'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/eye.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">눈건강</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=4'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/liver.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">간건강</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=5'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/bone.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">관절</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=6'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/blood-vessel.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">혈행개선</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=8'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/diet.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">체지방감소</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=13'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/intestine.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">장건강</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=14'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/skin.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">피부보습</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=16'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/blood-pressure.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">고혈압감소</div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div id="healthIcon" onclick="location.href='detail.pr?pno=19'"
-                                                style="text-decoration: none; cursor: pointer;">
-                                                <p><img src="resources/images/health.png" width="35px"></p>
-                                                <div style="text-align: center; padding-top: 10px;">종합건강</div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </div>
+                        <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
+                            <table style="width: 1000px; margin: auto;">
+                                <tr>
+                                    <td style="vertical-align: top; padding-bottom: 30px; padding-top: 90px;">
+                                        <h4 style="color: rgb(40, 40, 40); font-weight:bold;">고민별 상품보기</h4>
+                                    </td>
+                                    <td style="vertical-align: top; padding-top: 90px;">
+                                        <a href="list.pr"
+                                            style="float: right; text-decoration: none; color: rgb(40, 40, 40); font-weight: bold;">
+                                            더보기
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             </table>
+                            <div style="margin:auto;">
+                                <table id="content2Table" style="margin-left: 30px;">
+                                        <tr>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=1'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/eye2.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">눈건강</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=4'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/liver.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">간건강</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=5'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/bone.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">관절</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=6'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/blood-vessel.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">혈행개선</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=8'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/diet.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">체지방감소</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=13'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/intestine.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">장건강</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=14'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/skin.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">피부보습</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=16'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/blood-pressure.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">고혈압감소</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=2'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/vitality.png" width="35px" align="center"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">피로회복</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="healthIcon" onclick="location.href='detail.pr?pno=19'"
+                                                    style="text-decoration: none; cursor: pointer;">
+                                                    <p><img src="resources/images/health.png" width="35px"></p>
+                                                    <div style="text-align: center; padding-top: 10px;">종합건강</div>
+                                                </div>
+                                            </td>
+                                          
+                                        </tr>
+                                    
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div id="content2_3">&ensp;</div>
                 </div>
 
 
-                <div id="content3" style="height:230px;">
+                <div id="content3" style="height:230px;"  data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
                     <div id="content3_1">&ensp;</div>
                     <div id="content3_2">
                         <table style=" height: 100%; width: 80%;" align="center">
@@ -379,7 +370,7 @@
 
                 <div id="content4" style=" width:100%; height: 640px;">
                     <div id="content4_1" style="width: 10%; float: left;">&ensp;</div>
-                    <div id="content4_2" style="width: 80%; float: left;">
+                    <div id="content4_2" style="width: 80%; float: left;"  data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
                         <table style="width: 1000px;" align="center">
                             <tr>
                                 <td style="width: 80%; vertical-align: top; padding-bottom: 30px; padding-top: 90px;" align="left">
@@ -396,7 +387,7 @@
                         </table>
                         
                         <!-- 약 제품 슬라이드 -->
-                        <div class="swiper-container">
+                        <div class="swiper-container"  >
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide" onclick="location.href='detail.pr?pno=1'">
                                     <div>
@@ -450,7 +441,7 @@
                 </div>
 
                 <!-- 고객후기 -->
-                <div id="content5" style="width: 100%; height:630px; float: left; display: block;">
+                <div id="content5" style="width: 100%; height:630px; float: left; display: block;"  data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
                     <div id="content5_1" style="width: 10%; float: left;">&ensp;</div>
                     <div id="content5_2" style="width: 80%; float: left;">
                         <table style="width: 1000px;" align="center">
@@ -478,7 +469,7 @@
                 </div>
 
                 <!-- 뉴스레터 -->
-                <div id="content6" style="width: 100%; height:1000px; float: left;">
+                <div id="content6" style="width: 100%; height:1000px; float: left;"  data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
                     <div id="content6_1" style="width: 10%; float: left;">&ensp;</div>
                     <div id="content6_2" style="width: 80%; float: left;">
                         <table style="width: 1000px;" align="center">
@@ -545,6 +536,10 @@
 
              </div>
             </div>
+
+            <script> 
+                AOS.init(); // 스크롤 애니메이션 
+            </script>
 
             <script>
             
@@ -642,9 +637,7 @@
             
     <jsp:include page="/WEB-INF/views/common/footer.jsp" /> 
 
-    <script>
-        AOS.init();
-    </script>
+ 
 
 
 </body>
