@@ -166,7 +166,7 @@
 		                                <div class="myPageBtn" style="padding: 5px;">
 		                                    <div>
 		                                        <div><input type="hidden" value="${ myList[i].reviewNo }"></div>
-		                                        <div align="right"><button type="submit" class="btn btn-secondary btn-delete btn-sm" onclick="location.href='delete.re?rno=${ myList[i].reviewNo }'">삭제</button></div>
+		                                        <div align="right"><button type="submit" class="btn btn-secondary btn-delete btn-sm" onclick="location.href='myDelete.re?rno=${ myList[i].reviewNo }'">삭제</button></div>
 		                                    </div>
 		                                </div>
 			                        </div>
@@ -240,13 +240,6 @@
             });
         });
         
-        $(function() {
-            $(".btn-delete").click(function() { // 내 리뷰 삭제
-                var rno = $(this).parent('div').parent('div').chilren('div').eq(0).children('input').eq(0).val();
-                location.href = "myDelete.re?rno=" + rno;
-            });
-        });
-			
     </script>  	
 
 </body>
