@@ -56,7 +56,7 @@ public interface ReviewService {
 	ArrayList<ReviewFile> selectNewReviewFile(int rawReviewNo);
 	// 리뷰 대상 결제건 조회 서비스
 	ArrayList<Review> selectROrderList(int memberNo);
-	ArrayList<Review> selectROrderProductNameList(int orderNo);
+	ArrayList<Review> selectROrderProductNameList(long orderNo);
 
 	
 	

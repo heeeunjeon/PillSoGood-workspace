@@ -120,7 +120,7 @@ public class ReviewController {
 				// rOrderList 의 <Review> 타입 reviewOrder 들 추출
 				Review reviewOrder = rOrderList.get(i);
 				// 그 안에 있는 OrderNo 추출해서 rOrderNo 로 지정
-				int orderNo = reviewOrder.getOrderNo();
+				long orderNo = reviewOrder.getOrderNo();
 				
 				// System.out.println("orderNo : " + orderNo);
 				
@@ -163,7 +163,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("insert.re")
-	public ModelAndView insertReview(int orderNo, Review r, List<MultipartFile> upfile, HttpSession session, ModelAndView mv) {
+	public ModelAndView insertReview(long orderNo, Review r, List<MultipartFile> upfile, HttpSession session, ModelAndView mv) {
 		
 		// System.out.println(r);
 		// System.out.println(upfile);

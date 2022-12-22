@@ -31,7 +31,7 @@ public class Review {
 	private String subsStatus;
 	private int replyCount;
 	private ArrayList<ReviewFile> flist; // REVIEW_FILE 테이블에서 List 뽑아와서 List<Review>에 담을 변수
-	private int orderNo;
+	private long orderNo;
 	private String filePath; // FILE_PATH	VARCHAR2(1000 BYTE)
 	private String productName;
 	private ArrayList<Review> rOrderList; // 리뷰 작성 시 결제 건들이 들어있는 리스트

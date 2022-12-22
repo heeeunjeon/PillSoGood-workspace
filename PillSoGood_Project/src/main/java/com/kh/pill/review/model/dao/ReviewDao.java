@@ -103,7 +103,7 @@ public class ReviewDao {
 	public ArrayList<Review> selectROrderList(SqlSessionTemplate sqlSession, int memberNo) {
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectROrderList", memberNo);
 	}
-	public ArrayList<Review> selectROrderProductNameList(SqlSessionTemplate sqlSession, int orderNo) {
+	public ArrayList<Review> selectROrderProductNameList(SqlSessionTemplate sqlSession, long orderNo) {
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectROrderProductNameList", orderNo);
 	}
 	

@@ -121,7 +121,7 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.selectROrderList(sqlSession, memberNo);
 	}
 	@Override
-	public ArrayList<Review> selectROrderProductNameList(int orderNo) {
+	public ArrayList<Review> selectROrderProductNameList(long orderNo) {
 		return reviewDao.selectROrderProductNameList(sqlSession, orderNo);
 	}
 	

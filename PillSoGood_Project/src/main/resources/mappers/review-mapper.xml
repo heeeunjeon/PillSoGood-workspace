@@ -196,7 +196,7 @@
  		GROUP BY ORDER_NO
 	</select>
 
-	<select id="selectROrderProductNameList" resultMap="reviewListViewResultSet" parameterType="_int">
+	<select id="selectROrderProductNameList" resultMap="reviewListViewResultSet" parameterType="_long">
 		SELECT PRODUCT_NAME
   		FROM PRODUCT
  		WHERE PRODUCT_NO IN(SELECT PRODUCT_NO
