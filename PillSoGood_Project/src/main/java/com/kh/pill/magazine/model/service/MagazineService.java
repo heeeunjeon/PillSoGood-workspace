@@ -1,9 +1,6 @@
 package com.kh.pill.magazine.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.magazine.model.vo.Magazine;

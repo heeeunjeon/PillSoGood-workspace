@@ -217,7 +217,7 @@
 		                            </table>
 		                            
 		                            <div id="answer_update">
-		                                <textarea rows="8" class="form-control" placeholder="답변 내용 작성" style="resize: none;">${ q.answer }</textarea>
+		                                <textarea rows="8" class="form-control" placeholder="답변 내용 작성" style="resize: none;" maxlength="1000" >${ q.answer }</textarea>
 		                                <%-- 버튼 영역 --%>
 		                                <div align="right">
 		                                    <button type="button" class="btn btn-primary btn-sm" style="margin-top: 15px; width: 60px;" onclick="updateAnswer();">수정</button>
@@ -283,7 +283,7 @@
 			                        <%-- 댓글 입력창 부분 --%>
 			                        <c:when test="${ not empty loginUser and loginUser.memberId eq 'admin' }">
 				                        <div id="answer_enroll">
-			                                <textarea rows="8" class="form-control" placeholder="답변 내용 작성" style="resize: none;"></textarea>
+			                                <textarea rows="8" class="form-control" placeholder="답변 내용 작성" style="resize: none;" maxlength="1000" ></textarea>
 			                                
 			                                <%-- 버튼 영역 --%>
 			                                <div align="right">

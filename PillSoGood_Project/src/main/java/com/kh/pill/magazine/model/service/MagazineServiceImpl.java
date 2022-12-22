@@ -1,8 +1,6 @@
 package com.kh.pill.magazine.model.service;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

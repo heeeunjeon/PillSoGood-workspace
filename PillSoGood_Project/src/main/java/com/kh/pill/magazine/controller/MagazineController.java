@@ -11,8 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -51,9 +49,9 @@ public class MagazineController {
 		// 카테고리
 		ArrayList<Magazine> list = new ArrayList<>();
 		
-		System.out.println("life : " + life);
-		System.out.println("season : " + season);
-		System.out.println("issue : " + issue);
+		// System.out.println("life : " + life);
+		// System.out.println("season : " + season);
+		// System.out.println("issue : " + issue);
 		
 		if(life.equals("1")) { 
 			
@@ -92,8 +90,8 @@ public class MagazineController {
 			list = magazineService.selectMagazineList(pi);
 		}
 		
-		System.out.println(list);
-		System.out.println(life);
+		// System.out.println(list);
+		// System.out.println(life);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -233,7 +231,7 @@ public class MagazineController {
 		
 		int magazineLikeCount = magazineService.selectMagazineLikeCount(magazineNo);
 		
-		System.out.println(magazineLikeCount);
+		// System.out.println(magazineLikeCount);
 		
 		return magazineLikeCount;
 	}
@@ -320,7 +318,7 @@ public class MagazineController {
 		
 		Magazine mag = magazineService.selectMagazine(magazineNo);
 		
-		System.out.println(mag);
+		// System.out.println(mag);
 		
 		model.addAttribute("mag", mag);
 
@@ -354,12 +352,12 @@ public class MagazineController {
 		
 		int result = magazineService.updateMagazine(mag);
 		
-		System.out.println(result);
+		// System.out.println(result);
 
 
 		if(result > 0) {
 			
-			System.out.println(result);
+			// System.out.println(result);
 			
 			session.setAttribute("alertMsg", "게시글이 수정되었습니다.");
 			
