@@ -194,7 +194,7 @@
 			                        </tr>
 			                        <tr>
 			                            <td>
-			                                <input type="text" class="form-control" name="addressZip" value="${ loginUser.addressZip }" id="address_zip" placeholder="우편번호">
+			                                <input type="text" class="form-control" name="addressZip" value="${ loginUser.addressZip }" id="address_zip" placeholder="우편번호" readonly>
 			                                <input type="button" class="btn btn-primary" id="address_btn" onclick="getAddress();" value="우편번호 찾기">
 			                            </td>
 			                        </tr>
@@ -202,7 +202,7 @@
 			                            <td>주소</td>
 			                        </tr>
 			                        <tr>
-			                            <td><input type="text" class="form-control" name="address1" value="${ loginUser.address1 }" id="address1" placeholder="도로명 주소"></td>
+			                            <td><input type="text" class="form-control" name="address1" value="${ loginUser.address1 }" id="address1" placeholder="도로명 주소" readonly></td>
 			                        </tr>
 			                        <tr>
 			                            <td>상세주소</td>
