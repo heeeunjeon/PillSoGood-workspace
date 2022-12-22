@@ -47,7 +47,7 @@ public class ReviewController {
 		ArrayList<Review> bestListAll = reviewService.selectBestList(); // 일반 리뷰 전체를 베스트 기준으로 조회 후 ArrayList bestListAll 에 담음
 		ArrayList<Review> bestList = new ArrayList<>(); // 베스트 기준에 맞는 상위 3개 리뷰를 담을 ArrayList bestList 생성 
 		// System.out.println(bestList);
-		if(bestListAll.size() != 0 ) {
+		if(bestListAll.size() >= 3 ) {
 			
 			for(int i = 0; i < 3; i++) { // 상위 3개를 위해 3번만 반복
 				
@@ -65,9 +65,13 @@ public class ReviewController {
 				bestList.add(bestReview); // bestReview 를 ArrayList bestList 에 담음
 				
 			}
-		}
+			
+			model.addAttribute("bestList", bestList);
+		} else {
 		
-		model.addAttribute("bestList", bestList);
+			model.addAttribute("bestList", bestList);
+		
+		}
 		// System.out.println("bestList : " + bestList);
 		
 		// 일반 리뷰 전체 조회는 베스트 리뷰 전체 조회와 비슷함

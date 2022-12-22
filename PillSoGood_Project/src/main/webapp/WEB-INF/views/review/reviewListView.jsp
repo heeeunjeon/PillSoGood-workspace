@@ -172,13 +172,13 @@
 										</div>
 									</c:forEach>
 								</c:when>
-								<c:otherwise>
+								<c:when test="${empty bestList}">
 									<div align="center">
 										<br>
 											<p>베스트 리뷰가 없습니다.</p>
 										<br>
 									</div>
-								</c:otherwise>
+								</c:when>
 							</c:choose>
 						</div>
 					</div>
