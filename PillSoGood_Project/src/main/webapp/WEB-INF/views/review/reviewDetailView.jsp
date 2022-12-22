@@ -483,7 +483,7 @@
                                             
                         resultStr += "</tr>"
                                   + "<tr style='border-bottom: 1px solid lightgray;'>"
-                                  + "<td colspan='3'>" + "<p class='replyContent'>" + result[i].replyContent + "</p>" + "</td>"
+                                  + "<td colspan='3'>" + "<pre class='replyContent'>" + result[i].replyContent + "</pre>" + "</td>"
                                   + "</tr>";
                     }
                     
