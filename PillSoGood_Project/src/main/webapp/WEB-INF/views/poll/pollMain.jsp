@@ -172,17 +172,17 @@
                             <table align="center">
                                 <tr>
                                     <th width="80">생년월일</th>
-                                    <td  width="100"><input type="date" class="form-control" style="width: 10;" id="memberBirthYear" name="memberBirthYear" required max='9999-12-31'></td>
+                                    <td  width="100"><input type="date" class="form-control" style="width: 10;" id="memberBirthYear"  name="memberBirthYear" required max='9999-12-31'></td>
                                     
                                 </tr>
                                 <tr>
                                     <th>키</th>
-                                    <td width="100"><input type="number" class="form-control" id="height" name="height" required maxlength="3"></td>
+                                    <td width="100"><input type="number" class="form-control" max="999" oninput="maxLengthCheck(this)" id="height" name="height" required maxlength="3"></td>
                                     <td width="40">cm</td>
                                 </tr>
                                 <tr>
                                     <th>몸무게</th>
-                                    <td><input type="number" class="form-control" id="weight" name="weight" required maxlength="3"></td>
+                                    <td><input type="number" class="form-control" id="weight" max="999" name="weight" oninput="maxLengthCheck(this)" required maxlength="3"></td>
                                     <td>kg</td>
                                 </tr>
                                 <tr>
@@ -523,6 +523,13 @@
 
             
         });
+        
+        function maxLengthCheck(object){
+            if (object.value.length > object.maxLength){
+                object.value = object.value.slice(0, object.maxLength);
+            }    
+        }
+        
 
         var progressValue = 20;
 
