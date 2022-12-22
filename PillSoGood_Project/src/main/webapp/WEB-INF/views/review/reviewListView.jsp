@@ -166,8 +166,22 @@
 												<i class="fa-solid fa-star" style="color: #78C2AD;" width="100" height="100" ></i>
 											</c:forEach>
 											<input type="hidden" value="${ b.reviewNo }">
-											<p class="bestReviewService">${ fn:substring(b.reviewTitle, 0, 15) }...</p>
-											<p class="bestReviewContent">${ fn:substring(b.reviewContent, 0, 30) }...</p>
+											<c:choose>
+												<c:when test="${b.reviewTitle.length() < 18}">
+													<p class="bestReviewService">${ b.reviewTitle }</p>
+												</c:when>
+												<c:otherwise>
+													<p class="bestReviewService">${ fn:substring(b.reviewTitle, 0, 18) }...</p>
+												</c:otherwise>												
+											</c:choose>
+											<c:choose>
+												<c:when test="${b.reviewContent.length() < 30}">
+													<p class="bestReviewContent">${ b.reviewContent }</p>
+												</c:when>
+												<c:otherwise>
+													<p class="bestReviewContent">${ fn:substring(b.reviewContent, 0, 30) }...</p>
+												</c:otherwise>												
+											</c:choose>
 											<p class="bestReviewName">${ b.memberName }&emsp;${ b.reviewDate }</p>
 										</div>
 									</c:forEach>
