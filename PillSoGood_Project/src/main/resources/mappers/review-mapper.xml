@@ -188,12 +188,15 @@
 	
 	<select id="selectROrderList" resultMap="reviewListViewResultSet" parameterType="_int">
 		SELECT ORDER_NO
-  		FROM ORDER_CART
- 		WHERE CART_NO IN (SELECT CART_NO
-                     	  FROM CART
-                    	  WHERE MEMBER_NO = #{memberNo}
-                      	  AND CART_STATUS = 'N')
- 		GROUP BY ORDER_NO
+        FROM ORDERS
+        WHERE ORDER_NO IN (SELECT ORDER_NO
+                           FROM ORDER_CART
+                           WHERE CART_NO IN (SELECT CART_NO
+                                             FROM CART
+                                             WHERE MEMBER_NO = #{memberNo}
+                                             AND CART_STATUS = 'N')
+                           GROUP BY ORDER_NO)
+        AND ORDER_STATUS = 'Y'
 	</select>
 
 	<select id="selectROrderProductNameList" resultMap="reviewListViewResultSet" parameterType="_long">

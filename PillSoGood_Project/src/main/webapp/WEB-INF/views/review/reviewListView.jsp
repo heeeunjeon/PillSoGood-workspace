@@ -166,7 +166,7 @@
 												<i class="fa-solid fa-star" style="color: #78C2AD;" width="100" height="100" ></i>
 											</c:forEach>
 											<input type="hidden" value="${ b.reviewNo }">
-											<p class="bestReviewService">${ b.reviewTitle }</p>
+											<p class="bestReviewService">${ fn:substring(b.reviewTitle, 0, 15) }...</p>
 											<p class="bestReviewContent">${ fn:substring(b.reviewContent, 0, 30) }...</p>
 											<p class="bestReviewName">${ b.memberName }&emsp;${ b.reviewDate }</p>
 										</div>
