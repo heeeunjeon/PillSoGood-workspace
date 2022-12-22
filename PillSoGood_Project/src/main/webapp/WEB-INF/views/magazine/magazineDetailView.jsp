@@ -145,7 +145,9 @@
         <div id="content">
             <div id="content_1"></div>
             <div id="content_2">
-                <div id="content_2_1"><p>매거진</p></div>
+                <div id="content_2_1"><p>매거진</p>
+                 
+                </div>
                 <div id="content_2_2">
                     <!-- 삭제 수정 버튼 영역 -->
                     <c:if test="${ loginUser.memberId eq 'admin' }">
@@ -175,8 +177,10 @@
                     </script>
 
                     <!-- 기사 제목 영역 -->
+                    <div class="badgeArea" style="padding-bottom:30px; text-align:center;">
+                    	<span class="badge bg-primary">${ mag.categoryNo }</span>
+                    </div>
                     <div class="thumbnailArea">
-                        <span class="badge bg-primary">${ mag.categoryNo }</span>
                         <p>${ mag.magazineTitle }</p>
                     </div>
                     

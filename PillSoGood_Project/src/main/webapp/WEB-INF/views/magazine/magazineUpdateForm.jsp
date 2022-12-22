@@ -113,19 +113,24 @@
       }
 
     .tagify {
-               --tag--max-width: 250px;
-               width: 100%;
-               max-width: 600px;
-             }
+       --tag--max-width: 250px;
+       width: 100%;
+       max-width: 600px;
+     }
 
-             .tagify .tagify__tag-text {
-               white-space: nowrap;
-             }
-             
-        	.logoArea {
-		    padding-left: 29%;
-    		padding-top: 80px;
-			}
+     .tagify .tagify__tag-text {
+       white-space: nowrap;
+     }
+          
+   	.logoArea {
+  	   padding-left: 29%;
+ 	   padding-top: 80px;
+	}
+	
+      .tagify{    
+	max-width: 900px;
+	}
+	
              
 </style>
 
@@ -154,7 +159,7 @@
                         <input type="hidden" name="magazineNo" value="${ mag.magazineNo }" >
                         <tr>
                             <th><label for="title">제목</label></th>
-                            <td><input type="text" id="title" class="form-control" name="magazineTitle" value="${ mag.magazineTitle }" required></td>
+                            <td><input type="text" id="title" class="form-control" name="magazineTitle" value="${ mag.magazineTitle }" required maxlength="100"></td>
                         </tr>
                         
                         <tr>
@@ -182,12 +187,12 @@
 							
                         <tr>
                           <th><label for="content">내용</label></th>
-                          <td><textarea id="content" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" required>${ mag.magazineContent }</textarea></td>
+                          <td><textarea id="Magazinecontent" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" required maxlength="3000">${ mag.magazineContent }</textarea></td>
                         </tr>
 
                         <tr>
                           <th><label for="reupfile">사진</label></th>
-                          <td><input multiple="multiple" type="file" id="reupfile" class="form-control-file border" name="reupfile">
+                          <td><input multiple="multiple" type="file" id="reupfile" class="form-control-file border" name="reupfile" maxlength="1000">
                           	  
                           	  <c:if test="${ not empty mag.magazineImgName }">
                           	  
@@ -200,7 +205,7 @@
 
                         <tr>
                      <th><label for="hashtag">해시태그</label></th>
-                     <td><input type="text" id="hashtag" class="form-control" name="magazineHashtag" value="${ mag.magazineHashtag }">
+                     <td><input type="text" id="hashtag" class="form-control" name="magazineHashtag" value="${ mag.magazineHashtag }" maxlength="20">
                                              <script src='https://unpkg.com/@yaireo/tagify'></script>
       				<script src='https://unpkg.com/@yaireo/dragsort'></script>
       				<script>
@@ -264,11 +269,9 @@
     		
     	})
     	
-    	
-    	
-    	
     </script>
     
+
 
     
 </body>

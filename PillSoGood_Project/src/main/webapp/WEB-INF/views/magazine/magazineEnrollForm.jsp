@@ -126,9 +126,9 @@
         white-space: nowrap;
       }
       
-      tags {
-      	width: 1000px;
-      }
+      .tagify{    
+ 		max-width: 900px;
+		}
 
 </style>
 
@@ -157,7 +157,7 @@
                         
                         <tr>
                             <th><label for="magazineTitle">제목</label></th>
-                            <td><input type="text" id="magazineTitle" class="form-control" name="magazineTitle" placeholder="내용을 입력해주세요" required></td>
+                            <td><input type="text" id="magazineTitle" class="form-control" name="magazineTitle" placeholder="내용을 입력해주세요" required maxlength="100"></td>
                         </tr>
                         
                         <tr>
@@ -173,18 +173,18 @@
 
                         <tr>
                           <th><label for="content">내용</label></th>
-                          <td><textarea id="content" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" required></textarea></td>
+                          <td><textarea id="magazineContent" class="form-control h-25" rows="20" style="resize:none;" name="magazineContent" required maxlength="3000"></textarea></td>
                         </tr>
 
                         <tr>
                           <th><label for="upfile">사진</label></th>
-                          <td><input multiple="multiple" type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                          <td><input multiple="multiple" type="file" id="upfile" class="form-control-file border" name="upfile" maxlength="1000"></td>
                         </tr>  
 
                         <tr>
                           <th><label for="hashtag">해시태그</label></th>
 	                          <td>
-                        <input type="text" placeholder="type tags" id="magazineHashtag" class="form-control" name="magazineHashtag" value="${mag.magazineHashtag}">
+                        <input type="text" placeholder="type tags" id="magazineHashtag" class="form-control" name="magazineHashtag" value="${mag.magazineHashtag}" maxlength="20">
                         
                         <script src='https://unpkg.com/@yaireo/tagify'></script>
            				<script src='https://unpkg.com/@yaireo/dragsort'></script>
@@ -224,7 +224,7 @@
                         </tr>
                     </table>  
                     <div align="center" class="btnArea">
-                      <button type="submit" class="btn btn-primary">등록</button>
+                      <button type="submit" class="btn btn-primary" id="magazineBtn">등록</button>
                       <button type="button" class="btn btn-light" onclick="javascript:history.go(-1);">취소</button>
                     </div>
                   </fieldset>
