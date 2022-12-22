@@ -14,7 +14,7 @@
 <style>
 
     div {
-        border : 1px solid #78C2AD;
+        /* border : 1px solid #78C2AD; */
         box-sizing : border-box;
     }
 
