@@ -32,8 +32,7 @@ public class MagazineController {
 	private MagazineService magazineService;
 	
 	@RequestMapping("list.mag")
-	public String SelectMagazineList(@RequestParam(value="cpage", defaultValue="1") int currentPage, @RequestParam(value="popular", defaultValue="") 
-												  String popular, Model model,
+	public String SelectMagazineList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model,
 												  @RequestParam(value="life", defaultValue="") String life,
 												  @RequestParam(value="season", defaultValue="") String season, 
 												  @RequestParam(value="issue", defaultValue="") String issue) { 

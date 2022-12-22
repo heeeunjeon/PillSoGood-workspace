@@ -84,6 +84,7 @@
 		height: 200px;
 		background-size: cover;
 		border-radius: 15px;
+		z-index: 1;
 	}
 
 	#magazineTitle { /* 게시글 제목 */
@@ -110,7 +111,6 @@
 		border-radius: 10px;
 		cursor: pointer;
 		text-align: center;
-		background: url("images/icon-Triangle-down.png") center right 14px no-repeat;
 		/* 말줄임 */
 		white-space: nowrap;
 		text-overflow: ellipsis;
@@ -126,6 +126,8 @@
 		box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
 		border-radius: 10px;
 		background-color: white;
+		padding-left: 0px;
+		z-index: 3;
 	}
 
 	.btn-select.on+.list-member { display: block; }
@@ -139,11 +141,11 @@
 	}
 
 	.list-member li button {
-		width: auto;
+		width: 100%;
 		padding: 7px 10px;
 		border: none;
 		background-color: white;
-		border-radius: 8px;
+ 		border-radius: 8px;
 		cursor: pointer;
 		text-align: center;
 		/* 말줄임 */
@@ -155,14 +157,14 @@
 	.list-member li button:hover, .list-member li button:focus {
 		background-color: #F3969A;
 		opacity:1;
-		margin-right:100px;
+		/* margin-right:100px;*/
 	}
 	
 	.list-member ul { padding-left: 1rem; }
 
 
 	/* 하단 페이징 바 */
-	#pagingArea { padding: 20px; height: 200px; }
+	#pagingArea { padding: 20px; height: 200px; margin-top: 50px; }
 
 </style>
 </head>
@@ -190,7 +192,14 @@
 				<!-- 카테고리 영역 -->
 				<div class="magazineSelect">
 					<article class="cont-select">
-						<button class="btn btn-outline-secondary btn-select">전체</button>
+						<button class="btn btn-outline-secondary btn-select">
+							<c:choose>
+								<c:when test="${ not empty life }">라이프</c:when>
+								<c:when test="${ not empty season }">시즌</c:when>
+								<c:when test="${ not empty issue }">이슈</c:when>
+								<c:otherwise>전체</c:otherwise>
+							</c:choose>
+						</button>
 							<ul class="list-member">
 								<li><button type="button" onclick="location.href='list.mag';">전체</button></li>
 								<li><button type="button" onclick="location.href='list.mag?life=1';">라이프</button></li>
@@ -199,24 +208,7 @@
 							</ul>
 					</article>
 				</div>
-                   
-				<script>
-					$(function() {
-						if(${ not empty life }) {
-							$(".magazineSelect .btn-select").text("라이프");
-						}
-
-						if(${ not empty season }) {
-							$(".magazineSelect .btn-select").text("시즌");
-						}
-						
-						if(${ not empty issue }) {
-							$(".magazineSelect .btn-select").text("이슈");
-						}
-					});
-				</script>
-            
-              
+				
                 <!-- 실제 작업할 영역 -->
                 <div id="content_2_2">
 
