@@ -103,7 +103,7 @@
         text-align: center;
     }
     #order_list>thead { background-color: #78c2ad36; }
-    #order_list>tbody td { font-size: small; vertical-align: middle; }
+    #order_list>tbody td { vertical-align: middle; }
 
     #order_list>tbody>tr:hover { cursor: pointer; }
 
@@ -150,7 +150,7 @@
                             <p>[ 주문 목록 ]</p>
                         </div>
                         
-                        <table class="table table-hover" id="order_list" border="1">
+                        <table class="table table-hover" id="order_list">
                             <thead>
                                 <tr>
                                     <th width="35%">주문번호</th>

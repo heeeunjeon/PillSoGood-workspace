@@ -74,19 +74,24 @@
     .question_content {
         width: 95%;
         margin: auto;
-        margin-bottom: 70px;
-        background-color: #78c2ad36;
-        padding: 10px;
+        margin-bottom: 30px;
+        background-color: #afe0d147;
+        padding: 30px;
         border-radius: 10px;
+        
     }
+
 
     #answer_content, #not_answer {
         width: 90%;
         margin: auto;
-        background-color: #78c2ad36;
+        background-color: #fbeaebd1;
         border-radius: 10px;
     }
-    #answer_content th, #answer_content td, #not_answer { padding: 15px; color: black; }
+
+    #answer_content th, #answer_content td, #not_answer { padding: 20px; color: black; }
+
+	
 
     #answer_enroll {
         width: 90%;
@@ -207,7 +212,7 @@
 		                                    </tr>
 		                                </thead>
 		                                <tbody>
-		                                    <tr><td colspan="3">${ fn:replace(q.answer, newLine, "<br>") }</td></tr>
+		                                    <tr><td colspan="3" style="padding-bottom: 40px;">${ fn:replace(q.answer, newLine, "<br>") }</td></tr>
 		                                </tbody>
 		                            </table>
 		                            

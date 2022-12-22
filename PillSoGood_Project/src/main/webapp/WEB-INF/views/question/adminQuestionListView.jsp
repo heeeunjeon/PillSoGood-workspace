@@ -107,7 +107,7 @@
         table-layout: fixed;
     }
     #qna_list>thead { background-color: #78c2ad36; }
-    #qna_list>tbody td { font-size: small; vertical-align: middle; }
+    #qna_list>tbody td { vertical-align: middle; }
 
     #qna_list>tbody>tr:hover { cursor: pointer; }
 
@@ -165,10 +165,10 @@
                             <thead>
                                 <tr>
                                     <th width="10%">No</th>
-                                    <th width="40%">제목</th>
-                                    <th width="15%">작성자</th>
+                                    <th width="50%">제목</th>
+                                    <th width="10%">작성자</th>
                                     <th width="20%">등록일</th>
-                                    <th width="15%">상태</th>
+                                    <th width="10%">상태</th>
                                 </tr>
                             </thead>
                             <tbody>

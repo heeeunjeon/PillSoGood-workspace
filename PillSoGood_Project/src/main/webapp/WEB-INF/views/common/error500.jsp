@@ -24,7 +24,7 @@
 
     #navigator2 { height: 100px; }
 
-    #content { height: 1150px; }
+    #content { height: auto; display:flex; }
     #content_2>div { width: 100%; }
     #content_2_1 { height: 10%; float: left; }
     #content_2_2 { height: 80%; float: left; }
