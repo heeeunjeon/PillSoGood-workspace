@@ -111,6 +111,50 @@
 	    -webkit-appearance: none;
 	    margin: 0;
 	}
+
+    /* 비디오 컨트롤러 숨기기 */
+      /* 전체화면 버튼 */
+      video::-webkit-media-controls-fullscreen-button {
+        display: none !important;
+      }
+
+      /* 일시정지, 재생 버튼 */
+      video::-webkit-media-controls-play-button {
+        display: none !important;
+      }
+
+      /* 재생 슬라이드..? */
+      video::-webkit-media-controls-timeline {
+        display: none !important;
+      }
+
+      /* 현재 진행 시간 */
+      video::-webkit-media-controls-current-time-display {
+        display: none !important;
+      }
+
+      /* 전체 시간 */
+      video::-webkit-media-controls-time-remaining-display {
+        display: none !important;
+      }
+
+      /* 음소거 버튼 */
+      video::-webkit-media-controls-mute-button {
+        display: none !important;
+      }
+
+      /* 볼륨 조절 슬라이드 */
+      video::-webkit-media-controls-volume-slider {
+        display: none !important;
+      }
+
+      video::-webkit-media-controls-fullscreen-button {
+        display: none !important;
+      }
+
+      video::-webkit-media-controls {
+        display: none;
+      }
 	
 
 </style>
@@ -140,7 +184,11 @@
                     <!-- 1번 -->
 
                     <div id="survey1">
-                        <div id="imgg"><img src="resources/images/pillcase.jpg"></div>
+                        <video id="imgg" style="width: 850px; height: 400px; object-fit: cover; padding-left: 40px; padding-top: 30px;" autoplay muted controls>
+                            <source type="video/mp4" src="resources/images/pillsoGood.mp4" style="margin: auto;">
+                        </video>
+
+                      
                         <div class="text"><p>PillSoGood 과 함께 건강 설문 시작하기</p></div>
                         <div class="surveyBtn">
                             <div align="center">
