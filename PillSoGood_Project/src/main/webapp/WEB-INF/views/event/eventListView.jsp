@@ -123,7 +123,7 @@
 		                                    ${ e.evtTitle }
                                             <c:choose>
                                                 <%-- 이벤트 종료 날짜가 오늘 날짜보다 작거나 같다면 이벤트 진행중 --%>
-                                                <c:when test="${ today =< e.evtDew}">
+                                                <c:when test="${ today <= e.evtDew}">
                                                     <span class="btn btn-primary btn-sm eventStatus">진행중</span>
                                                 </c:when>
                                                 <%-- 그게 아니라면 이벤트 종료 --%>
