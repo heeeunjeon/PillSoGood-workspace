@@ -198,14 +198,14 @@
                     </div>
                     
                     <hr>
-                    
-                    <div align="center">
-                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='list.ev';" style="width:140px; margin-top: 20px;">목록으로</button>
-                    </div>    
 
 
 					<!-- 댓글이 달리는 부분 -->
                     <div id="replyArea" align="center"></div>
+                    
+                    <div align="center">
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='list.ev';" style="width:140px; margin-top: 50px;">목록으로</button>
+                    </div> 
 
                     <script>
 
@@ -246,7 +246,7 @@
     	                            							+ "<input type='hidden' value="+result[i].replyNo +">"
     		                        							+ "<tr>"
     			                        				              + "<td class='replyWriters' width='80%' style='padding-left: 60px; padding-top:20px; font-weight: bold;'>"
-    			                                        			  + result[i].memberId
+    			                                        			  + result[i].memberName
     			                                        			  +	"</td>"
     			                                        			  + "<td class='replyCreateDates' colspan='2' width='20%' style='padding-top: 20px; padding-left: 30px;' align='center'>"
     			                                        			  + result[i].replyDate
@@ -257,7 +257,7 @@
     		    	                                    			  + result[i].replyContent
     		    	                                    	          + "</pre></td>";
     		    	                                    	        
-    		    	                                    	          if(("${ loginUser.memberId }" == result[i].memberId) || ("${loginUser.memberId}" == 'admin') ) {
+    		    	                                    	          if(("${ loginUser.memberName }" == result[i].memberName) || ("${loginUser.memberName}" == '관리자') ) {
     			    	                                    	          
     				    	                                			resultStr += "<td align='center'>"
     				    	                                							+ "<button class='btn btn-danger btn-sm' onclick='deleteReply("+ result[i].replyNo + ")'>삭제</button>"
@@ -281,7 +281,7 @@
 															+ "<tr>"
 																	+ "<td width='30' style='padding-left:100px;'>ㄴ</td>"
 																	+ "<td class='replyWriters' width='80%' style='padding-left: 30px; padding-top:20px; font-weight: bold;'>"
-																	+ result[i].memberId
+																	+ result[i].memberName
 																	+	"</td>"
 																	+ "<td class='replyCreateDates' colspan='2' width='20%' style='padding-top: 20px; padding-left: 15px;'>"
 																	+ result[i].replyDate
@@ -293,7 +293,7 @@
 																	+ "</pre></td>";
 																	
 																	
-																	if(("${ loginUser.memberId }" == result[i].memberId) || ("${loginUser.memberId}" == 'admin')) {
+																	if(("${ loginUser.memberName }" == result[i].memberName) || ("${loginUser.memberName}" == '관리자')) {
 																		
 																	resultStr += "<td>"
 																					+"<button onclick='NestedDeleteReply("+ result[i].replyNo +");' style='margin-left: 15px;' class='btn btn-danger btn-sm'>삭제</button>"
@@ -461,7 +461,7 @@
 										
 										url : "insert.el",
 										data : { evtNo : ${e.evtNo},
-													memberNo : ${loginUser.memberNo}
+											     memberNo : ${loginUser.memberNo}
 										},
 										success : function (result) {
 											console.log("좋아요 성공");
@@ -487,7 +487,7 @@
 										
 										url : "delete.el",
 										data : { evtNo : ${e.evtNo},
-													memberNo : ${loginUser.memberNo}},
+											     memberNo : ${loginUser.memberNo}},
 										success : function (result) {
 											console.log("좋아요 삭제 성공");
 											

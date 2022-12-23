@@ -17,5 +17,5 @@ public class EventReply {
 	private String replyStatus; //REPLY_STATUS	CHAR(1 BYTE)
 	private int memberNo; // MEMBER_NO	NUMBER
 	private int evtNo; // EVENT_NO	NUMBER
-	private String memberId; // MEMBER_ID
+	private String memberName; // MEMBER_NAME 
 }
