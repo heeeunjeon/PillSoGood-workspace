@@ -394,11 +394,11 @@ public class ReviewController {
 		
 		// 리뷰에 첨부되어 있는 파일들 삭제
 		int result1 = reviewService.deleteReviewFile(rno2);
-		System.out.println("result1 : " + result1);
+		// System.out.println("result1 : " + result1);
 
 		// 리뷰 삭제
 		int result = reviewService.deleteReview(rno2);
-		System.out.println("result : " + result);
+		// System.out.println("result : " + result);
 		
 		if( result > 0 ) {
 			// 리뷰 리스트 페이지 url 재요청
@@ -420,11 +420,11 @@ public class ReviewController {
 		
 		// 리뷰에 첨부되어 있는 파일들 삭제
 		int result1 = reviewService.deleteReviewFile(rno2);
-		System.out.println("result1 : " + result1);
+		// System.out.println("result1 : " + result1);
 
 		// 리뷰 삭제
 		int result = reviewService.deleteReview(rno2);
-		System.out.println("result : " + result);
+		// System.out.println("result : " + result);
 		
 		if( result > 0 ) {
 			// 리뷰 리스트 페이지 url 재요청
