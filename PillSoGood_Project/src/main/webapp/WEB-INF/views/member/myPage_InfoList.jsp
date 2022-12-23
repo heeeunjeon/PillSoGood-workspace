@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>PillSoGood</title>
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+<title>MY PAGE 내 정보 관리</title>
 
 <style>
 

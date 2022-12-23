@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>PillSoGood</title>
+<title>공지사항</title>
 
 
 <style>
@@ -83,7 +83,7 @@
     }
 
     #noticePagination {
-
+		margin-top: 50px;
         padding-top : 20px;
     }
     

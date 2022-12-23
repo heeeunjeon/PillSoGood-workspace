@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>내 관심 제품</title>
+<title>MY PAGE 내 관심 제품</title>
 <style>
 
     div {

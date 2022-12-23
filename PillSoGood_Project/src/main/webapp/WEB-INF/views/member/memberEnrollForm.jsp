@@ -4,10 +4,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+<title>회원가입</title>
 <style>
 
     div {
@@ -54,9 +55,11 @@
     #memberEnrollFrom {
         box-sizing: border-box;
         height: 700px;
-        width: 400px;
+        width: 500px;
         margin-top: 50px;
     }
+    
+    #memberEnrollForm tr { height: 40px!important; }
 
 </style>
 
@@ -85,15 +88,15 @@
                             </tr>
                             <tr style="display: inline-block;">
                                 <td colspan="3">
-                                    <input class="form-control" type="text" placeholder="아이디를 입력" maxlength="20" style="width: 300px;" required name="memberId" id="memberId">
+                                    <input class="form-control" type="text" placeholder="아이디를 입력해주세요" minlength="5" maxlength="20" style="width: 400px;" required name="memberId" id="memberId">
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-secondary" style="width:100px" name="idCheck" id="idCheckbtn">중복확인</button>
+                                    <button type="button" class="btn btn-primary" style="width:100px" name="idCheck" id="idCheckbtn">중복확인</button>
 
                                 </td>
-							<tr>
+							<tr style="height: 20px!important;">
 								 <td>
-                                	<div id="checkResult" style="font-size:0.8em; display:none;"></div>
+                                	<div id="checkResult" style="font-size:0.8em; display:none; padding-left: 6px;"></div>
                                 </td>
                                     
 							</tr>
@@ -102,7 +105,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <input type="password" class="form-control" placeholder="특문,영문,숫자를 포함하여 8~20자 이하로 입력해주세요." minlength="8" maxlength="20" style="width:400px" required name="memberPwd" id="memberPwd">
+                                    <input type="password" class="form-control" placeholder="특문,영문,숫자를 포함하여 8~20자 이하로 입력해주세요" minlength="8" maxlength="20" style="width:500px" required name="memberPwd" id="memberPwd">
                                 </td>
                             </tr>
                             <tr>
@@ -110,7 +113,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <input type="password" class="form-control" placeholder="동일한 비밀번호를 재입력" style="width: 400px;" name="checkPwd" id="checkPwd">
+                                    <input type="password" class="form-control" placeholder="동일한 비밀번호를 한번 더 입력해주세요" style="width: 500px;" name="checkPwd" id="checkPwd">
                                  	<div id="checkResult2" style="font-size:0.8em; display:none;"></div>	
                                 </td>
                             </tr>
@@ -119,7 +122,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <input type="text" class="form-control" placeholder="이름 입력" style="width: 400px;" required name="memberName" id="memberName">
+                                    <input type="text" class="form-control" placeholder="이름을 입력해주세요" style="width: 500px;" required name="memberName" id="memberName">
                                 </td>
                             </tr>
                             <tr>
@@ -127,7 +130,7 @@
                             </tr>
                             <tr>
                                 <td colspan="3"> 
-                                    <input type="tel" class="form-control" placeholder="휴대폰 번호 '-' 없이 입력" maxlength="11" style="width: 400px;" required name="phone" id="phone">
+                                    <input type="tel" class="form-control" placeholder="휴대폰번호를 '-' 없이 입력해주세요" maxlength="11" style="width: 500px;" required name="phone" id="phone">
                                 </td>
                             </tr>
                             <tr>
@@ -135,12 +138,12 @@
                             </tr>
                             <tr style="display: inline-block;">
                                 <td>
-                                    <input type="text" class="form-control" placeholder="이메일 입력" style="width: 190px;" required id="email1" maxlength="30">
+                                    <input type="text" class="form-control" placeholder="이메일을 입력해주세요" style="width: 240px;" required id="email1" maxlength="30">
                                 </td>
-                                <td><span style="width:10px;" id="middle">@</span></td>
+                                <td><span style="width:10px;" id="middle">&nbsp;&nbsp;@&nbsp;&nbsp;</span></td>
 
                                 <td>
-                                    <select class="form-select" style="width: 190px;" id="email2" required>
+                                    <select class="form-select" style="width: 228px;" id="email2" required>
                                         <option value="naver.com">naver.com</option>
                                         <option value="google.com">google.com</option>
                                         <option value="kakao.com">kakao.com</option>
@@ -154,13 +157,13 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" name="addressZip" id="address_zip" placeholder="우편번호" style="display:inline-block; width: 67.5%;">
-	                                <input type="button" class="btn btn-secondary" id="address_btn" onclick="getAddress();" value="우편번호 찾기" style="display:inline-block; vertical-align: top;">
+                                    <input type="text" class="form-control" name="addressZip" id="address_zip" placeholder="우편번호" style="display:inline-block; width: 370px;" readonly>
+	                                <input type="button" class="btn btn-primary" id="address_btn" onclick="getAddress();" value="우편번호 찾기" style="display:inline-block; vertical-align: top;">
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" name="address1" id="address1" placeholder="도로명 주소">
+                                    <input type="text" class="form-control" name="address1" id="address1" placeholder="도로명 주소" readonly>
                                 </td>
                             </tr>
                             <tr>
@@ -197,8 +200,8 @@
 					        }
 					    </script>
 
-                        <div align="center" style="padding: 15px 0px;">
-                            <button class="btn btn-secondary" id="enrollbtn" type="submit" disabled onclick="return validate();">가입완료</button>
+                        <div align="center" style="padding: 15px 0px; margin-top: 30px;">
+                            <button class="btn btn-secondary" id="enrollbtn" type="submit" style="width: 140px; height: 40px;" disabled onclick="return validate();">가입하기</button>
                         </div>
                     </form>
 
@@ -256,9 +259,10 @@
    				});
    			} else { // 5글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
    				
-   				$("#checkResult").hide();
+   				$("#checkResult").show();
+   				$("#checkResult").css("color", "red").text("5자 이상으로 입력해주세요.");
    				$("#enrollForm button[type=submit]").attr("disabled", true);
-   				}
+			}
    			
    			});
    		});

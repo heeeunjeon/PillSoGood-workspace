@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>PillSoGood</title>
+<title>건강설문 결과</title>
 <style>
 
     div {

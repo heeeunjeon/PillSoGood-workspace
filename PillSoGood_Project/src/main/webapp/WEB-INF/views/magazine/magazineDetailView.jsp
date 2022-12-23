@@ -9,7 +9,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>매거진</title>
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+<title>매거진 상세</title>
 <!-- hashtag 소스 다운 -->
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <!-- hashtag 폴리필 (구버젼 브라우저 지원) -->

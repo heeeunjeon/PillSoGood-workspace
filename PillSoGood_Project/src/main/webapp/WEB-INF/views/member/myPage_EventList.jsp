@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>내가 찜한 이벤트</title>
+<title>MY PAGE 찜한 이벤트</title>
 <style>
 
     div {

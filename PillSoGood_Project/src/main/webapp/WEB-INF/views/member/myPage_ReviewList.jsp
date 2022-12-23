@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>내 후기 조회</title>
+<title>MY PAGE 내 후기 조회</title>
 
 <style>
 

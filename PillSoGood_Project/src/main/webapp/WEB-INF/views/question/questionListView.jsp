@@ -150,7 +150,7 @@
 				            </c:if>
 		
 		                    <!-- 페이징 -->
-		                    <div>
+		                    <div style="margin-top: 50px;">
 		                        <ul class="pagination">
 		                        	<c:if test="${ not empty list }">
 			                        	<c:choose>

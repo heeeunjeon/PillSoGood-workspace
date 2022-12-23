@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>Event 상세보기</title>
+<title>이벤트 상세</title>
 
 <style>
 
@@ -198,6 +198,10 @@
                     </div>
                     
                     <hr>
+                    
+                    <div align="center">
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='list.ev';" style="width:140px; margin-top: 20px;">목록으로</button>
+                    </div>    
 
 
 					<!-- 댓글이 달리는 부분 -->

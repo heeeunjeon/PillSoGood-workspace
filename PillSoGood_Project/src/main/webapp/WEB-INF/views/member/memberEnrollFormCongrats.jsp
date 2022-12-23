@@ -7,10 +7,11 @@
 <%
      request.setCharacterEncoding("utf-8"); 
 %>  
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
+<title>환영합니다.</title>
 <style>
 
     div {
@@ -97,7 +98,7 @@
 				                        맞춤 영양 성분을 확인해보세요.
                     </div>
                     <div align="center" id="btn">
-                        <button class="btn btn-outline-info" onclick="location.href='index.jsp'">메인으로</button> &ensp;
+                        <button class="btn btn-primary" onclick="location.href='loginForm.me'">로그인하기</button> &ensp;
                         <button class="btn btn-secondary" onclick="location.href='survey.po'">건강설문 시작하기</button>
                     </div>
                 </div>

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>Event 수정하기</title>
+<title>이벤트 수정</title>
 <style>
 
     div {

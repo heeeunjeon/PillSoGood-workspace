@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>PillSoGood</title>
+<title>공지사항 수정</title>
 <style>
 	
 	

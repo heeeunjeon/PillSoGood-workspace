@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>Event</title>
+<title>이벤트</title>
 <style>
 
     div {
@@ -155,8 +155,6 @@
                     </c:forEach>
                 </div>
 
-
-                
 				<div id="content_2_3">
              		<!-- 페이지네이션 -->
                     <div id="noticePagination">
@@ -183,7 +181,6 @@
 	                    		</c:otherwise>
 	                    	</c:choose>
                         </ul>
-
                     </div>
                 </div>
                 

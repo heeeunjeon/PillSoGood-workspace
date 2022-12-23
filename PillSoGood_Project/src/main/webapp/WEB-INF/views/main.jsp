@@ -247,7 +247,7 @@
                                 </tr>
                             </table>
                             <div style="margin:auto;">
-                                <table id="content2Table" style="margin-left: 30px;">
+                                <table id="content2Table" style="margin: auto;">
                                         <tr>
                                             <td>
                                                 <div id="healthIcon" onclick="location.href='detail.pr?pno=1'"

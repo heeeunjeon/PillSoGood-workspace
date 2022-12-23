@@ -10,6 +10,7 @@
 <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />    
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
 <title>매거진</title>
 <style>
 

@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon">
-<title>1:1 문의</title>
+<title>1:1 문의 상세</title>
 <style>
 
     div {
