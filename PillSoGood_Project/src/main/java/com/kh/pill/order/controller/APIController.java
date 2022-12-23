@@ -72,7 +72,7 @@ public class APIController {
 		
 		JsonObject payment = JsonParser.parseString(response).getAsJsonObject();
 		
-		Date schedule_at = new Date(payment.get("paidAt").getAsLong() + 60000);
+		Date schedule_at = new Date(payment.get("paidAt").getAsLong() + 300000);
 		
 		ScheduleEntry entry = new ScheduleEntry(merchant_uid, schedule_at, payment.get("amount").getAsBigDecimal());
 		entry.setName(payment.get("name").getAsString());
