@@ -102,10 +102,10 @@
                                 <td align="center" rowspan="7" width="50%">
                                     <div id="tgg"><div id="imgg"><div id="proImgg"><img src="${ p.productImgPath }"></div></div></div>
                                 </td>
-                                <th colspan="2" style="font-size: 20px; padding-left: 10px; padding-top: 50px;">${ p.productExplain }엔</th>
+                                <th colspan="2" style="font-size: 20px; ">${ p.productExplain }엔</th>
                             </tr>
                             <tr height="65px" style="border-bottom: solid lightgrey;">
-                                <th colspan="2" style="font-size: 30px; padding-left: 10px; padding-bottom: 10px;">${ p.productName }&ensp;<span style="color: rgb(185, 184, 184);">30일분</span></th>
+                                <th colspan="2" style="font-size: 30px;  padding-bottom: 10px;">${ p.productName }&ensp;<span style="color: rgb(185, 184, 184); font-size:20px;">30일분</span></th>
                             </tr>
                             <tr height="200px">
                                 <td colspan="2">
@@ -113,12 +113,12 @@
                                         <tbody align="left">
                                             <tr height="55px" style="font-size: 20px; border-bottom: 1px solid lightgrey;">
                                                 <th width="60%" style="padding-left: 10px;">구매가</th>
-                                                <th colspan="2" style="text-align:right"><fmt:formatNumber value="${ p.productPrice }"/>원</th>
+                                                <th colspan="2" style="text-align:right; padding-right:10px;"><fmt:formatNumber value="${ p.productPrice }"/>원</th>
                                             </tr>
                                             <tr height="55px" style="font-size: 20px">
                                                 <td style="padding-left: 10px;">수량선택</td>
                                                 <td style="text-align:center" id="allP">총 1개</td>
-                                                <td width="40px">
+                                                <td width="40px" style="padding-right:10px;">
                                                     <table>
                                                         <tr>
                                                             <td><button type="button" class="btn btn-light" style="background-color:white; border: 1px solid #ced4da;" onclick="count('minus');">-</button></td>
@@ -130,7 +130,7 @@
                                             </tr>
                                             <tr height="55px" style="font-size: 20px;">
                                                 <th style="padding-left: 10px;">총 금액</th>
-                                                <th colspan="2" style="text-align:right; font-size: 25px;" id="proPri"><fmt:formatNumber value="${ p.productPrice }" />원</th>
+                                                <th colspan="2" style="text-align:right; font-size: 25px; padding-right:10px;" id="proPri"><fmt:formatNumber value="${ p.productPrice }" />원</th>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -154,11 +154,11 @@
                                 <td width="90%"><button type="button" class="btn btn-primary" id="addCart" style="width: 300px">장바구니</button></td>
                             </tr>
                         </tbody>
-                        <tfoot height="530px">
+                        <tfoot height="530px;">
                             <tr>
-                                <td colspan="4">
+                                <td colspan="4" style="padding-top:50px; padding-bottom:50px;">
                                     <div id="proImg">
-                                        <div id="proImg_1_1" style="height:530px"><img src="${ p.productDescription }"></div>
+                                        <div id="proImg_1_1" style="height:530px; padding-top:30px;"><img src="${ p.productDescription }"></div>
                                     </div>
                                 </td>
                             </tr>
