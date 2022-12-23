@@ -301,7 +301,7 @@
                                 <td></td>
                             </tr>
                             <tr height="100px">
-                                <td><pre>${ r.reviewContent }</pre></td>
+                                <td><pre style="white-space: pre-line;">${ r.reviewContent }</pre></td>
                                 <td></td>
                             </tr>
                             <tr>
