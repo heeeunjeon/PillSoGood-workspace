@@ -187,12 +187,13 @@
 		                    <!-- 영섭 작업 영역 끝 -->
 	                	</c:when>
 	                	<c:otherwise>
-	                		<div align="center">
-		                        <button type="button" class="btn btn-secondary" style="height: 45px; width: 300px;" onclick="location.href='loginForm.me'">로그인</button>
-		                        <br>
-		                        <div style="font-size: large; margin: 100px 0px;">
+	                		<div align="center" style="margin-bottom:80px;">
+		                        
+		                        <div style="font-size: large; padding : 50px;">
 		                        	<b>1:1 문의 내역은<br>로그인 후 확인하실 수 있습니다.</b>
 		                        </div>
+		                        
+		                        <button type="button" class="btn btn-secondary" style="height: 45px; width: 300px;" onclick="location.href='loginForm.me'">로그인</button>
 		                    </div>
 	                		
 	                	</c:otherwise>
