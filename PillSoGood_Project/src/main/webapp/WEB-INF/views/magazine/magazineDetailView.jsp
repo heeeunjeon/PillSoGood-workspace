@@ -179,7 +179,7 @@
 
                     <!-- 기사 제목 영역 -->
                     <div class="badgeArea" style="padding-bottom:30px; text-align:center;">
-                    	<span class="badge bg-primary">${ mag.categoryNo }</span>
+                    	<span style="font-size: 16px; height:35px; width:78px;  line-height: 22px;" class="badge bg-primary">${ mag.categoryNo }</span>
                     </div>
                     <div class="thumbnailArea">
                         <p>${ mag.magazineTitle }</p>
