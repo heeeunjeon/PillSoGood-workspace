@@ -354,6 +354,7 @@
                     			
                     						// 댓글 작성 창 초기화효과
                     						$("#replyContentArea").val("");
+                    						$("#textCount").html(0);
                     					}
                     				},
                     				error : function() {
