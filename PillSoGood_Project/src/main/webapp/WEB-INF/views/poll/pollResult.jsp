@@ -169,7 +169,7 @@
                                 <span style="font-size: 15px;"> 
                                		<fmt:formatNumber type="number" value="${ (sysYear - userBirth + 1) - ((sysYear - userBirth + 1) % 10)}"/>대&ensp;
                                		<c:choose>
-                               			<c:when test="${ loginUser.gender eq F }">여</c:when><c:otherwise>남</c:otherwise></c:choose>성&ensp;${ loginUser.height }cm&ensp;${ loginUser.weight }kg&emsp;|&emsp;BMI <fmt:formatNumber value="${ loginUser.weight / ((loginUser.height / 100) * (loginUser.height / 100)) }" pattern=".00" /> </span> 
+                               			<c:when test="${ loginUser.gender eq 'F' }">여</c:when><c:otherwise>남</c:otherwise></c:choose>성&ensp;${ loginUser.height }cm&ensp;${ loginUser.weight }kg&emsp;|&emsp;BMI <fmt:formatNumber value="${ loginUser.weight / ((loginUser.height / 100) * (loginUser.height / 100)) }" pattern=".00" /> </span> 
                             </p>
                         </div>
                     </div>
