@@ -325,18 +325,18 @@ public class EventController {
 			e.setEvtImgName(reupfile.getOriginalFilename());
 			e.setEvtImgName("resources/eventUploadFiles/" + ChangeName);
 			
-			System.out.println(e.getEvtImgName());
+			// System.out.println(e.getEvtImgName());
 			
 		}
 		
 		int result = eventService.updateEvent(e);
 		
-		System.out.println(result);
+		// System.out.println(result);
 
 
 		if(result > 0) { // 게시글 수정 성공 
 			
-			System.out.println(result);
+			// System.out.println(result);
 			
 			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
 			
@@ -460,11 +460,11 @@ public class EventController {
 	@RequestMapping(value="nrinsert.ev", produces="text/html; charset=UTF-8")
 	public String ajaxInsertNestedReply(EventReply er) {
 		
-		System.out.println(er);
+		// System.out.println(er);
 
 		int result = eventService.insertNestedReply(er);
 		
-		System.out.println(er);
+		// System.out.println(er);
 		
 	
 		return (result > 0) ? "success" : "fail";

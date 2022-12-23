@@ -231,7 +231,7 @@
                         <hr>
                         <div id="change_pwd">
                          <!--비밀번호 변경  -->
-                            <button type="button" class="btn btn-primary" onclick="changePwdForm();">비밀번호 변경 <p style="float: right;">&gt;</p></button>
+                            <button type="button" class="btn btn-primary" style="font-family: 'Noto Sans KR', sans-serif !important;" onclick="changePwdForm();">비밀번호 변경 <p style="float: right;">&gt;</p></button>
                         </div>
                         <br>
     					<button type="button" class="btn btn-outline-secondary btn-sm" style="float: right;" onclick="deleteForm()">회원탈퇴</button>

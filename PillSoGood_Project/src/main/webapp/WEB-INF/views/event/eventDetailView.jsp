@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% pageContext.setAttribute("newLine", "\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -150,7 +151,7 @@
 					
 					<!-- 글 내용 -->
                     <div align="center" style="width: 100%; height:auto; text-align: left; padding-bottom: 50px; padding-top: 50px;">
-                         ${ e.evtContent }
+                         ${ fn:replace(e.evtContent, newLine, "<br>") }
                     </div>
 
                     <hr>
