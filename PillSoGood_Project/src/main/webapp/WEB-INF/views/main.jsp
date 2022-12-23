@@ -475,7 +475,7 @@
                         <table style="width: 1000px;" align="center" >
                             <tr>
                                 <td style="width: 80%; vertical-align: top; padding-bottom: 30px; padding-top: 90px;" align="left">
-                                    <h4 style="color: rgb(40, 40, 40); font-weight:bold;">뉴스레터</h4>
+                                    <h4 style="color: rgb(40, 40, 40); font-weight:bold;">매거진</h4>
                                 </td>
                                 <td style="width: 20%; vertical-align: top; padding-top: 90px;">
                                     <a href="list.mag"
