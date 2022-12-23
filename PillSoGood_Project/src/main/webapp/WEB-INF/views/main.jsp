@@ -599,13 +599,13 @@
             						
             						resultStr += "<tr>"
 		                                			+ "<td rowspan='6' style='width: 60%; vertical-align: top; padding-right: 30px; padding-top: 30px;' align='center' >"
-		                                    			+ "<img src="+ result[i].magazineImgName +" style='width:100%; height: 350px;'>"
+                                                        + "<a href=detail.mag?magazineNo="+ result[i].magazineNo +" style='text-decoration: none; color:rgb(40, 40, 40);'>"
+		                                    			    + "<img src="+ result[i].magazineImgName +" style='width:100%; height: 350px;' >"
 			                                    			+ "<p style='text-align: left; width: 100%;'>"
-			                                        		+ "<a href=detail.mag?magazineNo="+ result[i].magazineNo +" style='text-decoration: none; color:rgb(40, 40, 40);'>"
 			                                            		+ "<b style='padding-top: 20px; display: block; font-size: 20px;'>"+ result[i].magazineTitle +"</b>" 
 			                                        			+ "<br>"
-			                                        		+ "</a>"
-			                                    		+ "</p>"
+			                                    		    + "</p>"
+                                                        + "</a>"
 		                                			+ "</td>"
 	                            				+ "</tr>";
             						
@@ -613,7 +613,9 @@
             						
             						resultStr += "<tr>"
 				                                    + "<td style='width: 100%; height: 200px; vertical-align: top; padding-top: 30px;'>"
+                                                         + "<a href=detail.mag?magazineNo="+ result[i].magazineNo +" style='text-decoration: none;'>"
 				                                         + "<img src="+ result[i].magazineImgName +" style='width:100%; height: 200px;'>"
+                                                         + "</a>"
 				                                     + "</td>"
 				                                 +"</tr>"
 				                                 +"<tr>"
