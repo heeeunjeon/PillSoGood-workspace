@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.pill.common.model.vo.PageInfo;
-import com.kh.pill.common.model.vo.PageInfo;
 import com.kh.pill.common.template.Pagination;
 import com.kh.pill.magazine.model.service.MagazineService;
 import com.kh.pill.magazine.model.vo.Magazine;
@@ -104,13 +103,6 @@ public class CommonController {
 		
 		return new Gson().toJson(mainList);
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 
 }

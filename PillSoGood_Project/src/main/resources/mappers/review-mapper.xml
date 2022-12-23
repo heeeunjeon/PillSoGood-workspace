@@ -117,7 +117,7 @@
 				ORDER BY REVIEW_NO DESC
 			</when>
 			<when test="order == 'new'">
-				ORDER BY REVIEW_DATE DESC
+				ORDER BY REVIEW.REVIEW_DATE DESC
 			</when>
 			<when test="order == 'hot'">
 				ORDER BY REVIEW_COUNT DESC
@@ -209,10 +209,6 @@
                                         	 WHERE ORDER_NO = #{orderNo}))
 	</select> 
 	 
-	<insert id="insertReview" parameterType="review">
-		
-	</insert>
-	
 	<update id="increaseCount" parameterType="_int">	     
 	     UPDATE REVIEW
 		   SET REVIEW_COUNT = REVIEW_COUNT + 1
@@ -308,9 +304,10 @@
 			 , REVIEW_CONTENT
 			 , TO_CHAR(REVIEW_DATE, 'YYYY-MM-DD') AS "REVIEW_DATE"
 			 , REVIEW_GRADE
-  	   FROM REVIEW
+		  FROM REVIEW
 		 WHERE REVIEW_STATUS = 'Y'
 		   AND MEMBER_NO = #{memberNo}
+		 ORDER BY REVIEW_NO DESC
 	</select>
 	
 

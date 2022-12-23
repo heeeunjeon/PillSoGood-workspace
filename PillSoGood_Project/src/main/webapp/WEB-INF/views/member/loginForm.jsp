@@ -53,7 +53,7 @@
                             <tr>
                                 <th>아이디</th>
                                 <td>
-                                    <input class="form-control" type="text" placeholder="아이디를 입력해주세요" maxlength="20" id="memberId" name="memberId">
+                                    <input class="form-control" type="text" placeholder="아이디를 입력해주세요" maxlength="20" id="memberId" name="memberId" autofocus>
                                 </td>
                             </tr>
                             <tr>

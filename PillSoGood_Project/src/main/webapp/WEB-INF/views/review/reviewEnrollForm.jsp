@@ -250,7 +250,7 @@
 								<div id="btnDiv" align="center">
 									<input type="hidden" name="orderNo" class="form-control" value="1">
 									<button type="submit" class="btn btn-primary" onclick="toAdminSocketMsg();">등록하기</button>
-									<button type="reset" class="btn btn-secondary">뒤로가기</button>
+									<button type="button" class="btn btn-secondary" onclick="history.back();">뒤로가기</button>
 								</div>
 								
 								<script>
