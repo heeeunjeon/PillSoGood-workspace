@@ -174,8 +174,8 @@
                             	
                             <% } %>
                             
-                            console.log(Total);
-                            console.log(productName);
+                            // console.log(Total);
+                            // console.log(productName);
                             
                           
                             new Chart(ctx, {

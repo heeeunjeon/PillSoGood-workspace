@@ -587,7 +587,7 @@
             			url : "latestMagazine.main",
             			success : function(result) {
             				
-            				console.log(result);
+            				// console.log(result);
             				
             				var resultStr ="";
             				

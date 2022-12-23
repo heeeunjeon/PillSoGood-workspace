@@ -152,7 +152,7 @@
                             <button type="button" class="btn btn-outline-dark" id="m12">12개월</button>
                             <input type="button" class="btn btn-outline-primary" id="all" value="전체" onclick="location.href='myPage.or'">
 							
-                            <input type="date" id="startDate" value="s"> - 
+                            <input type="date" id="startDate"> - 
                             <input type="date" id="endDate">
                             
                             <input type="button" class="btn btn-primary" id="searchBtn" style="width: 90px; margin-left: 10px; color: white;" value="검색">
