@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.common.model.vo.PageInfo;
+import com.kh.pill.common.template.Pagination;
+import com.kh.pill.magazine.model.service.MagazineService;
+import com.kh.pill.magazine.model.vo.Magazine;
 import com.kh.pill.review.model.service.ReviewService;
 import com.kh.pill.review.model.vo.Review;
 import com.kh.pill.review.model.vo.ReviewFile;
@@ -17,6 +22,10 @@ public class CommonController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private MagazineService magazineService;
+	
 	
 	@RequestMapping("aboutUs.pill")
 	public String fowardAboutUs() {
@@ -62,6 +71,44 @@ public class CommonController {
 		return new Gson().toJson(bestList);
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="latestMagazine.main", produces="application/json; charset=UTF-8")
+	public String latestMagazine() {
+		
+		
+		int pageLimit = 5; 
+		int boardLimit = 6;
+		int currentPage = 1;
+		
+		int listCount = magazineService.selectListCount();
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		
+		ArrayList<Magazine> list = magazineService.selectMagazineList(pi);
+		
+		ArrayList<Magazine> mainList = new ArrayList<>();
+		
+		
+		for(int i =0; i <3 ; i++) {
+			
+			Magazine m = new Magazine();
+			
+			m = list.get(i);
+			
+			
+			mainList.add(m);
+			
+		}
+		
+		return new Gson().toJson(mainList);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

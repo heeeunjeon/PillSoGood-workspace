@@ -472,13 +472,13 @@
                 <div id="content6" style="width: 100%; height:1000px; float: left;"  data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1000">
                     <div id="content6_1" style="width: 10%; float: left;">&ensp;</div>
                     <div id="content6_2" style="width: 80%; float: left;">
-                        <table style="width: 1000px;" align="center">
+                        <table style="width: 1000px;" align="center" >
                             <tr>
                                 <td style="width: 80%; vertical-align: top; padding-bottom: 30px; padding-top: 90px;" align="left">
                                     <h4 style="color: rgb(40, 40, 40); font-weight:bold;">뉴스레터</h4>
                                 </td>
                                 <td style="width: 20%; vertical-align: top; padding-top: 90px;">
-                                    <a href=""
+                                    <a href="list.mag"
                                         style="float: right; text-decoration: none; color: rgb(40, 40, 40); font-weight: bold;">
                                         더보기
                                         <i class="fa-solid fa-chevron-right"></i>
@@ -487,44 +487,11 @@
                             </tr>
                         </table>
 
-                        <table style="width: 1000px;" align="center">
-                                <tr>
-                                    <td rowspan="6" style="width: 60%; vertical-align: top; padding-right: 30px; padding-top: 30px;" align="center" >
-                                        <img src="" style="width:100%; height: 350px;">
-                                        <p style="text-align: left; width: 100%;">
-                                            <a href="" style="text-decoration: none; color:rgb(40, 40, 40);">
-                                                <b style="padding-top: 20px; display: block; font-size: 20px;">속 쓰릴때 도움되는 영양제</b> 
-                                            <br>
-                                            하는 것이다 보라 청춘을 ! 그들의 몸이 얼마나 튼튼하며 그들의 피부가 얼마나 생생하며 그들의 눈에 무엇이 타오르고 있는가? 
-                                            우리 눈이 그것을 보는 때에 우리의 귀는 생의 찬미를 듣는다 그것은 웅대한 관현악이며 미묘한
-                                            </a>
-                                        </p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 100%; height: 200px; vertical-align: top; padding-top: 30px;">
-                                        <img src="" style="width:100%; height: 200px;">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top;">
-                                        <a href="" style="text-decoration: none; color:rgb(40, 40, 40);"><b style="display: block; padding-top: 20px;">속 쓰릴때 도움되는 영양제</b></a>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td style="width: 100%; height: 200px; vertical-align: top; padding-top: 30px;">
-                                        <img src="" style="width:100%; height: 200px;">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top;">
-                                        <a href="" style="text-decoration: none; color:rgb(40, 40, 40);"><b style="padding-top: 20px; display: block;">속 쓰릴때 도움되는 영양제</b></a>
-                                    </td>
-                                    
-                                </tr>
+                        <table style="width: 1000px;" align="center" id="content6_Table" >
+                             <tbody>
+                               
                             
-                            
+                            </tbody>
                         </table>
 
                     </div>
@@ -544,7 +511,10 @@
             <script>
             
             	$(function() {
+            		
             		mainPageBestReview();
+            		
+            		latestMagazine();
             		
             	});
             	
@@ -605,6 +575,69 @@
             			
             		});
             		
+            		
+            	}
+            	
+            	
+            	
+            	function latestMagazine() {
+            		
+            		$.ajax({
+            			
+            			url : "latestMagazine.main",
+            			success : function(result) {
+            				
+            				console.log(result);
+            				
+            				var resultStr ="";
+            				
+            				
+            				for(var i = 0; i < result.length; i++) {
+            					
+            					
+            					if(i == 0) {
+            						
+            						resultStr += "<tr>"
+		                                			+ "<td rowspan='6' style='width: 60%; vertical-align: top; padding-right: 30px; padding-top: 30px;' align='center' >"
+		                                    			+ "<img src="+ result[i].magazineImgName +" style='width:100%; height: 350px;'>"
+			                                    			+ "<p style='text-align: left; width: 100%;'>"
+			                                        		+ "<a href=detail.mag?magazineNo="+ result[i].magazineNo +" style='text-decoration: none; color:rgb(40, 40, 40);'>"
+			                                            		+ "<b style='padding-top: 20px; display: block; font-size: 20px;'>"+ result[i].magazineTitle +"</b>" 
+			                                        			+ "<br>"
+			                                        		+ "</a>"
+			                                    		+ "</p>"
+		                                			+ "</td>"
+	                            				+ "</tr>";
+            						
+            					}else {
+            						
+            						resultStr += "<tr>"
+				                                    + "<td style='width: 100%; height: 200px; vertical-align: top; padding-top: 30px;'>"
+				                                         + "<img src="+ result[i].magazineImgName +" style='width:100%; height: 200px;'>"
+				                                     + "</td>"
+				                                 +"</tr>"
+				                                 +"<tr>"
+				                                     +"<td style='vertical-align: top;'>"
+				                                         + "<a href=detail.mag?magazineNo="+ result[i].magazineNo+" style='text-decoration: none; color:rgb(40, 40, 40);'><b style='display: block; padding-top: 20px;'>"+ result[i].magazineTitle +"</b></a>"
+				                                     +"</td>"
+				                                 +"</tr>";
+            						
+            					}
+                                
+            					
+            				}
+            				
+            				
+            				$("#content6_Table>tbody").html(resultStr);
+            				
+            			},
+            			error : function() {
+            				
+            				console.log("main.jsp latestMagazine ajax failure");
+            			}
+            			
+            			
+            		});
             		
             	}
             	
