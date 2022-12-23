@@ -53,24 +53,24 @@
                             <tr>
                                 <th>아이디</th>
                                 <td>
-                                    <input class="form-control" type="text" placeholder="아이디를 입력" maxlength="20" id="memberId" name="memberId">
+                                    <input class="form-control" type="text" placeholder="아이디를 입력해주세요" maxlength="20" id="memberId" name="memberId">
                                 </td>
                             </tr>
                             <tr>
                                 <th>비밀번호</th>
                                 <td>
-                                    <input type="password" class="form-control" placeholder="비밀번호를 입력" maxlength="20" id="memberPwd" name="memberPwd">
+                                    <input type="password" class="form-control" placeholder="비밀번호를 입력해주세요" maxlength="20" id="memberPwd" name="memberPwd">
                                 </td>
                             </tr>
                         </table>
 
                         <div align="center">
-                            <button class="btn btn-secondary" style="width: 400px; height: 50px;">로그인</button>
+                            <button class="btn btn-secondary" style="width: 400px; height: 45px;">로그인</button>
                         </div>
 
                     </form>
 
-                    <div align="center" style="padding: 20px;">
+                    <div align="center" style="padding: 20px; margin-top: 15px;">
                         <a href="idFindForm.me" style="text-decoration:none; color:black;">ID 찾기</a>
                         &ensp; | &ensp;
                         <a href="enrollForm.me" style="text-decoration:none; color:black;">회원가입</a>
